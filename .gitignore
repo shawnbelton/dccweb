@@ -48,6 +48,7 @@ buildNumber.properties
 
 jmri-web.iml
 jmri-core/jmri-core.iml
+jmri-webapp/jmri-webapp.iml
 
 # Gradle:
 .idea/gradle.xml
