@@ -47,6 +47,7 @@ buildNumber.properties
 .idea/copyright/profiles_settings.xml
 
 jmri-web.iml
+jmri-core/jmri-core.iml
 
 # Gradle:
 .idea/gradle.xml
