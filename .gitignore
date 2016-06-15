@@ -79,3 +79,8 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+.idea/
+dcc-core/src/main/resources/
+dcc-interface/src/main/resources/
+dcc-interface/src/test/
+nce-interface/src/main/resources/
