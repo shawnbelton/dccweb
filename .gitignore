@@ -46,9 +46,9 @@ buildNumber.properties
 .idea/modules.xml
 .idea/copyright/profiles_settings.xml
 
-jmri-web.iml
-jmri-core/jmri-core.iml
-jmri-webapp/jmri-webapp.iml
+dcc-web.iml
+dcc-core/dcc-core.iml
+dcc-webapp/dcc-webapp.iml
 
 # Gradle:
 .idea/gradle.xml
