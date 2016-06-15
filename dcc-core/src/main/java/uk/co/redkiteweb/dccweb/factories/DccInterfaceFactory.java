@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.dccInterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
 /**
  * Created by shawn on 15/06/16.

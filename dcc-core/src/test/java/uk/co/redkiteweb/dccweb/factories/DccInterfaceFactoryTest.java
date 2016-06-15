@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
-import uk.co.redkiteweb.dccweb.dccInterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;

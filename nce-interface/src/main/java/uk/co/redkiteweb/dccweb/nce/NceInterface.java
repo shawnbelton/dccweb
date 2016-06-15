@@ -2,7 +2,7 @@ package uk.co.redkiteweb.dccweb.nce;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.dccInterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
 /**
  * Created by shawn on 15/06/16.

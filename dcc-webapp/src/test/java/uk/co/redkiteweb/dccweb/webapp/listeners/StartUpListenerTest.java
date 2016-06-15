@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.event.ContextRefreshedEvent;
-import uk.co.redkiteweb.dccweb.dccInterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
-import uk.co.redkiteweb.dccweb.webapp.listeners.StartUpListener;
 
 import static org.mockito.Mockito.*;
 
