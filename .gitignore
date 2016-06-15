@@ -49,6 +49,8 @@ buildNumber.properties
 dcc-web.iml
 dcc-core/dcc-core.iml
 dcc-webapp/dcc-webapp.iml
+dcc-interface/dcc-interface.iml
+nce-interface/nce-interface.iml
 
 # Gradle:
 .idea/gradle.xml
