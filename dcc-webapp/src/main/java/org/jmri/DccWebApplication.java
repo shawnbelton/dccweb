@@ -1,15 +1,15 @@
-package org.jmri.webapp;
+package org.jmri;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Created by shawn on 14/06/16.
+ * Created by shawn on 15/06/16.
  */
 @SpringBootApplication
-public class WebApplication {
+public class DccWebApplication {
 
     public static final void main(final String[] args) {
-        SpringApplication.run(WebApplication.class, args);
+        SpringApplication.run(DccWebApplication.class, args);
     }
 }
