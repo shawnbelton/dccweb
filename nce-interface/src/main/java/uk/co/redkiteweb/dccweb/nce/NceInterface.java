@@ -36,7 +36,7 @@ public class NceInterface extends AbstractDccInterface {
             final SerialPort serialPort = portFactory.getSerialPort();
         } catch (ConnectionException excpetion) {
             this.getDccInterfaceStatus().setDisconnected();
-            LOGGER.error(String.format("Connection error: %s", excpetion.getMessage()));
+            LOGGER.error(String.format("Connection error: %s", excpetion.getMessage()), excpetion);
         }
     }
 }
