@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * Created by shawn on 17/06/16.
  */
-public class AbstractDccInterface implements DccInterface {
+public abstract class AbstractDccInterface implements DccInterface {
 
     private DccInterfaceStatus dccInterfaceStatus;
 
@@ -23,4 +23,6 @@ public class AbstractDccInterface implements DccInterface {
     public void initialise() {
         dccInterfaceStatus.setDisconnected();
     }
+
+    public abstract void checkInterface();
 }

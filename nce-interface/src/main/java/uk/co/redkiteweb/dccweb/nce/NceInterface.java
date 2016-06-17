@@ -18,4 +18,9 @@ public class NceInterface extends AbstractDccInterface {
         super.initialise();
         LOGGER.info("Nce Interface Initialisation");
     }
+
+    @Override
+    public void checkInterface() {
+
+    }
 }
