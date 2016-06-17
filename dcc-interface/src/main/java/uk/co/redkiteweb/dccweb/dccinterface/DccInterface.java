@@ -5,6 +5,7 @@ package uk.co.redkiteweb.dccweb.dccinterface;
  */
 public interface DccInterface {
 
+    DccInterfaceStatus.Status getInterfaceStatus();
     void initialise();
 
 }
