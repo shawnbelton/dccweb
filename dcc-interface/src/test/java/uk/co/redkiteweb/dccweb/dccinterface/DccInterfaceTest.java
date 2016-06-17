@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static org.mockito.Mockito.mock;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 17/06/16.
@@ -23,6 +22,12 @@ public class DccInterfaceTest {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
         abstractDccInterface = new MyDccInterface();
         abstractDccInterface.setDccInterfaceStatus(dccInterfaceStatus);
+    }
+
+    @Test
+    public void testInitialise() {
+        abstractDccInterface.initialise();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
     }
 
     @Test

@@ -14,6 +14,7 @@ public class AbstractDccInterface implements DccInterface {
         this.dccInterfaceStatus = dccInterfaceStatus;
     }
 
+    @Override
     public DccInterfaceStatus.Status getInterfaceStatus() {
         return dccInterfaceStatus.getStatus();
     }
