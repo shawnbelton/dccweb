@@ -10,9 +10,7 @@ import uk.co.redkiteweb.dccweb.nce.communication.TalkToNCE;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 15/06/16.
@@ -43,5 +41,13 @@ public class NceInterfaceTest {
     public void connectionTest() throws ConnectionException {
         nceInterface.checkInterface();
         verify(talkToNCE, times(1)).sendData(any(NceData.class));
+        verify(dccInterfaceStatus, times(1)).setConnected();
+    }
+
+    @Test
+    public void failedConnectionTest() throws ConnectionException {
+        doThrow(mock(ConnectionException.class)).when(talkToNCE).sendData(any(NceData.class));
+        nceInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
     }
 }
