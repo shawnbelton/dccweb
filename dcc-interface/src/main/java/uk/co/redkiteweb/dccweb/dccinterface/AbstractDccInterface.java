@@ -24,5 +24,6 @@ public abstract class AbstractDccInterface implements DccInterface {
         dccInterfaceStatus.setDisconnected();
     }
 
+    @Override
     public abstract void checkInterface();
 }
