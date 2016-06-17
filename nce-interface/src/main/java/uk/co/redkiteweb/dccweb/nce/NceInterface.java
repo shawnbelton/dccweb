@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.AbstractDccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
+import uk.co.redkiteweb.dccweb.nce.communication.NceData;
+import uk.co.redkiteweb.dccweb.nce.communication.TalkToNCE;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 import uk.co.redkiteweb.dccweb.nce.factories.PortFactory;
 
@@ -17,11 +19,11 @@ public class NceInterface extends AbstractDccInterface {
 
     private static final Logger LOGGER = Logger.getLogger(NceInterface.class);
 
-    private PortFactory portFactory;
+    private TalkToNCE talkToNCE;
 
     @Autowired
-    public void setPortFactory(final PortFactory portFactory) {
-        this.portFactory = portFactory;
+    public void setTalkToNCE(final TalkToNCE talkToNCE) {
+        this.talkToNCE = talkToNCE;
     }
 
     @Override
@@ -33,10 +35,11 @@ public class NceInterface extends AbstractDccInterface {
     @Override
     public void checkInterface() {
         try {
-            final SerialPort serialPort = portFactory.getSerialPort();
-        } catch (ConnectionException excpetion) {
+            talkToNCE.sendData(new NceData());
+            this.getDccInterfaceStatus().setConnected();
+        } catch (ConnectionException exception) {
             this.getDccInterfaceStatus().setDisconnected();
-            LOGGER.error(String.format("Connection error: %s", excpetion.getMessage()), excpetion);
+            LOGGER.error(String.format("Connection error: %s", exception.getMessage()), exception);
         }
     }
 }
