@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -36,5 +37,9 @@ public class DccInterfaceTest {
         assertEquals(DccInterfaceStatus.Status.DISCONNECTED, abstractDccInterface.getInterfaceStatus());
     }
 
+    @Test
+    public void testGetDccInterfaceStatus() {
+        assertTrue(abstractDccInterface.getDccInterfaceStatus() instanceof DccInterfaceStatus);
+    }
 
 }

@@ -29,6 +29,10 @@
             <artifactId>log4j</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.rxtx</groupId>
+            <artifactId>rxtx</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
