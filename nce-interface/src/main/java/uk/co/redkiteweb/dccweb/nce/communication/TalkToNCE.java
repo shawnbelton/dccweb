@@ -23,11 +23,28 @@ public class TalkToNCE {
         this.portFactory = portFactory;
     }
 
+    public void shutdown() {
+        portFactory.close();
+    }
+
     public NceData sendData(final NceData data) throws ConnectionException {
         final SerialPort serialPort = portFactory.getSerialPort();
         try {
             final OutputStream outputStream = serialPort.getOutputStream();
             final InputStream inputStream = serialPort.getInputStream();
+            Integer outputData = data.readRequestData();
+            while (outputData != null) {
+                outputStream.write(outputData);
+                outputData = data.readRequestData();
+            }
+            outputStream.flush();
+            outputStream.close();
+            int inputData = inputStream.read();
+            while (inputData >= 0) {
+                data.addResponseData(inputData);
+                inputData = inputStream.read();
+            }
+            inputStream.close();
         } catch (IOException exception) {
             throw new ConnectionException("Send Data failed", exception);
         }

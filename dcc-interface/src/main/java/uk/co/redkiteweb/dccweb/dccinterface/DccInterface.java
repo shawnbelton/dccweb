@@ -8,5 +8,6 @@ public interface DccInterface {
     DccInterfaceStatus.Status getInterfaceStatus();
     void initialise();
     void checkInterface();
+    void shutdown();
 
 }

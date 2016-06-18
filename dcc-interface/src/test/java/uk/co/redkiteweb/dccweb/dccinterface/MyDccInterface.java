@@ -9,4 +9,9 @@ public class MyDccInterface extends AbstractDccInterface {
     public void checkInterface() {
 
     }
+
+    @Override
+    public void shutdown() {
+
+    }
 }

@@ -30,4 +30,7 @@ public abstract class AbstractDccInterface implements DccInterface {
 
     @Override
     public abstract void checkInterface();
+
+    @Override
+    public abstract void shutdown();
 }

@@ -33,10 +33,23 @@ public class NceInterface extends AbstractDccInterface {
     }
 
     @Override
+    public void shutdown() {
+        talkToNCE.shutdown();
+        this.getDccInterfaceStatus().setDisconnected();
+    }
+
+    @Override
     public void checkInterface() {
         try {
-            talkToNCE.sendData(new NceData());
-            this.getDccInterfaceStatus().setConnected();
+            final NceData nceData = new NceData();
+            nceData.addRequestData(0x80);
+            talkToNCE.sendData(nceData);
+            final Integer readData = nceData.readResponseData();
+            if (readData != null && readData == 33) {
+                this.getDccInterfaceStatus().setConnected();
+            } else {
+                this.getDccInterfaceStatus().setOffLine();
+            }
         } catch (ConnectionException exception) {
             this.getDccInterfaceStatus().setDisconnected();
             LOGGER.error(String.format("Connection error: %s", exception.getMessage()), exception);

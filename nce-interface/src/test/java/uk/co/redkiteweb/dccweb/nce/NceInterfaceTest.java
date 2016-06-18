@@ -41,7 +41,7 @@ public class NceInterfaceTest {
     public void connectionTest() throws ConnectionException {
         nceInterface.checkInterface();
         verify(talkToNCE, times(1)).sendData(any(NceData.class));
-        verify(dccInterfaceStatus, times(1)).setConnected();
+        verify(dccInterfaceStatus, times(1)).setOffLine();
     }
 
     @Test
