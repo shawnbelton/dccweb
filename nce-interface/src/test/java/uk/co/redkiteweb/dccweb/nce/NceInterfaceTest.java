@@ -38,9 +38,35 @@ public class NceInterfaceTest {
     }
 
     @Test
+    public void shutdown() {
+        nceInterface.shutdown();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+        verify(talkToNCE, times(1)).shutdown();
+    }
+
+    @Test
     public void connectionTest() throws ConnectionException {
+        final NceData nceData = new NceData();
+        nceData.addData(33);
+        when(talkToNCE.sendData(any(NceData.class))).thenReturn(nceData);
         nceInterface.checkInterface();
-        verify(talkToNCE, times(1)).sendData(any(NceData.class));
+        verify(dccInterfaceStatus, times(1)).setConnected();
+    }
+
+    @Test
+    public void offLineTest() throws ConnectionException {
+        final NceData nceData = new NceData();
+        when(talkToNCE.sendData(any(NceData.class))).thenReturn(nceData);
+        nceInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setOffLine();
+    }
+
+    @Test
+    public void offLine2Test() throws ConnectionException {
+        final NceData nceData = new NceData();
+        nceData.addData(100);
+        when(talkToNCE.sendData(any(NceData.class))).thenReturn(nceData);
+        nceInterface.checkInterface();
         verify(dccInterfaceStatus, times(1)).setOffLine();
     }
 

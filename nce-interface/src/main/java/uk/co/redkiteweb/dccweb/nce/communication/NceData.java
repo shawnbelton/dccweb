@@ -8,27 +8,17 @@ import java.util.Queue;
  */
 public class NceData {
 
-    private Queue<Integer> requestData;
-    private Queue<Integer> responseData;
+    private Queue<Integer> nceData;
 
     public NceData() {
-        requestData = new PriorityQueue<Integer>();
-        responseData = new PriorityQueue<Integer>();
+        nceData = new PriorityQueue<Integer>();
     }
 
-    public void addRequestData(final int data) {
-        requestData.add(data);
+    public void addData(final int data) {
+        nceData.add(data);
     }
 
-    public void addResponseData(final int data) {
-        responseData.add(data);
-    }
-
-    public Integer readRequestData() {
-        return requestData.poll();
-    }
-
-    public Integer readResponseData() {
-        return responseData.poll();
+    public Integer readData() {
+        return nceData.poll();
     }
 }

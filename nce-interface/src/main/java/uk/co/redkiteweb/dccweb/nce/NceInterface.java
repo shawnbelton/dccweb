@@ -41,10 +41,10 @@ public class NceInterface extends AbstractDccInterface {
     @Override
     public void checkInterface() {
         try {
-            final NceData nceData = new NceData();
-            nceData.addRequestData(0x80);
-            talkToNCE.sendData(nceData);
-            final Integer readData = nceData.readResponseData();
+            final NceData requestData = new NceData();
+            requestData.addData(0x80);
+            final NceData responseData = talkToNCE.sendData(requestData);
+            final Integer readData = responseData.readData();
             if (readData != null && readData == 33) {
                 this.getDccInterfaceStatus().setConnected();
             } else {
