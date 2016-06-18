@@ -1,6 +1,6 @@
 package uk.co.redkiteweb.dccweb.nce.communication;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 /**
@@ -11,7 +11,7 @@ public class NceData {
     private Queue<Integer> nceData;
 
     public NceData() {
-        nceData = new PriorityQueue<Integer>();
+        nceData = new LinkedList<Integer>();
     }
 
     public void addData(final int data) {

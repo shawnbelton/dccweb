@@ -28,28 +28,37 @@ public class TalkToNCE {
     }
 
     public NceData sendData(final NceData inData) throws ConnectionException {
-        final NceData outData = new NceData();
+        NceData outData;
         final SerialPort serialPort = portFactory.getSerialPort();
         try {
-            final OutputStream outputStream = serialPort.getOutputStream();
-            final InputStream inputStream = serialPort.getInputStream();
-            Integer outputData = inData.readData();
-            while (outputData != null) {
-                outputStream.write(outputData);
-                outputData = inData.readData();
-            }
-            outputStream.flush();
-            outputStream.close();
-            int inputData = inputStream.read();
-            while (inputData >= 0) {
-                outData.addData(inputData);
-                inputData = inputStream.read();
-            }
-            inputStream.close();
+            writeData(serialPort, inData);
+            outData = readData(serialPort);
         } catch (IOException exception) {
             throw new ConnectionException("Send Data failed", exception);
         }
         return outData;
     }
 
+    private void writeData(final SerialPort serialPort, final NceData inData) throws IOException {
+        final OutputStream outputStream = serialPort.getOutputStream();
+        Integer outputData = inData.readData();
+        while (outputData != null) {
+            outputStream.write(outputData);
+            outputData = inData.readData();
+        }
+        outputStream.flush();
+        outputStream.close();
+    }
+
+    private NceData readData(final SerialPort serialPort) throws IOException {
+        final NceData outData = new NceData();
+        final InputStream inputStream = serialPort.getInputStream();
+        int inputData = inputStream.read();
+        while (inputData >= 0) {
+            outData.addData(inputData);
+            inputData = inputStream.read();
+        }
+        inputStream.close();
+        return outData;
+    }
 }
