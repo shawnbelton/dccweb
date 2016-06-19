@@ -37,6 +37,7 @@ public class PortFactory {
         if (serialPort != null) {
             LOGGER.info("Closing connection.");
             serialPort.close();
+            serialPort = null;
         }
     }
 
