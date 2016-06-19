@@ -34,6 +34,7 @@ public class TalkToNCE {
             writeData(serialPort, inData);
             outData = readData(serialPort);
         } catch (IOException exception) {
+            portFactory.close();
             throw new ConnectionException("Send Data failed", exception);
         }
         return outData;
