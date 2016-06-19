@@ -21,11 +21,13 @@ public class InterfaceInfoTest {
     private InterfaceInfo interfaceInfo;
     private DccInterfaceFactory dccInterfaceFactory;
     private DccInterface dccInterface;
+    private DccInterfaceStatus dccInterfaceStatus;
 
     @Before
     public void setUp() {
         dccInterfaceFactory = mock(DccInterfaceFactory.class);
         dccInterface = mock(DccInterface.class);
+        dccInterfaceStatus = mock(DccInterfaceStatus.class);
         interfaceInfo = new InterfaceInfo();
         interfaceInfo.setDccInterfaceFactory(dccInterfaceFactory);
         when(dccInterfaceFactory.getInstance()).thenReturn(dccInterface);
@@ -33,7 +35,8 @@ public class InterfaceInfoTest {
 
     @Test
     public void testStatus() {
-        when(dccInterface.getInterfaceStatus()).thenReturn(DccInterfaceStatus.Status.DISCONNECTED);
-        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, interfaceInfo.getStatus());
+        when(dccInterface.getInterfaceStatus()).thenReturn(dccInterfaceStatus);
+        when(dccInterfaceStatus.getStatus()).thenReturn(DccInterfaceStatus.Status.DISCONNECTED);
+        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, interfaceInfo.getStatus().getStatus());
     }
 }

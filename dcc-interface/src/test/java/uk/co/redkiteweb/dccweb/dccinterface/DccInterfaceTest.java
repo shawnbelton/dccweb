@@ -34,7 +34,7 @@ public class DccInterfaceTest {
     @Test
     public void testStatus() {
         when(dccInterfaceStatus.getStatus()).thenReturn(DccInterfaceStatus.Status.DISCONNECTED);
-        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, abstractDccInterface.getInterfaceStatus());
+        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, abstractDccInterface.getInterfaceStatus().getStatus());
     }
 
     @Test

@@ -20,7 +20,7 @@ public class InterfaceInfo {
     }
 
     @RequestMapping("/interface/status")
-    public DccInterfaceStatus.Status getStatus() {
+    public DccInterfaceStatus getStatus() {
         return dccInterfaceFactory.getInstance().getInterfaceStatus();
     }
 

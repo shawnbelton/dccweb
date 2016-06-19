@@ -39,7 +39,7 @@ public class TalkToNCE {
         return outData;
     }
 
-    private void writeData(final SerialPort serialPort, final NceData inData) throws IOException {
+    private static void writeData(final SerialPort serialPort, final NceData inData) throws IOException {
         final OutputStream outputStream = serialPort.getOutputStream();
         Integer outputData = inData.readData();
         while (outputData != null) {
@@ -50,7 +50,7 @@ public class TalkToNCE {
         outputStream.close();
     }
 
-    private NceData readData(final SerialPort serialPort) throws IOException {
+    private static NceData readData(final SerialPort serialPort) throws IOException {
         final NceData outData = new NceData();
         final InputStream inputStream = serialPort.getInputStream();
         int inputData = inputStream.read();
