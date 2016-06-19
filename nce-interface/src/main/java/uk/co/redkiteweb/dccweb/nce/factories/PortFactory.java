@@ -2,7 +2,7 @@ package uk.co.redkiteweb.dccweb.nce.factories;
 
 import gnu.io.*;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 
@@ -14,16 +14,16 @@ public class PortFactory {
 
     private static final Logger LOGGER = Logger.getLogger(PortFactory.class);
 
-    private String connectionName;
+    private NcePortIdentifier ncePortIdentifier;
     private SerialPort serialPort;
 
     public PortFactory() {
         serialPort = null;
     }
 
-    @Value("${nce.port}")
-    public void setConnectionName(final String connectionName) {
-        this.connectionName = connectionName;
+    @Autowired
+    public void setNcePortIdentifier(final NcePortIdentifier ncePortIdentifier) {
+        this.ncePortIdentifier = ncePortIdentifier;
     }
 
     public SerialPort getSerialPort() throws ConnectionException {
@@ -56,14 +56,14 @@ public class PortFactory {
     private CommPort connect() throws ConnectionException {
         CommPort commPort;
         try {
-            final CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(connectionName);
+            final CommPortIdentifier portIdentifier = ncePortIdentifier.getInstance();
             if (portIdentifier.isCurrentlyOwned()) {
                 throw new ConnectionException(String.format("Connection already owned by %s", portIdentifier.getCurrentOwner()));
             } else {
                 commPort = portIdentifier.open(this.getClass().getName(), 9600);
             }
         } catch (NoSuchPortException exception) {
-            throw new ConnectionException(String.format("Port name %s is incorrect.", connectionName), exception);
+            throw new ConnectionException(exception.getMessage(), exception);
         } catch (PortInUseException exception) {
             throw new ConnectionException("Connection is in use", exception);
         }
