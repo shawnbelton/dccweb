@@ -16,7 +16,7 @@
     <!--<link href="/css/traincontroller.css" rel="stylesheet" media="screen"/>-->
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">DCC Web</title>
 </head>
-<body>
+<body ng-app="dccweb">
 <header th:replace="layouts/header :: header"/>
 <main role="main">
     <div class="container" layout:fragment="content">
@@ -29,5 +29,8 @@
         th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
 <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/js/bootstrap.min.js"
         th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
+<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.3.8/angular.js"
+        th:src="@{/webjars/angularjs/1.3.8/angular.js}"></script>
+<script src="/js/dcc-web.js"></script>
 </body>
 </html>
