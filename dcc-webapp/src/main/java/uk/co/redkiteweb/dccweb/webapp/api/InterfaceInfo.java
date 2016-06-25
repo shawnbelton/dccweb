@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
 import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
@@ -20,7 +21,7 @@ public class InterfaceInfo {
     }
 
     @RequestMapping("/interface/status")
-    public DccInterfaceStatus getStatus() {
+    public @ResponseBody DccInterfaceStatus getStatus() {
         return dccInterfaceFactory.getInstance().getInterfaceStatus();
     }
 

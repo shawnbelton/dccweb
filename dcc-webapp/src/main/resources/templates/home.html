@@ -4,6 +4,18 @@
       layout:decorator="layouts/design">
 <body>
 <div layout:fragment="content">
+    <div class="row">
+        <div class="sm-col6" ng-controller="trains">
+            <form id="createTrain" ng-submit="createTrain()">
+                <input type="text" placeholder="Train Number" ng-model="train.name" required="required"/>
+                <input type="text" placeholder="Train Name" ng-model="train.number"/>
+                <input type="submit" value="Create"/>
+            </form>
+        </div>
+        <div class="sm-col6">
+
+        </div>
+    </div>
 </div>
 
 </body>

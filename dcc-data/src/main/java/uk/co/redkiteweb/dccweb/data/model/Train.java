@@ -12,8 +12,8 @@ import javax.persistence.Id;
 public class Train {
 
     private Integer trainId;
-    private String trainNumber;
-    private String trainName;
+    private String number;
+    private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,19 +25,19 @@ public class Train {
         this.trainId = trainId;
     }
 
-    public String getTrainNumber() {
-        return trainNumber;
+    public String getNumber() {
+        return number;
     }
 
-    public void setTrainNumber(final String trainNumber) {
-        this.trainNumber = trainNumber;
+    public void setNumber(final String number) {
+        this.number = number;
     }
 
-    public String getTrainName() {
-        return trainName;
+    public String getName() {
+        return name;
     }
 
-    public void setTrainName(final String trainName) {
-        this.trainName = trainName;
+    public void setName(final String name) {
+        this.name = name;
     }
 }

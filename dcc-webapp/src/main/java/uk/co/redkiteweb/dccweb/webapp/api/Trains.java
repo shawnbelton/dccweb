@@ -1,8 +1,7 @@
 package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 
@@ -22,8 +21,14 @@ public class Trains {
     }
 
     @RequestMapping("/trains")
-    public List<Train> getAllTrains() {
+    public @ResponseBody List<Train> getAllTrains() {
         return (List<Train>)trainRepository.findAll();
+    }
+
+    @RequestMapping(value = "/trains/create", method = RequestMethod.POST)
+    public @ResponseBody Boolean createTrain(@RequestBody final Train train) {
+        trainRepository.save(train);
+        return Boolean.TRUE;
     }
 
 }
