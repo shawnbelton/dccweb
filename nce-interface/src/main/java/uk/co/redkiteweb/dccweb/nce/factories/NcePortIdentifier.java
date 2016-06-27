@@ -19,6 +19,7 @@ public class NcePortIdentifier {
     }
 
     public CommPortIdentifier getInstance() throws NoSuchPortException {
+        System.setProperty("gnu.io.rxtx.SerialPorts", connectionName);
         return CommPortIdentifier.getPortIdentifier(connectionName);
     }
 

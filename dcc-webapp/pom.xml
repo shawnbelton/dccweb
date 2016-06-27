@@ -95,7 +95,7 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
-            <version>1.3.11</version>
+            <version>1.5.7</version>
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>

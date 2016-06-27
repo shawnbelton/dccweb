@@ -6,20 +6,24 @@ angular.module('dccweb', [])
         this.getInfo = function (callback) {
             $http.get('/interface/status').then(function (resp) {
                 callback(resp.data);
-            }, function(error) {
-                alert(error);
             });
         };
     }]).service('trainsService', ['$http', function ($http) {
         this.createTrain = function(callback, train) {
             $http.post('/trains/create', train).then(function (resp) {
                 callback(resp.data);
-            }, function(error) {
-               alert(error);
             });
         };
-    }]).controller('info', ['$scope', '$interval', 'infoService',function ($scope, $interval, infoService) {
-        $scope.info = {
+        this.getTrains = function(callback) {
+            $http.get('/trains').then(function (resp) {
+                callback(resp.data);
+            });
+        }
+    }]).controller('info', ['$interval', 'infoService',function ($interval, infoService) {
+
+        var self = this;
+
+        self.info = {
             status: ''
         };
 
@@ -27,16 +31,40 @@ angular.module('dccweb', [])
 
         $interval(function () {
             infoService.getInfo(function (info) {
-                $scope.info = info;
+                self.info = info;
             });
         }, 1000);
-    }]).controller('trains', ['$scope', 'trainsService', function ($scope, trainsService) {
-        $scope.train = {};
-        $scope.createTrain = function() {
+    }]).controller('trains', ['trainsService', function (trainsService) {
+
+        var self = this;
+
+        self.list = true;
+    
+        self.getTrains = function () {
+            trainsService.getTrains(function(response) {
+               self.trains = response; 
+            });  
+        };
+
+        self.newTrain = function () {
+            self.list = false;
+            self.train = {};
+        };
+
+        self.cancel = function () {
+            self.list = true;
+            self.getTrains();
+        };
+
+        self.train = {};
+        self.getTrains();
+        self.createTrain = function() {
             trainsService.createTrain(function(response) {
                 if (response) {
-                    $scope.train = {};
+                    self.train = {};
+                    self.list = true;
+                    self.getTrains();
                 }
-            }, $scope.train);
+            }, self.train);
         };
     }]);

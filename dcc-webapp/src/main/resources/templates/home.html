@@ -5,11 +5,36 @@
 <body>
 <div layout:fragment="content">
     <div class="row">
-        <div class="sm-col6" ng-controller="trains">
-            <form id="createTrain" ng-submit="createTrain()">
-                <input type="text" placeholder="Train Number" ng-model="train.name" required="required"/>
-                <input type="text" placeholder="Train Name" ng-model="train.number"/>
-                <input type="submit" value="Create"/>
+        <div class="col-sm-6" ng-controller="trains as trains">
+            <div ng-show="trains.list">
+                <ol class="list-group">
+                    <li class="list-group-item" ng-repeat="train in trains.trains">
+                        {{train.number}} {{train.name}}
+                    </li>
+                </ol>
+                <input type="button" class="btn btn-primary pull-right" ng-click="trains.newTrain()" value="Add Train"/>
+            </div>
+            <form id="createTrain" class="form-horizontal" ng-hide="trains.list" ng-submit="trains.createTrain()" name="createTrain">
+                <div class="form-group">
+                    <label for="trainNumber" class="col-sm-3 control-label">Train Number</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="trainNumber" class="form-control" placeholder="Train Number" ng-model="trains.train.number" required="required"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="trainName" class="col-sm-3 control-label">Train Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="trainName" class="form-control" placeholder="Train Name" ng-model="trains.train.name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="pull-right">
+                            <input type="button" value="Cancel" class="btn btn-danger" ng-click="trains.cancel()"/>
+                            <input type="submit" value="Save" class="btn btn-primary" ng-disabled="createTrain.$invalid"/>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <div class="sm-col6">
