@@ -18,7 +18,12 @@ angular.module('dccweb', [])
             $http.get('/trains').then(function (resp) {
                 callback(resp.data);
             });
-        }
+        };
+        this.getTrain = function (callback, id) {
+            $http.post('/trains/byId', id).then(function (resp) {
+                callback(resp.data);
+            });
+        };
     }]).controller('info', ['$interval', 'infoService',function ($interval, infoService) {
 
         var self = this;
@@ -38,11 +43,10 @@ angular.module('dccweb', [])
 
         var self = this;
 
-        self.list = true;
-    
         self.getTrains = function () {
             trainsService.getTrains(function(response) {
-               self.trains = response; 
+                self.trains = response;
+                self.list = true;
             });  
         };
 
@@ -52,19 +56,33 @@ angular.module('dccweb', [])
         };
 
         self.cancel = function () {
-            self.list = true;
             self.getTrains();
+        };
+
+        self.createTrain = function() {
+            trainsService.createTrain(function(response) {
+                self.trains = response;
+                self.train = {};
+                self.list = true;
+            }, self.train);
+        };
+    
+        self.editTrain = function(trainId) {
+            trainsService.getTrain(function(response) {
+                self.train = response;
+                self.list = false;
+            }, trainId);
+        };
+    
+        self.configure = function(train) {
+            if (train.showConfig) {
+                train.showConfig = false;
+            } else {
+                train.showConfig = true;
+            }
         };
 
         self.train = {};
         self.getTrains();
-        self.createTrain = function() {
-            trainsService.createTrain(function(response) {
-                if (response) {
-                    self.train = {};
-                    self.list = true;
-                    self.getTrains();
-                }
-            }, self.train);
-        };
+
     }]);

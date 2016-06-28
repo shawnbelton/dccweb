@@ -26,9 +26,13 @@ public class Trains {
     }
 
     @RequestMapping(value = "/trains/create", method = RequestMethod.POST)
-    public @ResponseBody Boolean createTrain(@RequestBody final Train train) {
+    public @ResponseBody List<Train> createTrain(@RequestBody final Train train) {
         trainRepository.save(train);
-        return Boolean.TRUE;
+        return getAllTrains();
     }
 
+    @RequestMapping(value = "/trains/byId", method = RequestMethod.POST)
+    public @ResponseBody Train getById(@RequestBody final Integer trainId) {
+        return trainRepository.findOne(trainId);
+    }
 }

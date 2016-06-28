@@ -44,4 +44,10 @@ public class TrainsTest {
         assertNotNull(trains.getAllTrains());
     }
 
+    @Test
+    public void getById() {
+        when(trainRepository.findOne(anyInt())).thenReturn(new Train());
+        assertNotNull(trains.getById(1));
+    }
+
 }
