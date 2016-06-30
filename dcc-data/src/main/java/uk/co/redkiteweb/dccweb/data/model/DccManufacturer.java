@@ -21,7 +21,7 @@ public class DccManufacturer {
         return manufacturerId;
     }
 
-    public void setManufacturerId(Integer manufacturerId) {
+    public void setManufacturerId(final Integer manufacturerId) {
         this.manufacturerId = manufacturerId;
     }
 
@@ -29,7 +29,7 @@ public class DccManufacturer {
         return manufacturer;
     }
 
-    public void setManufacturer(String manufacturer) {
+    public void setManufacturer(final String manufacturer) {
         this.manufacturer = manufacturer;
     }
 
@@ -37,7 +37,7 @@ public class DccManufacturer {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(final String country) {
         this.country = country;
     }
 }

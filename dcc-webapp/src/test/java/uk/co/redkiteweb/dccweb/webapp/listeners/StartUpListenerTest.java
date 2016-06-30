@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.event.ContextRefreshedEvent;
+import uk.co.redkiteweb.dccweb.data.loaders.Loader;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
 
@@ -18,12 +19,15 @@ public class StartUpListenerTest {
 
     private StartUpListener startUpListener;
     private DccInterfaceFactory dccInterfaceFactory;
+    private Loader loader;
 
     @Before
     public void setUp() {
         startUpListener = new StartUpListener();
         dccInterfaceFactory = mock(DccInterfaceFactory.class);
+        loader = mock(Loader.class);
         startUpListener.setDccInterfaceFactory(dccInterfaceFactory);
+        startUpListener.setDccManufacturerLoader(loader);
     }
 
     @Test
@@ -33,5 +37,6 @@ public class StartUpListenerTest {
         final ContextRefreshedEvent contextRefreshedEvent = mock(ContextRefreshedEvent.class);
         startUpListener.onApplicationEvent(contextRefreshedEvent);
         verify(dccInterface, times(1)).initialise();
+        verify(loader, times(1)).load();
     }
 }
