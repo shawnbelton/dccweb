@@ -47,7 +47,7 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         return dccManufacturer;
     }
 
-    private DccManufacturer getDccManufacturer(final String[] parts) {
+    private static DccManufacturer getDccManufacturer(final String[] parts) {
         final DccManufacturer dccManufacturer = new DccManufacturer();
         dccManufacturer.setManufacturerId(Integer.parseInt(parts[0]));
         dccManufacturer.setManufacturer(parts[1]);

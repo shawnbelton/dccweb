@@ -26,6 +26,7 @@ public class DccManufacturerLoader implements Loader {
         this.dccManufacturerReader = dccManufacturerReader;
     }
 
+    @Override
     public void load() {
         DccManufacturer dccManufacturer;
         dccManufacturer = dccManufacturerReader.read();
