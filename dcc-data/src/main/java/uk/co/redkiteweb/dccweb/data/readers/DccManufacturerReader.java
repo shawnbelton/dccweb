@@ -28,10 +28,10 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         DccManufacturer dccManufacturer = null;
         try {
             dccManufacturer = getDccManufacturer(readLine());
-        } catch (FileNotFoundException fileNotFound) {
-            LOGGER.error(String.format("File %s not found.", dccManufacturersFile), fileNotFound);
         } catch (IOException ioException) {
             LOGGER.error(String.format("Unable to read %s", dccManufacturersFile), ioException);
+        } catch (ReaderException readerException) {
+            LOGGER.error(readerException.getMessage(), readerException);
         }
         return dccManufacturer;
     }
@@ -55,14 +55,19 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         return dccManufacturer;
     }
 
-    private BufferedReader getReader() throws FileNotFoundException {
+    private BufferedReader getReader() throws ReaderException {
         if (bufferedReader == null) {
-            bufferedReader = new BufferedReader(new InputStreamReader(ClassLoader.getSystemClassLoader().getResourceAsStream(dccManufacturersFile)));
+            final InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(dccManufacturersFile);
+            if (inputStream != null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            } else {
+                throw new ReaderException(String.format("%s not found.", dccManufacturersFile));
+            }
         }
         return bufferedReader;
     }
 
-    private String readLine() throws IOException {
+    private String readLine() throws IOException, ReaderException {
         final String readLine = getReader().readLine();
         if (readLine == null) {
             closeBufferedReader();
