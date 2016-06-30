@@ -36,7 +36,7 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         return dccManufacturer;
     }
 
-    private DccManufacturer getDccManufacturer(String readLine) {
+    private static DccManufacturer getDccManufacturer(String readLine) {
         DccManufacturer dccManufacturer = null;
         if (readLine != null) {
             final String[] parts = readLine.split(",");
