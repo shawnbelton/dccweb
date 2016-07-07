@@ -4,7 +4,16 @@
       layout:decorator="layouts/design">
 <body>
 <div layout:fragment="content">
-    <div class="row">
+    <div class="row" ng-controller="decoder as decoder">
+        <div class="col-sm-6">
+            <div class="panel panel-default panel-primary">
+                <div class="panel-heading"><span>Decoder Settings</span>
+                    <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoder.readDecoder()"/></span></div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+
+        </div>
     </div>
     </div>
 </body>

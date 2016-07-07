@@ -21,6 +21,10 @@
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-data</artifactId>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
