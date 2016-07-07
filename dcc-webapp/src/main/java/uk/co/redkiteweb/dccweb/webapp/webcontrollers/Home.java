@@ -14,4 +14,9 @@ public class Home {
         return "home";
     }
 
+    @RequestMapping(value = "/decoders/")
+    public String decoderHome() {
+        return "decoder/home";
+    }
+
 }

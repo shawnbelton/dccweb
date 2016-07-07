@@ -25,4 +25,9 @@ public class HomeTest {
         assertEquals("home", home.home());
     }
 
+    @Test
+    public void decoderHome() {
+        assertEquals("decoder/home", home.decoderHome());
+    }
+
 }
