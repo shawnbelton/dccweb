@@ -4,6 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.KeepAliveMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.ShutdownMessage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -15,31 +19,55 @@ import static org.mockito.Mockito.*;
 @RunWith(JUnit4.class)
 public class DccInterfaceTest {
 
-    private AbstractDccInterface abstractDccInterface;
+    private DccInterfaceImpl dccInterface;
     private DccInterfaceStatus dccInterfaceStatus;
+    private MessageProcessorFactory messageProcessorFactory;
+    private MessageProcessor messageProcessor;
 
     @Before
     public void setUp() {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
-        abstractDccInterface = new MyDccInterface();
-        abstractDccInterface.setDccInterfaceStatus(dccInterfaceStatus);
+        messageProcessorFactory = mock(MessageProcessorFactory.class);
+        messageProcessor = mock(MessageProcessor.class);
+        dccInterface = new DccInterfaceImpl();
+        dccInterface.setDccInterfaceStatus(dccInterfaceStatus);
+        dccInterface.setMessageProcessorFactory(messageProcessorFactory);
+        when(messageProcessorFactory.getInstance()).thenReturn(messageProcessor);
     }
 
     @Test
     public void testInitialise() {
-        abstractDccInterface.initialise();
+        dccInterface.initialise();
         verify(dccInterfaceStatus, times(1)).setDisconnected();
     }
 
     @Test
     public void testStatus() {
         when(dccInterfaceStatus.getStatus()).thenReturn(DccInterfaceStatus.Status.DISCONNECTED);
-        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, abstractDccInterface.getInterfaceStatus().getStatus());
+        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, dccInterface.getInterfaceStatus().getStatus());
     }
 
     @Test
-    public void testGetDccInterfaceStatus() {
-        assertTrue(abstractDccInterface.getDccInterfaceStatus() instanceof DccInterfaceStatus);
+    public void testShutdown() {
+        dccInterface.shutdown();
+        verify(messageProcessor, times(1)).process(any(ShutdownMessage.class));
     }
 
+    @Test
+    public void testCheckInterfaceOK() {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageProcessor.process(any(KeepAliveMessage.class))).thenReturn(messageResponse);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setConnected();
+    }
+
+    @Test
+    public void testCheckInterfaceOffLine() {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageProcessor.process(any(KeepAliveMessage.class))).thenReturn(messageResponse);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setOffLine();
+    }
 }

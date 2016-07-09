@@ -1,17 +1,17 @@
-package uk.co.redkiteweb.dccweb.factories;
+package uk.co.redkiteweb.dccweb.dccinterface.factories;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.MessageProcessor;
 
 /**
- * Created by shawn on 15/06/16.
+ * Created by shawn on 07/07/16.
  */
 @Component
-public class DccInterfaceFactory implements ApplicationContextAware {
+public class MessageProcessorFactory implements ApplicationContextAware {
 
     private String interfaceId;
 
@@ -27,8 +27,8 @@ public class DccInterfaceFactory implements ApplicationContextAware {
         this.context = context;
     }
 
-    public DccInterface getInstance() {
-        return context.getBean(interfaceId, DccInterface.class);
+    public MessageProcessor getInstance() {
+        return context.getBean(interfaceId, MessageProcessor.class);
     }
 
 }

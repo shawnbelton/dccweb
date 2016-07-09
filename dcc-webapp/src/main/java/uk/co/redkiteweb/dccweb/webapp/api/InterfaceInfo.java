@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
-import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
 
 /**
  * Created by shawn on 17/06/16.
@@ -13,16 +13,16 @@ import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
 @RestController
 public class InterfaceInfo {
 
-    private DccInterfaceFactory dccInterfaceFactory;
+    private DccInterface dccInterface;
 
     @Autowired
-    public void setDccInterfaceFactory(final DccInterfaceFactory dccInterfaceFactory) {
-        this.dccInterfaceFactory = dccInterfaceFactory;
+    public void setDccInterface(final DccInterface dccInterface) {
+        this.dccInterface = dccInterface;
     }
 
     @RequestMapping("/interface/status")
     public @ResponseBody DccInterfaceStatus getStatus() {
-        return dccInterfaceFactory.getInstance().getInterfaceStatus();
+        return dccInterface.getInterfaceStatus();
     }
 
 }

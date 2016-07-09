@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.event.ContextClosedEvent;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
-import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -20,16 +19,13 @@ import static org.mockito.Mockito.when;
 public class ShutdownListenerTest {
 
     private ShutdownListener shutdownListener;
-    private DccInterfaceFactory dccInterfaceFactory;
     private DccInterface dccInterface;
 
     @Before
     public void setUp() {
-        dccInterfaceFactory = mock(DccInterfaceFactory.class);
         dccInterface = mock(DccInterface.class);
         shutdownListener = new ShutdownListener();
-        when(dccInterfaceFactory.getInstance()).thenReturn(dccInterface);
-        shutdownListener.setDccInterfaceFactory(dccInterfaceFactory);
+        shutdownListener.setDccInterface(dccInterface);
     }
 
     @Test

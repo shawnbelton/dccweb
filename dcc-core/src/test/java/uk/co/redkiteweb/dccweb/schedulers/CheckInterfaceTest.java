@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
-import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
 
 import static org.mockito.Mockito.*;
 
@@ -16,16 +15,13 @@ import static org.mockito.Mockito.*;
 public class CheckInterfaceTest {
 
     private CheckInterface checkInterface;
-    private DccInterfaceFactory dccInterfaceFactory;
     private DccInterface dccInterface;
 
     @Before
     public void setUp() {
-        dccInterfaceFactory = mock(DccInterfaceFactory.class);
         dccInterface = mock(DccInterface.class);
         checkInterface = new CheckInterface();
-        checkInterface.setDccInterfaceFactory(dccInterfaceFactory);
-        when(dccInterfaceFactory.getInstance()).thenReturn(dccInterface);
+        checkInterface.setDccInterface(dccInterface);
     }
 
     @Test

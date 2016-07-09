@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.factories.DccInterfaceFactory;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
 /**
  * Created by shawn on 17/06/16.
@@ -14,16 +14,16 @@ public class CheckInterface {
 
     private static final Logger LOGGER = Logger.getLogger(CheckInterface.class);
 
-    private DccInterfaceFactory dccInterfaceFactory;
+    private DccInterface dccInterface;
 
     @Autowired
-    public void setDccInterfaceFactory(final DccInterfaceFactory dccInterfaceFactory) {
-        this.dccInterfaceFactory = dccInterfaceFactory;
+    public void setDccInterface(final DccInterface dccInterface) {
+        this.dccInterface = dccInterface;
     }
 
     @Scheduled(fixedDelay = 5000)
     public void checkInterface() {
         LOGGER.info("Checking Interface.");
-        dccInterfaceFactory.getInstance().checkInterface();
+        dccInterface.checkInterface();
     }
 }
