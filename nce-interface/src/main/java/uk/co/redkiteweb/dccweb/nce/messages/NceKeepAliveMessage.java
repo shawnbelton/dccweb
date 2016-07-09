@@ -15,8 +15,9 @@ public class NceKeepAliveMessage extends AbstractNceMessage implements NceMessag
     @Override
     public MessageResponse process(final Message message) throws ConnectionException {
         final MessageResponse messageResponse = getMessageResponse();
-            final NceData requestData = new NceData();
-            requestData.addData(0x80);
+        final NceData requestData = new NceData();
+        requestData.addData(0x80);
+        try {
             final NceData responseData = getTalkToNCE().sendData(requestData);
             final Integer readData = responseData.readData();
             if (readData != null && readData == 33) {
@@ -26,6 +27,10 @@ public class NceKeepAliveMessage extends AbstractNceMessage implements NceMessag
                 messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
                 messageResponse.put("Status", "Off-line");
             }
+        } catch (ConnectionException exception) {
+            getTalkToNCE().shutdown();
+            throw exception;
+        }
         return messageResponse;
     }
 }
