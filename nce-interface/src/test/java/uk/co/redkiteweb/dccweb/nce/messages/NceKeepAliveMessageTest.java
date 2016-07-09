@@ -58,4 +58,15 @@ public class NceKeepAliveMessageTest {
         verify(talkToNCE, times(1)).sendData(any(NceData.class));
         assertEquals(MessageResponse.MessageStatus.ERROR, messageResponse.getStatus());
     }
+
+    @Test
+    public void connectionException() throws ConnectionException {
+        when(talkToNCE.sendData(any(NceData.class))).thenThrow(new ConnectionException("Test"));
+        try {
+            nceKeepAliveMessage.process(mock(Message.class));
+        } catch (ConnectionException exception) {
+
+        }
+        verify(talkToNCE, times(1)).shutdown();
+    }
 }
