@@ -28,6 +28,7 @@ public abstract class AbstractNceMessage implements NceMessage {
         return messageResponse;
     }
 
+    @Override
     public abstract MessageResponse process(final Message message) throws ConnectionException;
 
 }
