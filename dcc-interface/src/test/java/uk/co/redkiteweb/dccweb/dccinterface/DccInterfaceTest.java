@@ -70,4 +70,14 @@ public class DccInterfaceTest {
         dccInterface.checkInterface();
         verify(dccInterfaceStatus, times(1)).setOffLine();
     }
+
+    @Test
+    public void testCheckInterfaceDisconnected() {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageProcessor.process(any(KeepAliveMessage.class))).thenReturn(messageResponse);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
+        when(messageResponse.get(eq("ERROR"))).thenReturn("Disconnected");
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
 }
