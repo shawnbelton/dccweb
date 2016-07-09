@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
-import uk.co.redkiteweb.dccweb.dccinterface.MessageProcessor;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;

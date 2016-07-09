@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.dccinterface;
+package uk.co.redkiteweb.dccweb.dccinterface.factories;
 
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
