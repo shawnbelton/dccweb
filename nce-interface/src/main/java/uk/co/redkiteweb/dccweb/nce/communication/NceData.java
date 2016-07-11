@@ -21,4 +21,12 @@ public class NceData {
     public Integer readData() {
         return nceData.poll();
     }
+
+    public boolean isEmpty() {
+        return nceData.isEmpty();
+    }
+
+    public int size() {
+        return nceData.size();
+    }
 }

@@ -6,9 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.KeepAliveMessage;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.ShutdownMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -80,5 +78,12 @@ public class DccInterfaceTest {
         when(messageResponse.get(eq("ERROR"))).thenReturn("Disconnected");
         dccInterface.checkInterface();
         verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
+
+    @Test
+    public void testSendMessage() {
+        dccInterface.sendMessage(new EnterProgramMessage());
+        dccInterface.sendMessage(new ExitProgramMessage());
+        verify(messageProcessor, times(2)).process(any(Message.class));
     }
 }

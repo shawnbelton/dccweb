@@ -4,8 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
+import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by shawn on 07/07/16.
@@ -14,14 +21,41 @@ import static junit.framework.TestCase.assertNotNull;
 public class DecoderReaderTest {
 
     private DecoderReader decoderReader;
+    private DccInterface dccInterface;
+    private DccManufacturerRepository dccManufacturerRepository;
 
     @Before
     public void setUp() {
+        dccInterface = mock(DccInterface.class);
+        dccManufacturerRepository = mock(DccManufacturerRepository.class);
         decoderReader = new DecoderReader();
+        decoderReader.setDccInterface(dccInterface);
+        decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
     }
 
     @Test
-    public void programTrackReadTest() {
+    public void errorEnterProgramTest() {
+        final MessageResponse messageResponse = new MessageResponse();
+        messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        assertNotNull(decoderReader.readDecoderOnProgram());
+    }
+
+    @Test
+    public void readDecoderOKTest() {
+        final MessageResponse messageResponse = new MessageResponse();
+        messageResponse.setStatus(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        assertNotNull(decoderReader.readDecoderOnProgram());
+    }
+
+    @Test
+    public void readDecoderFailTest() {
+        final MessageResponse messageResponseOK = new MessageResponse();
+        messageResponseOK.setStatus(MessageResponse.MessageStatus.OK);
+        final MessageResponse messageResponseError = new MessageResponse();
+        messageResponseError.setStatus(MessageResponse.MessageStatus.ERROR);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponseOK).thenReturn(messageResponseError);
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
 

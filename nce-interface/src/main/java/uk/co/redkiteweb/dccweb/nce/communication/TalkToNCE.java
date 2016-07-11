@@ -31,8 +31,10 @@ public class TalkToNCE {
         NceData outData;
         final SerialPort serialPort = portFactory.getSerialPort();
         try {
-            writeData(serialPort, inData);
-            outData = readData(serialPort);
+            synchronized (this) {
+                writeData(serialPort, inData);
+                outData = readData(serialPort);
+            }
         } catch (IOException exception) {
             portFactory.close();
             throw new ConnectionException("Send Data failed", exception);
@@ -55,8 +57,10 @@ public class TalkToNCE {
         final NceData outData = new NceData();
         final InputStream inputStream = serialPort.getInputStream();
         int inputData = inputStream.read();
-        while (inputData >= 0) {
-            outData.addData(inputData);
+        while (inputData >= 0 || outData.isEmpty()) {
+            if (inputData >= 0) {
+                outData.addData(inputData);
+            }
             inputData = inputStream.read();
         }
         inputStream.close();

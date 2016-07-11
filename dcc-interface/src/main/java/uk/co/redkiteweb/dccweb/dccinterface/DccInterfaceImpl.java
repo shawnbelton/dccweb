@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.KeepAliveMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ShutdownMessage;
 
@@ -53,5 +54,10 @@ public class DccInterfaceImpl implements DccInterface {
     @Override
     public void shutdown() {
         messageProcessorFactory.getInstance().process(new ShutdownMessage());
+    }
+
+    @Override
+    public MessageResponse sendMessage(final Message message) {
+        return messageProcessorFactory.getInstance().process(message);
     }
 }
