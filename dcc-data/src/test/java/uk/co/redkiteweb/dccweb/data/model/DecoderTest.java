@@ -23,6 +23,7 @@ public class DecoderTest {
         dccManufacturer = new DccManufacturer();
         decoder.setDecoderId(1);
         decoder.setDccManufacturer(dccManufacturer);
+        decoder.setRevision(123);
     }
 
     @Test
@@ -33,5 +34,10 @@ public class DecoderTest {
     @Test
     public void manufacturerTest() {
         assertNotNull(decoder.getDccManufacturer());
+    }
+
+    @Test
+    public void revisionTest() {
+        assertEquals(new Integer(123), decoder.getRevision());
     }
 }

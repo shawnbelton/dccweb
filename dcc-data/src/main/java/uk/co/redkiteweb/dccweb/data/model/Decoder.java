@@ -10,6 +10,7 @@ public class Decoder {
 
     private Integer decoderId;
     private DccManufacturer dccManufacturer;
+    private Integer revision;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,5 +29,13 @@ public class Decoder {
 
     public void setDccManufacturer(DccManufacturer dccManufacturer) {
         this.dccManufacturer = dccManufacturer;
+    }
+
+    public Integer getRevision() {
+        return revision;
+    }
+
+    public void setRevision(Integer revision) {
+        this.revision = revision;
     }
 }
