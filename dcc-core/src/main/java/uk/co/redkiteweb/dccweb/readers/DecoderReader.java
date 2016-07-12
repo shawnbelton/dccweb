@@ -55,7 +55,7 @@ public class DecoderReader {
         return getCvValue(dccInterface.sendMessage(readCVMessage));
     }
 
-    private Integer getCvValue(final MessageResponse response) {
+    private static Integer getCvValue(final MessageResponse response) {
         Integer cvValue = null;
         if (MessageResponse.MessageStatus.OK.equals(response.getStatus())) {
             cvValue = (Integer)response.get("CVData");
