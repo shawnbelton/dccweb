@@ -28,7 +28,7 @@ public class PortFactory {
 
     public SerialPort getSerialPort() throws ConnectionException {
         if (serialPort == null) {
-            buildSerialPort();
+            buildSerialPort(connect());
         }
         return serialPort;
     }
@@ -41,34 +41,40 @@ public class PortFactory {
         }
     }
 
-    private void buildSerialPort() throws ConnectionException {
-        final CommPort commPort = connect();
+    private void buildSerialPort(final CommPort commPort) throws ConnectionException {
         if (commPort instanceof SerialPort) {
-            serialPort = (SerialPort) commPort;
-            try {
-                serialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                serialPort.enableReceiveTimeout(100);
-            } catch (UnsupportedCommOperationException exception) {
-                throw new ConnectionException("Unable to set serial port parameters", exception);
-            }
+            configurePort((SerialPort) commPort);
+        }
+    }
+
+    private void configurePort(final SerialPort port) throws ConnectionException {
+        try {
+            port.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            port.enableReceiveTimeout(100);
+            serialPort = port;
+        } catch (UnsupportedCommOperationException exception) {
+            throw new ConnectionException("Unable to set serial port parameters", exception);
         }
     }
 
     private CommPort connect() throws ConnectionException {
-        CommPort commPort;
+        try {
+            return getPortIdentifier().open(this.getClass().getName(), 9600);
+        } catch (PortInUseException exception) {
+            throw new ConnectionException("Connection is in use", exception);
+        }
+    }
+
+    private CommPortIdentifier getPortIdentifier() throws ConnectionException {
         try {
             final CommPortIdentifier portIdentifier = ncePortIdentifier.getInstance();
             if (portIdentifier.isCurrentlyOwned()) {
                 throw new ConnectionException(String.format("Connection already owned by %s", portIdentifier.getCurrentOwner()));
-            } else {
-                commPort = portIdentifier.open(this.getClass().getName(), 9600);
             }
+            return portIdentifier;
         } catch (NoSuchPortException exception) {
             throw new ConnectionException(exception.getMessage(), exception);
-        } catch (PortInUseException exception) {
-            throw new ConnectionException("Connection is in use", exception);
         }
-        return commPort;
     }
 
 }
