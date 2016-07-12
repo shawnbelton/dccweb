@@ -34,6 +34,7 @@ public class DecoderReader {
         final Decoder decoder = new Decoder();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             decoder.setDccManufacturer(readManufacturer());
+            decoder.setRevision(readCV(7));
             dccInterface.sendMessage(new ExitProgramMessage());
         }
         return decoder;
@@ -41,12 +42,24 @@ public class DecoderReader {
 
     private DccManufacturer readManufacturer() {
         DccManufacturer dccManufacturer = null;
-        final ReadCVMessage readCVMessage = new ReadCVMessage();
-        readCVMessage.setCvReg(8);
-        final MessageResponse messageResponse = dccInterface.sendMessage(readCVMessage);
-        if (MessageResponse.MessageStatus.OK.equals(messageResponse.getStatus())) {
-            dccManufacturer = dccManufacturerRepository.findOne((Integer)messageResponse.get("CVData"));
+        final Integer cvValue = readCV(8);
+        if (cvValue != null) {
+            dccManufacturer = dccManufacturerRepository.findOne(cvValue);
         }
         return dccManufacturer;
+    }
+
+    private Integer readCV(final int cvNumber) {
+        final ReadCVMessage readCVMessage = new ReadCVMessage();
+        readCVMessage.setCvReg(cvNumber);
+        return getCvValue(dccInterface.sendMessage(readCVMessage));
+    }
+
+    private Integer getCvValue(final MessageResponse response) {
+        Integer cvValue = null;
+        if (MessageResponse.MessageStatus.OK.equals(response.getStatus())) {
+            cvValue = (Integer)response.get("CVData");
+        }
+        return cvValue;
     }
 }
