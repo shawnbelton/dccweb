@@ -36,11 +36,4 @@ public class NceReadCVMessage extends AbstractNceMessage implements NceMessage {
         return messageResponse;
     }
 
-    private static MessageResponse.MessageStatus readStatus(final Integer data) {
-        MessageResponse.MessageStatus status = MessageResponse.MessageStatus.ERROR;
-        if (data == 33) {
-            status = MessageResponse.MessageStatus.OK;
-        }
-        return status;
-    }
 }
