@@ -4,9 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import uk.co.redkiteweb.dccweb.data.loaders.Loader;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.mockito.Mockito.*;
 
@@ -19,14 +23,19 @@ public class StartUpListenerTest {
     private StartUpListener startUpListener;
     private DccInterface dccInterface;
     private Loader loader;
+    private ApplicationContext context;
 
     @Before
     public void setUp() {
-        startUpListener = new StartUpListener();
         dccInterface = mock(DccInterface.class);
         loader = mock(Loader.class);
+        context = mock(ApplicationContext.class);
+        startUpListener = new StartUpListener();
         startUpListener.setDccInterface(dccInterface);
-        startUpListener.setDccManufacturerLoader(loader);
+        startUpListener.setApplicationContext(context);
+        final Map<String, Loader> loaders = new HashMap<String, Loader>();
+        loaders.put("testLoader", loader);
+        when(context.getBeansOfType(eq(Loader.class))).thenReturn(loaders);
     }
 
     @Test
