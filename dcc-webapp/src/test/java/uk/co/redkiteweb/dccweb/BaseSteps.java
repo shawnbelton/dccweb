@@ -12,7 +12,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
  */
 @ContextConfiguration(classes = DccWebApplication.class, loader = SpringApplicationContextLoader.class)
 @RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest("server.port:8090")
+@IntegrationTest("server.port:8095")
 @WebAppConfiguration
 public class BaseSteps {
 
