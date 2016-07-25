@@ -8,9 +8,10 @@
     <modules>
         <module>dcc-data</module>
         <module>dcc-core</module>
-        <module>dcc-webapp</module>
         <module>dcc-interface</module>
         <module>nce-interface</module>
+        <module>demo-interface</module>
+        <module>dcc-webapp</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -90,6 +91,11 @@
             <dependency>
                 <groupId>uk.co.redkiteweb.dccweb</groupId>
                 <artifactId>nce-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>uk.co.redkiteweb.dccweb</groupId>
+                <artifactId>demo-interface</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -1,18 +1,17 @@
-package uk.co.redkiteweb.dccweb.nce.messages;
+package uk.co.redkiteweb.dccweb.demo.messages;
 
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 
 /**
- * Created by shawn on 09/07/16.
+ * Created by shawn on 25/07/16.
  */
-@Component("NceShutdownMessage")
-public class NceShutdownMessage extends AbstractNceMessage implements NceMessage {
+@Component("DemoShutdownMessage")
+public class DemoShutdownMessage extends AbstractDemoMessage implements DemoMessage {
 
     @Override
     public MessageResponse process(final Message message) {
-        getTalkToNCE().shutdown();
         return getMessageResponse();
     }
 }

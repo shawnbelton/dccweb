@@ -52,6 +52,7 @@ dcc-data/dcc-data.iml
 dcc-webapp/dcc-webapp.iml
 dcc-interface/dcc-interface.iml
 nce-interface/nce-interface.iml
+demo-interface/demo-interface.iml
 
 # Gradle:
 .idea/gradle.xml

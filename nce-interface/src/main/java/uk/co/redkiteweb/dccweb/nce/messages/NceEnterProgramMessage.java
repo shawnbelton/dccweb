@@ -9,7 +9,7 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 /**
  * Created by shawn on 09/07/16.
  */
-@Component("EnterProgramMessage")
+@Component("NceEnterProgramMessage")
 public class NceEnterProgramMessage extends AbstractSingleResponseMessage implements NceMessage {
 
     @Override

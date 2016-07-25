@@ -9,7 +9,7 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 /**
  * Created by shawn on 09/07/16.
  */
-@Component("KeepAliveMessage")
+@Component("NceKeepAliveMessage")
 public class NceKeepAliveMessage extends AbstractNceMessage implements NceMessage {
 
     @Override

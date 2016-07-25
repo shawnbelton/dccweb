@@ -11,7 +11,7 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 /**
  * Created by shawn on 11/07/16.
  */
-@Component("ReadCVMessage")
+@Component("NceReadCVMessage")
 public class NceReadCVMessage extends AbstractNceMessage implements NceMessage {
 
     private static final Logger LOGGER = Logger.getLogger(NceReadCVMessage.class);

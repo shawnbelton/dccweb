@@ -28,7 +28,7 @@ public class NceMessageProcessor implements MessageProcessor, ApplicationContext
     @Override
     public MessageResponse process(final Message message) {
         MessageResponse messageResponse = new MessageResponse();
-        final NceMessage nceMessage = applicationContext.getBean(message.getClass().getSimpleName(), NceMessage.class);
+        final NceMessage nceMessage = applicationContext.getBean("Nce" + message.getClass().getSimpleName(), NceMessage.class);
         try {
             messageResponse = nceMessage.process(message);
         } catch (ConnectionException exception) {
