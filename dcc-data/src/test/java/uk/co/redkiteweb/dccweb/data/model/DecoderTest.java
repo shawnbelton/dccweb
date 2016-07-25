@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
@@ -39,5 +41,11 @@ public class DecoderTest {
     @Test
     public void revisionTest() {
         assertEquals(new Integer(123), decoder.getRevision());
+    }
+
+    @Test
+    public void cvTest() {
+        decoder.setCvs(new ArrayList<CV>());
+        assertNotNull(decoder.getCvs());
     }
 }
