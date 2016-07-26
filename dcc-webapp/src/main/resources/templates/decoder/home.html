@@ -11,8 +11,14 @@
                     <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoder.readDecoder()"/></span></div>
                 <div class="list-group">
                     <div class="list-group-item">
-                        <span>{{decoder.decoder.dccManufacturer.manufacturer}}</span>
-                        <span>{{decoder.decoder.version}}</span>
+                        <p>
+                            <strong>Manufacturer:</strong>
+                            <span>{{decoder.decoder.dccManufacturer.manufacturer}}</span>
+                        </p>
+                        <p>
+                            <strong>Version:</strong>
+                            <span>{{decoder.decoder.version}}</span>
+                        </p>
                     </div>
                 </div>
             </div>
