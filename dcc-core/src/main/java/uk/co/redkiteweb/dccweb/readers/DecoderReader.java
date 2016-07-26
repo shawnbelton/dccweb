@@ -34,7 +34,7 @@ public class DecoderReader {
         final Decoder decoder = new Decoder();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             decoder.setDccManufacturer(readManufacturer());
-            decoder.setRevision(readCV(7));
+            decoder.setVersion(readCV(7));
             dccInterface.sendMessage(new ExitProgramMessage());
         }
         return decoder;

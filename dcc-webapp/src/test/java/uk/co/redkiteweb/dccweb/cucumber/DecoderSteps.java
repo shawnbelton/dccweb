@@ -1,7 +1,6 @@
 package uk.co.redkiteweb.dccweb.cucumber;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -54,7 +53,7 @@ public class DecoderSteps extends BaseSteps {
 
     @Then("^version is (\\d+)$")
     public void version_is(final Integer version) throws Throwable {
-        assertEquals(version, decoder.getRevision());
+        assertEquals(version, decoder.getVersion());
     }
 
 }

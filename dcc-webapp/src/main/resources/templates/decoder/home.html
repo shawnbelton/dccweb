@@ -9,6 +9,12 @@
             <div class="panel panel-default panel-primary">
                 <div class="panel-heading"><span>Decoder Settings</span>
                     <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoder.readDecoder()"/></span></div>
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <span>{{decoder.decoder.dccManufacturer.manufacturer}}</span>
+                        <span>{{decoder.decoder.version}}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-sm-6">

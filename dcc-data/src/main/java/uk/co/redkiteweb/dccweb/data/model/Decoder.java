@@ -11,7 +11,7 @@ public class Decoder {
 
     private Integer decoderId;
     private DccManufacturer dccManufacturer;
-    private Integer revision;
+    private Integer version;
     private List<CV> cvs;
 
     @Id
@@ -33,12 +33,12 @@ public class Decoder {
         this.dccManufacturer = dccManufacturer;
     }
 
-    public Integer getRevision() {
-        return revision;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setRevision(Integer revision) {
-        this.revision = revision;
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @OneToMany(mappedBy = "cvId")
