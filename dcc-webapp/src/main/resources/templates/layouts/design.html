@@ -22,7 +22,8 @@
 <body ng-app="dccweb">
 <header th:replace="layouts/header :: header"/>
 <main role="main">
-    <div class="container" layout:fragment="content">
+    <div class="container">
+        <div ng-view="ng-view"></div>
     </div>
 </main>
 <footer th:replace="layouts/header :: footer"/>
@@ -34,6 +35,8 @@
         th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
 <script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.7/angular.js"
         th:src="@{/webjars/angularjs/1.5.7/angular.js}"></script>
+<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.7/angular-route.js"
+        th:src="@{/webjars/angularjs/1.5.7/angular-route.js}"></script>
 <script src="/js/dcc-web.js"></script>
 <script src="/js/dcc-web-trains.js"></script>
 <script src="/js/dcc-web-info.js"></script>

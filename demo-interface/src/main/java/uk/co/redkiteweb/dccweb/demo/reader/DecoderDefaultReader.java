@@ -1,7 +1,8 @@
 package uk.co.redkiteweb.dccweb.demo.reader;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 
@@ -20,10 +21,11 @@ public class DecoderDefaultReader {
 
     private String defaultDecoderValues;
     private BufferedReader bufferedReader = null;
+    private Environment environment;
 
-    @Value("${defaultDecoderValues}")
-    public void setDefaultDecoderValues(final String defaultDecoderValues) {
-        this.defaultDecoderValues = defaultDecoderValues;
+    @Autowired
+    public void setEnvironment(final Environment environment) {
+        this.environment = environment;
     }
 
     public CVValue read() {
@@ -58,6 +60,7 @@ public class DecoderDefaultReader {
 
     private BufferedReader getReader() throws ReaderException {
         if (bufferedReader == null) {
+            defaultDecoderValues = environment.getProperty("defaultDecoderValues");
             final InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(defaultDecoderValues);
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

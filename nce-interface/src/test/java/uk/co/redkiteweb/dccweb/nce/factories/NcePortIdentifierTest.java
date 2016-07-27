@@ -5,9 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.core.env.Environment;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by shawn on 11/07/16.
@@ -16,15 +19,18 @@ import static org.junit.Assert.assertTrue;
 public class NcePortIdentifierTest {
 
     private NcePortIdentifier ncePortIdentifier;
+    private Environment environment;
 
     @Before
     public void setUp() {
+        environment = mock(Environment.class);
         ncePortIdentifier = new NcePortIdentifier();
-        ncePortIdentifier.setConnectionName("/dev/ttyS0");
+        ncePortIdentifier.setEnvironment(environment);
     }
 
     @Test
     public void getTest() {
+        when(environment.getProperty(anyString())).thenReturn("/dev/ttyS0");
         try {
             ncePortIdentifier.getInstance();
         } catch (NoSuchPortException exception) {
