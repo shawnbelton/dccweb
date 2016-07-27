@@ -26,6 +26,8 @@ public class DecoderTest {
         decoder.setDecoderId(1);
         decoder.setDccManufacturer(dccManufacturer);
         decoder.setVersion(123);
+        decoder.setShortAddress(101);
+        decoder.setLongAddress(1024);
     }
 
     @Test
@@ -41,6 +43,16 @@ public class DecoderTest {
     @Test
     public void revisionTest() {
         assertEquals(new Integer(123), decoder.getVersion());
+    }
+
+    @Test
+    public void shortAddressTest() {
+        assertEquals(new Integer(101), decoder.getShortAddress());
+    }
+
+    @Test
+    public void longAddressTest() {
+        assertEquals(new Integer(1024), decoder.getLongAddress());
     }
 
     @Test

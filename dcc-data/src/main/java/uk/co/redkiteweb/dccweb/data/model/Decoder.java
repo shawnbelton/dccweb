@@ -12,6 +12,8 @@ public class Decoder {
     private Integer decoderId;
     private DccManufacturer dccManufacturer;
     private Integer version;
+    private Integer shortAddress;
+    private Integer longAddress;
     private List<CV> cvs;
 
     @Id
@@ -39,6 +41,22 @@ public class Decoder {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public Integer getShortAddress() {
+        return shortAddress;
+    }
+
+    public void setShortAddress(Integer shortAddress) {
+        this.shortAddress = shortAddress;
+    }
+
+    public Integer getLongAddress() {
+        return longAddress;
+    }
+
+    public void setLongAddress(Integer longAddress) {
+        this.longAddress = longAddress;
     }
 
     @OneToMany(mappedBy = "cvId")
