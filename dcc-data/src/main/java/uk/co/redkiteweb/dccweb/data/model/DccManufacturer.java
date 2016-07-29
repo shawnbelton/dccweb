@@ -2,12 +2,13 @@ package uk.co.redkiteweb.dccweb.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by shawn on 30/06/16.
  */
 @Entity
-public class DccManufacturer {
+public class DccManufacturer implements Serializable {
 
     private Integer manufacturerId;
     private String manufacturer;

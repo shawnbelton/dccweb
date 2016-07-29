@@ -19,8 +19,8 @@ public class DccWebApplication {
         SpringApplication.run(DccWebApplication.class, args);
     }
 
-    @Bean
-    public DataSource dataSource() {
-        return (new EmbeddedDatabaseBuilder()).build();
-    }
+//    @Bean
+//    public DataSource dataSource() {
+//        return (new EmbeddedDatabaseBuilder()).build();
+//    }
 }

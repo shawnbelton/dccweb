@@ -19,6 +19,7 @@ public class CVTest {
     public void setUp() {
         cv = new CV();
         cv.setCvId(1);
+        cv.setDecoderId("TEST");
         cv.setCvNumber(2);
         cv.setCvValue(3);
     }
@@ -26,6 +27,7 @@ public class CVTest {
     @Test
     public void valuesTest() {
         assertEquals(new Integer(1), cv.getCvId());
+        assertEquals("TEST", cv.getDecoderId());
         assertEquals(new Integer(2), cv.getCvNumber());
         assertEquals(new Integer(3), cv.getCvValue());
     }

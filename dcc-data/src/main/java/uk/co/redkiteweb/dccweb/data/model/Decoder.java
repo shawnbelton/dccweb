@@ -1,15 +1,16 @@
 package uk.co.redkiteweb.dccweb.data.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by shawn on 07/07/16.
  */
 @Entity
-public class Decoder {
+public class Decoder implements Serializable {
 
-    private Integer decoderId;
+    private String decoderId;
     private DccManufacturer dccManufacturer;
     private Integer version;
     private Integer shortAddress;
@@ -17,12 +18,11 @@ public class Decoder {
     private List<CV> cvs;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getDecoderId() {
+    public String getDecoderId() {
         return decoderId;
     }
 
-    public void setDecoderId(Integer decoderId) {
+    public void setDecoderId(final String decoderId) {
         this.decoderId = decoderId;
     }
 
@@ -31,7 +31,7 @@ public class Decoder {
         return dccManufacturer;
     }
 
-    public void setDccManufacturer(DccManufacturer dccManufacturer) {
+    public void setDccManufacturer(final DccManufacturer dccManufacturer) {
         this.dccManufacturer = dccManufacturer;
     }
 
@@ -39,7 +39,7 @@ public class Decoder {
         return version;
     }
 
-    public void setVersion(Integer version) {
+    public void setVersion(final Integer version) {
         this.version = version;
     }
 
@@ -47,7 +47,7 @@ public class Decoder {
         return shortAddress;
     }
 
-    public void setShortAddress(Integer shortAddress) {
+    public void setShortAddress(final Integer shortAddress) {
         this.shortAddress = shortAddress;
     }
 
@@ -55,16 +55,17 @@ public class Decoder {
         return longAddress;
     }
 
-    public void setLongAddress(Integer longAddress) {
+    public void setLongAddress(final Integer longAddress) {
         this.longAddress = longAddress;
     }
 
-    @OneToMany(mappedBy = "cvId")
+    @OneToMany
+    @JoinColumn(name = "decoder_id")
     public List<CV> getCvs() {
         return cvs;
     }
 
-    public void setCvs(List<CV> cvs) {
+    public void setCvs(final List<CV> cvs) {
         this.cvs = cvs;
     }
 }

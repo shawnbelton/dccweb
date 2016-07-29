@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.CV;
 import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
+import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
@@ -14,6 +16,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shawn on 07/07/16.
@@ -23,8 +26,20 @@ import java.util.ArrayList;
 public class DecoderReader {
 
     private DccInterface dccInterface;
+    private DecoderRepository decoderRepository;
+    private CVRepository cvRepository;
     private DccManufacturerRepository dccManufacturerRepository;
-    private Decoder decoder;
+    private List<CV> cvs;
+
+    @Autowired
+    public void setCvRepository(final CVRepository cvRepository) {
+        this.cvRepository = cvRepository;
+    }
+
+    @Autowired
+    public void setDecoderRepository(final DecoderRepository decoderRepository) {
+        this.decoderRepository = decoderRepository;
+    }
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -37,8 +52,8 @@ public class DecoderReader {
     }
 
     public Decoder readDecoderOnProgram() {
-        decoder = new Decoder();
-        decoder.setCvs(new ArrayList<CV>());
+        final Decoder decoder = new Decoder();
+        cvs = new ArrayList<CV>();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             decoder.setDccManufacturer(readManufacturer());
             decoder.setVersion(readCV(7));
@@ -49,7 +64,15 @@ public class DecoderReader {
                 longAddress += readCV(18);
             }
             decoder.setLongAddress(longAddress);
+            decoder.setDecoderId(String.format("L%dS%d", decoder.getLongAddress(), decoder.getShortAddress()));
             dccInterface.sendMessage(new ExitProgramMessage());
+            decoderRepository.save(decoder);
+            for(CV cv : cvs) {
+                cv.setDecoderId(decoder.getDecoderId());
+                cvRepository.save(cv);
+            }
+            decoder.setCvs(cvs);
+            decoderRepository.save(decoder);
         }
         return decoder;
     }
@@ -71,7 +94,7 @@ public class DecoderReader {
             final CV cv = new CV();
             cv.setCvNumber(cvNumber);
             cv.setCvValue(cvValue);
-            decoder.getCvs().add(cv);
+            cvs.add(cv);
         }
         return cvValue;
     }

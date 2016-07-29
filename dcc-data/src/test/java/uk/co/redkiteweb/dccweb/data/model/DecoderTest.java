@@ -23,7 +23,7 @@ public class DecoderTest {
     public void setUp() {
         decoder = new Decoder();
         dccManufacturer = new DccManufacturer();
-        decoder.setDecoderId(1);
+        decoder.setDecoderId("L1S1");
         decoder.setDccManufacturer(dccManufacturer);
         decoder.setVersion(123);
         decoder.setShortAddress(101);
@@ -32,7 +32,7 @@ public class DecoderTest {
 
     @Test
     public void idTest() {
-        assertEquals(new Integer(1), decoder.getDecoderId());
+        assertEquals("L1S1", decoder.getDecoderId());
     }
 
     @Test

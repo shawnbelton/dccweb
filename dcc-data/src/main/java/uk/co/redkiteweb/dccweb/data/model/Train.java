@@ -4,12 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by shawn on 24/06/16.
  */
 @Entity
-public class Train {
+public class Train implements Serializable {
 
     private Integer trainId;
     private String number;

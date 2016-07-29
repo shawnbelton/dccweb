@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
@@ -24,14 +26,20 @@ public class DecoderReaderTest {
     private DecoderReader decoderReader;
     private DccInterface dccInterface;
     private DccManufacturerRepository dccManufacturerRepository;
+    private DecoderRepository decoderRepository;
+    private CVRepository cvRepository;
 
     @Before
     public void setUp() {
         dccInterface = mock(DccInterface.class);
+        decoderRepository = mock(DecoderRepository.class);
+        cvRepository = mock(CVRepository.class);
         dccManufacturerRepository = mock(DccManufacturerRepository.class);
         decoderReader = new DecoderReader();
         decoderReader.setDccInterface(dccInterface);
         decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
+        decoderReader.setDecoderRepository(decoderRepository);
+        decoderReader.setCvRepository(cvRepository);
     }
 
     @Test

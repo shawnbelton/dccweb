@@ -5,19 +5,36 @@
                     <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoder.readDecoder()"/></span></div>
                 <div class="list-group">
                     <div class="list-group-item">
-                        <p>
-                            <strong>Manufacturer:</strong>
-                            <span>{{decoder.decoder.dccManufacturer.manufacturer}}</span>
+                        <p class="row">
+                            <strong class="col-sm-3">Manufacturer:</strong>
+                            <span class="col-sm-9">{{decoder.decoder.dccManufacturer.manufacturer}}</span>
                         </p>
-                        <p>
-                            <strong>Version:</strong>
-                            <span>{{decoder.decoder.version}}</span>
+                        <p class="row">
+                            <strong class="col-sm-3">Version:</strong>
+                            <span class="col-sm-9">{{decoder.decoder.version}}</span>
+                        </p>
+                        <p class="row">
+                            <strong class="col-sm-3">Short Address:</strong>
+                            <span class="col-sm-9">{{decoder.decoder.shortAddress}}</span>
+                        </p>
+                        <p class="row">
+                            <strong class="col-sm-3">Long Address:</strong>
+                            <span class="col-sm-9">{{decoder.decoder.longAddress}}</span>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-6">
-
+            <div class="panel panel-default panel-primary">
+                <div class="panel-heading"><span>Decoders</span></div>
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="decoder in decoder.decoders">
+                        <div>
+                            Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
