@@ -1,9 +1,6 @@
 package uk.co.redkiteweb.dccweb.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +14,7 @@ public class Train implements Serializable {
     private Integer trainId;
     private String number;
     private String name;
+    private Decoder decoder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,5 +40,15 @@ public class Train implements Serializable {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    @OneToOne
+    @JoinColumn(name="train_id")
+    public Decoder getDecoder() {
+        return decoder;
+    }
+
+    public void setDecoder(Decoder decoder) {
+        this.decoder = decoder;
     }
 }

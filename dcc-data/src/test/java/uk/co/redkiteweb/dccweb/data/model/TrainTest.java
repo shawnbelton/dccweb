@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -18,16 +19,18 @@ public class TrainTest {
     @Before
     public void setUp() {
         train = new Train();
+        train.setTrainId(1);
+        train.setName("test");
+        train.setNumber("12345");
+        train.setDecoder(new Decoder());
     }
 
     @Test
     public void testTrain() {
-        train.setTrainId(1);
-        train.setName("test");
-        train.setNumber("12345");
         assertEquals(new Integer(1), train.getTrainId());
         assertEquals("test", train.getName());
         assertEquals("12345", train.getNumber());
+        assertNotNull(train.getDecoder());
     }
 
 }

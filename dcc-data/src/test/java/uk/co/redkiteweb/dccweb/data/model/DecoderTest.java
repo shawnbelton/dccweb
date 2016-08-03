@@ -24,6 +24,7 @@ public class DecoderTest {
         decoder = new Decoder();
         dccManufacturer = new DccManufacturer();
         decoder.setDecoderId(1234);
+        decoder.setTrainId(101);
         decoder.setDccManufacturer(dccManufacturer);
         decoder.setVersion(123);
         decoder.setShortAddress(101);
@@ -33,6 +34,11 @@ public class DecoderTest {
     @Test
     public void idTest() {
         assertEquals(new Integer(1234), decoder.getDecoderId());
+    }
+
+    @Test
+    public void trainIdTest() {
+        assertEquals(new Integer(101), decoder.getTrainId());
     }
 
     @Test
