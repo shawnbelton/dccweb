@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class CV implements Serializable {
 
     private Integer cvId;
-    private String decoderId;
+    private Integer decoderId;
     private Integer cvNumber;
     private Integer cvValue;
 
@@ -25,11 +25,11 @@ public class CV implements Serializable {
     }
 
     @Column(name = "decoder_id")
-    public String getDecoderId() {
+    public Integer getDecoderId() {
         return decoderId;
     }
 
-    public void setDecoderId(final String decoderId) {
+    public void setDecoderId(final Integer decoderId) {
         this.decoderId = decoderId;
     }
 

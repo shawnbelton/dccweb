@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 public class Decoder implements Serializable {
 
-    private String decoderId;
+    private Integer decoderId;
     private DccManufacturer dccManufacturer;
     private Integer version;
     private Integer shortAddress;
@@ -18,11 +18,12 @@ public class Decoder implements Serializable {
     private List<CV> cvs;
 
     @Id
-    public String getDecoderId() {
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Integer getDecoderId() {
         return decoderId;
     }
 
-    public void setDecoderId(final String decoderId) {
+    public void setDecoderId(final Integer decoderId) {
         this.decoderId = decoderId;
     }
 

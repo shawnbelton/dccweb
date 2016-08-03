@@ -52,19 +52,23 @@ public class DecoderReader {
     }
 
     public Decoder readDecoderOnProgram() {
-        final Decoder decoder = new Decoder();
+        Decoder decoder = new Decoder();
         cvs = new ArrayList<CV>();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
-            decoder.setDccManufacturer(readManufacturer());
-            decoder.setVersion(readCV(7));
-            decoder.setShortAddress(readCV(1));
             Integer longAddress = readCV(17);
             if (longAddress!=null) {
                 longAddress *= 256;
                 longAddress += readCV(18);
             }
+            Integer shortAddress = readCV(1);
+            final Decoder existingDecoder = decoderRepository.findByShortAddressAndLongAddress(shortAddress, longAddress);
+            if (existingDecoder != null) {
+                decoder = existingDecoder;
+            }
+            decoder.setDccManufacturer(readManufacturer());
+            decoder.setVersion(readCV(7));
+            decoder.setShortAddress(shortAddress);
             decoder.setLongAddress(longAddress);
-            decoder.setDecoderId(String.format("L%dS%d", decoder.getLongAddress(), decoder.getShortAddress()));
             dccInterface.sendMessage(new ExitProgramMessage());
             decoderRepository.save(decoder);
             for(CV cv : cvs) {

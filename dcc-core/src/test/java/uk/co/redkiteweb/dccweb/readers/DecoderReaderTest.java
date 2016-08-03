@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
@@ -13,6 +14,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -52,6 +54,16 @@ public class DecoderReaderTest {
 
     @Test
     public void readDecoderOKTest() {
+        readDecoderOK();
+    }
+
+    @Test
+    public void readExistingDecoderOKTest() {
+        when(decoderRepository.findByShortAddressAndLongAddress(anyInt(), anyInt())).thenReturn(new Decoder());
+        readDecoderOK();
+    }
+
+    private void readDecoderOK() {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
