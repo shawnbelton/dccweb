@@ -11,7 +11,19 @@
                                 ng-click="trains.configure(train)"/>
                         </div>
                         <div ng-show="train.showConfig">
+                            <form id="updateConfig" class="form-horizontal" name="updateConfig">
+                            <div class="form-group">
+                            <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
+                                <div class="col-sm-9">
+                            <select name="decoder" class="form-control" id="decoder" ng-model="train.decoder">
+                                <option ng-repeat="decoder in trains.decoders" value="{{decoder}}">
+                                    Short Address:{{decoder.shortAddress}} Long Address:{{decoder.longAddress}}
+                                </option>
+                            </select>
+                                </div>
+                            </div>
                             <p>This is where the config will be displayed.</p>
+                            </form>
                         </div>
                     </div>
                 </div>

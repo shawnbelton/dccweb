@@ -18,6 +18,11 @@ angular.module('dccweb')
                 callback(resp.data);
             });
         };
+        this.getDecoders = function (callback) {
+            $http.get('/decoders/all').then(function (resp) {
+                callback(resp.data);
+            });
+        };
     }]).controller('trains', ['trainsService', function (trainsService) {
 
         var self = this;
@@ -52,6 +57,12 @@ angular.module('dccweb')
                 self.list = false;
             }, trainId);
         };
+
+        self.getDecoders = function () {
+            trainsService.getDecoders(function (response) {
+                self.decoders = response;
+            })
+        }
     
         self.configure = function(train) {
             if (train.showConfig) {
@@ -61,7 +72,9 @@ angular.module('dccweb')
             }
         };
 
+        self.decoders = {};
         self.train = {};
         self.getTrains();
+        self.getDecoders();
 
     }]);
