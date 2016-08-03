@@ -10,6 +10,8 @@ import java.util.List;
 @Entity
 public class Decoder implements Serializable {
 
+    private static final long serialVersionUID = 9002;
+
     private Integer decoderId;
     private DccManufacturer dccManufacturer;
     private Integer version;

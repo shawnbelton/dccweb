@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Entity
 public class DccManufacturer implements Serializable {
 
+    private static final long serialVersionUID = 9000;
+
     private Integer manufacturerId;
     private String manufacturer;
     private String country;

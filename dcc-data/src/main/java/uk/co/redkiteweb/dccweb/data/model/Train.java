@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Entity
 public class Train implements Serializable {
 
+    private static final long serialVersionUID = 9001;
+
     private Integer trainId;
     private String number;
     private String name;

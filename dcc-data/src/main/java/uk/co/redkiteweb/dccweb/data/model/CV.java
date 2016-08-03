@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Entity
 public class CV implements Serializable {
 
+    private static final long serialVersionUID = 9003;
+
     private Integer cvId;
     private Integer decoderId;
     private Integer cvNumber;
