@@ -13,7 +13,6 @@ public class Decoder implements Serializable {
     private static final long serialVersionUID = 9002;
 
     private Integer decoderId;
-    private Integer trainId;
     private DccManufacturer dccManufacturer;
     private Integer version;
     private Integer shortAddress;
@@ -28,15 +27,6 @@ public class Decoder implements Serializable {
 
     public void setDecoderId(final Integer decoderId) {
         this.decoderId = decoderId;
-    }
-
-    @Column(name = "train_id")
-    public Integer getTrainId() {
-        return trainId;
-    }
-
-    public void setTrainId(Integer trainId) {
-        this.trainId = trainId;
     }
 
     @ManyToOne

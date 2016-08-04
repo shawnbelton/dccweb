@@ -50,6 +50,14 @@ angular.module('dccweb')
                 self.list = true;
             }, self.train);
         };
+
+        self.updateTrain = function(train) {
+            trainsService.createTrain(function (response) {
+                self.trains = response;
+                self.train = {};
+                self.list = true;
+            }, train);
+        };
     
         self.editTrain = function(trainId) {
             trainsService.getTrain(function(response) {
@@ -65,6 +73,7 @@ angular.module('dccweb')
         }
     
         self.configure = function(train) {
+            self.train = train;
             if (train.showConfig) {
                 train.showConfig = false;
             } else {

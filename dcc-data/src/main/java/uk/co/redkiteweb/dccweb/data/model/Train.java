@@ -43,7 +43,6 @@ public class Train implements Serializable {
     }
 
     @OneToOne
-    @JoinColumn(name="train_id")
     public Decoder getDecoder() {
         return decoder;
     }

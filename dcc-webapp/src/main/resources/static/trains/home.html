@@ -1,63 +1,72 @@
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default panel-primary">
-                <div class="panel-heading">Engine Shed</div>
-                <div class="list-group" ng-show="trains.list">
-                    <div class="list-group-item" ng-repeat="train in trains.trains">
-                        <div>
-                            <input type="button" ng-click="trains.editTrain(train.trainId)" class="btn btn-success btn-xs" value="Edit"/>
-                            {{train.number}} {{train.name}}
-                            <input type="button" class="btn btn-primary btn-xs  pull-right" value="Configure"
-                                ng-click="trains.configure(train)"/>
-                        </div>
-                        <div ng-show="train.showConfig">
-                            <form id="updateConfig" class="form-horizontal" name="updateConfig">
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default panel-primary">
+            <div class="panel-heading">Engine Shed</div>
+            <div class="list-group" ng-show="trains.list">
+                <div class="list-group-item" ng-repeat="train in trains.trains">
+                    <div class="list-group-item-heading">
+                        <input type="button" ng-click="trains.editTrain(train.trainId)" class="btn btn-success btn-xs"
+                               value="Edit"/>
+                        {{train.number}} {{train.name}}
+                        <input type="button" class="btn btn-primary btn-xs  pull-right" value="Configure"
+                               ng-click="trains.configure(train)"/>
+                    </div>
+                    <div class="list-group-item-text" ng-show="train.showConfig">
+                        <form id="updateConfig" class="form-horizontal" name="updateConfig" ng-submit="trains.updateTrain(train)">
                             <div class="form-group">
-                            <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
+                                <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
                                 <div class="col-sm-9">
-                            <select name="decoder" class="form-control" id="decoder" ng-model="train.decoder">
-                                <option ng-repeat="decoder in trains.decoders" value="{{decoder}}">
-                                    Short Address:{{decoder.shortAddress}} Long Address:{{decoder.longAddress}}
-                                </option>
-                            </select>
+                                    <select name="decoder" class="form-control" id="decoder" ng-model="train.decoder">
+                                        <option ng-repeat="decoder in trains.decoders" value="{{decoder}}">
+                                            Short Address:{{decoder.shortAddress}} Long Address:{{decoder.longAddress}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
-                            <p>This is where the config will be displayed.</p>
-                            </form>
-                        </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <input type="submit" value="Assign" class="btn btn-xs btn-success"/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="panel-body" ng-hide="trains.list">
-                    <form id="createTrain" class="form-horizontal" ng-submit="trains.createTrain()" name="createTrain">
-                        <div class="form-group">
-                            <label for="trainNumber" class="col-sm-3 control-label">Train Number</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="trainNumber" class="form-control" placeholder="Train Number" ng-model="trains.train.number" required="required"/>
+            </div>
+            <div class="panel-body" ng-hide="trains.list">
+                <form id="createTrain" class="form-horizontal" ng-submit="trains.createTrain()" name="createTrain">
+                    <div class="form-group">
+                        <label for="trainNumber" class="col-sm-3 control-label">Train Number</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="trainNumber" class="form-control" placeholder="Train Number"
+                                   ng-model="trains.train.number" required="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="trainName" class="col-sm-3 control-label">Train Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="trainName" class="form-control" placeholder="Train Name"
+                                   ng-model="trains.train.name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="pull-right">
+                                <input type="button" value="Cancel" class="btn btn-sm btn-danger"
+                                       ng-click="trains.cancel()"/>
+                                <input type="submit" value="Save" class="btn btn-sm btn-success"
+                                       ng-disabled="createTrain.$invalid"/>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="trainName" class="col-sm-3 control-label">Train Name</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="trainName" class="form-control" placeholder="Train Name" ng-model="trains.train.name"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <div class="pull-right">
-                                    <input type="button" value="Cancel" class="btn btn-sm btn-danger" ng-click="trains.cancel()"/>
-                                    <input type="submit" value="Save" class="btn btn-sm btn-success" ng-disabled="createTrain.$invalid"/>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer" ng-show="trains.list">
-                    <input type="button" class="btn btn-success btn-sm pull-right" ng-click="trains.newTrain()" value="Add Train"/>
-                    <div class="clearfix"/>
-                </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer clearfix" ng-show="trains.list">
+                <input type="button" class="btn btn-success btn-sm pull-right" ng-click="trains.newTrain()"
+                       value="Add Train"/>
             </div>
         </div>
-        <div class="sm-col6">
-
-        </div>
     </div>
+    <div class="sm-col6">
+
+    </div>
+</div>
