@@ -8,6 +8,11 @@ angular.module('dccweb')
                 callback(resp.data);
             });
         };
+        this.assignDecoder = function(callback, train) {
+            $http.post('/trains/assign/decoder', train).then(function (resp) {
+                callback(resp.data);
+            });
+        };
         this.getTrains = function(callback) {
             $http.get('/trains').then(function (resp) {
                 callback(resp.data);
@@ -51,8 +56,8 @@ angular.module('dccweb')
             }, self.train);
         };
 
-        self.updateTrain = function(train) {
-            trainsService.createTrain(function (response) {
+        self.assignDecoder = function(train) {
+            trainsService.assignDecoder(function (response) {
                 self.trains = response;
                 self.train = {};
                 self.list = true;

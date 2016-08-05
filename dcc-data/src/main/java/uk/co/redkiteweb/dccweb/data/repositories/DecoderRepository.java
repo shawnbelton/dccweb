@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
  * Created by shawn on 07/07/16.
  */
 @Repository
-public interface DecoderRepository extends CrudRepository<Decoder, String> {
+public interface DecoderRepository extends CrudRepository<Decoder, Integer> {
 
     Decoder findByShortAddressAndLongAddress(final Integer shortAddress, final Integer longAddress);
 

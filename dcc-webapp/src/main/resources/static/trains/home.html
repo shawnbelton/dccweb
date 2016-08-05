@@ -12,14 +12,11 @@
                                ng-click="trains.configure(train)"/>
                     </div>
                     <div class="list-group-item-text" ng-show="train.showConfig">
-                        <form id="updateConfig" class="form-horizontal" name="updateConfig" ng-submit="trains.updateTrain(train)">
+                        <form id="updateConfig" class="form-horizontal" name="updateConfig" ng-submit="trains.assignDecoder(train)">
                             <div class="form-group">
                                 <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
                                 <div class="col-sm-9">
-                                    <select name="decoder" class="form-control" id="decoder" ng-model="train.decoder">
-                                        <option ng-repeat="decoder in trains.decoders" value="{{decoder}}">
-                                            Short Address:{{decoder.shortAddress}} Long Address:{{decoder.longAddress}}
-                                        </option>
+                                    <select name="decoder" class="form-control" id="decoder" ng-options="'Long Address: ' + decoder.longAddress + ' Short Address: ' + decoder.shortAddress for decoder in trains.decoders track by decoder.decoderId" ng-model="train.decoder">
                                     </select>
                                 </div>
                             </div>
