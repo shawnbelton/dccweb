@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class CVPK implements Serializable {
 
+    private static final long serialVersionUID = 8003;
+
     private Integer decoderId;
     private Integer cvNumber;
 
