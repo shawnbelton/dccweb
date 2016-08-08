@@ -75,8 +75,7 @@ public class DecoderReader {
                 cv.setDecoderId(decoder.getDecoderId());
                 cvRepository.save(cv);
             }
-            decoder.setCvs(cvs);
-            decoderRepository.save(decoder);
+            decoder = decoderRepository.findOne(decoder.getDecoderId());
         }
         return decoder;
     }

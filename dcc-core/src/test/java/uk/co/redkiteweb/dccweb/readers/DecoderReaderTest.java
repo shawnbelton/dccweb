@@ -68,6 +68,7 @@ public class DecoderReaderTest {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
         when(messageResponse.get(eq("CVData"))).thenReturn(new Integer(1));
+        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
 
@@ -78,6 +79,7 @@ public class DecoderReaderTest {
         final MessageResponse messageResponseError = mock(MessageResponse.class);
         when(messageResponseError.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponseOK).thenReturn(messageResponseError);
+        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
 

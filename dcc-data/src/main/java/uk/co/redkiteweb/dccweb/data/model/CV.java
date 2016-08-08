@@ -7,25 +7,16 @@ import java.io.Serializable;
  * Created by shawn on 25/07/16.
  */
 @Entity
+@IdClass(CVPK.class)
 public class CV implements Serializable {
 
     private static final long serialVersionUID = 9003;
 
-    private Integer cvId;
     private Integer decoderId;
     private Integer cvNumber;
     private Integer cvValue;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getCvId() {
-        return cvId;
-    }
-
-    public void setCvId(final Integer cvId) {
-        this.cvId = cvId;
-    }
-
     @Column(name = "decoder_id")
     public Integer getDecoderId() {
         return decoderId;
@@ -35,6 +26,7 @@ public class CV implements Serializable {
         this.decoderId = decoderId;
     }
 
+    @Id
     public Integer getCvNumber() {
         return cvNumber;
     }
