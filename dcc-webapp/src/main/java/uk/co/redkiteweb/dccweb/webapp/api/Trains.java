@@ -17,16 +17,10 @@ import java.util.Map;
 public class Trains {
 
     private TrainRepository trainRepository;
-    private DecoderRepository decoderRepository;
 
     @Autowired
     public void setTrainRepository(final TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
-    }
-
-    @Autowired
-    public void setDecoderRepository(final DecoderRepository decoderRepository) {
-        this.decoderRepository = decoderRepository;
     }
 
     @RequestMapping("/trains")
@@ -36,12 +30,6 @@ public class Trains {
 
     @RequestMapping(value = "/trains/create", method = RequestMethod.POST)
     public @ResponseBody List<Train> createTrain(@RequestBody final Train train) {
-        trainRepository.save(train);
-        return getAllTrains();
-    }
-
-    @RequestMapping(value = "/trains/assign/decoder", method = RequestMethod.POST)
-    public @ResponseBody List<Train> assignDecoder(@RequestBody final Train train) {
         trainRepository.save(train);
         return getAllTrains();
     }

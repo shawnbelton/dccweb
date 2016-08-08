@@ -3,13 +3,8 @@
  */
 angular.module('dccweb')
     .service('trainsService', ['$http', function ($http) {
-        this.createTrain = function(callback, train) {
+        this.saveTrain = function(callback, train) {
             $http.post('/trains/create', train).then(function (resp) {
-                callback(resp.data);
-            });
-        };
-        this.assignDecoder = function(callback, train) {
-            $http.post('/trains/assign/decoder', train).then(function (resp) {
                 callback(resp.data);
             });
         };
@@ -49,7 +44,7 @@ angular.module('dccweb')
         };
 
         self.createTrain = function() {
-            trainsService.createTrain(function(response) {
+            trainsService.saveTrain(function(response) {
                 self.trains = response;
                 self.train = {};
                 self.list = true;
@@ -57,7 +52,7 @@ angular.module('dccweb')
         };
 
         self.assignDecoder = function(train) {
-            trainsService.assignDecoder(function (response) {
+            trainsService.saveTrain(function (response) {
                 self.trains = response;
                 self.train = {};
                 self.list = true;
