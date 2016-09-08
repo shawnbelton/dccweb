@@ -1,6 +1,7 @@
 package uk.co.redkiteweb.dccweb.demo.reader;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ import java.io.InputStreamReader;
 @Component
 public class DecoderDefaultReader {
 
-    private static final Logger LOGGER = Logger.getLogger(DecoderDefaultReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(DecoderDefaultReader.class);
 
     private String defaultDecoderValues;
     private BufferedReader bufferedReader = null;

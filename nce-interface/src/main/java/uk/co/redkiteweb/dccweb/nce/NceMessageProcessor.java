@@ -1,6 +1,7 @@
 package uk.co.redkiteweb.dccweb.nce;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import uk.co.redkiteweb.dccweb.nce.messages.NceMessage;
 @Component("Nce")
 public class NceMessageProcessor implements MessageProcessor, ApplicationContextAware {
 
-    private static final Logger LOGGER = Logger.getLogger(NceMessageProcessor.class);
+    private static final Logger LOGGER = LogManager.getLogger(NceMessageProcessor.class);
 
     private ApplicationContext applicationContext;
 

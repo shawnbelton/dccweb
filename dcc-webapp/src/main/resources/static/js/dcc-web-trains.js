@@ -26,6 +26,11 @@ angular.module('dccweb')
     }]).controller('trains', ['trainsService', function (trainsService) {
 
         var self = this;
+        self.cab = {
+            train: null,
+            speed: 0,
+            direction: 'UP'
+        };
 
         self.getTrains = function () {
             trainsService.getTrains(function(response) {
@@ -79,6 +84,23 @@ angular.module('dccweb')
             } else {
                 train.showConfig = true;
             }
+        };
+
+        self.drive = function(train) {
+            self.cab.train = train;
+        };
+
+        self.stop = function() {
+            self.cab.speed = 0;
+            self.cab.direction = 'STOP';
+        };
+
+        self.up = function() {
+            self.cab.direction = 'UP';
+        };
+
+        self.down = function() {
+            self.cab.direction = 'DOWN';
         };
 
         self.decoders = {};

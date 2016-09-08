@@ -1,7 +1,8 @@
 package uk.co.redkiteweb.dccweb.nce.factories;
 
 import gnu.io.*;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
@@ -12,7 +13,7 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 @Component
 public class PortFactory {
 
-    private static final Logger LOGGER = Logger.getLogger(PortFactory.class);
+    private static final Logger LOGGER = LogManager.getLogger(PortFactory.class);
 
     private NcePortIdentifier ncePortIdentifier;
     private SerialPort serialPort;
