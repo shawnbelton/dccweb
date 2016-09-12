@@ -9,6 +9,8 @@ import java.io.Serializable;
  */
 public class Cab implements Serializable {
 
+    static final long serialVersionUID = 8000;
+
     private Train train;
     private int speed;
     private String direction;
