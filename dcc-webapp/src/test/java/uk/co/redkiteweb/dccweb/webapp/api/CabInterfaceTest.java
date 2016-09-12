@@ -37,7 +37,13 @@ public class CabInterfaceTest {
 
     @Test
     public void testUpdateCab() {
-        cabInterface.updateCab(new Cab());
+        final Cab cab = new Cab();
+        final Train train = new Train();
+        train.setNumber("12345");
+        cab.setTrain(train);
+        cab.setSpeed(100);
+        cab.setDirection("UP");
+        cabInterface.updateCab(cab);
         verify(cabStore, times(1)).putCab(any(Cab.class));
     }
 
