@@ -73,7 +73,7 @@
                 <form id="trainCab" class="form-horizontal">
                     <div class="input-group-lg">
                         <input id="slider1" class="form-control" type="range" ng-disabled="trains.cab.direction == 'STOP'"
-                               min="0" max="256" step="1" ng-model="trains.cab.speed" />
+                               min="0" max="256" step="1" ng-change="trains.speedChanged()" ng-model="trains.cab.speed" />
                     </div>
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group" role="group">

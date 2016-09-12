@@ -23,9 +23,22 @@ angular.module('dccweb')
                 callback(resp.data);
             });
         };
+        this.getCab = function (callback, train) {
+            $http.post('/trains/cab', train).then(function (resp) {
+                callback(resp.data);
+            });
+        };
+        this.updateCab = function(callback, cab) {
+            $http.post('trains/cab/update', cab).then(function (resp) {
+                callback(resp.data);
+            });
+        };
     }]).controller('trains', ['trainsService', function (trainsService) {
 
         var self = this;
+
+        self.update = true;
+
         self.cab = {
             train: null,
             speed: 0,
@@ -87,20 +100,38 @@ angular.module('dccweb')
         };
 
         self.drive = function(train) {
-            self.cab.train = train;
+            trainsService.getCab(function(response) {
+                self.cab = response;
+            }, train);
+        };
+
+        self.updateCab = function() {
+            trainsService.updateCab(function(response) {
+                self.update = response;
+            }, self.cab);
         };
 
         self.stop = function() {
             self.cab.speed = 0;
             self.cab.direction = 'STOP';
+            self.updateCab();
         };
 
         self.up = function() {
             self.cab.direction = 'UP';
+            self.updateCab();
         };
 
         self.down = function() {
             self.cab.direction = 'DOWN';
+            self.updateCab();
+        };
+
+        self.speedChanged = function() {
+            if (self.update) {
+                self.update = false;
+                self.updateCab();
+            }
         };
 
         self.decoders = {};
