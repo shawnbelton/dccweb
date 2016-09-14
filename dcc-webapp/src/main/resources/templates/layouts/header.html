@@ -26,13 +26,25 @@
         </div>
     </nav>
 </header>
-<footer role="contentinfo" class="navbar navbar-fixed-bottom navbar-inverse" th:fragment="footer">
-    <div class="container">
-        <div class="navbar-header">
-            <p class="navbar-text">DCC Web &copy; 2016</p>
+<footer role="contentinfo" class="navbar-fixed-bottom" th:fragment="footer">
+    <div class="container" ng-controller="info as info">
+        <div class="panel panel-info">
+            <div class="panel-heading small">Messages</div>
+            <ul class="list-group">
+                <li class="list-group-item small" ng-repeat="message in info.messages">
+                    {{message.message}}
+                </li>
+            </ul>
         </div>
-        <div class="nav navbar-nav navbar-right" ng-controller="info as info">
-            <p class="navbar-text">Status: {{info.info.status}}</p>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <p class="navbar-text">DCC Web &copy; 2016</p>
+            </div>
+            <div class="nav navbar-nav navbar-right" ng-controller="info as info">
+                <p class="navbar-text">Status: {{info.info.status}}</p>
+            </div>
         </div>
     </div>
 </footer>

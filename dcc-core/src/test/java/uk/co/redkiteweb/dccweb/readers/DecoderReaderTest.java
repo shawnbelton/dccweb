@@ -8,6 +8,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
@@ -30,9 +31,11 @@ public class DecoderReaderTest {
     private DccManufacturerRepository dccManufacturerRepository;
     private DecoderRepository decoderRepository;
     private CVRepository cvRepository;
+    private LogStore logStore;
 
     @Before
     public void setUp() {
+        logStore = mock(LogStore.class);
         dccInterface = mock(DccInterface.class);
         decoderRepository = mock(DecoderRepository.class);
         cvRepository = mock(CVRepository.class);
@@ -42,6 +45,7 @@ public class DecoderReaderTest {
         decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
         decoderReader.setDecoderRepository(decoderRepository);
         decoderReader.setCvRepository(cvRepository);
+        decoderReader.setLogStore(logStore);
     }
 
     @Test

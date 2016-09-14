@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
@@ -29,6 +30,7 @@ public class DecoderReader {
     private DecoderRepository decoderRepository;
     private CVRepository cvRepository;
     private DccManufacturerRepository dccManufacturerRepository;
+    private LogStore logStore;
     private List<CV> cvs;
 
     @Autowired
@@ -51,21 +53,30 @@ public class DecoderReader {
         this.dccManufacturerRepository = dccManufacturerRepository;
     }
 
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
+    }
+
     public Decoder readDecoderOnProgram() {
         Decoder decoder = new Decoder();
         cvs = new ArrayList<CV>();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
+            logStore.log("info", "Reading long address");
             Integer longAddress = readCV(17);
             if (longAddress!=null) {
                 longAddress *= 256;
                 longAddress += readCV(18);
             }
+            logStore.log("info", "Reading shot address");
             Integer shortAddress = readCV(1);
             final Decoder existingDecoder = decoderRepository.findByShortAddressAndLongAddress(shortAddress, longAddress);
             if (existingDecoder != null) {
                 decoder = existingDecoder;
             }
+            logStore.log("info", "Reading manufacturer");
             decoder.setDccManufacturer(readManufacturer());
+            logStore.log("info", "Reading version");
             decoder.setVersion(readCV(7));
             decoder.setShortAddress(shortAddress);
             decoder.setLongAddress(longAddress);

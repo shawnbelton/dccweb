@@ -8,6 +8,11 @@ angular.module('dccweb')
                 callback(resp.data);
             });
         };
+        this.getMessages = function (callback) {
+            $http.get('/messages').then(function (resp) {
+                callback(resp.data);
+            });
+        };
     }]).controller('info', ['$interval', 'infoService',function ($interval, infoService) {
 
     var self = this;
@@ -16,11 +21,18 @@ angular.module('dccweb')
         status: ''
     };
 
+    self.messages = null;
+
     console.log('dccweb info created.');
 
     $interval(function () {
         infoService.getInfo(function (info) {
             self.info = info;
+        });
+    }, 1000);
+    $interval(function () {
+        infoService.getMessages(function (messages) {
+            self.messages = messages;
         });
     }, 1000);
 }]);
