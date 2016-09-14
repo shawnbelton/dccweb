@@ -3,6 +3,7 @@ package uk.co.redkiteweb.dccweb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
@@ -13,6 +14,7 @@ import javax.sql.DataSource;
  */
 @SpringBootApplication
 @EnableScheduling
+@EnableAsync
 public class DccWebApplication {
 
     public static final void main(final String[] args) {
