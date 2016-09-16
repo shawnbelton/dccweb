@@ -63,7 +63,7 @@ public class DecoderReaderTest {
 
     @Test
     public void readExistingDecoderOKTest() {
-        when(decoderRepository.findByShortAddressAndLongAddress(anyInt(), anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findByCurrentAddress(anyInt())).thenReturn(new Decoder());
         readDecoderOK();
     }
 

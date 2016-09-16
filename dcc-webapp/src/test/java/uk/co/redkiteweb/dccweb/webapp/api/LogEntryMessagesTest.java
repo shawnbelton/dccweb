@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.data.Log;
+import uk.co.redkiteweb.dccweb.data.data.LogEntry;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
  * Created by shawn on 14/09/16.
  */
 @RunWith(JUnit4.class)
-public class LogMessagesTest {
+public class LogEntryMessagesTest {
 
     private LogMessages logMessages;
     private LogStore logStore;
@@ -31,7 +31,7 @@ public class LogMessagesTest {
 
     @Test
     public void testGetMessages() {
-        when(logStore.getLastSix()).thenReturn(new ArrayList<Log>());
+        when(logStore.getLastSix()).thenReturn(new ArrayList<LogEntry>());
         assertNotNull(logMessages.getMessages());
     }
 }

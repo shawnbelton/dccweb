@@ -11,24 +11,24 @@ import static org.junit.Assert.assertEquals;
  * Created by shawn on 14/09/16.
  */
 @RunWith(JUnit4.class)
-public class LogTest {
+public class LogEntryTest {
 
-    private Log log;
+    private LogEntry logEntry;
 
     @Before
     public void setup() {
-        log = new Log();
-        log.setLevel("info");
-        log.setMessage("message");
+        logEntry = new LogEntry();
+        logEntry.setLevel("info");
+        logEntry.setMessage("message");
     }
 
     @Test
     public void testLevel() {
-        assertEquals("info", log.getLevel());
+        assertEquals("info", logEntry.getLevel());
     }
 
     @Test
     public void testMessage() {
-        assertEquals("message", log.getMessage());
+        assertEquals("message", logEntry.getMessage());
     }
 }

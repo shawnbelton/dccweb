@@ -4,7 +4,7 @@
 angular.module('dccweb')
     .service('trainsService', ['$http', function ($http) {
         this.saveTrain = function(callback, train) {
-            $http.post('/trains/create', train).then(function (resp) {
+            $http.post('/trains/save', train).then(function (resp) {
                 callback(resp.data);
             });
         };

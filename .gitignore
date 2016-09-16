@@ -51,6 +51,7 @@ dcc-core/dcc-core.iml
 dcc-data/dcc-data.iml
 dcc-webapp/dcc-webapp.iml
 dcc-interface/dcc-interface.iml
+decoder-definitions/decoder-definitions.iml
 nce-interface/nce-interface.iml
 demo-interface/demo-interface.iml
 

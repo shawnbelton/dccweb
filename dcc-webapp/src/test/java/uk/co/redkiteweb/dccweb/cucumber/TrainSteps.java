@@ -35,7 +35,7 @@ public class TrainSteps extends BaseSteps {
             final Train train = new Train();
             train.setNumber(trainRow.getCells().get(0));
             train.setName(trainRow.getCells().get(1));
-            trains.createTrain(train);
+            trains.saveTrain(train);
         }
     }
 

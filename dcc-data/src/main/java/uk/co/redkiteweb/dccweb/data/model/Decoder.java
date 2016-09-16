@@ -17,6 +17,7 @@ public class Decoder implements Serializable {
     private Integer version;
     private Integer shortAddress;
     private Integer longAddress;
+    private Integer currentAddress;
     private List<CV> cvs;
 
     @Id
@@ -60,6 +61,14 @@ public class Decoder implements Serializable {
 
     public void setLongAddress(final Integer longAddress) {
         this.longAddress = longAddress;
+    }
+
+    public Integer getCurrentAddress() {
+        return currentAddress;
+    }
+
+    public void setCurrentAddress(Integer currentAddress) {
+        this.currentAddress = currentAddress;
     }
 
     @OneToMany

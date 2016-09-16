@@ -6,6 +6,7 @@
     <artifactId>dcc-web</artifactId>
     <version>1.0.0.0-SNAPSHOT</version>
     <modules>
+        <module>decoder-definitions</module>
         <module>dcc-data</module>
         <module>dcc-core</module>
         <module>dcc-interface</module>
@@ -86,6 +87,11 @@
             <dependency>
                 <groupId>uk.co.redkiteweb.dccweb</groupId>
                 <artifactId>dcc-interface</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>uk.co.redkiteweb.dccweb</groupId>
+                <artifactId>decoder-definitions</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

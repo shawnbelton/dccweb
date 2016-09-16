@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
  * Created by shawn on 14/09/16.
  */
 @RunWith(JUnit4.class)
-public class LogStoreTest {
+public class LogEntryStoreTest {
 
     private LogStore logStore;
 

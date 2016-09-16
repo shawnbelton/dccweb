@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by shawn on 14/09/16.
  */
-public class Log implements Serializable {
+public class LogEntry implements Serializable {
 
     private static final long serialVersionUID = 7000;
 

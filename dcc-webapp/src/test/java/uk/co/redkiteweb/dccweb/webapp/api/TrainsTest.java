@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +24,20 @@ public class TrainsTest {
 
     private Trains trains;
     private TrainRepository trainRepository;
+    private LogStore logStore;
 
     @Before
     public void setUp() {
         trainRepository = mock(TrainRepository.class);
+        logStore = mock(LogStore.class);
         trains = new Trains();
         trains.setTrainRepository(trainRepository);
+        trains.setLogStore(logStore);
     }
 
     @Test
     public void saveTrain() {
-        trains.createTrain(new Train());
+        trains.saveTrain(new Train());
         verify(trainRepository, times(1)).save(any(Train.class));
     }
 

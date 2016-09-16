@@ -10,6 +10,6 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 @Repository
 public interface DecoderRepository extends CrudRepository<Decoder, Integer> {
 
-    Decoder findByShortAddressAndLongAddress(final Integer shortAddress, final Integer longAddress);
+    Decoder findByCurrentAddress(final Integer currentAddress);
 
 }
