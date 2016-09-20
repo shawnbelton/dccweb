@@ -28,6 +28,7 @@ public class DecoderTest {
         decoder.setVersion(123);
         decoder.setShortAddress(101);
         decoder.setLongAddress(1024);
+        decoder.setCurrentAddress(1024);
     }
 
     @Test
@@ -53,6 +54,11 @@ public class DecoderTest {
     @Test
     public void longAddressTest() {
         assertEquals(new Integer(1024), decoder.getLongAddress());
+    }
+
+    @Test
+    public void currentAddressTest() {
+        assertEquals(new Integer(1024), decoder.getCurrentAddress());
     }
 
     @Test

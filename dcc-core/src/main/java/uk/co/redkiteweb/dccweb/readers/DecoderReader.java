@@ -32,6 +32,7 @@ public class DecoderReader {
     private DccManufacturerRepository dccManufacturerRepository;
     private DefinitionReaderFactory definitionReaderFactory;
     private LogStore logStore;
+    private CVReader cvReader;
 
     @Autowired
     public void setCvRepository(final CVRepository cvRepository) {
@@ -63,17 +64,23 @@ public class DecoderReader {
         this.definitionReaderFactory = definitionReaderFactory;
     }
 
+    @Autowired
+    public void setCvReader(final CVReader cvReader) {
+        this.cvReader = cvReader;
+    }
+
     public Decoder readDecoderOnProgram() {
         Map<Integer, Integer> cachedCvs = new HashMap<Integer, Integer>();
         Decoder decoder = new Decoder();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             try {
                 logStore.log("info", "Reading manufacturer");
-                final Integer manufacturerId = readCV(8);
+                final Integer manufacturerId = cvReader.readCV(8);
                 if (manufacturerId != null) {
                     logStore.log("info", "Reading Revision");
-                    final Integer revision = readCV(7);
+                    final Integer revision = cvReader.readCV(7);
                     final DefinitionReader definitionReader = definitionReaderFactory.getInstance(manufacturerId, revision);
+                    definitionReader.setCvReader(cvReader);
                     final boolean longAddressMode = definitionReader.readValue("Address Mode") == 1;
                     decoder.setDccManufacturer(dccManufacturerRepository.findOne(manufacturerId));
                     decoder.setVersion(revision);
@@ -87,8 +94,9 @@ public class DecoderReader {
                     final Decoder existingDecoder = decoderRepository.findByCurrentAddress(decoder.getCurrentAddress());
                     if (existingDecoder != null) {
                         decoder.setDecoderId(existingDecoder.getDecoderId());
+                        decoder.setCvs(existingDecoder.getCvs());
                     }
-                    cachedCvs = definitionReader.getCVCache();
+                    cachedCvs = cvReader.getCVCache();
                 }
             } catch (DefinitionException exception) {
                 logStore.log("error", exception.getMessage());
@@ -96,29 +104,15 @@ public class DecoderReader {
             //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
             dccInterface.sendMessage(new ExitProgramMessage());
             decoderRepository.save(decoder);
-            for (Integer cvNumber : cachedCvs.keySet()) {
+            for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
                 final CV cv = new CV();
-                cv.setCvNumber(cvNumber);
-                cv.setCvValue(cachedCvs.get(cvNumber));
+                cv.setCvNumber(cvValue.getKey());
+                cv.setCvValue(cvValue.getValue());
                 cv.setDecoderId(decoder.getDecoderId());
                 cvRepository.save(cv);
             }
             decoder = decoderRepository.findOne(decoder.getDecoderId());
         }
         return decoder;
-    }
-
-    private Integer readCV(final int cvNumber) {
-        final ReadCVMessage readCVMessage = new ReadCVMessage();
-        readCVMessage.setCvReg(cvNumber);
-        return getCvValue(dccInterface.sendMessage(readCVMessage));
-    }
-
-    private static Integer getCvValue(final MessageResponse response) {
-        Integer cvValue = null;
-        if (MessageResponse.MessageStatus.OK.equals(response.getStatus())) {
-            cvValue = (Integer)response.get("CVData");
-        }
-        return cvValue;
     }
 }

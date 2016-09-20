@@ -12,13 +12,15 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 07/07/16.
@@ -32,20 +34,29 @@ public class DecoderReaderTest {
     private DecoderRepository decoderRepository;
     private CVRepository cvRepository;
     private LogStore logStore;
+    private DefinitionReaderFactory definitionReaderFactory;
+    private DefinitionReader definitionReader;
+    private CVReader cvReader;
 
     @Before
-    public void setUp() {
+    public void setUp() throws DefinitionException {
         logStore = mock(LogStore.class);
         dccInterface = mock(DccInterface.class);
         decoderRepository = mock(DecoderRepository.class);
         cvRepository = mock(CVRepository.class);
         dccManufacturerRepository = mock(DccManufacturerRepository.class);
+        definitionReaderFactory = mock(DefinitionReaderFactory.class);
+        definitionReader = mock(DefinitionReader.class);
+        cvReader = mock(CVReader.class);
         decoderReader = new DecoderReader();
         decoderReader.setDccInterface(dccInterface);
         decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
         decoderReader.setDecoderRepository(decoderRepository);
         decoderReader.setCvRepository(cvRepository);
         decoderReader.setLogStore(logStore);
+        decoderReader.setDefinitionReaderFactory(definitionReaderFactory);
+        decoderReader.setCvReader(cvReader);
+        when(definitionReaderFactory.getInstance(anyInt(), anyInt())).thenReturn(definitionReader);
     }
 
     @Test
@@ -57,21 +68,28 @@ public class DecoderReaderTest {
     }
 
     @Test
-    public void readDecoderOKTest() {
+    public void readDecoderOKTest() throws DefinitionException {
+        when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         readDecoderOK();
     }
 
     @Test
-    public void readExistingDecoderOKTest() {
+    public void readExistingDecoderOKTest() throws DefinitionException {
+        when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         when(decoderRepository.findByCurrentAddress(anyInt())).thenReturn(new Decoder());
         readDecoderOK();
     }
 
-    private void readDecoderOK() {
+    private void readDecoderOK() throws DefinitionException {
+        final Map<Integer, Integer> cachedCvs = new HashMap<Integer, Integer>();
+        cachedCvs.put(1,2);
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(messageResponse.get(eq("CVData"))).thenReturn(new Integer(1));
+        when(cvReader.readCV(anyInt())).thenReturn(1);
+        when(definitionReader.readValue(eq("Short Address"))).thenReturn(1);
+        when(definitionReader.readValue(eq("Long Address"))).thenReturn(192);
+        when(cvReader.getCVCache()).thenReturn(cachedCvs);
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
@@ -87,4 +105,25 @@ public class DecoderReaderTest {
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
 
+    @Test
+    public void readManufacturerIdNull() {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(cvReader.readCV(anyInt())).thenReturn(null);
+        assertNull(decoderReader.readDecoderOnProgram());
+    }
+
+    @Test
+    public void readNotDefinedDefinition() throws DefinitionException {
+        when(definitionReaderFactory.getInstance(anyInt(), anyInt())).thenThrow(new DefinitionException("Error"));
+        readDecoderOK();
+        verify(logStore, times(1)).log(eq("error"), anyString());
+    }
+
+    @Test
+    public void readShortAddressMode() throws DefinitionException {
+        when(definitionReader.readValue(eq("Address Mode"))).thenReturn(0);
+        readDecoderOK();
+    }
 }

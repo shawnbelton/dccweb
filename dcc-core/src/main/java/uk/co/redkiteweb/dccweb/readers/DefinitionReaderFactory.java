@@ -14,13 +14,7 @@ import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 @Component
 public class DefinitionReaderFactory implements ApplicationContextAware {
 
-    private DccInterface dccInterface;
     private ApplicationContext context;
-
-    @Autowired
-    public void setDccInterface(final DccInterface dccInterface) {
-        this.dccInterface = dccInterface;
-    }
 
     @Override
     public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {

@@ -21,14 +21,10 @@ import java.util.Map;
 @Scope("prototype")
 public class DefinitionReader {
 
-    private DccInterface dccInterface;
     private LogStore logStore;
     private DecoderDefinition decoderDefinition;
-    private final Map<Integer, Integer> cachedCVs;
-
-    public DefinitionReader() {
-        cachedCVs = new HashMap<Integer, Integer>();
-    }
+    private ValueTypeFactory valueTypeFactory;
+    private CVReader cvReader;
 
     @Autowired
     public void setLogStore(final LogStore logStore) {
@@ -36,54 +32,28 @@ public class DefinitionReader {
     }
 
     @Autowired
-    public void setDccInterface(final DccInterface dccInterface) {
-        this.dccInterface = dccInterface;
+    public void setDecoderDefinition(final DecoderDefinition decoderDefinition) {
+        this.decoderDefinition = decoderDefinition;
+    }
+
+    @Autowired
+    public void setValueTypeFactory(final ValueTypeFactory valueTypeFactory) {
+        this.valueTypeFactory = valueTypeFactory;
+    }
+
+    public void setCvReader(final CVReader cvReader) {
+        this.cvReader = cvReader;
     }
 
     public void setDecoderFile(final String decoderFile) throws DefinitionException {
-        decoderDefinition = new DecoderDefinition(decoderFile);
+        decoderDefinition.setDecoderDefFile(decoderFile);
     }
 
     public Integer readValue(final String valueName) throws DefinitionException {
         logStore.log("info", String.format("Reading %s", valueName));
-        final ValueType valueType = getValueType(decoderDefinition.getValueNode(valueName));
-        return valueType.getValue();
-    }
-
-    public Map<Integer, Integer> getCVCache() {
-        return cachedCVs;
-    }
-
-    private ValueType getValueType(final Node valueNode) {
-        ValueType valueType = null;
-        final String type = valueNode.getAttributes().getNamedItem("type").getTextContent();
-        if ("value".equalsIgnoreCase(type)) {
-            valueType = new Value(this, valueNode);
-        } else if ("flag".equalsIgnoreCase(type)) {
-            valueType = new Flag(this, valueNode);
-        }
-        return valueType;
-    }
-
-    public Integer readCV(final int cvNumber) {
-        Integer cvValue;
-        if (cachedCVs.containsKey(cvNumber)) {
-            cvValue = cachedCVs.get(cvNumber);
-        } else {
-            final ReadCVMessage readCVMessage = new ReadCVMessage();
-            readCVMessage.setCvReg(cvNumber);
-            cvValue = getCvValue(dccInterface.sendMessage(readCVMessage));
-            cachedCVs.put(cvNumber, cvValue);
-        }
-        return cvValue;
-    }
-
-    private static Integer getCvValue(final MessageResponse response) {
-        Integer cvValue = null;
-        if (MessageResponse.MessageStatus.OK.equals(response.getStatus())) {
-            cvValue = (Integer)response.get("CVData");
-        }
-        return cvValue;
+        final Node valueNode = decoderDefinition.getValueNode(valueName);
+        final ValueType valueType = valueTypeFactory.getInstance(valueNode);
+        return valueType.getValue(cvReader, valueNode);
     }
 
 }
