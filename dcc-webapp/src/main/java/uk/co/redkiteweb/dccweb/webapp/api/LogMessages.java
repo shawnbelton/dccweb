@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.redkiteweb.dccweb.data.data.Log;
+import uk.co.redkiteweb.dccweb.data.data.LogEntry;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class LogMessages {
     }
 
     @RequestMapping("/messages")
-    public @ResponseBody List<Log> getMessages() {
+    public @ResponseBody List<LogEntry> getMessages() {
         return logStore.getLastSix();
     }
 

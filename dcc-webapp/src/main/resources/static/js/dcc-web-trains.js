@@ -4,7 +4,7 @@
 angular.module('dccweb')
     .service('trainsService', ['$http', function ($http) {
         this.saveTrain = function(callback, train) {
-            $http.post('/trains/create', train).then(function (resp) {
+            $http.post('/trains/save', train).then(function (resp) {
                 callback(resp.data);
             });
         };
@@ -113,7 +113,11 @@ angular.module('dccweb')
 
         self.stop = function() {
             self.cab.speed = 0;
-            self.cab.direction = 'STOP';
+            if ('UP' == self.cab.direction) {
+                self.cab.direction = 'FSTOP';
+            } else if ('DOWN' == self.cab.direction) {
+                self.cab.direction = 'RSTOP';
+            }
             self.updateCab();
         };
 

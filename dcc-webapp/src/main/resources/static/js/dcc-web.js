@@ -4,6 +4,9 @@
 angular.module('dccweb', ["ngRoute"])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {
+            templateUrl: 'home/home.html',
+            controller: 'home as home'
+        }).when('/engine', {
             templateUrl: 'trains/home.html',
             controller: 'trains as trains'
         }).when('/decoders', {

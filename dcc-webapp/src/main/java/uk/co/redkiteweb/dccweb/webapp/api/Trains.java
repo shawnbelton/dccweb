@@ -6,6 +6,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +18,16 @@ import java.util.Map;
 public class Trains {
 
     private TrainRepository trainRepository;
+    private LogStore logStore;
 
     @Autowired
     public void setTrainRepository(final TrainRepository trainRepository) {
         this.trainRepository = trainRepository;
+    }
+
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
     }
 
     @RequestMapping("/trains")
@@ -28,9 +35,10 @@ public class Trains {
         return (List<Train>)trainRepository.findAll();
     }
 
-    @RequestMapping(value = "/trains/create", method = RequestMethod.POST)
-    public @ResponseBody List<Train> createTrain(@RequestBody final Train train) {
+    @RequestMapping(value = "/trains/save", method = RequestMethod.POST)
+    public @ResponseBody List<Train> saveTrain(@RequestBody final Train train) {
         trainRepository.save(train);
+        logStore.log("info", String.format("Saved train with number %s", train.getNumber()));
         return getAllTrains();
     }
 

@@ -1,7 +1,9 @@
 package uk.co.redkiteweb.dccweb.webapp.data.store;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 import uk.co.redkiteweb.dccweb.webapp.data.Cab;
 
 import java.util.HashMap;
@@ -27,10 +29,12 @@ public class CabStore {
         Cab cab = new Cab();
         if (cabStore.containsKey(train.getTrainId())) {
             cab = cabStore.get(train.getTrainId());
+            cab.setTrain(train);
         } else {
             cab.setTrain(train);
             cab.setDirection("UP");
             cab.setSpeed(0);
+            cab.setSteps("128");
             putCab(cab);
         }
         return cab;
