@@ -72,8 +72,8 @@
             <div class="panel-body">
                 <form id="trainCab" class="form-horizontal">
                     <div class="input-group-lg">
-                        <input id="slider1" class="form-control" type="range" ng-disabled="trains.cab.direction == 'STOP'"
-                               min="0" max="256" step="1" ng-change="trains.speedChanged()" ng-model="trains.cab.speed" />
+                        <input id="slider1" class="form-control" type="range" ng-disabled="trains.cab.direction == 'RSTOP' || trains.cab.direction == 'FSTOP'"
+                               min="0" max="127" step="1" ng-change="trains.speedChanged()" ng-model="trains.cab.speed" />
                     </div>
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group" role="group">
@@ -84,7 +84,8 @@
                         </div>
                         <div class="btn-group pull-right" role="group">
                             <button type="button" class="btn btn-sm" ng-click="trains.stop()"
-                                    ng-class="{'btn-info': trains.cab.direction != 'STOP', 'btn-danger': trains.cab.direction == 'STOP'}">Stop</button>
+                                    ng-class="{'btn-info': trains.cab.direction != 'RSTOP' && trains.cab.direction != 'FSTOP',
+                                     'btn-danger': trains.cab.direction == 'RSTOP' || trains.cab.direction == 'FSTOP'}">Stop</button>
                         </div>
                     </div>
                 </form>

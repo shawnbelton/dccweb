@@ -9,10 +9,9 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.webapp.data.Cab;
 
-import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.DOWN;
-import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.STOP;
-import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.UP;
+import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.*;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_128;
+import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_28;
 
 /**
  * Created by shawn on 13/09/16.
@@ -34,7 +33,7 @@ public class CabService {
         if (cab.getTrain() != null && cab.getTrain().getDecoder() != null) {
             LOGGER.info(String.format("Updating cab %d", cab.getTrain().getDecoder().getCurrentAddress()));
             final ChangeSpeedMessage changeSpeedMessage = new ChangeSpeedMessage();
-            changeSpeedMessage.setSpeedSteps(toSpeedSteps());
+            changeSpeedMessage.setSpeedSteps(toSpeedSteps(cab.getSteps()));
             changeSpeedMessage.setSpeed(cab.getSpeed());
             changeSpeedMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
@@ -42,16 +41,26 @@ public class CabService {
         }
     }
 
-    private static ChangeSpeedMessage.SpeedSteps toSpeedSteps() {
-        return STEPS_128;
+    private static ChangeSpeedMessage.SpeedSteps toSpeedSteps(final String stepsStr) {
+        ChangeSpeedMessage.SpeedSteps steps = STEPS_128;
+        if ("128".equalsIgnoreCase(stepsStr)) {
+            steps = STEPS_128;
+        } else if ("28".equalsIgnoreCase(stepsStr)) {
+            steps = STEPS_28;
+        }
+        return steps;
     }
 
     private static ChangeSpeedMessage.Direction toDirection(final String directionStr) {
-        ChangeSpeedMessage.Direction direction = STOP;
+        ChangeSpeedMessage.Direction direction = RSTOP;
         if ("UP".equalsIgnoreCase(directionStr)) {
             direction = UP;
         } else if ("DOWN".equalsIgnoreCase(directionStr)) {
             direction = DOWN;
+        } else if ("RSTOP".equalsIgnoreCase(directionStr)) {
+            direction = RSTOP;
+        } else if ("FSTOP".equalsIgnoreCase(directionStr)) {
+            direction = FSTOP;
         }
         return direction;
     }

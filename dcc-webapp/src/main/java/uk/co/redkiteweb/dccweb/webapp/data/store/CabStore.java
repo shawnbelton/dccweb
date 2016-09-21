@@ -16,12 +16,6 @@ import java.util.Map;
 public class CabStore {
 
     private final Map<Integer, Cab> cabStore;
-    private TrainRepository trainRepository;
-
-    @Autowired
-    public void setTrainRepository(final TrainRepository trainRepository) {
-        this.trainRepository = trainRepository;
-    }
 
     public CabStore() {
         cabStore = new HashMap<Integer, Cab>();
@@ -40,6 +34,7 @@ public class CabStore {
             cab.setTrain(train);
             cab.setDirection("UP");
             cab.setSpeed(0);
+            cab.setSteps("128");
             putCab(cab);
         }
         return cab;

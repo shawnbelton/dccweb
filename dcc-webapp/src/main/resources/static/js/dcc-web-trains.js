@@ -113,7 +113,11 @@ angular.module('dccweb')
 
         self.stop = function() {
             self.cab.speed = 0;
-            self.cab.direction = 'STOP';
+            if ('UP' == self.cab.direction) {
+                self.cab.direction = 'FSTOP';
+            } else if ('DOWN' == self.cab.direction) {
+                self.cab.direction = 'RSTOP';
+            }
             self.updateCab();
         };
 

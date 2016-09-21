@@ -14,6 +14,7 @@ public class Cab implements Serializable {
     private Train train;
     private int speed;
     private String direction;
+    private String steps;
 
     public Train getTrain() {
         return train;
@@ -37,5 +38,13 @@ public class Cab implements Serializable {
 
     public void setDirection(final String direction) {
         this.direction = direction;
+    }
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public void setSteps(final String steps) {
+        this.steps = steps;
     }
 }

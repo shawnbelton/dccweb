@@ -15,8 +15,6 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 @Component("NceReadCVMessage")
 public class NceReadCVMessage extends AbstractNceMessage implements NceMessage {
 
-    private static final Logger LOGGER = LogManager.getLogger(NceReadCVMessage.class);
-
     @Override
     public MessageResponse process(final Message message) throws ConnectionException {
 

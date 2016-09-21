@@ -62,14 +62,38 @@ public class CabServiceTest {
     }
 
     @Test
-    public void testChangeSpeedStop() {
-
+    public void testChangeSpeedRStop() {
         final Cab cab = getCab();
-        cab.setDirection("STOP");
+        cab.setDirection("RSTOP");
         cab.setSpeed(0);
         cabService.updateCab(cab);
-        verify(dccInterface, times(1)).
-        sendMessage(any(ChangeSpeedMessage.class));
+        verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+    }
+
+    @Test
+    public void testChangeSpeedFStop() {
+        final Cab cab = getCab();
+        cab.setDirection("FSTOP");
+        cab.setSpeed(0);
+        cabService.updateCab(cab);
+        verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+    }
+
+
+    @Test
+    public void testChangeSpeed28Steps() {
+        final Cab cab = getCab();
+        cab.setSteps("28");
+        cabService.updateCab(cab);
+        verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+    }
+
+    @Test
+    public void testChangeSpeedNullSteps() {
+        final Cab cab = getCab();
+        cab.setSteps(null);
+        cabService.updateCab(cab);
+        verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
     }
 
     private Cab getCab() {
@@ -79,6 +103,7 @@ public class CabServiceTest {
         train.setDecoder(decoder);
         final Cab cab = new Cab();
         cab.setSpeed(127);
+        cab.setSteps("128");
         cab.setTrain(train);
         return cab;
     }

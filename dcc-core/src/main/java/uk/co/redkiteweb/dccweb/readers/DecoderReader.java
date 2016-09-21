@@ -106,9 +106,9 @@ public class DecoderReader {
             decoderRepository.save(decoder);
             for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
                 final CV cv = new CV();
+                cv.setDecoderId(decoder.getDecoderId());
                 cv.setCvNumber(cvValue.getKey());
                 cv.setCvValue(cvValue.getValue());
-                cv.setDecoderId(decoder.getDecoderId());
                 cvRepository.save(cv);
             }
             decoder = decoderRepository.findOne(decoder.getDecoderId());

@@ -11,7 +11,8 @@ public class ChangeSpeedMessage implements Message {
     }
 
     public enum Direction {
-        STOP,
+        RSTOP,
+        FSTOP,
         UP,
         DOWN
     }
