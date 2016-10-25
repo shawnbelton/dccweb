@@ -11,6 +11,6 @@ angular.module('dccweb', ["ngRoute"])
             controller: 'trains as trains'
         }).when('/decoders', {
             templateUrl: 'decoder/home.html',
-            controller: 'decoder as decoder'
+            controller: 'decoders as decoders'
         }).otherwise({redirectTo: '/'});
     }]);

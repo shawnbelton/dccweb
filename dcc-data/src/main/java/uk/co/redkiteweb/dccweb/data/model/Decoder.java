@@ -19,6 +19,7 @@ public class Decoder implements Serializable {
     private Integer longAddress;
     private Integer currentAddress;
     private List<CV> cvs;
+    private List<DecoderFunction> decoderFunctions;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,5 +80,15 @@ public class Decoder implements Serializable {
 
     public void setCvs(final List<CV> cvs) {
         this.cvs = cvs;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "decoder_id")
+    public List<DecoderFunction> getDecoderFunctions() {
+        return decoderFunctions;
+    }
+
+    public void setDecoderFunctions(final List<DecoderFunction> decoderFunctions) {
+        this.decoderFunctions = decoderFunctions;
     }
 }
