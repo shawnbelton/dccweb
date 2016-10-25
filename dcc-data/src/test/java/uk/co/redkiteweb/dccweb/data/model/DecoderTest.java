@@ -66,4 +66,10 @@ public class DecoderTest {
         decoder.setCvs(new ArrayList<CV>());
         assertNotNull(decoder.getCvs());
     }
+
+    @Test
+    public void decoderFunctionTest() {
+        decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
+        assertNotNull(decoder.getDecoderFunctions());
+    }
 }

@@ -95,6 +95,7 @@ public class DecoderReader {
                     if (existingDecoder != null) {
                         decoder.setDecoderId(existingDecoder.getDecoderId());
                         decoder.setCvs(existingDecoder.getCvs());
+                        decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
                     }
                     cachedCvs = cvReader.getCVCache();
                 }

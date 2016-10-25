@@ -2,25 +2,48 @@
         <div class="col-sm-6">
             <div class="panel panel-default panel-primary">
                 <div class="panel-heading"><span>Decoder Settings</span>
-                    <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoder.readDecoder()"/></span></div>
+                    <span class="pull-right"><input id="readDecoder" type="button" class="btn btn-info btn-xs" value="Read Values" ng-click="decoders.readDecoder()"/></span></div>
                 <div class="list-group">
                     <div class="list-group-item">
                         <p class="row">
                             <strong class="col-sm-3">Manufacturer:</strong>
-                            <span class="col-sm-9">{{decoder.decoder.dccManufacturer.manufacturer}}</span>
+                            <span class="col-sm-9">{{decoders.decoder.dccManufacturer.manufacturer}}</span>
                         </p>
                         <p class="row">
                             <strong class="col-sm-3">Version:</strong>
-                            <span class="col-sm-9">{{decoder.decoder.version}}</span>
+                            <span class="col-sm-9">{{decoders.decoder.version}}</span>
                         </p>
                         <p class="row">
                             <strong class="col-sm-3">Short Address:</strong>
-                            <span class="col-sm-9">{{decoder.decoder.shortAddress}}</span>
+                            <span class="col-sm-9">{{decoders.decoder.shortAddress}}</span>
                         </p>
                         <p class="row">
                             <strong class="col-sm-3">Long Address:</strong>
-                            <span class="col-sm-9">{{decoder.decoder.longAddress}}</span>
+                            <span class="col-sm-9">{{decoders.decoder.longAddress}}</span>
                         </p>
+                    </div>
+                </div>
+                <div class="panel-heading" ng-show="decoders.decoder"><span>Decoder Functions</span></div>
+                <div class="list-group" ng-show="decoders.decoder">
+                    <div class="list-group-item" ng-repeat="decoderFunction in decoders.decoder.decoderFunctions">
+                        <div>{{decoderFunction.number}} {{decoderFunction.name}}</div>
+                    </div>
+                    <div class="list-group-item">
+                        <form id="addFunction" class="form-inline" name="addFunction" ng-submit="decoders.addFunction()">
+                            <div class="form-group form-group-sm">
+                                <label for="functionNumber">Number</label>
+                                <select class="form-control" id="functionNumber" required="required"
+                                        ng-options="number for number in decoders.functionNumbers" ng-model="decoders.decoderFunction.number">
+                                </select>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label for="functionName">Name</label>
+                                <input type="text" required="required" class="form-control" id="functionName" ng-model="decoders.decoderFunction.name"/>
+                            </div>
+                            <div class="pull-right">
+                                <input type="submit" id="saveFunction" ng-disabled="addFunction.$invalid" class="btn btn-sm btn-success" value="Add Function"/>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -29,9 +52,13 @@
             <div class="panel panel-default panel-primary">
                 <div class="panel-heading"><span>Decoders</span></div>
                 <div class="list-group">
-                    <div class="list-group-item" ng-repeat="decoder in decoder.decoders">
+                    <div class="list-group-item" ng-repeat="decoderItem in decoders.decoders">
                         <div>
-                            Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}
+                            Long Address: {{decoderItem.longAddress}} Short Address: {{decoderItem.shortAddress}}
+                            <div class="pull-right">
+                                <input type="button" class="btn btn-success btn-xs" value="Edit"
+                                       ng-click="decoders.editDecoder(decoderItem.decoderId)"/>
+                            </div>
                         </div>
                     </div>
                 </div>
