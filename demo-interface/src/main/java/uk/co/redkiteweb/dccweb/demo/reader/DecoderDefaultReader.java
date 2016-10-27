@@ -7,10 +7,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * Created by shawn on 26/07/16.
@@ -59,10 +56,10 @@ public class DecoderDefaultReader {
         return cvValue;
     }
 
-    private BufferedReader getReader() throws ReaderException {
+    private BufferedReader getReader() throws ReaderException, IOException {
         if (bufferedReader == null) {
             defaultDecoderValues = environment.getProperty("defaultDecoderValues");
-            final InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(defaultDecoderValues);
+            final InputStream inputStream = new FileInputStream(defaultDecoderValues);
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             } else {
