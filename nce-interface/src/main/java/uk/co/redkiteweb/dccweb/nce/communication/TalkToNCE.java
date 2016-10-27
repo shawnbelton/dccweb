@@ -1,6 +1,8 @@
 package uk.co.redkiteweb.dccweb.nce.communication;
 
 import gnu.io.SerialPort;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
@@ -15,6 +17,8 @@ import java.io.OutputStream;
  */
 @Component
 public class TalkToNCE {
+
+    private static final Logger LOGGER = LogManager.getLogger(TalkToNCE.class);
 
     private PortFactory portFactory;
 
@@ -46,6 +50,7 @@ public class TalkToNCE {
         final OutputStream outputStream = serialPort.getOutputStream();
         Integer outputData = inData.readData();
         while (outputData != null) {
+            LOGGER.debug(String.format("Sending: %d",outputData));
             outputStream.write(outputData);
             outputData = inData.readData();
         }
@@ -59,6 +64,7 @@ public class TalkToNCE {
         int inputData = inputStream.read();
         while (inputData >= 0 || outData.isEmpty()) {
             if (inputData >= 0) {
+                LOGGER.debug(String.format("Receiving: %d",inputData));
                 outData.addData(inputData);
             }
             inputData = inputStream.read();

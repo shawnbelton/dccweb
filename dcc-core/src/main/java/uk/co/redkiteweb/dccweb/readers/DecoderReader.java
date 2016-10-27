@@ -98,22 +98,31 @@ public class DecoderReader {
                         decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
                     }
                     cachedCvs = cvReader.getCVCache();
+                    //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
+                    decoder = saveDecoder(cachedCvs, decoder);
+                } else {
+                    logStore.log("info", "No decoder detected.");
                 }
             } catch (DefinitionException exception) {
                 logStore.log("error", exception.getMessage());
             }
-            //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
             dccInterface.sendMessage(new ExitProgramMessage());
-            decoderRepository.save(decoder);
-            for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
-                final CV cv = new CV();
-                cv.setDecoderId(decoder.getDecoderId());
-                cv.setCvNumber(cvValue.getKey());
-                cv.setCvValue(cvValue.getValue());
-                cvRepository.save(cv);
-            }
-            decoder = decoderRepository.findOne(decoder.getDecoderId());
+        } else {
+            logStore.log("error", "Unable to enter program mode.");
         }
+        return decoder;
+    }
+
+    private Decoder saveDecoder(Map<Integer, Integer> cachedCvs, Decoder decoder) {
+        decoderRepository.save(decoder);
+        for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
+            final CV cv = new CV();
+            cv.setDecoderId(decoder.getDecoderId());
+            cv.setCvNumber(cvValue.getKey());
+            cv.setCvValue(cvValue.getValue());
+            cvRepository.save(cv);
+        }
+        decoder = decoderRepository.findOne(decoder.getDecoderId());
         return decoder;
     }
 }

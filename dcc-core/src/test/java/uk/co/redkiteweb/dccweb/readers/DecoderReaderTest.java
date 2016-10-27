@@ -111,7 +111,7 @@ public class DecoderReaderTest {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
         when(cvReader.readCV(anyInt())).thenReturn(null);
-        assertNull(decoderReader.readDecoderOnProgram());
+        assertNotNull(decoderReader.readDecoderOnProgram());
     }
 
     @Test
