@@ -23,8 +23,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="panel-heading" ng-show="decoders.decoder"><span>Decoder Functions</span></div>
-                <div class="list-group" ng-show="decoders.decoder">
+                <div class="panel-heading" ng-show="decoders.decoder.decoderId"><span>Decoder Functions</span></div>
+                <div class="list-group" ng-show="decoders.decoder.decoderId">
                     <div class="list-group-item" ng-repeat="decoderFunction in decoders.decoder.decoderFunctions">
                         <div>{{decoderFunction.number}} {{decoderFunction.name}}</div>
                     </div>

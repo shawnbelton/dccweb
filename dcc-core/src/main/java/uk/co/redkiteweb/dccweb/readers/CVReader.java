@@ -41,9 +41,15 @@ public class CVReader {
             final ReadCVMessage readCVMessage = new ReadCVMessage();
             readCVMessage.setCvReg(cvNumber);
             cvValue = getCvValue(dccInterface.sendMessage(readCVMessage));
-            cachedCVs.put(cvNumber, cvValue);
+            addToCache(cvNumber, cvValue);
         }
         return cvValue;
+    }
+
+    private void addToCache(final int cvNumber, final Integer cvValue) {
+        if (cvValue!=null) {
+            cachedCVs.put(cvNumber, cvValue);
+        }
     }
 
     private static Integer getCvValue(final MessageResponse response) {
@@ -53,5 +59,4 @@ public class CVReader {
         }
         return cvValue;
     }
-
 }

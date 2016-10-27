@@ -2,10 +2,12 @@ package uk.co.redkiteweb.dccweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 
 import javax.sql.DataSource;
 
@@ -15,14 +17,16 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
+@PropertySource({"file:./config/application.properties"})
 public class DccWebApplication {
 
     public static final void main(final String[] args) {
         SpringApplication.run(DccWebApplication.class, args);
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        return (new EmbeddedDatabaseBuilder()).build();
-//    }
+    @Bean
+    @ConfigurationProperties(prefix = "datasource.dccweb")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
 }

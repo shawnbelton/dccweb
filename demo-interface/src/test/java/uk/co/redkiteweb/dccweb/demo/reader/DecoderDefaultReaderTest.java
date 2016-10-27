@@ -30,7 +30,7 @@ public class DecoderDefaultReaderTest {
 
     @Test
     public void readTest() {
-        when(environment.getProperty(anyString())).thenReturn("testDefault.csv");
+        when(environment.getProperty(anyString())).thenReturn("./src/test/resources/testDefault.csv");
         assertNotNull(decoderDefaultReader.read());
         assertNull(decoderDefaultReader.read());
         assertNull(decoderDefaultReader.read());

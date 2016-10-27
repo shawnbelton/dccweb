@@ -56,9 +56,9 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         return dccManufacturer;
     }
 
-    private BufferedReader getReader() throws ReaderException {
+    private BufferedReader getReader() throws ReaderException, IOException {
         if (bufferedReader == null) {
-            final InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(dccManufacturersFile);
+            final InputStream inputStream = new FileInputStream(dccManufacturersFile);
             if (inputStream != null) {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             } else {
