@@ -18,7 +18,7 @@ public class CabFunctionComparator implements Comparator<CabFunction> {
         return compare;
     }
 
-    private int compareFunctionOneNotNull(final CabFunction cabFunctionOne,final CabFunction cabFunctionTwo) {
+    private static int compareFunctionOneNotNull(final CabFunction cabFunctionOne,final CabFunction cabFunctionTwo) {
         int compare;
         if (cabFunctionTwo==null) {
             compare = 1;
@@ -28,7 +28,7 @@ public class CabFunctionComparator implements Comparator<CabFunction> {
         return compare;
     }
 
-    private int compareNeitherNull(final Integer numberOne,final Integer numberTwo) {
+    private static int compareNeitherNull(final Integer numberOne,final Integer numberTwo) {
         int compare;
         if (numberOne==null) {
             compare = compareNumberOneNull(numberTwo);
@@ -38,7 +38,7 @@ public class CabFunctionComparator implements Comparator<CabFunction> {
         return compare;
     }
 
-    private int compareNumberOneNotNull(final Integer numberOne,final Integer numberTwo) {
+    private static int compareNumberOneNotNull(final Integer numberOne,final Integer numberTwo) {
         int compare;
         if (numberTwo==null) {
             compare = 1;
@@ -48,7 +48,7 @@ public class CabFunctionComparator implements Comparator<CabFunction> {
         return compare;
     }
 
-    private int compareNumberOneNull(final Integer numberTwo) {
+    private static int compareNumberOneNull(final Integer numberTwo) {
         int compare;
         if (numberTwo==null) {
             compare = 0;
@@ -58,7 +58,7 @@ public class CabFunctionComparator implements Comparator<CabFunction> {
         return compare;
     }
 
-    private int compareFunctionOneNull(final CabFunction cabFunctionTwo) {
+    private static int compareFunctionOneNull(final CabFunction cabFunctionTwo) {
         int compare;
         if (cabFunctionTwo==null) {
             compare = 0;
