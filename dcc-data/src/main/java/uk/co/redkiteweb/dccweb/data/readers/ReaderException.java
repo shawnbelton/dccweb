@@ -9,4 +9,8 @@ public class ReaderException extends Exception {
         super(message);
     }
 
+    public ReaderException(final String message, final Throwable throwable) {
+        super(message, throwable);
+    }
+
 }

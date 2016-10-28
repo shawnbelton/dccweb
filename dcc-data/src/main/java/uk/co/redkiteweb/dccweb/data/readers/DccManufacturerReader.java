@@ -58,11 +58,11 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
 
     private BufferedReader getReader() throws ReaderException, IOException {
         if (bufferedReader == null) {
-            final InputStream inputStream = new FileInputStream(dccManufacturersFile);
-            if (inputStream != null) {
+            try {
+                final InputStream inputStream = new FileInputStream(dccManufacturersFile);
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            } else {
-                throw new ReaderException(String.format("%s not found.", dccManufacturersFile));
+            } catch (FileNotFoundException exception) {
+                throw new ReaderException(String.format("%s not found.", dccManufacturersFile), exception);
             }
         }
         return bufferedReader;

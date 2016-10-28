@@ -59,11 +59,11 @@ public class DecoderDefaultReader {
     private BufferedReader getReader() throws ReaderException, IOException {
         if (bufferedReader == null) {
             defaultDecoderValues = environment.getProperty("defaultDecoderValues");
-            final InputStream inputStream = new FileInputStream(defaultDecoderValues);
-            if (inputStream != null) {
+            try {
+                final InputStream inputStream = new FileInputStream(defaultDecoderValues);
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            } else {
-                throw new ReaderException(String.format("%s not found.", defaultDecoderValues));
+            } catch (FileNotFoundException exception) {
+                throw new ReaderException(String.format("%s not found.", defaultDecoderValues), exception);
             }
         }
         return bufferedReader;
