@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb;
+package uk.co.redkiteweb.dccweb.cucumber;
 
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -6,7 +6,6 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import gherkin.formatter.model.DataTableRow;
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.co.redkiteweb.dccweb.BaseSteps;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.demo.registers.DecoderRegister;
 import uk.co.redkiteweb.dccweb.webapp.api.Decoders;
