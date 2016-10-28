@@ -70,36 +70,13 @@ public class DecoderReader {
     }
 
     public Decoder readDecoderOnProgram() {
-        Map<Integer, Integer> cachedCvs = new HashMap<Integer, Integer>();
         Decoder decoder = new Decoder();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             try {
                 logStore.log("info", "Reading manufacturer");
                 final Integer manufacturerId = cvReader.readCV(8);
                 if (manufacturerId != null) {
-                    logStore.log("info", "Reading Revision");
-                    final Integer revision = cvReader.readCV(7);
-                    final DefinitionReader definitionReader = definitionReaderFactory.getInstance(manufacturerId, revision);
-                    definitionReader.setCvReader(cvReader);
-                    final boolean longAddressMode = definitionReader.readValue("Address Mode") == 1;
-                    decoder.setDccManufacturer(dccManufacturerRepository.findOne(manufacturerId));
-                    decoder.setVersion(revision);
-                    decoder.setShortAddress(definitionReader.readValue("Short Address"));
-                    decoder.setLongAddress(definitionReader.readValue("Long Address"));
-                    if (longAddressMode) {
-                        decoder.setCurrentAddress(decoder.getLongAddress());
-                    } else {
-                        decoder.setCurrentAddress(decoder.getShortAddress());
-                    }
-                    final Decoder existingDecoder = decoderRepository.findByCurrentAddress(decoder.getCurrentAddress());
-                    if (existingDecoder != null) {
-                        decoder.setDecoderId(existingDecoder.getDecoderId());
-                        decoder.setCvs(existingDecoder.getCvs());
-                        decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
-                    }
-                    cachedCvs = cvReader.getCVCache();
-                    //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
-                    decoder = saveDecoder(cachedCvs, decoder);
+                    decoder = readDecoder(manufacturerId);
                 } else {
                     logStore.log("info", "No decoder detected.");
                 }
@@ -113,7 +90,33 @@ public class DecoderReader {
         return decoder;
     }
 
-    private Decoder saveDecoder(Map<Integer, Integer> cachedCvs, Decoder decoder) {
+    private Decoder readDecoder(final Integer manufacturerId) throws DefinitionException {
+        final Decoder decoder = new Decoder();
+        logStore.log("info", "Reading Revision");
+        final Integer revision = cvReader.readCV(7);
+        final DefinitionReader definitionReader = definitionReaderFactory.getInstance(manufacturerId, revision);
+        definitionReader.setCvReader(cvReader);
+        final boolean longAddressMode = definitionReader.readValue("Address Mode") == 1;
+        decoder.setDccManufacturer(dccManufacturerRepository.findOne(manufacturerId));
+        decoder.setVersion(revision);
+        decoder.setShortAddress(definitionReader.readValue("Short Address"));
+        decoder.setLongAddress(definitionReader.readValue("Long Address"));
+        if (longAddressMode) {
+            decoder.setCurrentAddress(decoder.getLongAddress());
+        } else {
+            decoder.setCurrentAddress(decoder.getShortAddress());
+        }
+        final Decoder existingDecoder = decoderRepository.findByCurrentAddress(decoder.getCurrentAddress());
+        if (existingDecoder != null) {
+            decoder.setDecoderId(existingDecoder.getDecoderId());
+            decoder.setCvs(existingDecoder.getCvs());
+            decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
+        }
+        //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
+        return saveDecoder(cvReader.getCVCache(), decoder);
+    }
+
+    private Decoder saveDecoder(final Map<Integer, Integer> cachedCvs,final Decoder decoder) {
         decoderRepository.save(decoder);
         for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
             final CV cv = new CV();
@@ -122,7 +125,6 @@ public class DecoderReader {
             cv.setCvValue(cvValue.getValue());
             cvRepository.save(cv);
         }
-        decoder = decoderRepository.findOne(decoder.getDecoderId());
-        return decoder;
+        return decoderRepository.findOne(decoder.getDecoderId());
     }
 }
