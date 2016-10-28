@@ -3,6 +3,7 @@ package uk.co.redkiteweb.dccweb.webapp.data;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * Created by shawn on 12/09/16.
@@ -15,6 +16,7 @@ public class Cab implements Serializable {
     private int speed;
     private String direction;
     private String steps;
+    private Set<CabFunction> cabFunctions;
 
     public Train getTrain() {
         return train;
@@ -46,5 +48,13 @@ public class Cab implements Serializable {
 
     public void setSteps(final String steps) {
         this.steps = steps;
+    }
+
+    public Set<CabFunction> getCabFunctions() {
+        return cabFunctions;
+    }
+
+    public void setCabFunctions(final Set<CabFunction> cabFunctions) {
+        this.cabFunctions = cabFunctions;
     }
 }
