@@ -1,10 +1,8 @@
 package uk.co.redkiteweb.dccweb.webapp.data.store;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 import uk.co.redkiteweb.dccweb.webapp.data.Cab;
 import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
 import uk.co.redkiteweb.dccweb.webapp.data.CabFunctionComparator;
@@ -35,9 +33,10 @@ public class CabStore {
         if (cabStore.containsKey(train.getTrainId())) {
             cab = cabStore.get(train.getTrainId());
             cab.setTrain(train);
+            buildSetCabFunctions(cab);
         } else {
             cab.setTrain(train);
-            cab.setCabFunctions(createSetCabFunctions(train));
+            buildSetCabFunctions(cab);
             cab.setDirection("UP");
             cab.setSpeed(0);
             cab.setSteps("128");
@@ -46,17 +45,37 @@ public class CabStore {
         return cab;
     }
 
-    private static Set<CabFunction> createSetCabFunctions(final Train train) {
-        final Set<CabFunction> cabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
-        if (train.getDecoder()!=null && train.getDecoder().getDecoderFunctions()!=null) {
-            for(DecoderFunction decoderFunction : train.getDecoder().getDecoderFunctions()) {
-                cabFunctions.add(createCabFunction(decoderFunction));
+    private static void buildSetCabFunctions(final Cab cab) {
+        final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
+        if (cab.getTrain().getDecoder()!=null && cab.getTrain().getDecoder().getDecoderFunctions()!=null) {
+            for(DecoderFunction decoderFunction : cab.getTrain().getDecoder().getDecoderFunctions()) {
+                newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));
             }
         }
-        return cabFunctions;
+        cab.setCabFunctions(newCabFunctions);
     }
 
-    private static CabFunction createCabFunction(final DecoderFunction decoderFunction) {
+    private static CabFunction getCabFunction(final DecoderFunction decoderFunction, Set<CabFunction> cabFunctions) {
+        CabFunction cabFunction = fetchCabFunction(cabFunctions, decoderFunction.getNumber());
+        if (cabFunction == null) {
+            cabFunction = getCabFunction(decoderFunction);
+        }
+        return cabFunction;
+    }
+
+    private static CabFunction fetchCabFunction(Set<CabFunction> cabFunctions, final Integer functionNumber) {
+        CabFunction foundFunction = null;
+        if (cabFunctions!=null) {
+            for (CabFunction cabFunction : cabFunctions) {
+                if (cabFunction.getNumber().equals(functionNumber)) {
+                    foundFunction = cabFunction;
+                }
+            }
+        }
+        return foundFunction;
+    }
+
+    private static CabFunction getCabFunction(final DecoderFunction decoderFunction) {
         final CabFunction cabFunction = new CabFunction();
         cabFunction.setNumber(decoderFunction.getNumber());
         cabFunction.setName(decoderFunction.getName());
