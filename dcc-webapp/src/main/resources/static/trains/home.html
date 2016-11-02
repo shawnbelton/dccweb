@@ -88,6 +88,15 @@
                                      'btn-danger': trains.cab.direction == 'RSTOP' || trains.cab.direction == 'FSTOP'}">Stop</button>
                         </div>
                     </div>
+                    <div class="row top10">
+                        <div class="container">
+                            <ul class="list-inline">
+                                <li ng-repeat="cabFunction in trains.cab.cabFunctions">
+                                    <input type="button" class="btn btn-sm" ng-class="{'btn-primary': cabFunction.state, 'btn-default': !cabFunction.state}" ng-value="cabFunction.name"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
