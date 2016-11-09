@@ -19,13 +19,21 @@ public class NceChangeSpeedMessage extends AbstractNceMessage implements NceMess
         final MessageResponse messageResponse = getMessageResponse();
         final NceData nceData = new NceData();
         nceData.addData(0xa2);
-        nceData.addData((changeSpeedMessage.getAddress() / 256) | 0xc0);  // Force to long address for now.
+        nceData.addData((changeSpeedMessage.getAddress() / 256) | getHighByteMask(changeSpeedMessage.isAddressMode()));
         nceData.addData(changeSpeedMessage.getAddress() % 256);
         nceData.addData(getOpCode(changeSpeedMessage.getSpeedSteps(), changeSpeedMessage.getDirection()));
         nceData.addData(changeSpeedMessage.getSpeed());
         final NceData responseData = getTalkToNCE().sendData(nceData);
         messageResponse.setStatus(readStatus(responseData.readData()));
         return messageResponse;
+    }
+
+    private static int getHighByteMask(final boolean longAddress) {
+        int highByteMask = 0;
+        if (longAddress) {
+            highByteMask = 0xc0;
+        }
+        return highByteMask;
     }
 
     private static int getOpCode(final ChangeSpeedMessage.SpeedSteps speedSteps, ChangeSpeedMessage.Direction direction) {

@@ -29,7 +29,12 @@ angular.module('dccweb')
             });
         };
         this.updateCab = function(callback, cab) {
-            $http.post('trains/cab/update', cab).then(function (resp) {
+            $http.post('/trains/cab/update', cab).then(function (resp) {
+                callback(resp.data);
+            });
+        };
+        this.toggleCabFunction = function(callback, cab) {
+            $http.post('/trains/cab/updateFunction', cab).then(function (resp) {
                 callback(resp.data);
             });
         };
@@ -136,6 +141,13 @@ angular.module('dccweb')
                 self.update = false;
                 self.updateCab();
             }
+        };
+
+        self.toggleCabFunction = function(cabFunction) {
+            cabFunction.state = !cabFunction.state;
+            trainsService.toggleCabFunction(function(response) {
+                self.update = response;
+            }, self.cab);
         };
 
         self.decoders = {};

@@ -82,9 +82,19 @@ public class NceChangeSpeedMessageTest {
         nceChangeSpeedMessage.process(message);
     }
 
+    @Test
+    public void testLowAddressUpSpeed() throws ConnectionException {
+        when(nceData.readData()).thenReturn(0x21);
+        final ChangeSpeedMessage changeSpeedMessage = getChangeSpeedMessage();
+        changeSpeedMessage.setAddress(16);
+        changeSpeedMessage.setAddressMode(false);
+        nceChangeSpeedMessage.process(changeSpeedMessage);
+    }
+
     private ChangeSpeedMessage getChangeSpeedMessage() {
         final ChangeSpeedMessage message = new ChangeSpeedMessage();
         message.setAddress(1234);
+        message.setAddressMode(true);
         message.setSpeed(50);
         message.setSpeedSteps(ChangeSpeedMessage.SpeedSteps.STEPS_128);
         message.setDirection(ChangeSpeedMessage.Direction.UP);

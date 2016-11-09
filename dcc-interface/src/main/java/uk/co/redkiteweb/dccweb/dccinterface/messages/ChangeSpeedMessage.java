@@ -21,12 +21,13 @@ public class ChangeSpeedMessage implements Message {
     private int speed;
     private Direction direction;
     private int address;
+    private boolean addressMode;
 
     public SpeedSteps getSpeedSteps() {
         return speedSteps;
     }
 
-    public void setSpeedSteps(SpeedSteps speedSteps) {
+    public void setSpeedSteps(final SpeedSteps speedSteps) {
         this.speedSteps = speedSteps;
     }
 
@@ -34,7 +35,7 @@ public class ChangeSpeedMessage implements Message {
         return speed;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(final int speed) {
         this.speed = speed;
     }
 
@@ -42,7 +43,7 @@ public class ChangeSpeedMessage implements Message {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    public void setDirection(final Direction direction) {
         this.direction = direction;
     }
 
@@ -50,7 +51,15 @@ public class ChangeSpeedMessage implements Message {
         return address;
     }
 
-    public void setAddress(int address) {
+    public void setAddress(final int address) {
         this.address = address;
+    }
+
+    public boolean isAddressMode() {
+        return addressMode;
+    }
+
+    public void setAddressMode(final boolean addressMode) {
+        this.addressMode = addressMode;
     }
 }

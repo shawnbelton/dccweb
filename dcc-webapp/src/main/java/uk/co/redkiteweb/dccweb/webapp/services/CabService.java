@@ -7,7 +7,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
 import uk.co.redkiteweb.dccweb.webapp.data.Cab;
+import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
 
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.*;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_128;
@@ -30,15 +32,33 @@ public class CabService {
 
     @Async
     public void updateCab(final Cab cab) {
-        if (cab.getTrain() != null && cab.getTrain().getDecoder() != null) {
+        if (hasDecoder(cab)) {
             LOGGER.info(String.format("Updating cab %d", cab.getTrain().getDecoder().getCurrentAddress()));
             final ChangeSpeedMessage changeSpeedMessage = new ChangeSpeedMessage();
+            changeSpeedMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
+            changeSpeedMessage.setAddressMode(cab.getTrain().getDecoder().getAddressMode());
             changeSpeedMessage.setSpeedSteps(toSpeedSteps(cab.getSteps()));
             changeSpeedMessage.setSpeed(cab.getSpeed());
-            changeSpeedMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
             dccInterface.sendMessage(changeSpeedMessage);
         }
+    }
+
+    @Async
+    public void updateCabFunctions(final Cab cab) {
+        if (hasDecoder(cab)) {
+            final UpdateFunctionsMessage updateFunctionsMessage = new UpdateFunctionsMessage();
+            updateFunctionsMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
+            updateFunctionsMessage.setAddressMode(cab.getTrain().getDecoder().getAddressMode());
+            for(CabFunction cabFunction : cab.getCabFunctions()) {
+                updateFunctionsMessage.addFunction(cabFunction.getNumber(), cabFunction.getState());
+            }
+            dccInterface.sendMessage(updateFunctionsMessage);
+        }
+    }
+
+    private static boolean hasDecoder(final Cab cab) {
+        return cab.getTrain() != null && cab.getTrain().getDecoder() != null;
     }
 
     private static ChangeSpeedMessage.SpeedSteps toSpeedSteps(final String stepsStr) {

@@ -18,6 +18,7 @@ public class Decoder implements Serializable {
     private Integer shortAddress;
     private Integer longAddress;
     private Integer currentAddress;
+    private Boolean addressMode;
     private List<CV> cvs;
     private List<DecoderFunction> decoderFunctions;
 
@@ -68,8 +69,16 @@ public class Decoder implements Serializable {
         return currentAddress;
     }
 
-    public void setCurrentAddress(Integer currentAddress) {
+    public void setCurrentAddress(final Integer currentAddress) {
         this.currentAddress = currentAddress;
+    }
+
+    public Boolean getAddressMode() {
+        return addressMode;
+    }
+
+    public void setAddressMode(final Boolean addressMode) {
+        this.addressMode = addressMode;
     }
 
     @OneToMany

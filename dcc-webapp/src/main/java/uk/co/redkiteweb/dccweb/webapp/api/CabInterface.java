@@ -42,4 +42,12 @@ public class CabInterface {
         cabStore.putCab(cab);
         return Boolean.TRUE;
     }
+
+    @RequestMapping(value = "/trains/cab/updateFunction", method = RequestMethod.POST)
+    public @ResponseBody Boolean updateCabFunction(@RequestBody final Cab cab) {
+        LOGGER.info(String.format("Updating functions on %s", cab.getTrain().getNumber()));
+        cabService.updateCabFunctions(cab);
+        cabStore.putCab(cab);
+        return Boolean.TRUE;
+    }
 }

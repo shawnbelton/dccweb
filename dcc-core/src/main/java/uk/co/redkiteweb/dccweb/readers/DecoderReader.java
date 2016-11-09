@@ -96,12 +96,12 @@ public class DecoderReader {
         final Integer revision = cvReader.readCV(7);
         final DefinitionReader definitionReader = definitionReaderFactory.getInstance(manufacturerId, revision);
         definitionReader.setCvReader(cvReader);
-        final boolean longAddressMode = definitionReader.readValue("Address Mode") == 1;
+        decoder.setAddressMode(definitionReader.readValue("Address Mode") == 1);
         decoder.setDccManufacturer(dccManufacturerRepository.findOne(manufacturerId));
         decoder.setVersion(revision);
         decoder.setShortAddress(definitionReader.readValue("Short Address"));
         decoder.setLongAddress(definitionReader.readValue("Long Address"));
-        if (longAddressMode) {
+        if (decoder.getAddressMode()) {
             decoder.setCurrentAddress(decoder.getLongAddress());
         } else {
             decoder.setCurrentAddress(decoder.getShortAddress());
