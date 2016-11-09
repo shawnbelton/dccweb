@@ -8,6 +8,8 @@ import java.util.Comparator;
  */
 public class CabFunctionComparator implements Comparator<CabFunction>, Serializable {
 
+    static final long serialVersionUID = 8002;
+
     @Override
     public int compare(final CabFunction cabFunctionOne, final CabFunction cabFunctionTwo) {
         int compare;
