@@ -29,6 +29,7 @@ public class DecoderTest {
         decoder.setShortAddress(101);
         decoder.setLongAddress(1024);
         decoder.setCurrentAddress(1024);
+        decoder.setAddressMode(true);
     }
 
     @Test
@@ -71,5 +72,10 @@ public class DecoderTest {
     public void decoderFunctionTest() {
         decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
         assertNotNull(decoder.getDecoderFunctions());
+    }
+
+    @Test
+    public void decoderAddressModeTest() {
+        assertEquals(true, decoder.getAddressMode());
     }
 }

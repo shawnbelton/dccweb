@@ -9,7 +9,13 @@ import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
 import uk.co.redkiteweb.dccweb.webapp.data.Cab;
+import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
+import uk.co.redkiteweb.dccweb.webapp.data.CabFunctionComparator;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -96,15 +102,35 @@ public class CabServiceTest {
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
     }
 
+    @Test
+    public void testUpdateFunctionNullTrain() {
+        cabService.updateCabFunctions(new Cab());
+        verify(dccInterface, never()).sendMessage(any(Message.class));
+    }
+
+    @Test
+    public void testUpdateFunctionTrain() {
+        final Cab cab = getCab();
+        cabService.updateCabFunctions(cab);
+        verify(dccInterface, times(1)).sendMessage(any(UpdateFunctionsMessage.class));
+    }
+
     private Cab getCab() {
         final Decoder decoder = new Decoder();
         decoder.setCurrentAddress(1234);
+        decoder.setAddressMode(true);
         final Train train = new Train();
         train.setDecoder(decoder);
         final Cab cab = new Cab();
         cab.setSpeed(127);
         cab.setSteps("128");
         cab.setTrain(train);
+        final Set<CabFunction> cabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
+        final CabFunction cabFunction = new CabFunction();
+        cabFunction.setNumber(1);
+        cabFunction.setState(true);
+        cabFunctions.add(cabFunction);
+        cab.setCabFunctions(cabFunctions);
         return cab;
     }
 

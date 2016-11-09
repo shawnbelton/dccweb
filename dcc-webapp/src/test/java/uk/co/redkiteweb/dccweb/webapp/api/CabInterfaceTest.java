@@ -53,4 +53,15 @@ public class CabInterfaceTest {
         verify(cabService, times(1)).updateCab(any(Cab.class));
     }
 
+    @Test
+    public void testUpdateFunction() {
+        final Cab cab = new Cab();
+        final Train train = new Train();
+        train.setNumber("12345");
+        train.setTrainId(1);
+        cab.setTrain(train);
+        cabInterface.updateCabFunction(cab);
+        verify(cabService, times(1)).updateCabFunctions(any(Cab.class));
+        verify(cabStore, times(1)).putCab(any(Cab.class));
+    }
 }

@@ -24,6 +24,7 @@ public class ChangeSpeedMessageTest {
         changeSpeedMessage.setDirection(UP);
         changeSpeedMessage.setSpeed(45);
         changeSpeedMessage.setSpeedSteps(STEPS_128);
+        changeSpeedMessage.setAddressMode(true);
     }
 
     @Test
@@ -44,5 +45,10 @@ public class ChangeSpeedMessageTest {
     @Test
     public void testSpeedSteps() {
         assertEquals(STEPS_128, changeSpeedMessage.getSpeedSteps());
+    }
+
+    @Test
+    public void testAddressMode() {
+        assertEquals(true, changeSpeedMessage.isAddressMode());
     }
 }

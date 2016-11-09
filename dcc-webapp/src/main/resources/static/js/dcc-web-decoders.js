@@ -51,7 +51,7 @@ angular.module('dccweb')
         self.setDecoder = function(decoder) {
             self.decoder = decoder;
             self.functionNumbers = [];
-            for(var index = 1; index<=29; index++) {
+            for(var index = 0; index<29; index++) {
                 if (self.isAvailable(index, decoder.decoderFunctions)) {
                     self.functionNumbers.push(index);
                 }
