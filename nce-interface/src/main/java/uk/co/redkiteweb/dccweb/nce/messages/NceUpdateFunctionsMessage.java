@@ -1,9 +1,8 @@
 package uk.co.redkiteweb.dccweb.nce.messages;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
