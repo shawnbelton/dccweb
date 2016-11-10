@@ -8,6 +8,10 @@
         <version>1.5</version>
     </skin>
     <body>
+        <menu name="DCC Web">
+            <item name="About" href="index.html"/>
+            <item name="Components" href="components.html"/>
+        </menu>
         <menu ref="reports"/>
     </body>
 </project>
