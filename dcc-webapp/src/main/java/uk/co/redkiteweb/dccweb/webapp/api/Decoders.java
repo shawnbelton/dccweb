@@ -6,7 +6,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
-import uk.co.redkiteweb.dccweb.readers.DecoderReader;
+import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 public class Decoders {
 
-    private DecoderReader decoderReader;
+    private DecoderReaderFactory decoderReaderFactory;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
 
@@ -31,13 +31,13 @@ public class Decoders {
     }
 
     @Autowired
-    public void setDecoderReader(final DecoderReader decoderReader) {
-        this.decoderReader = decoderReader;
+    public void setDecoderReaderFactory(final DecoderReaderFactory decoderReaderFactory) {
+        this.decoderReaderFactory = decoderReaderFactory;
     }
 
     @RequestMapping("/decoders/read")
     public @ResponseBody Decoder readDecoder() {
-        return decoderReader.readDecoderOnProgram();
+        return decoderReaderFactory.createInstance().readDecoderOnProgram();
     }
 
     @RequestMapping("/decoders/all")

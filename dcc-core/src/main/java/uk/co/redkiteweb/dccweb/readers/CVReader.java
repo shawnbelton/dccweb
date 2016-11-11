@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.readers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class CVReader {
+
+    private static final Logger LOGGER = LogManager.getLogger(CVReader.class);
 
     private final Map<Integer, Integer> cachedCVs;
     private DccInterface dccInterface;
@@ -43,6 +47,7 @@ public class CVReader {
             cvValue = getCvValue(dccInterface.sendMessage(readCVMessage));
             addToCache(cvNumber, cvValue);
         }
+        LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
     }
 
