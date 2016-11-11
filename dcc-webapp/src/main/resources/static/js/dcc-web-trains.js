@@ -116,6 +116,11 @@ angular.module('dccweb')
             }, self.cab);
         };
 
+        self.halt = function() {
+            self.cab.speed = 0;
+            self.updateCab();
+        };
+
         self.stop = function() {
             self.cab.speed = 0;
             if ('UP' == self.cab.direction) {

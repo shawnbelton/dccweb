@@ -85,3 +85,4 @@ fabric.properties
 .idea/
 *.log
 dccweb.db/
+logs/
