@@ -15,7 +15,7 @@ The application is built using the following components:
 Build the application by using the following maven command
 > mvn clean package
 
-Setup the application by creating a config directory at the same directory level as the jar file.
+Setup the application by creating a config and logs directory at the same directory level as the jar file.
 
 Into the config directory copy the following files:
 
