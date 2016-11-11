@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.readers.DecoderReader;
+import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
 
 import java.util.ArrayList;
 
@@ -24,16 +25,19 @@ public class DecodersTest {
 
     private Decoders decoders;
     private DecoderReader decoderReader;
+    private DecoderReaderFactory decoderReaderFactory;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
 
     @Before
     public void setUp() {
         decoderReader = mock(DecoderReader.class);
+        decoderReaderFactory = mock(DecoderReaderFactory.class);
+        when(decoderReaderFactory.createInstance()).thenReturn(decoderReader);
         decoderRepository = mock(DecoderRepository.class);
         decoderFunctionRepository = mock(DecoderFunctionRepository.class);
         decoders = new Decoders();
-        decoders.setDecoderReader(decoderReader);
+        decoders.setDecoderReaderFactory(decoderReaderFactory);
         decoders.setDecoderRepository(decoderRepository);
         decoders.setDecoderFunctionRepository(decoderFunctionRepository);
     }

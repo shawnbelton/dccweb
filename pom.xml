@@ -33,7 +33,7 @@
             <id>shawn</id>
             <name>Shawn Belton</name>
             <roles>
-                <role>Load</role>
+                <role>Lead</role>
             </roles>
         </developer>
     </developers>
@@ -58,17 +58,21 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.6</version>
-                <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
-                </configuration>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <id>clean</id>
+                        <phase>pre-site</phase>
                         <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>instrument</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>instrument</goal>
                             <goal>cobertura</goal>
+                            <goal>check</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -104,14 +108,33 @@
                 <reportSets>
                     <reportSet>
                         <reports>
-                            <report>index</report>
+                            <report>summary</report>
                             <report>project-team</report>
                             <report>scm</report>
-                            <report>summary</report>
                             <report>modules</report>
                         </reports>
                     </reportSet>
                 </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>LATEST</version>
+                <configuration>
+                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+                    <docletArtifact>
+                        <groupId>org.umlgraph</groupId>
+                        <artifactId>umlgraph</artifactId>
+                        <version>LATEST</version>
+                    </docletArtifact>
+                    <additionalparam>-views -all</additionalparam>
+                    <useStandardDocletOptions>true</useStandardDocletOptions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
             </plugin>
         </plugins>
     </reporting>

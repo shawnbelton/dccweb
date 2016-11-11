@@ -24,11 +24,11 @@ public class NceUpdateFunctionsMessage extends AbstractNceMessage implements Nce
 
     public NceUpdateFunctionsMessage() {
         operationMap = new HashMap<Integer, Integer>();
-        operationMap.put(4,7);
-        operationMap.put(8,8);
-        operationMap.put(12,9);
-        operationMap.put(20,15);
-        operationMap.put(28,16);
+        operationMap.put(4,0x07);
+        operationMap.put(8,0x08);
+        operationMap.put(12,0x09);
+        operationMap.put(20,0x15);
+        operationMap.put(28,0x16);
     }
 
     @Override
