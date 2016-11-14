@@ -1,13 +1,13 @@
-package uk.co.redkiteweb.dccweb.webapp.data.store;
+package uk.co.redkiteweb.dccweb.data.store;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
 
 import java.util.ArrayList;
 

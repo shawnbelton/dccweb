@@ -2,7 +2,9 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 /**
  * Created by shawn on 13/11/16.
@@ -11,10 +13,19 @@ import org.springframework.web.bind.annotation.*;
 public class Blocks {
     private static final Logger LOGGER = LogManager.getLogger(Blocks.class);
 
+    private LogStore logStore;
+
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
+    }
+
     @RequestMapping(value = "/block/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
     public @ResponseBody Boolean blockOccupancy(@PathVariable final Integer blockNumber,
                                                 @PathVariable final Boolean occupied) {
-        LOGGER.info(String.format("Block Number %d is now %s", blockNumber, occupied));
+        final String message = String.format("Block Number %d is now %s.", blockNumber, occupied?"Occupied":"Unoccupied");
+        logStore.log("info", message);
+        LOGGER.info(message);
         return Boolean.TRUE;
     }
 

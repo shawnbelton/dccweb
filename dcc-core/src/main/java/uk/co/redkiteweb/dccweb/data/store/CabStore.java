@@ -1,11 +1,11 @@
-package uk.co.redkiteweb.dccweb.webapp.data.store;
+package uk.co.redkiteweb.dccweb.data.store;
 
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.Cab;
+import uk.co.redkiteweb.dccweb.data.CabFunction;
+import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
-import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
-import uk.co.redkiteweb.dccweb.webapp.data.CabFunctionComparator;
 
 import java.util.HashMap;
 import java.util.Map;

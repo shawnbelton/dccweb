@@ -1,15 +1,15 @@
-package uk.co.redkiteweb.dccweb.webapp.services;
+package uk.co.redkiteweb.dccweb.services;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import uk.co.redkiteweb.dccweb.data.Cab;
+import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
-import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
 
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.*;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_128;

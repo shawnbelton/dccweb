@@ -86,3 +86,4 @@ fabric.properties
 *.log
 dccweb.db/
 logs/
+hardware/blockcontroller/.idea/
