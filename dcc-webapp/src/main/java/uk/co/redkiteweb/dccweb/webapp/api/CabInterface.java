@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.webapp.services.CabService;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
-import uk.co.redkiteweb.dccweb.webapp.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.services.CabService;
 
 /**
  * Created by shawn on 12/09/16.

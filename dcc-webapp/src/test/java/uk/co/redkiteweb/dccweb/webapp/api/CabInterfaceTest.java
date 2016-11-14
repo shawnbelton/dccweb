@@ -4,15 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
-import uk.co.redkiteweb.dccweb.webapp.data.store.CabStore;
-import uk.co.redkiteweb.dccweb.webapp.services.CabService;
+import uk.co.redkiteweb.dccweb.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.services.CabService;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 12/09/16.

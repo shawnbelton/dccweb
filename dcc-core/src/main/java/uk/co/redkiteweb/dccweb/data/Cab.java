@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.webapp.data;
+package uk.co.redkiteweb.dccweb.data;
 
 import uk.co.redkiteweb.dccweb.data.model.Train;
 

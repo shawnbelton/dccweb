@@ -1,18 +1,18 @@
-package uk.co.redkiteweb.dccweb.webapp.services;
+package uk.co.redkiteweb.dccweb.services;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.Cab;
+import uk.co.redkiteweb.dccweb.data.CabFunction;
+import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
-import uk.co.redkiteweb.dccweb.webapp.data.Cab;
-import uk.co.redkiteweb.dccweb.webapp.data.CabFunction;
-import uk.co.redkiteweb.dccweb.webapp.data.CabFunctionComparator;
 
 import java.util.Set;
 import java.util.TreeSet;

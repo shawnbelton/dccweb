@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.webapp.data;
+package uk.co.redkiteweb.dccweb.data;
 
 import org.junit.Before;
 import org.junit.Test;

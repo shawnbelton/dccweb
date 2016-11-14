@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
 

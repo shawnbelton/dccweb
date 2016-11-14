@@ -86,3 +86,14 @@ fabric.properties
 *.log
 dccweb.db/
 logs/
+hardware/blockcontroller/.idea/
+hardware/blockcontroller/build/CMakeFiles/
+hardware/blockcontroller/build/*.eep
+hardware/blockcontroller/build/*.elf
+hardware/blockcontroller/build/*.hex
+hardware/blockcontroller/build/*.cpp
+hardware/blockcontroller/build/*.a
+hardware/blockcontroller/build/cmake_install.cmake
+hardware/blockcontroller/build/CMakeCache.txt
+hardware/blockcontroller/build/Makefile
+

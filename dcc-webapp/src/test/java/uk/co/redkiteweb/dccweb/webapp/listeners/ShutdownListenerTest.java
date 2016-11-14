@@ -7,10 +7,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.context.event.ContextClosedEvent;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 18/06/16.

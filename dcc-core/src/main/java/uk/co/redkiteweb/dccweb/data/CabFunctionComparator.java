@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.webapp.data;
+package uk.co.redkiteweb.dccweb.data;
 
 import java.io.Serializable;
 import java.util.Comparator;
