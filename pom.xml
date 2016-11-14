@@ -60,15 +60,8 @@
                 <version>2.6</version>
                 <executions>
                     <execution>
-                        <id>clean</id>
-                        <phase>pre-site</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                    <execution>
                         <id>instrument</id>
-                        <phase>site</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>instrument</goal>
                             <goal>cobertura</goal>
