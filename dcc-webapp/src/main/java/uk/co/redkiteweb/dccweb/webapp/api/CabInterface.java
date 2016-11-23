@@ -30,13 +30,11 @@ public class CabInterface {
         this.cabService = cabService;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/trains/cab", method = RequestMethod.POST)
     public @ResponseBody Cab getCab(@RequestBody final Train train) {
         return cabStore.getCab(train);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/trains/cab/update", method = RequestMethod.POST)
     public @ResponseBody Boolean updateCab(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating %s to %d speed %s direction.", cab.getTrain().getNumber(), cab.getSpeed(), cab.getDirection()));
@@ -45,7 +43,6 @@ public class CabInterface {
         return Boolean.TRUE;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/trains/cab/updateFunction", method = RequestMethod.POST)
     public @ResponseBody Boolean updateCabFunction(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating functions on %s", cab.getTrain().getNumber()));

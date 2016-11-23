@@ -11,7 +11,7 @@ import {Status} from "./status";
 export class StatusService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private statusUrl = 'http://localhost:8090/interface/status';
+    private statusUrl = '/interface/status';
 
     constructor(private http: Http) {}
 

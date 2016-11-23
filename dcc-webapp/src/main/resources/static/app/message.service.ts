@@ -11,7 +11,7 @@ import {Message} from "./message";
 export class MessageService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private logEntryUrl = 'http://localhost:8090/messages';
+    private logEntryUrl = '/messages';
 
     constructor(private http: Http) {}
 

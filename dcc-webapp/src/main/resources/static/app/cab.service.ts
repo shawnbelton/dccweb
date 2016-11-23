@@ -11,9 +11,9 @@ import {Train} from "./train";
 export class CabService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private fetchCabUrl = 'http://localhost:8090/trains/cab';
-    private updateCabUrl = 'http://localhost:8090/trains/cab/update';
-    private updateCabFunctionUrl = 'http://localhost:8090/trains/cab/updateFunction';
+    private fetchCabUrl = '/trains/cab';
+    private updateCabUrl = '/trains/cab/update';
+    private updateCabFunctionUrl = '/trains/cab/updateFunction';
 
     private _cab: BehaviorSubject<Cab> = new BehaviorSubject(null);
     private cab: Observable<Cab> = this._cab.asObservable();

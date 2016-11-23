@@ -12,10 +12,10 @@ import {DecoderFunction} from "./decoderFunction";
 export class DecoderService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private decodersUrl = 'http://localhost:8090/decoders/all';
-    private readDecoderUrl = 'http://localhost:8090/decoders/read';
-    private fetchDecoderUrl = 'http://localhost:8090/decoders/byId/';
-    private addFunctionUrl = 'http://localhost:8090/decoders/function/add';
+    private decodersUrl = '/decoders/all';
+    private readDecoderUrl = '/decoders/read';
+    private fetchDecoderUrl = '/decoders/byId/';
+    private addFunctionUrl = '/decoders/function/add';
 
     private _decoders: BehaviorSubject<Decoder[]> = new BehaviorSubject([]);
     private decoders: Observable<Decoder[]> = this._decoders.asObservable();

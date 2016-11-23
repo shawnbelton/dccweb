@@ -1,50 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html
+        xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    <base href="/"/>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge, chrome=1"/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.min.css}"
           rel="stylesheet" media="screen"/>
     <link href="http://cdn.jsdelivr.net/webjars/jquery-ui/1.11.4/jquery-ui.min.css"
-          th:href="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.css}"
           rel="stylesheet" media="screen"/>
     <link href="http://cdn.jsdelivr.net/webjars/angularjs/1.5.7/angular-csp.css"
-          th:href="@{/webjars/angulajs/1.5.7/angular-csp.css}"
           rel="stylesheet" media="screen"/>
     <link href="/css/slider.css" rel="stylesheet" media="screen"/>
     <link href="/css/dcc-web.css" rel="stylesheet" media="screen"/>
-    <!--<link href="/css/traincontroller.css" rel="stylesheet" media="screen"/>-->
-    <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">DCC Web</title>
+    <title>DCC Web</title>
+    <!-- 1. Load libraries -->
+    <!-- Polyfill for older browsers -->
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="js/systemjs.config.js"></script>
+    <script>
+        System.import('app').catch(function(err){ console.error(err); });
+    </script>
 </head>
-<body ng-app="dccweb">
-<header th:replace="layouts/header :: header"/>
-<main role="main">
+<!-- 3. Display the application -->
+<body>
+<dcc-app>Loading...</dcc-app>
+<footer role="contentinfo">
     <div class="container">
-        <div ng-view="ng-view"></div>
+        <dcc-messages>Loading...</dcc-messages>
     </div>
-
-</main>
-<footer th:replace="layouts/header :: footer"/>
-<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
-        th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
-<script src="http://cdn.jsdelivr.net/webjars/jquery-ui/1.11.4/jquery-ui.min.js"
-        th:src="@{/webjars/jquery-ui/1.11.4/jquery-ui.min.js}"></script>
-<script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.6/js/bootstrap.min.js"
-        th:src="@{/webjars/bootstrap/3.3.6/js/bootstrap.min.js}"></script>
-<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.7/angular.js"
-        th:src="@{/webjars/angularjs/1.5.7/angular.js}"></script>
-<script src="http://cdn.jsdelivr.net/webjars/angularjs/1.5.7/angular-route.js"
-        th:src="@{/webjars/angularjs/1.5.7/angular-route.js}"></script>
-<script src="/js/dcc-web.js"></script>
-<script src="/js/dcc-web-trains.js"></script>
-<script src="/js/dcc-web-info.js"></script>
-<script src="/js/dcc-web-decoders.js"></script>
-<script src="/js/dcc-web-menu.js"></script>
-<script src="/js/dcc-web-home.js"></script>
+    <div class="navbar navbar-inverse navbar-fixed-bottom">
+        <div class="container">
+            <div class="navbar-header">
+                <p class="navbar-text">DCC Web &copy; 2016</p>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <dcc-status>Loading...</dcc-status>
+            </div>
+        </div>
+    </div>
+</footer>
 </body>
 </html>
