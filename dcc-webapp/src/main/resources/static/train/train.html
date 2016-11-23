@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default panel-primary">
+            <div class="panel-heading">Engine Shed</div>
+            <div class="list-group" *ngIf="!mode">
+                <div class="list-group-item" *ngFor="let train of trains">
+                    <div class="list-group-item-heading">
+                        <input type="button" class="btn btn-info btn-xs" value="Drive" (click)="driveTrain(train)"/>
+                        {{train.number}} {{train.name}}
+                        <div class="pull-right">
+                            <input type="button" class="btn btn-success btn-xs" (click)="startEditTrain(train)" value="Edit"/>
+                            <input type="button" class="btn btn-primary btn-xs" (click)="configure(train)" value="Configure"/>
+                        </div>
+                    </div>
+                    <div class="list-group-item-text" *ngIf="train.showConfig">
+                        <form id="updateConfig" class="form-horizontal" name="updateConfig" (ngSubmit)="assignDecoder(train)">
+                            <div class="form-group">
+                                <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
+                                <div class="col-sm-9">
+                                    <select name="decoder" ngControl="decoder" id="decoder" class="form-control" [(ngModel)]="train.decoder.decoderId">
+                                        <option *ngFor="let decoder of decoders" [value]="decoder.decoderId">Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="clearfix">
+                                <div class="pull-right">
+                                    <input type="submit" value="Assign" class="btn btn-xs btn-success"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer clearfix" *ngIf="!mode">
+                <input type="button" class="btn btn-success btn-sm pull-right" value="Add Train" (click)="newTrain()"/>
+            </div>
+            <div class="panel-body" *ngIf="mode">
+                <form id="createTrain" class="form-horizontal" name="createTrain" (ngSubmit)="saveTrain()" #trainForm="ngForm">
+                    <div class="form-group">
+                        <label for="trainNumber" class="col-sm-3 control-label">Train Number</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="trainNumber" name="trainNumber" class="form-control" placeholder="Train Number"
+                                   [(ngModel)]="editTrain.number" required="required" #trainNumber="ngModel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="trainName" class="col-sm-3 control-label">Train Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="trainName" name="trainName" class="form-control" placeholder="Train Name"
+                                [(ngModel)]="editTrain.name" #trainName="ngModel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="pull-right">
+                                <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
+                                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!trainForm.form.valid"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <dcc-cab></dcc-cab>
+    </div>
+</div>

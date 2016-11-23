@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default panel-primary">
+            <div class="panel-heading">
+                <span>Decoder Settings</span>
+                <span class="pull-right">
+                    <input id="readDecoder" type="button" class="btn btn-info btn-xs" (click)="readDecoder()" value="Read Values"/>
+                </span>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item">
+                    <p class="row">
+                        <label class="col-sm-3">Manufacturer:</label>
+                        <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.dccManufacturer.manufacturer}}</span>
+                    </p>
+                    <p class="row">
+                        <label class="col-sm-3">Version:</label>
+                        <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.version}}</span>
+                    </p>
+                    <p class="row">
+                        <label class="col-sm-3">Short Address:</label>
+                        <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.shortAddress}}</span>
+                    </p>
+                    <p class="row">
+                        <label class="col-sm-3">Long Address:</label>
+                        <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.longAddress}}</span>
+                    </p>
+                </div>
+            </div>
+            <div class="panel-heading" *ngIf="currentDecoder!=null">
+                <span>Decoder Functions</span>
+            </div>
+            <div class="list-group" *ngIf="currentDecoder!=null">
+                <div class="list-group-item" *ngFor="let decoderFunction of currentDecoder.decoderFunctions">
+                    <div>
+                        <span>{{decoderFunction.number}} {{decoderFunction.name}}</span>
+                        <div class="pull-right">
+                            <input type="button" class="btn btn-danger btn-xs" value="Remove"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="list-group-item">
+                    <form id="addFunction" class="form-inline" name="addFunction" (ngSubmit)="addDecoderFunction()" #addFunction="ngForm">
+                        <div class="form-group form-group-sm">
+                            <label for="functionNumber">Number</label>
+                            <select class="form-control" id="functionNumber" name="functionNumber" required="required"
+                                    [(ngModel)]="newDecoderFunction.number" #functionNumber="ngModel">
+                                <option *ngFor="let availableFunction of availableFunctions" [value]="availableFunction">{{availableFunction}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <label for="functionName">Name</label>
+                            <input type="text" required="required" class="form-control" id="functionName" name="functionName"
+                                [(ngModel)]="newDecoderFunction.name" #functionName="ngModel"/>
+                        </div>
+                        <div class="pull-right">
+                            <input type="submit" id="saveFunction" class="btn btn-sm btn-success" value="Add Function"
+                                   [disabled]="!addFunction.form.valid"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default panel-primary">
+            <div class="panel-heading"><span>Decoders</span></div>
+            <div class="list-group">
+                <div class="list-group-item" *ngFor="let decoder of decoders">
+                    <div>
+                        Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}
+                        <div class="pull-right">
+                            <input type="button" class="btn btn-success btn-xs" (click)="editDecoder(decoder)" value="Edit"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

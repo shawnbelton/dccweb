@@ -5,11 +5,8 @@
 #include "Notifier.h"
 
 byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-IPAddress ip(192,168,0,75);
-IPAddress gateway(192,168,0,1);
-IPAddress submask(255,255,255,0);
 
-IPAddress server(192,168,0,19);
+IPAddress server(192,168,1,1);
 
 EthernetClient client;
 
@@ -19,7 +16,6 @@ void Notifier::init() {
     digitalWrite(4, HIGH);
 
     Serial.print(F("Starting Ethernet.."));
-    //Ethernet.begin(mac, ip, gateway, gateway, submask);
 
     if (!Ethernet.begin(mac)) {
         Serial.println("Fail");

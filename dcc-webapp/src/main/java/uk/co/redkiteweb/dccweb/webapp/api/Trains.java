@@ -2,14 +2,11 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by shawn on 24/06/16.

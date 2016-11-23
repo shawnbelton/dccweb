@@ -45,8 +45,8 @@ public class Decoders {
         return (List<Decoder>)decoderRepository.findAll();
     }
 
-    @RequestMapping(value = "/decoders/byId", method = RequestMethod.POST)
-    public @ResponseBody Decoder getById(@RequestBody final Integer decoderId) {
+    @RequestMapping(value = "/decoders/byId/{decoderId}", method = RequestMethod.GET)
+    public @ResponseBody Decoder getById(@PathVariable final Integer decoderId) {
         return decoderRepository.findOne(decoderId);
     }
 

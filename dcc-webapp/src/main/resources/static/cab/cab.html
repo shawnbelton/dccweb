@@ -1,0 +1,36 @@
+<div class="panel panel-success" *ngIf="cab!=null">
+    <div class="panel-heading">{{cab.train.number}} {{cab.train.name}}</div>
+    <div class="panel-body">
+        <form id="trainCab" name="trainCab" class="form-horizontal" #trainCab="ngForm">
+            <div class="input-group-lg">
+                <input id="slider1" name="slider1" class="form-control" type="range" [(ngModel)]="cab.speed" (change)="speedChange()"
+                       min="0" max="127" step="1" #slider1="ngModel" [disabled]="cab.direction == 'FSTOP' || cab.direction == 'RSTOP'" />
+            </div>
+            <div class="btn-toolbar" role="toolbar">
+                <div class="btn-group" role="group">
+                    <button type="button" (click)="down()" class="btn btn-sm"
+                            [ngClass]="{'btn-info': cab.direction != 'DOWN', 'btn-success': cab.direction == 'DOWN'}">&lt;&lt;</button>
+                    <button type="button" (click)="up()" class="btn btn-sm"
+                            [ngClass]="{'btn-info': cab.direction != 'UP', 'btn-success': cab.direction == 'UP'}">&gt;&gt;</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" (click)="halt()" class="btn btn-sm btn-warning">Halt</button>
+                </div>
+                <div class="btn-group pull-right" role="group">
+                    <button type="button" (click)="stop()" class="btn btn-sm"
+                            [ngClass]="{'btn-info': cab.direction !='RSTOP' && cab.direction != 'FSTOP','btn-danger': cab.direction == 'RSTOP' || cab.direction == 'FSTOP'}">Stop</button>
+                </div>
+            </div>
+            <div class="row top10">
+                <div class="col-xs-12">
+                    <ul class="list-inline">
+                        <li *ngFor="let cabFunction of cab.cabFunctions">
+                            <input type="button" (click)="toggleFunction(cabFunction)" class="btn btn-sm"
+                                   [ngClass]="{'btn-primary': cabFunction.state, 'btn-default': !cabFunction.state}" value="{{cabFunction.name}}"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
