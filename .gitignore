@@ -97,3 +97,7 @@ hardware/blockcontroller/build/cmake_install.cmake
 hardware/blockcontroller/build/CMakeCache.txt
 hardware/blockcontroller/build/Makefile
 
+
+dcc-webapp/src/main/resources/static/app/*.js.map
+dcc-webapp/src/main/resources/static/app/*.js
+dcc-webapp/src/main/resources/static/node_modules/

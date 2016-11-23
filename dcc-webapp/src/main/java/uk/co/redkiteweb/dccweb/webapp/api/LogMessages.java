@@ -1,6 +1,9 @@
 package uk.co.redkiteweb.dccweb.webapp.api;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +18,8 @@ import java.util.List;
 @RestController
 public class LogMessages {
 
+    private static final Logger LOGGER = LogManager.getLogger(LogMessages.class);
+
     private LogStore logStore;
 
     @Autowired
@@ -22,8 +27,10 @@ public class LogMessages {
         this.logStore = logStore;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/messages")
     public @ResponseBody List<LogEntry> getMessages() {
+        LOGGER.info("Log Messages Requested");
         return logStore.getLastSix();
     }
 

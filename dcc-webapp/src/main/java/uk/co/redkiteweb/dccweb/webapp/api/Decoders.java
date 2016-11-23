@@ -35,21 +35,25 @@ public class Decoders {
         this.decoderReaderFactory = decoderReaderFactory;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/decoders/read")
     public @ResponseBody Decoder readDecoder() {
         return decoderReaderFactory.createInstance().readDecoderOnProgram();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/decoders/all")
     public @ResponseBody List<Decoder> allDecoders() {
         return (List<Decoder>)decoderRepository.findAll();
     }
 
-    @RequestMapping(value = "/decoders/byId", method = RequestMethod.POST)
-    public @ResponseBody Decoder getById(@RequestBody final Integer decoderId) {
+    @CrossOrigin(origins = "http://localhost:3000")
+    @RequestMapping(value = "/decoders/byId/{decoderId}", method = RequestMethod.GET)
+    public @ResponseBody Decoder getById(@PathVariable final Integer decoderId) {
         return decoderRepository.findOne(decoderId);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/decoders/function/add", method = RequestMethod.POST)
     public @ResponseBody Decoder addFunction(@RequestBody final DecoderFunction decoderFunction) {
         decoderFunctionRepository.save(decoderFunction);

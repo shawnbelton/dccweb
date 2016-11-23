@@ -2,14 +2,11 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Train;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by shawn on 24/06/16.
@@ -30,11 +27,13 @@ public class Trains {
         this.logStore = logStore;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping("/trains")
     public @ResponseBody List<Train> getAllTrains() {
         return (List<Train>)trainRepository.findAll();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/trains/save", method = RequestMethod.POST)
     public @ResponseBody List<Train> saveTrain(@RequestBody final Train train) {
         trainRepository.save(train);
