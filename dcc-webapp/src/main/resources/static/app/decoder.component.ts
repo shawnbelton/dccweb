@@ -39,6 +39,10 @@ export class DecoderComponent implements OnInit {
         this.decoderService.addDecoderFunction(this.newDecoderFunction);
     }
 
+    deleteDecoderFunction(decoderFunction: DecoderFunction): void {
+        this.decoderService.deleteDecoderFunction(decoderFunction);
+    }
+
     private setCurrentDecoder(decoder: Decoder): void {
         this.currentDecoder = decoder;
         this.availableFunctions = new Array();

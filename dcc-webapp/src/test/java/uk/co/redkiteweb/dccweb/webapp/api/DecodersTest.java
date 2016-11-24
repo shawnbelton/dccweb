@@ -70,4 +70,15 @@ public class DecodersTest {
         assertNotNull(decoders.addFunction(decoderFunction));
         verify(decoderFunctionRepository, times(1)).save(any(DecoderFunction.class));
     }
+
+    @Test
+    public void testDeleteFunction() {
+        final DecoderFunction decoderFunction = new DecoderFunction();
+        decoderFunction.setDecoderId(1);
+        decoderFunction.setNumber(1);
+        decoderFunction.setName("Sound");
+        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        assertNotNull(decoders.deleteFunction(decoderFunction));
+        verify(decoderFunctionRepository, times(1)).delete(any(DecoderFunction.class));
+    }
 }

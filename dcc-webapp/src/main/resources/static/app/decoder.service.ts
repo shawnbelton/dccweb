@@ -16,6 +16,7 @@ export class DecoderService {
     private readDecoderUrl = '/decoders/read';
     private fetchDecoderUrl = '/decoders/byId/';
     private addFunctionUrl = '/decoders/function/add';
+    private deleteFunctionUrl = '/decoders/function/delete';
 
     private _decoders: BehaviorSubject<Decoder[]> = new BehaviorSubject([]);
     private decoders: Observable<Decoder[]> = this._decoders.asObservable();
@@ -47,6 +48,12 @@ export class DecoderService {
 
     addDecoderFunction(decoderFunction: DecoderFunction): void {
         this.http.post(this.addFunctionUrl, decoderFunction).map(response => response.json()).subscribe(data => {
+            this._decoder.next(data);
+        }, error => console.log('Could not load decoder.'));
+    }
+
+    deleteDecoderFunction(decoderFunction: DecoderFunction): void {
+        this.http.post(this.deleteFunctionUrl, decoderFunction).map(response => response.json()).subscribe(data => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }
