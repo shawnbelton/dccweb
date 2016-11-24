@@ -55,4 +55,10 @@ public class Decoders {
         decoderFunctionRepository.save(decoderFunction);
         return decoderRepository.findOne(decoderFunction.getDecoderId());
     }
+
+    @RequestMapping(value = "/decoders/function/delete", method = RequestMethod.POST)
+    public @ResponseBody Decoder deleteFunction(@RequestBody final DecoderFunction decoderFunction) {
+        decoderFunctionRepository.delete(decoderFunction);
+        return decoderRepository.findOne(decoderFunction.getDecoderId());
+    }
 }

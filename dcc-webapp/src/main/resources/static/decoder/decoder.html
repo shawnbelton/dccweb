@@ -35,7 +35,7 @@
                     <div>
                         <span>{{decoderFunction.number}} {{decoderFunction.name}}</span>
                         <div class="pull-right">
-                            <input type="button" class="btn btn-danger btn-xs" value="Remove"/>
+                            <input type="button" class="btn btn-danger btn-xs" (click)="deleteDecoderFunction(decoderFunction)" value="Remove"/>
                         </div>
                     </div>
                 </div>

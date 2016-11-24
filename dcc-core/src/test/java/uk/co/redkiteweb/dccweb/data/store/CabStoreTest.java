@@ -8,10 +8,14 @@ import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by shawn on 12/09/16.
@@ -21,10 +25,13 @@ public class CabStoreTest {
 
     private CabStore cabStore;
     private Train train;
+    private DecoderRepository decoderRepository;
 
     @Before
     public void setup() {
+        decoderRepository = mock(DecoderRepository.class);
         cabStore = new CabStore();
+        cabStore.setDecoderRepository(decoderRepository);
         train = new Train();
         train.setTrainId(1);
         train.setNumber("12345");
@@ -53,6 +60,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderNoFunctions() {
         final Decoder decoder = new Decoder();
+        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
         train.setDecoder(decoder);
         assertEquals(0, cabStore.getCab(train).getCabFunctions().size());
@@ -61,6 +69,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderOneFunction() {
         final Decoder decoder = new Decoder();
+        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
         decoder.getDecoderFunctions().add(getDecoderFunction(1, "Name"));
         train.setDecoder(decoder);
@@ -70,6 +79,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderFunctionAdded() {
         final Decoder decoder = new Decoder();
+        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
         decoder.getDecoderFunctions().add(getDecoderFunction(1, "Name"));
         train.setDecoder(decoder);

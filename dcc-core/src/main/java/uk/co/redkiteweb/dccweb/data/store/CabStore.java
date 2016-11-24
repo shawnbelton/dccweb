@@ -1,11 +1,14 @@
 package uk.co.redkiteweb.dccweb.data.store;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
+import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,10 +21,16 @@ import java.util.TreeSet;
 @Component
 public class CabStore {
 
+    private DecoderRepository decoderRepository;
     private final Map<Integer, Cab> cabStore;
 
     public CabStore() {
         cabStore = new HashMap<Integer, Cab>();
+    }
+
+    @Autowired
+    public void setDecoderRepository(final DecoderRepository decoderRepository) {
+        this.decoderRepository = decoderRepository;
     }
 
     public void putCab(final Cab cab) {
@@ -45,10 +54,11 @@ public class CabStore {
         return cab;
     }
 
-    private static void buildSetCabFunctions(final Cab cab) {
+    private void buildSetCabFunctions(final Cab cab) {
         final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
         if (cab.getTrain().getDecoder()!=null && cab.getTrain().getDecoder().getDecoderFunctions()!=null) {
-            for(DecoderFunction decoderFunction : cab.getTrain().getDecoder().getDecoderFunctions()) {
+            final Decoder decoder  = decoderRepository.findOne(cab.getTrain().getDecoder().getDecoderId());
+            for(DecoderFunction decoderFunction : decoder.getDecoderFunctions()) {
                 newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));
             }
         }
