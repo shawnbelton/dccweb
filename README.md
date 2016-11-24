@@ -6,10 +6,18 @@ The application is built using the following components:
 
 - Maven
 - Java
+- NPM
 - Spring Boot
-- AngularJS
+- Angular 2
 - Bootstrap
 - RXTX Serial Communication
+
+Pre-requisites for building the application are that the following are installed.
+
+- Maven Minimum version 3.2.3
+- Java JDK 1.8
+- NPM Minimum version 3.5.2
+- RXTX binary libraries
     
 Build the application by using the following maven command
 > mvn clean package
