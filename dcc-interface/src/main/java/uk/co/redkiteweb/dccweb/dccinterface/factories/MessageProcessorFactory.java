@@ -1,10 +1,11 @@
 package uk.co.redkiteweb.dccweb.dccinterface.factories;
 
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
 /**
  * Created by shawn on 07/07/16.
@@ -12,13 +13,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class MessageProcessorFactory implements ApplicationContextAware {
 
-    private String interfaceId;
-
     private ApplicationContext context;
+    private SettingsService settingsService;
 
-    @Value("${interfaceId}")
-    public void setInterfaceId(final String interfaceId) {
-        this.interfaceId = interfaceId;
+    @Autowired
+    public void setSettingsService(final SettingsService settingsService) {
+        this.settingsService = settingsService;
     }
 
     @Override
@@ -27,7 +27,7 @@ public class MessageProcessorFactory implements ApplicationContextAware {
     }
 
     public MessageProcessor getInstance() {
-        return context.getBean(interfaceId, MessageProcessor.class);
+        return context.getBean(settingsService.getSettingValue("InterfaceType", "Demo"), MessageProcessor.class);
     }
 
 }

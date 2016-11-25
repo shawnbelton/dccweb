@@ -5,11 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
+import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 08/07/16.
@@ -19,18 +19,21 @@ public class MessageProcessingFactoryTest {
 
     private MessageProcessorFactory messageProcessorFactory;
     private ApplicationContext context;
+    private SettingsService settingsService;
 
     @Before
     public void setUp() {
+        settingsService = mock(SettingsService.class);
         context = mock(ApplicationContext.class);
         messageProcessorFactory = new MessageProcessorFactory();
         messageProcessorFactory.setApplicationContext(context);
+        messageProcessorFactory.setSettingsService(settingsService);
+        when(settingsService.getSettingValue(anyString(), anyString())).thenReturn("Demo");
     }
 
     @Test
     public void getInstanceTest() {
-        messageProcessorFactory.setInterfaceId("TEST");
         messageProcessorFactory.getInstance();
-        verify(context, times(1)).getBean(eq("TEST"), eq(MessageProcessor.class));
+        verify(context, times(1)).getBean(eq("Demo"), eq(MessageProcessor.class));
     }
 }
