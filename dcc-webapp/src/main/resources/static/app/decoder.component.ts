@@ -59,7 +59,7 @@ export class DecoderComponent implements OnInit {
 
     private hasFunction(index: number): boolean {
         var found = false;
-        if (this.currentDecoder != null) {
+        if (this.currentDecoder != null && this.currentDecoder.decoderFunctions != null) {
             for (let decoderFunction of this.currentDecoder.decoderFunctions) {
                 if (decoderFunction.number == index) {
                     found = true;

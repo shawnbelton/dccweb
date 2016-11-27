@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.core.env.Environment;
+import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyString;
@@ -20,17 +21,20 @@ public class NcePortIdentifierTest {
 
     private NcePortIdentifier ncePortIdentifier;
     private Environment environment;
+    private SettingsService settingsService;
 
     @Before
     public void setUp() {
+        settingsService = mock(SettingsService.class);
         environment = mock(Environment.class);
         ncePortIdentifier = new NcePortIdentifier();
         ncePortIdentifier.setEnvironment(environment);
+        ncePortIdentifier.setSettingsService(settingsService);
     }
 
     @Test
     public void getTest() {
-        when(environment.getProperty(anyString())).thenReturn("/dev/ttyS0");
+        when(settingsService.getSettingValue(anyString(), anyString())).thenReturn("/dev/ttyS0");
         try {
             ncePortIdentifier.getInstance();
         } catch (NoSuchPortException exception) {

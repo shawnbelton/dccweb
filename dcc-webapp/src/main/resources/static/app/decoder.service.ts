@@ -25,10 +25,10 @@ export class DecoderService {
     private decoder: Observable<Decoder> = this._decoder.asObservable();
 
     constructor(private http: Http) {
-        this.loadInitialData();
+        this.fetchDecoders();
     }
 
-    loadInitialData(): void {
+    fetchDecoders(): void {
         this.http.get(this.decodersUrl).map(response => response.json()).subscribe(data => {
             this._decoders.next(data);
         }, error => console.log('Could not load decoders.'));
@@ -37,12 +37,14 @@ export class DecoderService {
     fetchDecoder(decoderId: number): void {
         this.http.get(this.fetchDecoderUrl + decoderId).map(response => response.json()).subscribe(data => {
             this._decoder.next(data);
+            this.fetchDecoders();
         }, error => console.log('Could not load decoder.'));
     }
 
     readDecoder(): void {
         this.http.get(this.readDecoderUrl).map(response => response.json()).subscribe(data => {
             this._decoder.next(data);
+            this.fetchDecoders();
         }, error => console.log('Could not load decoder.'));
     }
 
