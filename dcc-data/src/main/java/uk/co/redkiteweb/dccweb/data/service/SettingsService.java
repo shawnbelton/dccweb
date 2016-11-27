@@ -39,17 +39,22 @@ public class SettingsService {
             systemParameter = systemParameterRepository.findByName(name);
             if (systemParameter == null) {
                 systemParameter = setSettingValue(name, defaultValue);
+            } else {
+                settingsMap.put(name, systemParameter);
             }
-            settingsMap.put(name, systemParameter);
         }
         return systemParameter.getValue();
     }
 
     public SystemParameter setSettingValue(final String name, final String value) {
-        final SystemParameter systemParameter = new SystemParameter();
+        SystemParameter systemParameter = systemParameterRepository.findByName(name);
+        if (systemParameter==null) {
+            systemParameter = new SystemParameter();
+        }
         systemParameter.setName(name);
         systemParameter.setValue(value);
         systemParameterRepository.save(systemParameter);
+        settingsMap.put(name, systemParameter);
         return systemParameter;
     }
 }

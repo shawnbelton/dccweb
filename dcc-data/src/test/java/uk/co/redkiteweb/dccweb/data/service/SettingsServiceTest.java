@@ -61,4 +61,18 @@ public class SettingsServiceTest {
         when(systemParameterRepository.findAll()).thenReturn(settingsList);
         assertNotNull(settingsService.getAllSettings());
     }
+
+    @Test
+    public void testNewSaveSetting() {
+        when(systemParameterRepository.findByName(anyString())).thenReturn(null);
+        settingsService.setSettingValue("TEST", "VALUE");
+        verify(systemParameterRepository, times(1)).save(any(SystemParameter.class));
+    }
+
+    @Test
+    public void testUpdateSetting() {
+        when(systemParameterRepository.findByName(anyString())).thenReturn(new SystemParameter());
+        settingsService.setSettingValue("TEST", "VALUE");
+        verify(systemParameterRepository, times(1)).save(any(SystemParameter.class));
+    }
 }

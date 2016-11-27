@@ -1,9 +1,6 @@
 package uk.co.redkiteweb.dccweb.data.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -28,6 +25,7 @@ public class SystemParameter implements Serializable {
         this.settingId = settingId;
     }
 
+    @Column(unique = true, nullable = false)
     public String getName() {
         return name;
     }
@@ -36,6 +34,7 @@ public class SystemParameter implements Serializable {
         this.name = name;
     }
 
+    @Column(nullable = false)
     public String getValue() {
         return value;
     }

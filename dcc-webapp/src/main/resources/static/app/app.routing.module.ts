@@ -5,11 +5,13 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {TrainComponent} from "./train.component";
 import {DecoderComponent} from "./decoder.component";
+import {SettingsComponent} from "./settings.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/engineshed', pathMatch: 'full'},
     { path: 'engineshed', component: TrainComponent },
-    { path: 'decoders', component: DecoderComponent }
+    { path: 'decoders', component: DecoderComponent },
+    { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({

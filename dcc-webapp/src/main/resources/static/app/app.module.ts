@@ -15,6 +15,8 @@ import {TrainService} from "./train.service";
 import {FormsModule} from "@angular/forms";
 import {CabComponent} from "./cab.component";
 import {CabService} from "./cab.service";
+import {SettingsComponent} from "./settings.component";
+import {SettingsService} from "./settings.service";
 
 @NgModule({
     imports: [
@@ -29,14 +31,16 @@ import {CabService} from "./cab.service";
         MessageComponent,
         TrainComponent,
         DecoderComponent,
-        CabComponent
+        CabComponent,
+        SettingsComponent
     ],
     providers: [
         MessageService,
         StatusService,
         DecoderService,
         TrainService,
-        CabService
+        CabService,
+        SettingsService
     ],
     bootstrap: [
         AppComponent,

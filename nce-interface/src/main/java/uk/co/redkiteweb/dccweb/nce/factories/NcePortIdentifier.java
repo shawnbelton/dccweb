@@ -28,7 +28,7 @@ public class NcePortIdentifier {
     }
 
     public CommPortIdentifier getInstance() throws NoSuchPortException {
-        final String connectionName = settingsService.getSettingValue("NcePort", "/dev/ttyUSB0");
+        final String connectionName = settingsService.getSettingValue("SerialPort", "/dev/ttyUSB0");
         System.setProperty("gnu.io.rxtx.SerialPorts", connectionName);
         return CommPortIdentifier.getPortIdentifier(connectionName);
     }
