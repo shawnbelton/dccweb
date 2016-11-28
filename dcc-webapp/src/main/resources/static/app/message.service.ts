@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
-import {Observable} from "rxjs/Rx";
+import {Observable, BehaviorSubject} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Message} from "./message";
 
@@ -13,24 +13,25 @@ export class MessageService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private logEntryUrl = '/messages';
 
-    constructor(private http: Http) {}
+    private _messages: BehaviorSubject<Message[]> = new BehaviorSubject([]);
+    private messages: Observable<Message[]> = this._messages.asObservable();
 
-    getMessagePromise(): Promise<Message[]> {
-        return this.http.get(this.logEntryUrl)
-            .toPromise()
-            .then(response => response.json() as Message[])
-            .catch(this.handleError);
+    constructor(private http: Http) {
+        this.startFetchingMessages();
+    }
+
+    fetchMessages(): void {
+        this.http.get(this.logEntryUrl).map(response => response.json()).subscribe(data => {
+            this._messages.next(data);
+        }, error => console.log('Could not get messages.'));
     }
 
     getMessages(): Observable<Message[]> {
-        //return Observable.fromPromise(this.getMessagePromise(), 2000);
-        return Observable
-            .interval(2000)
-            .flatMap(() => this.getMessagePromise());
+        return this.messages;
     }
 
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
+    startFetchingMessages(): void {
+        Observable.interval(2000).subscribe(data => this.fetchMessages());
     }
+
 }
