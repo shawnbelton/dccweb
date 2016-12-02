@@ -17,6 +17,8 @@ import {CabComponent} from "./cab.component";
 import {CabService} from "./cab.service";
 import {SettingsComponent} from "./settings.component";
 import {SettingsService} from "./settings.service";
+import {MacroService} from "./macro.service";
+import {MacroComponent} from "./macro.component";
 
 @NgModule({
     imports: [
@@ -32,7 +34,8 @@ import {SettingsService} from "./settings.service";
         TrainComponent,
         DecoderComponent,
         CabComponent,
-        SettingsComponent
+        SettingsComponent,
+        MacroComponent
     ],
     providers: [
         MessageService,
@@ -40,7 +43,8 @@ import {SettingsService} from "./settings.service";
         DecoderService,
         TrainService,
         CabService,
-        SettingsService
+        SettingsService,
+        MacroService
     ],
     bootstrap: [
         AppComponent,

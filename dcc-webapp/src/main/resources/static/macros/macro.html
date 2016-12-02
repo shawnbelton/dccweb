@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Macro Edit</div>
+            <div class="panel-body">
+                <form id="editMacroForm" name="editMacroForm" class="form-inline"
+                      (ngSubmit)="saveMacroName()" #editMacroForm="ngForm" *ngIf="macro.editing">
+                    <div class="form-group">
+                        <label for="macroName" class="control-label">Macro Name</label>
+                        <input type="text" id="macroName" name="macroName" class="form-control input-sm"
+                               placeholder="Macro Name" [(ngModel)]="macro.name" #macroName="ngModel"
+                               required="required"/>
+                    </div>
+                    <input type="submit" value="Update" class="btn btn-xs btn-info"
+                           [disabled]="!editMacroForm.form.valid"/>
+                </form>
+                <div *ngIf="!macro.editing">
+                    <strong>{{macro.name}}</strong>
+                    <div class="pull-right"><input type="button" class="btn btn-xs btn-info"
+                                                   (click)="editMacroName()" value="Edit"/></div>
+                </div>
+            </div>
+            <ul class="list-group">
+                <li *ngFor="let step of macro.steps" class="list-group-item">
+                    <form id="editStepForm" name="editStepForm" class="form-inline"
+                          (ngSubmit)="saveStep(step)" #editStepForm="ngForm" *ngIf="step.editing">
+                        {{step.number}}
+                        <div class="form-group">
+                            <label for="stepType" class="form-label">Type</label>
+                            <select id="stepType" name="stepType" class="form-control input-sm" [(ngModel)]="step.type"
+                                    #stepType="ngModel" required="required">
+                                <option value="decoderFunction">Train function</option>
+                                <option value="delay">Wait Seconds</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="step.type=='delay'">
+                            <label for="seconds" class="form-label">Seconds</label>
+                            <input type="text" id="seconds" name="seconds" class="form-control input-sm" [(ngModel)]="step.delay"
+                                   #seconds="ngModel" required="required"/>
+                        </div>
+                        <span *ngIf="step.type=='decoderFunction'">
+                            <div class="form-group" >
+                                <label for="stepTrain" class="form-label">Train</label>
+                                <select id="stepTrain" name="stepTrain" class="form-control input-sm" [(ngModel)]="step.trainId"
+                                        #stepTrain="ngModel" required="required">
+                                    <option *ngFor="let train of trains" [value]="train.trainId">{{train.number}} {{train.name}}</option>
+                                </select>
+                            </div>
+                            <span *ngIf="step.trainId!=null">
+                                <div class="form-group">
+                                    <label for="stepFunction" class="form-label">Function</label>
+                                    <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionId"
+                                            #stepFunction="ngModel" required="required">
+                                        <option *ngFor="let function of fetchDecoder(step).decoderFunctions" [value]="function.functionId">
+                                            {{function.name}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="stepFunctionState" class="form-label">State</label>
+                                    <select id="stepFunctionState" name="stepFuncionState" class="form-control input-sm" [(ngModel)]="step.functionStatus"
+                                            #stepFunctionState="ngModel" required="required">
+                                        <option value="true">On</option>
+                                        <option value="false">Off</option>
+                                    </select>
+                                </div>
+                            </span>
+
+                        </span>
+                        <input type="submit" value="Update" class="btn btn-xs btn-info"
+                               [disabled]="!editStepForm.form.valid"/>
+                    </form>
+                    <div *ngIf="!step.editing">
+                        <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="glyphicon glyphicon-arrow-up"></span></a>
+                        <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                        <strong>{{displayStep(step)}}</strong>
+                        <div class="pull-right">
+                            <input type="button" class="btn btn-xs btn-info"
+                                                       (click)="editStep(step)" value="Edit"/>
+                            <button class="btn btn-xs btn-danger" (click)="removeStep(step)">X</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="clearfix">
+                        <div class="pull-right">
+                            <input type="button" class="btn btn-xs btn-info" (click)="addStep()" value="Add Step"/>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="panel-footer">
+                <div class="clearfix">
+                    <div class="pull-right">
+                        <input type="button" class="btn btn-xs btn-info" (click)="saveMacro()" [disabled]="!macroValid()" value="Save Macro"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Macros</div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let macro of macros">
+                    {{macro.name}}
+                    <div class="pull-right">
+                        <input type="button" class="btn btn-xs btn-info" (click)="editMacro(macro)" value="Edit"/>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
