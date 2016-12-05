@@ -11,7 +11,7 @@ import {DecoderFunction} from "./decoderFunction";
 import {MacroService} from "./macro.service";
 @Component({
     moduleId: module.id,
-    templateUrl: '/macros/macro.html'
+    templateUrl: '/macroedit/macro.html'
 })
 export class MacroComponent implements OnInit {
 
@@ -29,13 +29,31 @@ export class MacroComponent implements OnInit {
         this.macroService.getMacros().subscribe(macros => this.macros = macros);
     }
 
-    editMacro(macro: Macro): void {
+    setMacro(macro: Macro): void {
         this.macro = macro;
+        this.macro.steps = this.macro.steps.sort((step1, step2) => step1.number - step2.number);
+    }
+
+    getMacro(): void {
+        this.macroService.getMacro().subscribe(macro => this.setMacro(macro));
+    }
+
+    editMacro(macro: Macro): void {
+        this.macroService.editMacro(macro);
     }
 
     saveMacro(): void {
         this.macroService.saveMacro(this.macro);
         this.macro = new Macro();
+    }
+
+    deleteMacro(macro: Macro): void {
+        this.macroService.deleteMacro(macro);
+        this.macro = new Macro();
+    }
+
+    runMacro(macro: Macro): void {
+        this.macroService.runMacro(macro);
     }
 
     macroValid(): boolean {
@@ -135,7 +153,7 @@ export class MacroComponent implements OnInit {
     displayFunction(step: MacroStep): string {
         let train: Train = this.fetchTrain(step);
         let display: string = "Turn " + this.getState(step.functionStatus);
-        display = display + " " + this.displayFunctionName(train, step.functionId);
+        display = display + " " + this.displayFunctionName(train, step.functionNumber);
         display = display + " on " + this.displayTrainInfo(train);
         return display;
     }
@@ -144,10 +162,10 @@ export class MacroComponent implements OnInit {
         return train.number + " " + train.name;
     }
 
-    displayFunctionName(train: Train, functionId: number): string {
+    displayFunctionName(train: Train, functionNumber: number): string {
         let decoderFunction: DecoderFunction;
         for(let iFunction of train.decoder.decoderFunctions) {
-            if (iFunction.functionId = functionId) {
+            if (iFunction.number = functionNumber) {
                 decoderFunction = iFunction;
             }
         }
@@ -166,6 +184,7 @@ export class MacroComponent implements OnInit {
 
     ngOnInit(): void {
         this.macro = new Macro();
+        this.getMacro();
         this.getMacros();
         this.getTrains();
     }

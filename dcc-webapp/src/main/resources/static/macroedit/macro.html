@@ -49,9 +49,9 @@
                             <span *ngIf="step.trainId!=null">
                                 <div class="form-group">
                                     <label for="stepFunction" class="form-label">Function</label>
-                                    <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionId"
+                                    <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionNumber"
                                             #stepFunction="ngModel" required="required">
-                                        <option *ngFor="let function of fetchDecoder(step).decoderFunctions" [value]="function.functionId">
+                                        <option *ngFor="let function of fetchDecoder(step).decoderFunctions" [value]="function.number">
                                             {{function.name}}
                                         </option>
                                     </select>
@@ -103,9 +103,11 @@
             <div class="panel-heading">Macros</div>
             <ul class="list-group">
                 <li class="list-group-item" *ngFor="let macro of macros">
+                    <input type="button" class="btn btn-xs btn-success" (click)="runMacro(macro)" value="Run"/>
                     {{macro.name}}
                     <div class="pull-right">
                         <input type="button" class="btn btn-xs btn-info" (click)="editMacro(macro)" value="Edit"/>
+                        <input type="button" class="btn btn-xs btn-danger" (click)="deleteMacro(macro)" value="X"/>
                     </div>
                 </li>
             </ul>

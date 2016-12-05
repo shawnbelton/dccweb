@@ -13,7 +13,7 @@ const routes: Routes = [
     { path: 'engine-shed', component: TrainComponent },
     { path: 'decoders', component: DecoderComponent },
     { path: 'settings', component: SettingsComponent },
-    { path: 'macros', component: MacroComponent }
+    { path: 'macro-edit', component: MacroComponent }
 ];
 
 @NgModule({
