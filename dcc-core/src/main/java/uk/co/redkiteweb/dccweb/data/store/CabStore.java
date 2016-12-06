@@ -71,7 +71,7 @@ public class CabStore {
 
     private void buildSetCabFunctions(final Cab cab) {
         final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
-        if (cab.getTrain().getDecoder()!=null && cab.getTrain().getDecoder().getDecoderFunctions()!=null) {
+        if (cab.getTrain().getDecoder()!=null) {
             for(DecoderFunction decoderFunction : getDecoderFunctions(cab.getTrain().getDecoder())) {
                 newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));
             }

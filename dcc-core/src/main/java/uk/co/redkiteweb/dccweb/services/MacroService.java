@@ -39,7 +39,9 @@ public class MacroService {
 
     private Set<MacroStep> orderSteps(final List<MacroStep> unordered) {
         final Set<MacroStep> ordered = new TreeSet<MacroStep>(new MacroStepComparator());
-        ordered.addAll(unordered);
+        if (unordered != null) {
+            ordered.addAll(unordered);
+        }
         return ordered;
     }
 

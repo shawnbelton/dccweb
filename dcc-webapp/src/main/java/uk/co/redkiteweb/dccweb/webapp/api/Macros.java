@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.services.MacroService;
 
 import java.util.List;
@@ -16,17 +15,11 @@ import java.util.List;
 public class Macros {
 
     private MacroRepository macroRepository;
-    private MacroStepRepository macroStepRepository;
     private MacroService macroService;
 
     @Autowired
     public void setMacroRepository(MacroRepository macroRepository) {
         this.macroRepository = macroRepository;
-    }
-
-    @Autowired
-    public void setMacroStepRepository(MacroStepRepository macroStepRepository) {
-        this.macroStepRepository = macroStepRepository;
     }
 
     @Autowired
