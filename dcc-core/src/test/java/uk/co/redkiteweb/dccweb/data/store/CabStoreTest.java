@@ -8,9 +8,12 @@ import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
@@ -25,16 +28,23 @@ public class CabStoreTest {
 
     private CabStore cabStore;
     private Train train;
+    private TrainRepository trainRepository;
     private DecoderRepository decoderRepository;
+    private DecoderFunctionRepository decoderFunctionRepository;
 
     @Before
     public void setup() {
         decoderRepository = mock(DecoderRepository.class);
+        decoderFunctionRepository = mock(DecoderFunctionRepository.class);
+        trainRepository = mock(TrainRepository.class);
         cabStore = new CabStore();
         cabStore.setDecoderRepository(decoderRepository);
+        cabStore.setDecoderFunctionRepository(decoderFunctionRepository);
+        cabStore.setTrainRepository(trainRepository);
         train = new Train();
         train.setTrainId(1);
         train.setNumber("12345");
+        when(trainRepository.findOne(anyInt())).thenReturn(train);
     }
 
     @Test
@@ -61,7 +71,7 @@ public class CabStoreTest {
     public void testDecoderNoFunctions() {
         final Decoder decoder = new Decoder();
         when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
-        decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
+        when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(new ArrayList<DecoderFunction>());
         train.setDecoder(decoder);
         assertEquals(0, cabStore.getCab(train).getCabFunctions().size());
     }
@@ -70,8 +80,9 @@ public class CabStoreTest {
     public void testDecoderOneFunction() {
         final Decoder decoder = new Decoder();
         when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
-        decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
-        decoder.getDecoderFunctions().add(getDecoderFunction(1, "Name"));
+        final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
+        decoderFunctions.add(getDecoderFunction(1, "Name"));
+        when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);
         train.setDecoder(decoder);
         assertEquals(1, cabStore.getCab(train).getCabFunctions().size());
     }
@@ -80,12 +91,20 @@ public class CabStoreTest {
     public void testDecoderFunctionAdded() {
         final Decoder decoder = new Decoder();
         when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
-        decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
-        decoder.getDecoderFunctions().add(getDecoderFunction(1, "Name"));
+        final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
+        decoderFunctions.add(getDecoderFunction(1, "Name"));
+        when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);
         train.setDecoder(decoder);
         assertEquals(1, cabStore.getCab(train).getCabFunctions().size());
-        decoder.getDecoderFunctions().add(getDecoderFunction(2, "Name2"));
+        decoderFunctions.add(getDecoderFunction(2, "Name2"));
         assertEquals(2, cabStore.getCab(train).getCabFunctions().size());
+    }
+
+    @Test
+    public void testGetCabByTrainId() {
+        final Decoder decoder = new Decoder();
+        train.setDecoder(decoder);
+        assertEquals(0, cabStore.getCab(1).getCabFunctions().size());
     }
 
     private DecoderFunction getDecoderFunction(final int number, final String name) {

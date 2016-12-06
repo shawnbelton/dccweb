@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
-import {Observable} from "rxjs/Rx";
+import {Observable, BehaviorSubject} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "./status";
 
@@ -13,23 +13,27 @@ export class StatusService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private statusUrl = '/interface/status';
 
-    constructor(private http: Http) {}
+    private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
+    private status: Observable<Status> = this._status.asObservable();
 
-    getStatusPromise(): Promise<Status> {
-        return this.http.get(this.statusUrl)
-            .toPromise()
-            .then(response => response.json() as Status)
-            .catch(this.handleError);
+    constructor(private http: Http) {
+        this.startFetchingStatus();
+    }
+
+    readStatus(): void {
+        this.http.get(this.statusUrl).map(response => response.json())
+            .subscribe(data => {
+                this._status.next(data);
+            }, error => console.log('Could not load status.'));
+    }
+
+    startFetchingStatus(): void {
+        Observable.interval(2000).subscribe(data => {
+            this.readStatus();
+        });
     }
 
     getStatus(): Observable<Status> {
-        return Observable
-            .interval(2000)
-            .flatMap(() => this.getStatusPromise());
-    }
-
-    private handleError(error: any): Promise<any> {
-        console.error('An error occurred', error); // for demo purposes only
-        return Promise.reject(error.message || error);
+        return this.status;
     }
 }

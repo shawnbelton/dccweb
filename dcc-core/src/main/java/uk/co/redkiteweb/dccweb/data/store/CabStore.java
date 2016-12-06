@@ -8,12 +8,11 @@ import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by shawn on 12/09/16.
@@ -22,6 +21,8 @@ import java.util.TreeSet;
 public class CabStore {
 
     private DecoderRepository decoderRepository;
+    private DecoderFunctionRepository decoderFunctionRepository;
+    private TrainRepository trainRepository;
     private final Map<Integer, Cab> cabStore;
 
     public CabStore() {
@@ -33,8 +34,22 @@ public class CabStore {
         this.decoderRepository = decoderRepository;
     }
 
+    @Autowired
+    public void setDecoderFunctionRepository(final DecoderFunctionRepository decoderFunctionRepository) {
+        this.decoderFunctionRepository = decoderFunctionRepository;
+    }
+
+    @Autowired
+    public void setTrainRepository(final TrainRepository trainRepository) {
+        this.trainRepository = trainRepository;
+    }
+
     public void putCab(final Cab cab) {
         cabStore.put(cab.getTrain().getTrainId(), cab);
+    }
+
+    public Cab getCab(final Integer trainId) {
+        return getCab(trainRepository.findOne(trainId));
     }
 
     public Cab getCab(final Train train) {
@@ -56,13 +71,16 @@ public class CabStore {
 
     private void buildSetCabFunctions(final Cab cab) {
         final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
-        if (cab.getTrain().getDecoder()!=null && cab.getTrain().getDecoder().getDecoderFunctions()!=null) {
-            final Decoder decoder  = decoderRepository.findOne(cab.getTrain().getDecoder().getDecoderId());
-            for(DecoderFunction decoderFunction : decoder.getDecoderFunctions()) {
+        if (cab.getTrain().getDecoder()!=null) {
+            for(DecoderFunction decoderFunction : getDecoderFunctions(cab.getTrain().getDecoder())) {
                 newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));
             }
         }
         cab.setCabFunctions(newCabFunctions);
+    }
+
+    private List<DecoderFunction> getDecoderFunctions(final Decoder decoder) {
+        return this.decoderFunctionRepository.findAllByDecoderId(decoder.getDecoderId());
     }
 
     private static CabFunction getCabFunction(final DecoderFunction decoderFunction, Set<CabFunction> cabFunctions) {
