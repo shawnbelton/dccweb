@@ -137,6 +137,10 @@ export class MacroComponent implements OnInit {
         }
     }
 
+    isTrainFunction(step: MacroStep): boolean {
+        return step.type == 'decoderFunction' || step.type == 'setSpeed';
+    }
+
     displayStep(step: MacroStep): string {
         let display: string = step.number.toString() + " ";
         switch(step.type) {
@@ -146,6 +150,8 @@ export class MacroComponent implements OnInit {
             case "decoderFunction":
                 display = display + this.displayFunction(step);
                 break;
+            case "setSpeed":
+                display = display + this.displaySetSpeed(step);
         }
         return display;
     }
@@ -154,6 +160,13 @@ export class MacroComponent implements OnInit {
         let train: Train = this.fetchTrain(step);
         let display: string = "Turn " + this.getState(step.functionStatus);
         display = display + " " + this.displayFunctionName(train, step.functionNumber);
+        display = display + " on " + this.displayTrainInfo(train);
+        return display;
+    }
+
+    displaySetSpeed(step: MacroStep): string {
+        let train: Train = this.fetchTrain(step);
+        let display: string = "Set speed to " + step.speed;
         display = display + " on " + this.displayTrainInfo(train);
         return display;
     }

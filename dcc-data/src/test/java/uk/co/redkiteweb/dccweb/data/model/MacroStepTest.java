@@ -26,6 +26,7 @@ public class MacroStepTest {
         macroStep.setFunctionStatus("True");
         macroStep.setTrainId(1);
         macroStep.setType("type");
+        macroStep.setSpeed(50);
     }
 
     @Test
@@ -66,5 +67,10 @@ public class MacroStepTest {
     @Test
     public void testType() {
         assertEquals("type", macroStep.getType());
+    }
+
+    @Test
+    public void testSpeed() {
+        assertEquals(new Integer(50), macroStep.getSpeed());
     }
 }
