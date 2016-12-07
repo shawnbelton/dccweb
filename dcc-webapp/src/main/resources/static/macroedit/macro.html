@@ -30,15 +30,16 @@
                             <select id="stepType" name="stepType" class="form-control input-sm" [(ngModel)]="step.type"
                                     #stepType="ngModel" required="required">
                                 <option value="decoderFunction">Train function</option>
+                                <option value="setSpeed">Set Speed</option>
                                 <option value="delay">Wait Seconds</option>
                             </select>
                         </div>
                         <div class="form-group" *ngIf="step.type=='delay'">
                             <label for="seconds" class="form-label">Seconds</label>
-                            <input type="text" id="seconds" name="seconds" class="form-control input-sm" [(ngModel)]="step.delay"
+                            <input type="number" id="seconds" name="seconds" class="form-control input-sm" [(ngModel)]="step.delay"
                                    #seconds="ngModel" required="required"/>
                         </div>
-                        <span *ngIf="step.type=='decoderFunction'">
+                        <span *ngIf="isTrainFunction(step)">
                             <div class="form-group" >
                                 <label for="stepTrain" class="form-label">Train</label>
                                 <select id="stepTrain" name="stepTrain" class="form-control input-sm" [(ngModel)]="step.trainId"
@@ -47,7 +48,7 @@
                                 </select>
                             </div>
                             <span *ngIf="step.trainId!=null">
-                                <div class="form-group">
+                                <div class="form-group" *ngIf="step.type=='decoderFunction'">
                                     <label for="stepFunction" class="form-label">Function</label>
                                     <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionNumber"
                                             #stepFunction="ngModel" required="required">
@@ -56,7 +57,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" *ngIf="step.type=='decoderFunction'">
                                     <label for="stepFunctionState" class="form-label">State</label>
                                     <select id="stepFunctionState" name="stepFuncionState" class="form-control input-sm" [(ngModel)]="step.functionStatus"
                                             #stepFunctionState="ngModel" required="required">
@@ -64,8 +65,12 @@
                                         <option value="false">Off</option>
                                     </select>
                                 </div>
+                                <div class="form-group" *ngIf="step.type=='setSpeed'">
+                                    <label for="speed" class="form-label">Speed</label>
+                                    <input type="number" id="speed" name="speed" class="form-control input-sm" [(ngModel)]="step.speed"
+                                        #speed="ngModel" required="required"/>
+                                </div>
                             </span>
-
                         </span>
                         <input type="submit" value="Update" class="btn btn-xs btn-info"
                                [disabled]="!editStepForm.form.valid"/>

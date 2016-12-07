@@ -40,6 +40,10 @@ public abstract class AbstractMacroStep implements IStep {
         return "true".equalsIgnoreCase(this.macroStep.getFunctionStatus());
     }
 
+    protected Integer getSpeed() {
+        return this.macroStep.getSpeed();
+    }
+
     @Override
     public abstract void run();
 }

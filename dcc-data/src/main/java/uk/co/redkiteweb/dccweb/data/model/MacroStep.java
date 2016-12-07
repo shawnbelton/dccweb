@@ -18,6 +18,7 @@ public class MacroStep implements Serializable {
     private Integer trainId;
     private Integer functionNumber;
     private String functionStatus;
+    private Integer speed;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +26,7 @@ public class MacroStep implements Serializable {
         return stepId;
     }
 
-    public void setStepId(Integer stepId) {
+    public void setStepId(final Integer stepId) {
         this.stepId = stepId;
     }
 
@@ -34,7 +35,7 @@ public class MacroStep implements Serializable {
         return macroId;
     }
 
-    public void setMacroId(Integer macroId) {
+    public void setMacroId(final Integer macroId) {
         this.macroId = macroId;
     }
 
@@ -42,7 +43,7 @@ public class MacroStep implements Serializable {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(final Integer number) {
         this.number = number;
     }
 
@@ -50,7 +51,7 @@ public class MacroStep implements Serializable {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -58,7 +59,7 @@ public class MacroStep implements Serializable {
         return delay;
     }
 
-    public void setDelay(Float delay) {
+    public void setDelay(final Float delay) {
         this.delay = delay;
     }
 
@@ -66,7 +67,7 @@ public class MacroStep implements Serializable {
         return trainId;
     }
 
-    public void setTrainId(Integer trainId) {
+    public void setTrainId(final Integer trainId) {
         this.trainId = trainId;
     }
 
@@ -74,7 +75,7 @@ public class MacroStep implements Serializable {
         return functionNumber;
     }
 
-    public void setFunctionNumber(Integer functionNumber) {
+    public void setFunctionNumber(final Integer functionNumber) {
         this.functionNumber = functionNumber;
     }
 
@@ -82,7 +83,15 @@ public class MacroStep implements Serializable {
         return functionStatus;
     }
 
-    public void setFunctionStatus(String functionStatus) {
+    public void setFunctionStatus(final String functionStatus) {
         this.functionStatus = functionStatus;
+    }
+
+    public Integer getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(final Integer speed) {
+        this.speed = speed;
     }
 }
