@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
+import uk.co.redkiteweb.dccweb.services.factory.IStep;
 import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
-import uk.co.redkiteweb.dccweb.services.steps.IStep;
 
 import java.util.ArrayList;
 

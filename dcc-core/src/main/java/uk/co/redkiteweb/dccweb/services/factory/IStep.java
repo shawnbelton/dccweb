@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.services.steps;
+package uk.co.redkiteweb.dccweb.services.factory;
 
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 

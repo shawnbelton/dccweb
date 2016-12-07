@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
-import uk.co.redkiteweb.dccweb.services.steps.IStep;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;

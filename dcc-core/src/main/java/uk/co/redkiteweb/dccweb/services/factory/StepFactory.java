@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
-import uk.co.redkiteweb.dccweb.services.steps.IStep;
 
 /**
  * Created by shawn on 05/12/16.
