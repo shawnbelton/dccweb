@@ -178,7 +178,7 @@ export class MacroComponent implements OnInit {
     displayFunctionName(train: Train, functionNumber: number): string {
         let decoderFunction: DecoderFunction;
         for(let iFunction of train.decoder.decoderFunctions) {
-            if (iFunction.number = functionNumber) {
+            if (iFunction.number == functionNumber) {
                 decoderFunction = iFunction;
             }
         }
