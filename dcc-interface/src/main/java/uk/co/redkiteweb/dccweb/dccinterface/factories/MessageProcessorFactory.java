@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
+import java.util.Collection;
+
 /**
  * Created by shawn on 07/07/16.
  */
@@ -30,4 +32,7 @@ public class MessageProcessorFactory implements ApplicationContextAware {
         return context.getBean(settingsService.getSettingValue("InterfaceType", "Demo"), MessageProcessor.class);
     }
 
+    public Collection<MessageProcessor> getAllInterfaces() {
+        return context.getBeansOfType(MessageProcessor.class).values();
+    }
 }

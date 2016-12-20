@@ -12,8 +12,7 @@
                             <div class="col-sm-9">
                                 <select id="ddlDccSystem" class="form-control" name="ddlDccSystem"
                                         [(ngModel)]="settings.dccSystem" #ddlDccSystem="ngModel">
-                                    <option value="Demo">Demo DCC System</option>
-                                    <option value="Nce">NCE DCC System</option>
+                                    <option *ngFor="let interface of interfaces" [value]="interface.code">{{interface.name}}</option>
                                 </select>
                             </div>
                         </div>

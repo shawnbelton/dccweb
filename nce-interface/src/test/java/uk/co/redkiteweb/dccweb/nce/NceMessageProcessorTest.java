@@ -5,15 +5,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
-import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.nce.communication.NceData;
-import uk.co.redkiteweb.dccweb.nce.communication.TalkToNCE;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 import uk.co.redkiteweb.dccweb.nce.messages.NceMessage;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -53,5 +51,15 @@ public class NceMessageProcessorTest {
         when(nceMessage.process(any(Message.class))).thenThrow(new ConnectionException("Error"));
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         assertNotNull(nceMessageProcessor.process(message));
+    }
+
+    @Test
+    public void testCode() {
+        assertEquals("Nce", nceMessageProcessor.getInterfaceCode());
+    }
+
+    @Test
+    public void testName() {
+        assertEquals("NCE DCC System", nceMessageProcessor.getInterfaceName());
     }
 }
