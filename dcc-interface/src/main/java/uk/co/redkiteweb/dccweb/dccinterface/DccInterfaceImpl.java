@@ -2,11 +2,16 @@ package uk.co.redkiteweb.dccweb.dccinterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.dccinterface.data.InterfaceInfo;
+import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.KeepAliveMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ShutdownMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by shawn on 17/06/16.
@@ -54,6 +59,15 @@ public class DccInterfaceImpl implements DccInterface {
     @Override
     public void shutdown() {
         messageProcessorFactory.getInstance().process(new ShutdownMessage());
+    }
+
+    @Override
+    public List<InterfaceInfo> getInterfaces() {
+        final List<InterfaceInfo> interfaces = new ArrayList<InterfaceInfo>();
+        for(MessageProcessor messageProcessor : messageProcessorFactory.getAllInterfaces()) {
+            interfaces.add(InterfaceInfo.getInstance(messageProcessor));
+        }
+        return interfaces;
     }
 
     @Override

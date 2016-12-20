@@ -9,5 +9,8 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 public interface MessageProcessor {
 
     MessageResponse process(final Message message);
+    String getInterfaceCode();
+    String getInterfaceName();
+
 
 }

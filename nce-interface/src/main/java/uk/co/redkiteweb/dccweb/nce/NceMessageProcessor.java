@@ -22,6 +22,16 @@ public class NceMessageProcessor implements MessageProcessor, ApplicationContext
     private ApplicationContext applicationContext;
 
     @Override
+    public String getInterfaceCode() {
+        return "Nce";
+    }
+
+    @Override
+    public String getInterfaceName() {
+        return "NCE DCC System";
+    }
+
+    @Override
     public void setApplicationContext(final ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }

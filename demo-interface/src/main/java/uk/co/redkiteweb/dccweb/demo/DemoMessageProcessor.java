@@ -17,6 +17,16 @@ public class DemoMessageProcessor implements MessageProcessor, ApplicationContex
     private ApplicationContext context;
 
     @Override
+    public String getInterfaceCode() {
+        return "Demo";
+    }
+
+    @Override
+    public String getInterfaceName() {
+        return "Demo DCC System";
+    }
+
+    @Override
     public void setApplicationContext(final ApplicationContext applicationContext) {
         this.context = applicationContext;
     }
