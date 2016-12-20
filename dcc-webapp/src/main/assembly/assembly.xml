@@ -16,5 +16,14 @@
                 <include>*.jar</include>
             </includes>
         </fileSet>
+        <fileSet>
+            <directory>src/main/runtime/config</directory>
+            <outputDirectory>config</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/runtime/scripts</directory>
+            <outputDirectory>/</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
     </fileSets>
 </assembly>
