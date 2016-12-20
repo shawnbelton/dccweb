@@ -8,8 +8,10 @@ import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -28,9 +30,14 @@ public class DccInterfaceTest {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
         messageProcessorFactory = mock(MessageProcessorFactory.class);
         messageProcessor = mock(MessageProcessor.class);
+        when(messageProcessor.getInterfaceCode()).thenReturn("Code");
+        when(messageProcessor.getInterfaceName()).thenReturn("Name");
         dccInterface = new DccInterfaceImpl();
         dccInterface.setDccInterfaceStatus(dccInterfaceStatus);
         dccInterface.setMessageProcessorFactory(messageProcessorFactory);
+        final List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>();
+        messageProcessors.add(messageProcessor);
+        when(messageProcessorFactory.getAllInterfaces()).thenReturn(messageProcessors);
         when(messageProcessorFactory.getInstance()).thenReturn(messageProcessor);
     }
 
@@ -85,5 +92,10 @@ public class DccInterfaceTest {
         dccInterface.sendMessage(new EnterProgramMessage());
         dccInterface.sendMessage(new ExitProgramMessage());
         verify(messageProcessor, times(2)).process(any(Message.class));
+    }
+
+    @Test
+    public void testAllInterfaces() {
+        assertEquals(1, dccInterface.getInterfaces().size());
     }
 }

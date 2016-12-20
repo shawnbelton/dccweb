@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ShutdownMessage;
 import uk.co.redkiteweb.dccweb.demo.messages.DemoMessage;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -39,6 +40,16 @@ public class DemoMessageProcessorTest {
         when(demoMessage.process(any(Message.class))).thenReturn(messageResponse);
         demoMessageProcessor.process(new ShutdownMessage());
         verify(demoMessage, times(1)).process(any(Message.class));
+    }
+
+    @Test
+    public void testCode() {
+        assertEquals("Demo", demoMessageProcessor.getInterfaceCode());
+    }
+
+    @Test
+    public void testName() {
+        assertEquals("Demo DCC System", demoMessageProcessor.getInterfaceName());
     }
 
 }

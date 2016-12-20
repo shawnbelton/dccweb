@@ -7,9 +7,7 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 17/06/16.
@@ -31,8 +29,13 @@ public class InterfaceInfoTest {
 
     @Test
     public void testStatus() {
-        when(dccInterface.getInterfaceStatus()).thenReturn(dccInterfaceStatus);
-        when(dccInterfaceStatus.getStatus()).thenReturn(DccInterfaceStatus.Status.DISCONNECTED);
-        assertEquals(DccInterfaceStatus.Status.DISCONNECTED, interfaceInfo.getStatus().getStatus());
+        interfaceInfo.getStatus();
+        verify(dccInterface, times(1)).getInterfaceStatus();
+    }
+
+    @Test
+    public void testInterfaces() {
+        interfaceInfo.getInterfaces();
+        verify(dccInterface, times(1)).getInterfaces();
     }
 }
