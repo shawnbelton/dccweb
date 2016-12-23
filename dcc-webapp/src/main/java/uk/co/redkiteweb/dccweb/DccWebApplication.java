@@ -20,13 +20,14 @@ import javax.sql.DataSource;
 @PropertySource({"file:config/application.properties"})
 public class DccWebApplication {
 
-    public static final void main(final String[] args) {
-        SpringApplication.run(DccWebApplication.class, args);
-    }
-
     @Bean
     @ConfigurationProperties(prefix = "datasource.dccweb")
     public DataSource dataSource() {
         return DataSourceBuilder.create().build();
     }
+
+    public static void main(final String[] args) {
+        SpringApplication.run(DccWebApplication.class, args);
+    }
+
 }

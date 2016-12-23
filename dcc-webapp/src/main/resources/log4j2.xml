@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Appenders>
-        <RollingFile name="RollingFile" fileName="logs/dcc-web.log" filePattern="logs/dcc-web-%d{MM-dd-yyyy}.log.gz"
-                     ignoreExceptions="false">
+        <RollingFile name="RollingFile" fileName="logs/dcc-web.log"
+                     filePattern="logs/$${date:yyyy-MM}/dcc-web-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
             </PatternLayout>
-            <TimeBasedTriggeringPolicy />
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
     <Loggers>

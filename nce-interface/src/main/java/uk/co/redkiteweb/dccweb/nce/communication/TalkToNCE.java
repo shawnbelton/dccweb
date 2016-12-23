@@ -62,11 +62,9 @@ public class TalkToNCE {
         final NceData outData = new NceData();
         final InputStream inputStream = serialPort.getInputStream();
         int inputData = inputStream.read();
-        while (inputData >= 0 || outData.isEmpty()) {
-            if (inputData >= 0) {
-                LOGGER.debug(String.format("Receiving: %d",inputData));
-                outData.addData(inputData);
-            }
+        while (inputData >= 0) {
+            LOGGER.debug(String.format("Receiving: %d",inputData));
+            outData.addData(inputData);
             inputData = inputStream.read();
         }
         inputStream.close();
