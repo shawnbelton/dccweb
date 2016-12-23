@@ -51,7 +51,7 @@ public class PortFactory {
     private void configurePort(final SerialPort port) throws ConnectionException {
         try {
             port.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            port.enableReceiveTimeout(100);
+            port.enableReceiveTimeout(1000);
             serialPort = port;
         } catch (UnsupportedCommOperationException exception) {
             throw new ConnectionException("Unable to set serial port parameters", exception);

@@ -12,8 +12,7 @@ import uk.co.redkiteweb.dccweb.nce.factories.PortFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
@@ -52,10 +51,20 @@ public class TalkToNCETest {
     public void sendDataTest() throws ConnectionException, IOException {
         final NceData nceData = new NceData();
         nceData.addData(80);
-        when(inputStream.read()).thenReturn(-1).thenReturn(33).thenReturn(-1);
+        when(inputStream.read()).thenReturn(33).thenReturn(-1);
         final NceData outData = talkToNce.sendData(nceData);
         verify(outputStream, times(1)).write(eq(80));
         assertEquals(33, (int)outData.readData());
+    }
+
+    @Test
+    public void setDataTimeoutTest() throws ConnectionException, IOException {
+        final NceData nceData = new NceData();
+        nceData.addData(80);
+        when(inputStream.read()).thenReturn(-1);
+        final NceData outData = talkToNce.sendData(nceData);
+        verify(outputStream, times(1)).write(eq(80));
+        assertTrue(outData.isEmpty());
     }
 
     @Test
