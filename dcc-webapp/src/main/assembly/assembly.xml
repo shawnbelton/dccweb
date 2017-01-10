@@ -22,7 +22,7 @@
         </fileSet>
         <fileSet>
             <directory>src/main/runtime/scripts</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>.</outputDirectory>
             <fileMode>0755</fileMode>
         </fileSet>
     </fileSets>

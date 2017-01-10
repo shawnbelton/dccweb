@@ -7,6 +7,7 @@ import {Observable, BehaviorSubject} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Decoder} from "./decoder";
 import {DecoderFunction} from "./decoderFunction";
+import {LinkedMacro} from "./linked.macro";
 
 @Injectable()
 export class DecoderService {
@@ -17,6 +18,8 @@ export class DecoderService {
     private fetchDecoderUrl = '/decoders/byId/';
     private addFunctionUrl = '/decoders/function/add';
     private deleteFunctionUrl = '/decoders/function/delete';
+    private linkMacroUrl = '/decoders/macro/link';
+    private unlinkMacroUrl = '/decoders/macro/unlink';
 
     private _decoders: BehaviorSubject<Decoder[]> = new BehaviorSubject([]);
     private decoders: Observable<Decoder[]> = this._decoders.asObservable();
@@ -56,6 +59,18 @@ export class DecoderService {
 
     deleteDecoderFunction(decoderFunction: DecoderFunction): void {
         this.http.post(this.deleteFunctionUrl, decoderFunction).map(response => response.json()).subscribe(data => {
+            this._decoder.next(data);
+        }, error => console.log('Could not load decoder.'));
+    }
+
+    linkMacro(linkedMacro: LinkedMacro): void {
+        this.http.post(this.linkMacroUrl, linkedMacro).map(response => response.json()).subscribe(data => {
+            this._decoder.next(data);
+        }, error => console.log('Could not load decoder.'));
+    }
+
+    unlinkMacro(linkedMacro: LinkedMacro): void {
+        this.http.post(this.unlinkMacroUrl, linkedMacro).map(response => response.json()).subscribe(data => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }

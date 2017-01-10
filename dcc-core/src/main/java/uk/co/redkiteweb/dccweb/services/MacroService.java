@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.model.comparators.MacroStepComparator;
+import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
 
 import java.util.List;
@@ -24,10 +25,20 @@ public class MacroService {
     private static final Logger LOGGER = LogManager.getLogger(MacroService.class);
 
     private StepFactory stepFactory;
+    private MacroRepository macroRepository;
 
     @Autowired
     public void setStepFactory(final StepFactory stepFactory) {
         this.stepFactory = stepFactory;
+    }
+
+    @Autowired
+    public void setMacroRepository(final MacroRepository macroRepository) {
+        this.macroRepository = macroRepository;
+    }
+
+    public void runMacroByName(final String name) {
+        this.runMacro(macroRepository.findByName(name));
     }
 
     @Async
