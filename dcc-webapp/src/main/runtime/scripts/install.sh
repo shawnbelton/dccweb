@@ -6,7 +6,7 @@ then
     rm /etc/init.d/dccweb
 fi
 
-DCCJAR="$(readlink -f ./lib/*.jar)"
+DCCJAR="$(readlink -f ./*.jar)"
 echo "Path to jar: ${DCCJAR}"
 
 ln -s ${DCCJAR} /etc/init.d/dccweb
