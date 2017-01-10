@@ -19,6 +19,8 @@ import {SettingsComponent} from "./settings.component";
 import {SettingsService} from "./settings.service";
 import {MacroService} from "./macro.service";
 import {MacroComponent} from "./macro.component";
+import {PerformanceComponent} from "./performance.component";
+import {PerformanceService} from "./performance.service";
 
 @NgModule({
     imports: [
@@ -35,7 +37,8 @@ import {MacroComponent} from "./macro.component";
         DecoderComponent,
         CabComponent,
         SettingsComponent,
-        MacroComponent
+        MacroComponent,
+        PerformanceComponent
     ],
     providers: [
         MessageService,
@@ -44,7 +47,8 @@ import {MacroComponent} from "./macro.component";
         TrainService,
         CabService,
         SettingsService,
-        MacroService
+        MacroService,
+        PerformanceService
     ],
     bootstrap: [
         AppComponent,
