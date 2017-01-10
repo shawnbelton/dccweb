@@ -53,13 +53,14 @@ public class CabStore {
     }
 
     public Cab getCab(final Train train) {
+        final Train reloadTrain = trainRepository.findOne(train.getTrainId());
         Cab cab = new Cab();
         if (cabStore.containsKey(train.getTrainId())) {
             cab = cabStore.get(train.getTrainId());
-            cab.setTrain(train);
+            cab.setTrain(reloadTrain);
             buildSetCabFunctions(cab);
         } else {
-            cab.setTrain(train);
+            cab.setTrain(reloadTrain);
             buildSetCabFunctions(cab);
             cab.setDirection("UP");
             cab.setSpeed(0);
