@@ -75,6 +75,12 @@ public class DecoderTest {
     }
 
     @Test
+    public void linkedMacrosTest() {
+        decoder.setLinkedMacros(new ArrayList<LinkedMacro>());
+        assertNotNull(decoder.getLinkedMacros());
+    }
+
+    @Test
     public void decoderAddressModeTest() {
         assertEquals(true, decoder.getAddressMode());
     }

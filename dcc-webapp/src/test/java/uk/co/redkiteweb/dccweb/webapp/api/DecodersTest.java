@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
+import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
 import uk.co.redkiteweb.dccweb.readers.DecoderReader;
 import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
 
@@ -28,6 +30,7 @@ public class DecodersTest {
     private DecoderReaderFactory decoderReaderFactory;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
+    private LinkedMacroRepository linkedMacroRepository;
 
     @Before
     public void setUp() {
@@ -36,10 +39,12 @@ public class DecodersTest {
         when(decoderReaderFactory.createInstance()).thenReturn(decoderReader);
         decoderRepository = mock(DecoderRepository.class);
         decoderFunctionRepository = mock(DecoderFunctionRepository.class);
+        linkedMacroRepository = mock(LinkedMacroRepository.class);
         decoders = new Decoders();
         decoders.setDecoderReaderFactory(decoderReaderFactory);
         decoders.setDecoderRepository(decoderRepository);
         decoders.setDecoderFunctionRepository(decoderFunctionRepository);
+        decoders.setLinkedMacroRepository(linkedMacroRepository);
     }
 
     @Test
@@ -80,5 +85,21 @@ public class DecodersTest {
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoders.deleteFunction(decoderFunction));
         verify(decoderFunctionRepository, times(1)).delete(any(DecoderFunction.class));
+    }
+
+    @Test
+    public void testLinkMacro() {
+        final LinkedMacro linkedMacro = new LinkedMacro();
+        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        assertNotNull(decoders.linkMacro(linkedMacro));
+        verify(linkedMacroRepository, times(1)).save(any(LinkedMacro.class));
+    }
+
+    @Test
+    public void testUnlinkMacro() {
+        final LinkedMacro linkedMacro = new LinkedMacro();
+        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        assertNotNull(decoders.unlinkMacro(linkedMacro));
+        verify(linkedMacroRepository, times(1)).delete(any(LinkedMacro.class));
     }
 }
