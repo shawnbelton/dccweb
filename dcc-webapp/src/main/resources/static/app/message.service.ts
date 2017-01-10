@@ -4,7 +4,6 @@
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
 import {Observable, BehaviorSubject} from "rxjs/Rx";
-import "rxjs/add/operator/toPromise";
 import {Message} from "./message";
 
 @Injectable()
