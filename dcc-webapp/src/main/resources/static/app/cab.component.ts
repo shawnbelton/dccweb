@@ -5,6 +5,8 @@ import {Component, OnInit} from "@angular/core";
 import {Cab} from "./cab";
 import {CabService} from "./cab.service";
 import {CabFunction} from "./cabFunction";
+import {Macro} from "./macro";
+import {MacroService} from "./macro.service";
 @Component({
     moduleId: module.id,
     templateUrl: '/cab/cab.html',
@@ -14,7 +16,7 @@ export class CabComponent implements OnInit {
 
     cab: Cab;
 
-    constructor(private cabService: CabService) {}
+    constructor(private cabService: CabService, private macroService: MacroService) {}
 
     speedChange(): void {
         this.updateCab();
@@ -52,6 +54,10 @@ export class CabComponent implements OnInit {
 
     updateCabFunction(): void {
         this.cabService.updateCabFunction(this.cab);
+    }
+
+    runMacro(macro: Macro): void {
+        this.macroService.runMacro(macro);
     }
 
     toggleFunction(cabFunction: CabFunction): void {

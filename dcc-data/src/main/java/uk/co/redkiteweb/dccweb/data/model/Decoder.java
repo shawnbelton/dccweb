@@ -21,6 +21,7 @@ public class Decoder implements Serializable {
     private Boolean addressMode;
     private List<CV> cvs;
     private List<DecoderFunction> decoderFunctions;
+    private List<LinkedMacro> linkedMacros;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -99,5 +100,15 @@ public class Decoder implements Serializable {
 
     public void setDecoderFunctions(final List<DecoderFunction> decoderFunctions) {
         this.decoderFunctions = decoderFunctions;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "decoder_id")
+    public List<LinkedMacro> getLinkedMacros() {
+        return linkedMacros;
+    }
+
+    public void setLinkedMacros(final List<LinkedMacro> linkedMacros) {
+        this.linkedMacros = linkedMacros;
     }
 }

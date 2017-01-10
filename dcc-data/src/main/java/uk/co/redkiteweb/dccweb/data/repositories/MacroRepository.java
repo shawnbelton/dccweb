@@ -9,4 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.Macro;
  */
 @Repository
 public interface MacroRepository extends CrudRepository<Macro, Integer> {
+
+    Macro findByName(final String name);
+
 }

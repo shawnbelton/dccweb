@@ -21,7 +21,7 @@ public class Macro implements Serializable {
         return macroId;
     }
 
-    public void setMacroId(Integer macroId) {
+    public void setMacroId(final Integer macroId) {
         this.macroId = macroId;
     }
 
@@ -29,7 +29,7 @@ public class Macro implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -39,7 +39,7 @@ public class Macro implements Serializable {
         return steps;
     }
 
-    public void setSteps(List<MacroStep> steps) {
+    public void setSteps(final List<MacroStep> steps) {
         this.steps = steps;
     }
 }

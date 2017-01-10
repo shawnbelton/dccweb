@@ -4,7 +4,10 @@
 import {Component, OnInit} from "@angular/core";
 import {Decoder} from "./decoder";
 import {DecoderService} from "./decoder.service";
+import {MacroService} from "./macro.service";
 import {DecoderFunction} from "./decoderFunction";
+import {Macro} from "./macro";
+import {LinkedMacro} from "./linked.macro";
 
 @Component({
     moduleId: module.id,
@@ -13,11 +16,34 @@ import {DecoderFunction} from "./decoderFunction";
 export class DecoderComponent implements OnInit {
 
     decoders: Decoder[];
+    macros: Macro[];
     currentDecoder: Decoder;
     availableFunctions: number[];
     newDecoderFunction: DecoderFunction;
+    linkedMacro: LinkedMacro;
+    decoderTabState: string;
 
-    constructor(private decoderService: DecoderService) {}
+    constructor(private decoderService: DecoderService, private macroService: MacroService) {
+        this.decoderTabState = "FUNCTIONS";
+    }
+
+    setFunctionsTab(): boolean {
+        this.decoderTabState = "FUNCTIONS";
+        return false;
+    }
+
+    setMacrosTab(): boolean {
+        this.decoderTabState = "MACROS";
+        return false;
+    }
+
+    isFunctionsTab(): boolean {
+        return this.currentDecoder!=null && this.decoderTabState=="FUNCTIONS";
+    }
+
+    isMacrosTab(): boolean {
+        return this.currentDecoder!=null && this.decoderTabState=="MACROS";
+    }
 
     readDecoder(): void {
         this.decoderService.readDecoder();
@@ -34,13 +60,31 @@ export class DecoderComponent implements OnInit {
             .getDecoder().subscribe(decoder => this.setCurrentDecoder(decoder));
     }
 
+    getMacros(): void {
+        this.macroService.getMacros().subscribe(macros => this.macros = macros);
+    }
+
     addDecoderFunction(): void {
         this.newDecoderFunction.decoderId = this.currentDecoder.decoderId;
         this.decoderService.addDecoderFunction(this.newDecoderFunction);
     }
 
+    linkMacro(): void {
+        this.linkedMacro.decoderId = this.currentDecoder.decoderId;
+        for(let macro of this.macros) {
+            if (macro.macroId == this.linkedMacro.macroId) {
+                this.linkedMacro.macro = macro;
+            }
+        }
+        this.decoderService.linkMacro(this.linkedMacro);
+    }
+
     deleteDecoderFunction(decoderFunction: DecoderFunction): void {
         this.decoderService.deleteDecoderFunction(decoderFunction);
+    }
+
+    unlinkMacro(linkedMacro: LinkedMacro): void {
+        this.decoderService.unlinkMacro(linkedMacro);
     }
 
     private setCurrentDecoder(decoder: Decoder): void {
@@ -52,6 +96,7 @@ export class DecoderComponent implements OnInit {
             }
         }
         this.newDecoderFunction = new DecoderFunction();
+        this.linkedMacro = new LinkedMacro();
         if (this.availableFunctions.length>0) {
             this.newDecoderFunction.number = this.availableFunctions[0];
         }
@@ -71,5 +116,6 @@ export class DecoderComponent implements OnInit {
 
     ngOnInit(): void {
         this.getDecoders();
+        this.getMacros();
     }
 }

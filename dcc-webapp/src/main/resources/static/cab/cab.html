@@ -31,6 +31,15 @@
                     </ul>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-inline">
+                        <li *ngFor="let linkedMacro of cab.train.decoder.linkedMacros">
+                            <input type="button" (click)="runMacro(linkedMacro.macro)" class="btn btn-sm btn-default" value="{{linkedMacro.macro.name}}"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </form>
     </div>
 </div>
