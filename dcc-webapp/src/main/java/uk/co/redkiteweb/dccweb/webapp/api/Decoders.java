@@ -8,6 +8,7 @@ import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class Decoders {
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
     private LinkedMacroRepository linkedMacroRepository;
+    private LogStore logStore;
 
     @Autowired
     public void setDecoderRepository(final DecoderRepository decoderRepository) {
@@ -43,6 +45,11 @@ public class Decoders {
         this.decoderReaderFactory = decoderReaderFactory;
     }
 
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
+    }
+
     @RequestMapping("/decoders/read")
     public @ResponseBody Decoder readDecoder() {
         return decoderReaderFactory.createInstance().readDecoderOnProgram();
@@ -61,24 +68,28 @@ public class Decoders {
     @RequestMapping(value = "/decoders/function/add", method = RequestMethod.POST)
     public @ResponseBody Decoder addFunction(@RequestBody final DecoderFunction decoderFunction) {
         decoderFunctionRepository.save(decoderFunction);
+        logStore.log("info", String.format("Decoder function %s with number %d added.", decoderFunction.getName(), decoderFunction.getNumber()));
         return decoderRepository.findOne(decoderFunction.getDecoderId());
     }
 
     @RequestMapping(value = "/decoders/function/delete", method = RequestMethod.POST)
     public @ResponseBody Decoder deleteFunction(@RequestBody final DecoderFunction decoderFunction) {
         decoderFunctionRepository.delete(decoderFunction);
+        logStore.log("info", String.format("Decoder function %s with number %d removed.", decoderFunction.getName(), decoderFunction.getNumber()));
         return decoderRepository.findOne(decoderFunction.getDecoderId());
     }
 
     @RequestMapping(value = "/decoders/macro/link", method = RequestMethod.POST)
     public @ResponseBody Decoder linkMacro(@RequestBody final LinkedMacro linkedMacro) {
         linkedMacroRepository.save(linkedMacro);
+        logStore.log("info", String.format("Macro %s linked.", linkedMacro.getMacro().getName()));
         return decoderRepository.findOne(linkedMacro.getDecoderId());
     }
 
     @RequestMapping(value = "/decoders/macro/unlink", method = RequestMethod.POST)
     public @ResponseBody Decoder unlinkMacro(@RequestBody final LinkedMacro linkedMacro) {
         linkedMacroRepository.delete(linkedMacro);
+        logStore.log("info", String.format("Macro %s unlinked.", linkedMacro.getMacro().getName()));
         return decoderRepository.findOne(linkedMacro.getDecoderId());
     }
 }
