@@ -2,16 +2,40 @@
     <div class="panel-heading">Application information</div>
     <div class="panel-body">
         <div *ngIf="info!=null && info.build!=null">
-            <p><strong>Name:</strong>{{info.build.name}}</p>
-            <p><strong>Group:</strong>{{info.build.group}}</p>
-            <p><strong>Artifact:</strong>{{info.build.artifact}}</p>
-            <p><strong>Version:</strong>{{info.build.version}}</p>
-            <p><strong>Time:</strong>{{toDateString(info.build.time)}}</p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">Name:</strong>
+                <span class="col-sm-8 text-left">{{info.build.name}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">Group:</strong>
+                <span class="col-sm-8 text-left">{{info.build.group}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">Artifact:</strong>
+                <span class="col-sm-8 text-left">{{info.build.artifact}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">Version:</strong>
+                <span class="col-sm-8 text-left">{{info.build.version}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">Time:</strong>
+                <span class="col-sm-8 text-left">{{toDateString(info.build.time)}}</span>
+            </p>
         </div>
         <div *ngIf="info!=null && info.git!=null">
-            <p><strong>git branch:</strong>{{info.git.branch}}</p>
-            <p><strong>git commit id:</strong>{{info.git.commit.id}}</p>
-            <p><strong>git commit time:</strong>{{toDateString(info.git.commit.time)}}</p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">git branch:</strong>
+                <span class="col-sm-8 text-left">{{info.git.branch}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">git commit id:</strong>
+                <span class="col-sm-8 text-left">{{info.git.commit.id}}</span>
+            </p>
+            <p class="row">
+                <strong class="col-sm-4 text-right">git commit time:</strong>
+                <span class="col-sm-8 text-left">{{toDateString(info.git.commit.time)}}</span>
+            </p>
         </div>
     </div>
 </div>
