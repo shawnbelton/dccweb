@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.*;
@@ -24,17 +25,20 @@ public class DccInterfaceTest {
     private DccInterfaceStatus dccInterfaceStatus;
     private MessageProcessorFactory messageProcessorFactory;
     private MessageProcessor messageProcessor;
+    private LogStore logStore;
 
     @Before
     public void setUp() {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
         messageProcessorFactory = mock(MessageProcessorFactory.class);
         messageProcessor = mock(MessageProcessor.class);
+        logStore = mock(LogStore.class);
         when(messageProcessor.getInterfaceCode()).thenReturn("Code");
         when(messageProcessor.getInterfaceName()).thenReturn("Name");
         dccInterface = new DccInterfaceImpl();
         dccInterface.setDccInterfaceStatus(dccInterfaceStatus);
         dccInterface.setMessageProcessorFactory(messageProcessorFactory);
+        dccInterface.setLogStore(logStore);
         final List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>();
         messageProcessors.add(messageProcessor);
         when(messageProcessorFactory.getAllInterfaces()).thenReturn(messageProcessors);

@@ -9,6 +9,8 @@ import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.model.comparators.MacroStepComparator;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
 
 import java.util.List;
@@ -24,8 +26,10 @@ public class MacroService {
 
     private static final Logger LOGGER = LogManager.getLogger(MacroService.class);
 
+    private LogStore logStore;
     private StepFactory stepFactory;
     private MacroRepository macroRepository;
+    private MacroStepRepository macroStepRepository;
 
     @Autowired
     public void setStepFactory(final StepFactory stepFactory) {
@@ -37,13 +41,25 @@ public class MacroService {
         this.macroRepository = macroRepository;
     }
 
+    @Autowired
+    public void setMacroStepRepository(final MacroStepRepository macroStepRepository) {
+        this.macroStepRepository = macroStepRepository;
+    }
+
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
+    }
+
     public void runMacroByName(final String name) {
         this.runMacro(macroRepository.findByName(name));
     }
 
     @Async
     public void runMacro(final Macro macro) {
-        for(MacroStep step : orderSteps(macro.getSteps())) {
+        this.logStore.log("info", String.format("Running macro %s",macro.getName()));
+        final List<MacroStep> macroSteps = macroStepRepository.getByMacroId(macro.getMacroId());
+        for(MacroStep step : orderSteps(macroSteps)) {
             runStep(step);
         }
     }
