@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.dccinterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.data.InterfaceInfo;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
@@ -21,6 +22,7 @@ public class DccInterfaceImpl implements DccInterface {
 
     private DccInterfaceStatus dccInterfaceStatus;
     private MessageProcessorFactory messageProcessorFactory;
+    private LogStore logStore;
 
     @Autowired
     public void setDccInterfaceStatus(final DccInterfaceStatus dccInterfaceStatus) {
@@ -30,6 +32,11 @@ public class DccInterfaceImpl implements DccInterface {
     @Autowired
     public void setMessageProcessorFactory(final MessageProcessorFactory messageProcessorFactory) {
         this.messageProcessorFactory = messageProcessorFactory;
+    }
+
+    @Autowired
+    public void setLogStore(final LogStore logStore) {
+        this.logStore = logStore;
     }
 
     @Override
@@ -44,7 +51,7 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public void checkInterface() {
-        final MessageResponse messageResponse = messageProcessorFactory.getInstance().process(new KeepAliveMessage());
+        final MessageResponse messageResponse = sendMessage(new KeepAliveMessage(), false);
         if (MessageResponse.MessageStatus.OK.equals(messageResponse.getStatus())) {
             dccInterfaceStatus.setConnected();
         } else {
@@ -58,7 +65,7 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public void shutdown() {
-        messageProcessorFactory.getInstance().process(new ShutdownMessage());
+        sendMessage(new ShutdownMessage());
     }
 
     @Override
@@ -72,6 +79,13 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public MessageResponse sendMessage(final Message message) {
+        return sendMessage(message, true);
+    }
+
+    private MessageResponse sendMessage(final Message message, final boolean logEntry) {
+        if (logEntry) {
+            logStore.log("info", String.format("Sending message: %s", message.getLogMessage()));
+        }
         return messageProcessorFactory.getInstance().process(message);
     }
 }

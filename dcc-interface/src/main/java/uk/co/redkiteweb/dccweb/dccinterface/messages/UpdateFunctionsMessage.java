@@ -43,4 +43,22 @@ public class UpdateFunctionsMessage implements Message {
         }
         return functionState;
     }
+
+    @Override
+    public String getLogMessage() {
+        return String.format("Updating Function(s) %s on %d",getFunctionStatusList(),address);
+    }
+
+    private String getFunctionStatusList() {
+        final StringBuffer list = new StringBuffer();
+        String separator = "";
+        for(Map.Entry<Integer, Boolean> function : functions.entrySet()) {
+            list.append(separator);
+            list.append(function.getKey());
+            list.append(" ");
+            list.append(function.getValue());
+            separator = ", ";
+        }
+        return list.toString();
+    }
 }

@@ -57,6 +57,7 @@ public class MacroService {
 
     @Async
     public void runMacro(final Macro macro) {
+        this.logStore.log("info", String.format("Running macro %s",macro.getName()));
         final List<MacroStep> macroSteps = macroStepRepository.getByMacroId(macro.getMacroId());
         for(MacroStep step : orderSteps(macroSteps)) {
             runStep(step);
@@ -72,9 +73,7 @@ public class MacroService {
     }
 
     private void runStep(final MacroStep step) {
-        final String logMessage = String.format("Running macro step %d", step.getNumber());
-        LOGGER.info(logMessage);
-        this.logStore.log("info", logMessage);
+        LOGGER.info(String.format("Running macro step %d", step.getNumber()));
         this.stepFactory.getInstance(step).run();
     }
 }

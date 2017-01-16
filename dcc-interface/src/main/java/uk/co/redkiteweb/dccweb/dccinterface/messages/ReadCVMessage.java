@@ -14,4 +14,9 @@ public class ReadCVMessage implements Message {
     public void setCvReg(int cvReg) {
         this.cvReg = cvReg;
     }
+
+    @Override
+    public String getLogMessage() {
+        return String.format("Reading CV %d", cvReg);
+    }
 }

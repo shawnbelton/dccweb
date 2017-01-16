@@ -62,4 +62,9 @@ public class ChangeSpeedMessage implements Message {
     public void setAddressMode(final boolean addressMode) {
         this.addressMode = addressMode;
     }
+
+    @Override
+    public String getLogMessage() {
+        return String.format("Set %d to speed %d direction %s", address, speed, direction);
+    }
 }
