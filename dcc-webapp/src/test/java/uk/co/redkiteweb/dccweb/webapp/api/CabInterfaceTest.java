@@ -7,7 +7,7 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
-import uk.co.redkiteweb.dccweb.services.CabService;
+import uk.co.redkiteweb.dccweb.services.AsyncCabService;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
@@ -20,11 +20,11 @@ public class CabInterfaceTest {
 
     private CabInterface cabInterface;
     private CabStore cabStore;
-    private CabService cabService;
+    private AsyncCabService cabService;
 
     @Before
     public void setup() {
-        cabService = mock(CabService.class);
+        cabService = mock(AsyncCabService.class);
         cabStore = mock(CabStore.class);
         cabInterface = new CabInterface();
         cabInterface.setCabService(cabService);

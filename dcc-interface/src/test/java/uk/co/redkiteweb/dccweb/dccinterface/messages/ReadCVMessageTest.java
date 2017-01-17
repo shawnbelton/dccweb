@@ -25,4 +25,9 @@ public class ReadCVMessageTest {
     public void getCVRegTest() {
         assertEquals(4, readCVMessage.getCvReg());
     }
+
+    @Test
+    public void testLogMessage() {
+        assertEquals("Reading CV 4", readCVMessage.getLogMessage());
+    }
 }

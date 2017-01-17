@@ -42,4 +42,9 @@ public class UpdateFunctionsMessageTest {
     public void testFunctionNotExist() {
         assertEquals(false, updateFunctionsMessage.getFunctionState(1));
     }
+
+    @Test
+    public void testLogMessageText() {
+        assertEquals("Updating Function(s) 2 true on 1", updateFunctionsMessage.getLogMessage());
+    }
 }
