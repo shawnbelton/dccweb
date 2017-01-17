@@ -51,4 +51,9 @@ public class ChangeSpeedMessageTest {
     public void testAddressMode() {
         assertEquals(true, changeSpeedMessage.isAddressMode());
     }
+
+    @Test
+    public void testLogMessages() {
+        assertEquals("Set 1234 to speed 45 direction UP", changeSpeedMessage.getLogMessage());
+    }
 }
