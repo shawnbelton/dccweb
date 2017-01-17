@@ -9,9 +9,18 @@ import java.util.Queue;
 public class NceData {
 
     private Queue<Integer> nceData;
+    private int expectedValues;
 
     public NceData() {
         nceData = new LinkedList<Integer>();
+    }
+
+    public int getExpectedValues() {
+        return expectedValues;
+    }
+
+    public void setExpectedValues(int expectedValues) {
+        this.expectedValues = expectedValues;
     }
 
     public void addData(final int data) {

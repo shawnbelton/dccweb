@@ -11,6 +11,7 @@ import uk.co.redkiteweb.dccweb.nce.factories.PortFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 
 /**
  * Created by shawn on 17/06/16.
@@ -33,16 +34,19 @@ public class TalkToNCE {
 
     public NceData sendData(final NceData inData) throws ConnectionException {
         NceData outData;
+        final long startTicker = new Date().getTime();
         final SerialPort serialPort = portFactory.getSerialPort();
         try {
             synchronized (this) {
                 writeData(serialPort, inData);
-                outData = readData(serialPort);
+                outData = readData(serialPort, inData);
             }
         } catch (IOException exception) {
             portFactory.close();
             throw new ConnectionException("Send Data failed", exception);
         }
+        final long endTicker = new Date().getTime();
+        LOGGER.info(String.format("NCE Communication time: %d data items read: %d", endTicker-startTicker, outData.size()));
         return outData;
     }
 
@@ -58,15 +62,17 @@ public class TalkToNCE {
         outputStream.close();
     }
 
-    private static NceData readData(final SerialPort serialPort) throws IOException {
+    private static NceData readData(final SerialPort serialPort, final NceData inData) throws IOException {
         final NceData outData = new NceData();
         final InputStream inputStream = serialPort.getInputStream();
         int inputData = inputStream.read();
-        while (inputData >= 0) {
-            LOGGER.debug(String.format("Receiving: %d",inputData));
-            outData.addData(inputData);
+        do {
+            if (inputData >= 0) {
+                LOGGER.debug(String.format("Receiving: %d", inputData));
+                outData.addData(inputData);
+            }
             inputData = inputStream.read();
-        }
+        } while (inData.getExpectedValues()!=outData.size());
         inputStream.close();
         return outData;
     }

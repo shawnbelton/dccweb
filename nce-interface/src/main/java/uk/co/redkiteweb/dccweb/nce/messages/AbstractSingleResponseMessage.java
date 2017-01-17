@@ -13,6 +13,7 @@ public abstract class AbstractSingleResponseMessage extends AbstractNceMessage {
         final MessageResponse messageResponse = getMessageResponse();
         final NceData requestData = new NceData();
         requestData.addData(commandValue);
+        requestData.setExpectedValues(1);
         final NceData responseData = getTalkToNCE().sendData(requestData);
         messageResponse.setStatus(readStatus(responseData.readData()));
         return messageResponse;
