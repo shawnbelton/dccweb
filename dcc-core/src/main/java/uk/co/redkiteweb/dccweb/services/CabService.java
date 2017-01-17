@@ -3,7 +3,6 @@ package uk.co.redkiteweb.dccweb.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
@@ -30,7 +29,6 @@ public class CabService {
         this.dccInterface = dccInterface;
     }
 
-    @Async
     public void updateCab(final Cab cab) {
         if (hasDecoder(cab)) {
             LOGGER.info(String.format("Updating cab %d", cab.getTrain().getDecoder().getCurrentAddress()));
@@ -44,7 +42,6 @@ public class CabService {
         }
     }
 
-    @Async
     public void updateCabFunctions(final Cab cab) {
         if (hasDecoder(cab)) {
             final UpdateFunctionsMessage updateFunctionsMessage = new UpdateFunctionsMessage();
