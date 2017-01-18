@@ -14,6 +14,8 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 public class PortFactory {
 
     private static final Logger LOGGER = LogManager.getLogger(PortFactory.class);
+    private static final int BAUD_RATE = 9600;
+    private static final int RECEIVE_TIMEOUT = 10;
 
     private NcePortIdentifier ncePortIdentifier;
     private SerialPort serialPort;
@@ -50,8 +52,8 @@ public class PortFactory {
 
     private void configurePort(final SerialPort port) throws ConnectionException {
         try {
-            port.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            port.enableReceiveTimeout(1000);
+            port.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+            port.enableReceiveTimeout(RECEIVE_TIMEOUT);
             serialPort = port;
         } catch (UnsupportedCommOperationException exception) {
             throw new ConnectionException("Unable to set serial port parameters", exception);
@@ -60,7 +62,7 @@ public class PortFactory {
 
     private CommPort connect() throws ConnectionException {
         try {
-            return getPortIdentifier().open(this.getClass().getName(), 9600);
+            return getPortIdentifier().open(this.getClass().getName(), BAUD_RATE);
         } catch (PortInUseException exception) {
             throw new ConnectionException("Connection is in use", exception);
         }

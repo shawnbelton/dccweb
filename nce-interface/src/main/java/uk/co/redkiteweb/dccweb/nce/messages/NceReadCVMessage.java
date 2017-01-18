@@ -1,7 +1,5 @@
 package uk.co.redkiteweb.dccweb.nce.messages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
@@ -23,6 +21,7 @@ public class NceReadCVMessage extends AbstractNceMessage implements NceMessage {
         nceData.addData(0xa9);
         nceData.addData(((ReadCVMessage)message).getCvReg() / 256);
         nceData.addData(((ReadCVMessage)message).getCvReg() % 256);
+        nceData.setExpectedValues(2);
         final NceData responseData = getTalkToNCE().sendData(nceData);
         if (responseData.size() == 1) {
             if (responseData.readData() == 48) {

@@ -37,12 +37,16 @@ export class DecoderComponent implements OnInit {
         return false;
     }
 
+    isEmptyDecoder(): boolean {
+        return this.currentDecoder != null && this.currentDecoder.currentAddress != null;
+    }
+
     isFunctionsTab(): boolean {
-        return this.currentDecoder!=null && this.decoderTabState=="FUNCTIONS";
+        return this.isEmptyDecoder() && this.decoderTabState=="FUNCTIONS";
     }
 
     isMacrosTab(): boolean {
-        return this.currentDecoder!=null && this.decoderTabState=="MACROS";
+        return this.isEmptyDecoder() && this.decoderTabState=="MACROS";
     }
 
     readDecoder(): void {

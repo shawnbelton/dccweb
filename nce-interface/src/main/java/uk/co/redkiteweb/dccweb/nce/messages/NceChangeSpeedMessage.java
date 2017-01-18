@@ -23,6 +23,7 @@ public class NceChangeSpeedMessage extends AbstractNceMessage implements NceMess
         nceData.addData(changeSpeedMessage.getAddress() % 256);
         nceData.addData(getOpCode(changeSpeedMessage.getSpeedSteps(), changeSpeedMessage.getDirection()));
         nceData.addData(changeSpeedMessage.getSpeed());
+        nceData.setExpectedValues(1);
         final NceData responseData = getTalkToNCE().sendData(nceData);
         messageResponse.setStatus(readStatus(responseData.readData()));
         return messageResponse;

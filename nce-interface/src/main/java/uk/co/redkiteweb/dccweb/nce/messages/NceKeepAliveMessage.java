@@ -17,6 +17,7 @@ public class NceKeepAliveMessage extends AbstractNceMessage implements NceMessag
         final MessageResponse messageResponse = getMessageResponse();
         final NceData requestData = new NceData();
         requestData.addData(0x80);
+        requestData.setExpectedValues(1);
         try {
             final NceData responseData = getTalkToNCE().sendData(requestData);
             final Integer readData = responseData.readData();

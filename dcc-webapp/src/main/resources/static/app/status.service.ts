@@ -24,7 +24,13 @@ export class StatusService {
         this.http.get(this.statusUrl).map(response => response.json())
             .subscribe(data => {
                 this._status.next(data);
-            }, error => console.log('Could not load status.'));
+            }, error => this.unableToReadStatus());
+    }
+
+    unableToReadStatus(): void {
+        let status: Status = new Status();
+        status.status = "Service Down";
+        this._status.next(status);
     }
 
     startFetchingStatus(): void {

@@ -57,6 +57,7 @@ public class NceUpdateFunctionsMessage extends AbstractNceMessage implements Nce
         nceData.addData(updateFunctionsMessage.getAddress() % 256);
         nceData.addData(opertation);
         nceData.addData(value);
+        nceData.setExpectedValues(1);
         LOGGER.info(String.format("Sending operation %d value %d", opertation, value));
         final NceData responseData = getTalkToNCE().sendData(nceData);
         return readStatus(responseData.readData());
