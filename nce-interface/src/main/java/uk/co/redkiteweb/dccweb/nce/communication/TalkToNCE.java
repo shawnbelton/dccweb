@@ -20,6 +20,7 @@ import java.util.Date;
 public class TalkToNCE {
 
     private static final Logger LOGGER = LogManager.getLogger(TalkToNCE.class);
+    private static final long FULL_TIMEOUT = 5000;
 
     private PortFactory portFactory;
 
@@ -65,6 +66,8 @@ public class TalkToNCE {
     private static NceData readData(final SerialPort serialPort, final NceData inData) throws IOException {
         final NceData outData = new NceData();
         final InputStream inputStream = serialPort.getInputStream();
+        final Timer timer = new Timer(FULL_TIMEOUT);
+        timer.start();
         int inputData = inputStream.read();
         do {
             if (inputData >= 0) {
@@ -72,7 +75,8 @@ public class TalkToNCE {
                 outData.addData(inputData);
             }
             inputData = inputStream.read();
-        } while (inData.getExpectedValues()!=outData.size());
+        } while (inData.getExpectedValues()!=outData.size() && !timer.hasTimedOut());
+        LOGGER.info(String.format("Read time: %d", timer.getRunningTime()));
         inputStream.close();
         return outData;
     }

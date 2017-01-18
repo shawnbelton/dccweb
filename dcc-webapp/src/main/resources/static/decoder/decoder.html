@@ -12,22 +12,22 @@
                 <p class="row">
                     <label class="col-sm-3">Manufacturer:</label>
                     <span class="col-sm-9"
-                          *ngIf="currentDecoder!=null">{{currentDecoder.dccManufacturer.manufacturer}}</span>
+                          *ngIf="isEmptyDecoder()">{{currentDecoder.dccManufacturer.manufacturer}}</span>
                 </p>
                 <p class="row">
                     <label class="col-sm-3">Version:</label>
-                    <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.version}}</span>
+                    <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.version}}</span>
                 </p>
                 <p class="row">
                     <label class="col-sm-3">Short Address:</label>
-                    <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.shortAddress}}</span>
+                    <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.shortAddress}}</span>
                 </p>
                 <p class="row">
                     <label class="col-sm-3">Long Address:</label>
-                    <span class="col-sm-9" *ngIf="currentDecoder!=null">{{currentDecoder.longAddress}}</span>
+                    <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.longAddress}}</span>
                 </p>
             </div>
-            <ul class="decoders nav nav-tabs" *ngIf="currentDecoder!=null">
+            <ul class="decoders nav nav-tabs" *ngIf="isEmptyDecoder()">
                 <li role="presentation" [ngClass]="{'active': isFunctionsTab()}"><a href="/decoders" (click)="setFunctionsTab()">Decoder Functions</a></li>
                 <li role="presentation" [ngClass]="{'active': isMacrosTab()}"><a href="/decoders" (click)="setMacrosTab()">Macros</a></li>
             </ul>
