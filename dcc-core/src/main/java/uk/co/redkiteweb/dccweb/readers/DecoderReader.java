@@ -13,10 +13,8 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -110,6 +108,7 @@ public class DecoderReader {
         if (existingDecoder != null) {
             decoder.setDecoderId(existingDecoder.getDecoderId());
             decoder.setCvs(existingDecoder.getCvs());
+            decoder.setLinkedMacros(existingDecoder.getLinkedMacros());
             decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
         }
         //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
