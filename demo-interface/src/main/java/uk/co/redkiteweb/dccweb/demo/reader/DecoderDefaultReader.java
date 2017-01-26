@@ -2,12 +2,12 @@ package uk.co.redkiteweb.dccweb.demo.reader;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by shawn on 26/07/16.
@@ -16,24 +16,16 @@ import java.io.*;
 public class DecoderDefaultReader {
 
     private static final Logger LOGGER = LogManager.getLogger(DecoderDefaultReader.class);
+    private static final String DEFAULT_DECODER_VALUES = "decoderDefaults.csv";
 
-    private String defaultDecoderValues;
     private BufferedReader bufferedReader = null;
-    private Environment environment;
-
-    @Autowired
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
-    }
 
     public CVValue read() {
         CVValue cvValue = null;
         try {
             cvValue = getCVValue(readLine());
         } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", defaultDecoderValues), ioException);
-        } catch (ReaderException readerException) {
-            LOGGER.error(readerException.getMessage(), readerException);
+            LOGGER.error(String.format("Unable to read %s", DEFAULT_DECODER_VALUES), ioException);
         }
         return cvValue;
     }
@@ -56,20 +48,15 @@ public class DecoderDefaultReader {
         return cvValue;
     }
 
-    private BufferedReader getReader() throws ReaderException, IOException {
+    private BufferedReader getReader() throws IOException {
         if (bufferedReader == null) {
-            defaultDecoderValues = environment.getProperty("defaultDecoderValues");
-            try {
-                final InputStream inputStream = new FileInputStream(defaultDecoderValues);
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            } catch (FileNotFoundException exception) {
-                throw new ReaderException(String.format("%s not found.", defaultDecoderValues), exception);
-            }
+            final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_DECODER_VALUES);
+            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         }
         return bufferedReader;
     }
 
-    private String readLine() throws IOException, ReaderException {
+    private String readLine() throws IOException {
         final String readLine = getReader().readLine();
         if (readLine == null) {
             closeBufferedReader();
