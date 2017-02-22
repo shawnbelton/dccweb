@@ -5,7 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by shawn on 23/01/17.
@@ -21,6 +24,7 @@ public class AccessoryDecoderTypeTest {
         accessoryDecoderType.setDecoderTypeId(1);
         accessoryDecoderType.setDecoderType("Signal");
         accessoryDecoderType.setDecoderTypeCode("SIGNAL");
+        accessoryDecoderType.setDecoderTypeOperations(new ArrayList<AccessoryDecoderTypeOperation>());
     }
 
     @Test
@@ -36,5 +40,10 @@ public class AccessoryDecoderTypeTest {
     @Test
     public void testCode() {
         assertEquals("SIGNAL", accessoryDecoderType.getDecoderTypeCode());
+    }
+
+    @Test
+    public void testOperations() {
+        assertNotNull(accessoryDecoderType.getDecoderTypeOperations());
     }
 }

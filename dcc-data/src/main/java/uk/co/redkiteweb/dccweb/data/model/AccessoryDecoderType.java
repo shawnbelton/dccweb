@@ -2,7 +2,10 @@ package uk.co.redkiteweb.dccweb.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by shawn on 23/01/17.
@@ -14,6 +17,7 @@ public class AccessoryDecoderType implements Serializable {
     private Integer decoderTypeId;
     private String decoderType;
     private String decoderTypeCode;
+    private List<AccessoryDecoderTypeOperation> decoderTypeOperations;
 
     @Id
     public Integer getDecoderTypeId() {
@@ -38,5 +42,15 @@ public class AccessoryDecoderType implements Serializable {
 
     public void setDecoderTypeCode(String decoderTypeCode) {
         this.decoderTypeCode = decoderTypeCode;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "decoder_type_id")
+    public List<AccessoryDecoderTypeOperation> getDecoderTypeOperations() {
+        return decoderTypeOperations;
+    }
+
+    public void setDecoderTypeOperations(List<AccessoryDecoderTypeOperation> decoderTypeOperations) {
+        this.decoderTypeOperations = decoderTypeOperations;
     }
 }
