@@ -22,12 +22,11 @@ public class StepFactoryTest {
 
     private StepFactory stepFactory;
     private ApplicationContext context;
-    private IStep nullStep;
 
     @Before
     public void setup() {
         context = mock(ApplicationContext.class);
-        nullStep = mock(IStep.class);
+        final IStep nullStep = mock(IStep.class);
         stepFactory = new StepFactory();
         stepFactory.setApplicationContext(context);
         stepFactory.setNullStep(nullStep);

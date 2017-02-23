@@ -20,13 +20,11 @@ import static org.mockito.Mockito.*;
 public class AsyncConfigTest {
 
     private AsyncConfig asyncConfig;
-    private AsyncUncaughtHandler asyncUncaughtHandler;
 
     @Before
     public void setup() {
-        asyncUncaughtHandler = mock(AsyncUncaughtHandler.class);
         asyncConfig = new AsyncConfig();
-        asyncConfig.setAsyncUncaughtExceptionHandler(asyncUncaughtHandler);
+        asyncConfig.setAsyncUncaughtExceptionHandler(mock(AsyncUncaughtHandler.class));
     }
 
     @Test

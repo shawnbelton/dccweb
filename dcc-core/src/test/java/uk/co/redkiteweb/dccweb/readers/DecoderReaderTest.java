@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -30,9 +28,7 @@ public class DecoderReaderTest {
 
     private DecoderReader decoderReader;
     private DccInterface dccInterface;
-    private DccManufacturerRepository dccManufacturerRepository;
     private DecoderRepository decoderRepository;
-    private CVRepository cvRepository;
     private LogStore logStore;
     private DefinitionReaderFactory definitionReaderFactory;
     private DefinitionReader definitionReader;
@@ -43,8 +39,8 @@ public class DecoderReaderTest {
         logStore = mock(LogStore.class);
         dccInterface = mock(DccInterface.class);
         decoderRepository = mock(DecoderRepository.class);
-        cvRepository = mock(CVRepository.class);
-        dccManufacturerRepository = mock(DccManufacturerRepository.class);
+        final CVRepository cvRepository = mock(CVRepository.class);
+        final DccManufacturerRepository dccManufacturerRepository = mock(DccManufacturerRepository.class);
         definitionReaderFactory = mock(DefinitionReaderFactory.class);
         definitionReader = mock(DefinitionReader.class);
         cvReader = mock(CVReader.class);

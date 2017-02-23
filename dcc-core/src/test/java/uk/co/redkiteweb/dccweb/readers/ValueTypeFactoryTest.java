@@ -20,13 +20,11 @@ import static org.mockito.Mockito.when;
 public class ValueTypeFactoryTest {
 
     private ValueTypeFactory valueTypeFactory;
-    private Value value;
-    private Flag flag;
 
     @Before
     public void setup() {
-        value = mock(Value.class);
-        flag = mock(Flag.class);
+        final Value value = mock(Value.class);
+        final Flag flag = mock(Flag.class);
         valueTypeFactory = new ValueTypeFactory();
         valueTypeFactory.setValue(value);
         valueTypeFactory.setFlag(flag);

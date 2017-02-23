@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.Cab;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**

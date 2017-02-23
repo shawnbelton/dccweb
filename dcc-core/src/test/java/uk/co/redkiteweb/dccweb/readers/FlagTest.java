@@ -21,7 +21,6 @@ public class FlagTest {
 
     private Flag flag;
     private Node node;
-    private NamedNodeMap namedNodeMap;
     private CVReader cvReader;
 
     @Before
@@ -29,7 +28,7 @@ public class FlagTest {
         cvReader = mock(CVReader.class);
         when(cvReader.readCV(anyInt())).thenReturn(1);
         node = mock(Node.class);
-        namedNodeMap = mock(NamedNodeMap.class);
+        final NamedNodeMap namedNodeMap = mock(NamedNodeMap.class);
         when(node.getParentNode()).thenReturn(node);
         when(node.getAttributes()).thenReturn(namedNodeMap);
         when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);

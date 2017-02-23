@@ -50,7 +50,7 @@ public class UpdateFunctionsMessage implements Message {
     }
 
     private String getFunctionStatusList() {
-        final StringBuffer list = new StringBuffer();
+        final StringBuilder list = new StringBuilder();
         String separator = "";
         for(Map.Entry<Integer, Boolean> function : functions.entrySet()) {
             list.append(separator);

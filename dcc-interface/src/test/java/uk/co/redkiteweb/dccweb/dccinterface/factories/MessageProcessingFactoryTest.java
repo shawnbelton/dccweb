@@ -10,8 +10,6 @@ import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 import java.util.HashMap;
 
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -22,11 +20,10 @@ public class MessageProcessingFactoryTest {
 
     private MessageProcessorFactory messageProcessorFactory;
     private ApplicationContext context;
-    private SettingsService settingsService;
 
     @Before
     public void setUp() {
-        settingsService = mock(SettingsService.class);
+        final SettingsService settingsService = mock(SettingsService.class);
         context = mock(ApplicationContext.class);
         messageProcessorFactory = new MessageProcessorFactory();
         messageProcessorFactory.setApplicationContext(context);

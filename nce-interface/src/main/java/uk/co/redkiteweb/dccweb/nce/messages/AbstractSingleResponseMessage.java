@@ -9,7 +9,7 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
  */
 public abstract class AbstractSingleResponseMessage extends AbstractNceMessage {
 
-    protected MessageResponse singleResponse(final int commandValue) throws ConnectionException {
+    MessageResponse singleResponse(final int commandValue) throws ConnectionException {
         final MessageResponse messageResponse = getMessageResponse();
         final NceData requestData = new NceData();
         requestData.addData(commandValue);

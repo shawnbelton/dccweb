@@ -20,13 +20,12 @@ import static org.mockito.Mockito.when;
 public class NceChangeSpeedMessageTest {
 
     private NceChangeSpeedMessage nceChangeSpeedMessage;
-    private TalkToNCE talkToNCE;
     private NceData nceData;
 
     @Before
     public void setup() throws ConnectionException {
         nceData = mock(NceData.class);
-        talkToNCE = mock(TalkToNCE.class);
+        final TalkToNCE talkToNCE = mock(TalkToNCE.class);
         nceChangeSpeedMessage = new NceChangeSpeedMessage();
         nceChangeSpeedMessage.setTalkToNCE(talkToNCE);
         when(talkToNCE.sendData(any(NceData.class))).thenReturn(nceData);

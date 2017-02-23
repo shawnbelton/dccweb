@@ -20,7 +20,7 @@ public class MessageResponseTest {
     public void setUp() {
         messageResponse = new MessageResponse();
         messageResponse.setStatus(MessageResponse.MessageStatus.OK);
-        messageResponse.put("TEST", new Integer(1));
+        messageResponse.put("TEST", 1);
     }
 
     @Test

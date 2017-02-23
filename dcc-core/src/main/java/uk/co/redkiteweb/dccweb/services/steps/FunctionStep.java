@@ -26,7 +26,7 @@ public class FunctionStep extends AbstractMacroStep implements IStep {
     public void run() {
         final Cab cab = this.getCab();
         for (CabFunction cabFunction : cab.getCabFunctions()) {
-            if (cabFunction.getNumber()==this.getFunctionNumber()) {
+            if (cabFunction.getNumber().equals(this.getFunctionNumber())) {
                 cabFunction.setState(this.getFunctionStatus());
             }
         }

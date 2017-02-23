@@ -17,7 +17,6 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**

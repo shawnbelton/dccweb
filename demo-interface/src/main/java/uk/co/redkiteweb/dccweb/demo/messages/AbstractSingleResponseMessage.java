@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  */
 public abstract class AbstractSingleResponseMessage extends AbstractDemoMessage {
 
-    protected MessageResponse singleResponse(final String key, final Object value) {
+    MessageResponse singleResponse(final String key, final Object value) {
         final MessageResponse messageResponse = getMessageResponse();
         messageResponse.put(key, value);
         return messageResponse;

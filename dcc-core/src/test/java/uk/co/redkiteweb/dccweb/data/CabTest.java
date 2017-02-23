@@ -17,11 +17,10 @@ import static org.junit.Assert.assertEquals;
 public class CabTest {
 
     private Cab cab;
-    private Train train;
 
     @Before
     public void setup() {
-        train = new Train();
+        final Train train = new Train();
         train.setNumber("12345");
         cab = new Cab();
         cab.setSpeed(0);

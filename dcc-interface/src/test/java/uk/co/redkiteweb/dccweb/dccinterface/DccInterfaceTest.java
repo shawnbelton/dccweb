@@ -23,16 +23,14 @@ public class DccInterfaceTest {
 
     private DccInterfaceImpl dccInterface;
     private DccInterfaceStatus dccInterfaceStatus;
-    private MessageProcessorFactory messageProcessorFactory;
     private MessageProcessor messageProcessor;
-    private LogStore logStore;
 
     @Before
     public void setUp() {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
-        messageProcessorFactory = mock(MessageProcessorFactory.class);
+        final MessageProcessorFactory messageProcessorFactory = mock(MessageProcessorFactory.class);
         messageProcessor = mock(MessageProcessor.class);
-        logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         when(messageProcessor.getInterfaceCode()).thenReturn("Code");
         when(messageProcessor.getInterfaceName()).thenReturn("Name");
         dccInterface = new DccInterfaceImpl();

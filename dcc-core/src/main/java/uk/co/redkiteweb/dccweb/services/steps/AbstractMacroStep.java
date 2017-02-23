@@ -24,23 +24,23 @@ public abstract class AbstractMacroStep implements IStep {
         this.macroStep = macroStep;
     }
 
-    protected Float delay() {
+    Float delay() {
         return macroStep.getDelay();
     }
 
-    protected Cab getCab() {
+    Cab getCab() {
         return cabStore.getCab(macroStep.getTrainId());
     }
 
-    protected Integer getFunctionNumber() {
+    Integer getFunctionNumber() {
         return this.macroStep.getFunctionNumber();
     }
 
-    protected Boolean getFunctionStatus() {
+    Boolean getFunctionStatus() {
         return "true".equalsIgnoreCase(this.macroStep.getFunctionStatus());
     }
 
-    protected Integer getSpeed() {
+    Integer getSpeed() {
         return this.macroStep.getSpeed();
     }
 

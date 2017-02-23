@@ -13,7 +13,6 @@ import uk.co.redkiteweb.dccweb.services.CabService;
 
 import java.util.TreeSet;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**

@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 
 import java.util.*;
@@ -20,18 +19,12 @@ import java.util.*;
 @Component
 public class CabStore {
 
-    private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
     private TrainRepository trainRepository;
     private final Map<Integer, Cab> cabStore;
 
     public CabStore() {
         cabStore = new HashMap<Integer, Cab>();
-    }
-
-    @Autowired
-    public void setDecoderRepository(final DecoderRepository decoderRepository) {
-        this.decoderRepository = decoderRepository;
     }
 
     @Autowired

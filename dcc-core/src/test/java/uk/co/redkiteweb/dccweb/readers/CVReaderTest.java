@@ -22,12 +22,11 @@ import static org.mockito.Mockito.when;
 public class CVReaderTest {
 
     private CVReader cvReader;
-    private DccInterface dccInterface;
     private MessageResponse messageResponse;
 
     @Before
     public void setup() {
-        dccInterface = mock(DccInterface.class);
+        final DccInterface dccInterface = mock(DccInterface.class);
         messageResponse = mock(MessageResponse.class);
         cvReader = new CVReader();
         cvReader.setDccInterface(dccInterface);

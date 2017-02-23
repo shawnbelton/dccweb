@@ -7,8 +7,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**

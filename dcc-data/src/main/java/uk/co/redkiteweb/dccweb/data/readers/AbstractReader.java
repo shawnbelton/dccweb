@@ -14,7 +14,7 @@ public abstract class AbstractReader {
 
     protected abstract InputStream getInputStream();
 
-    protected String readLine() throws IOException {
+    String readLine() throws IOException {
         if (bufferedReader == null) {
             bufferedReader = new BufferedReader(new InputStreamReader(getInputStream()));
         }

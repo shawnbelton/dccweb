@@ -48,7 +48,7 @@ public class DecoderDefaultReader {
         return cvValue;
     }
 
-    private BufferedReader getReader() throws IOException {
+    private BufferedReader getReader() {
         if (bufferedReader == null) {
             final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_DECODER_VALUES);
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));

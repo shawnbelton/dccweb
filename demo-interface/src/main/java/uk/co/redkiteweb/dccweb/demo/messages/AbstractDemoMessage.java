@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  */
 public abstract class AbstractDemoMessage implements DemoMessage {
 
-    public MessageResponse getMessageResponse() {
+    MessageResponse getMessageResponse() {
         final MessageResponse messageResponse = new MessageResponse();
         messageResponse.setStatus(MessageResponse.MessageStatus.OK);
         return messageResponse;

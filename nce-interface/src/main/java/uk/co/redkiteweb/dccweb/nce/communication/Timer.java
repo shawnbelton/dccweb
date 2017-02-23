@@ -5,10 +5,10 @@ import java.util.Date;
 /**
  * Created by shawn on 18/01/17.
  */
-public class Timer {
+class Timer {
 
     private long startTime;
-    private long timeout;
+    private final long timeout;
 
     public Timer(final long timeout) {
         this.timeout = timeout;

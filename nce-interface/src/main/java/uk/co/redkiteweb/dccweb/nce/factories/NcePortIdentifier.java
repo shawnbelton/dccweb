@@ -3,7 +3,6 @@ package uk.co.redkiteweb.dccweb.nce.factories;
 import gnu.io.CommPortIdentifier;
 import gnu.io.NoSuchPortException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
@@ -15,16 +14,9 @@ public class NcePortIdentifier {
 
     private SettingsService settingsService;
 
-    private Environment environment;
-
     @Autowired
     public void setSettingsService(final SettingsService settingsService) {
         this.settingsService = settingsService;
-    }
-
-    @Autowired
-    public void setEnvironment(final Environment environment) {
-        this.environment = environment;
     }
 
     public CommPortIdentifier getInstance() throws NoSuchPortException {
