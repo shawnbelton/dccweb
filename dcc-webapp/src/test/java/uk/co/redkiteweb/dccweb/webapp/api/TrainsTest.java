@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -24,12 +23,11 @@ public class TrainsTest {
 
     private Trains trains;
     private TrainRepository trainRepository;
-    private LogStore logStore;
 
     @Before
     public void setUp() {
         trainRepository = mock(TrainRepository.class);
-        logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         trains = new Trains();
         trains.setTrainRepository(trainRepository);
         trains.setLogStore(logStore);

@@ -10,7 +10,6 @@ import uk.co.redkiteweb.dccweb.async.AsyncUncaughtHandler;
 import java.util.concurrent.Executor;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**

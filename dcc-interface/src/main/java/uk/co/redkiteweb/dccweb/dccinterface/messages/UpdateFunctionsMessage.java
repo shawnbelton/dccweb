@@ -10,7 +10,7 @@ public class UpdateFunctionsMessage implements Message {
 
     private int address;
     private boolean addressMode;
-    private Map<Integer, Boolean> functions;
+    private final Map<Integer, Boolean> functions;
 
     public UpdateFunctionsMessage() {
         functions = new HashMap<Integer, Boolean>();

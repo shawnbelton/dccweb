@@ -23,13 +23,12 @@ public class StartUpListenerTest {
     private StartUpListener startUpListener;
     private DccInterface dccInterface;
     private Loader loader;
-    private ApplicationContext context;
 
     @Before
     public void setUp() {
         dccInterface = mock(DccInterface.class);
         loader = mock(Loader.class);
-        context = mock(ApplicationContext.class);
+        final ApplicationContext context = mock(ApplicationContext.class);
         startUpListener = new StartUpListener();
         startUpListener.setDccInterface(dccInterface);
         startUpListener.setApplicationContext(context);

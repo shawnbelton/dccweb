@@ -36,8 +36,7 @@ export class TrainComponent implements OnInit {
     configure(train: Train): void {
         train.showConfig = !train.showConfig;
         if (train.decoder == null) {
-            var decoder = new Decoder();
-            train.decoder = decoder;
+            train.decoder = new Decoder();
         }
     }
 
