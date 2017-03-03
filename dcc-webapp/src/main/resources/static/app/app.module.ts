@@ -23,6 +23,8 @@ import {PerformanceComponent} from "./performance.component";
 import {PerformanceService} from "./performance.service";
 import {InfoService} from "./info.service";
 import {InfoComponent} from "./info.component";
+import {AccessoryDecoderService} from "./accessoryDecoder.service";
+import {AccessoryComponent} from "./accessory.component";
 
 @NgModule({
     imports: [
@@ -41,7 +43,8 @@ import {InfoComponent} from "./info.component";
         SettingsComponent,
         MacroComponent,
         PerformanceComponent,
-        InfoComponent
+        InfoComponent,
+        AccessoryComponent
     ],
     providers: [
         MessageService,
@@ -52,7 +55,8 @@ import {InfoComponent} from "./info.component";
         SettingsService,
         MacroService,
         PerformanceService,
-        InfoService
+        InfoService,
+        AccessoryDecoderService
     ],
     bootstrap: [
         AppComponent,

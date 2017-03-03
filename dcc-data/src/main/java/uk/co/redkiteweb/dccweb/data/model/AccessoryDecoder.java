@@ -13,6 +13,7 @@ public class AccessoryDecoder implements Serializable {
     private Integer accessoryDecoderId;
     private AccessoryDecoderType accessoryDecoderType;
     private Integer address;
+    private String name;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,5 +40,13 @@ public class AccessoryDecoder implements Serializable {
 
     public void setAddress(final Integer address) {
         this.address = address;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

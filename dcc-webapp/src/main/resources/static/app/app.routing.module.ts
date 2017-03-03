@@ -8,11 +8,13 @@ import {DecoderComponent} from "./decoder.component";
 import {SettingsComponent} from "./settings.component";
 import {MacroComponent} from "./macro.component";
 import {PerformanceComponent} from "./performance.component";
+import {AccessoryComponent} from "./accessory.component";
 
 const routes: Routes = [
     { path: '', redirectTo: '/engine-shed', pathMatch: 'full'},
     { path: 'engine-shed', component: TrainComponent },
     { path: 'decoders', component: DecoderComponent },
+    { path: 'accessories', component: AccessoryComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'macro-edit', component: MacroComponent },
     { path: 'performance', component: PerformanceComponent }

@@ -22,6 +22,7 @@ public class AccessoryDecoderTest {
         accessoryDecoder.setAccessoryDecoderId(1);
         accessoryDecoder.setAccessoryDecoderType(new AccessoryDecoderType());
         accessoryDecoder.setAddress(123);
+        accessoryDecoder.setName("Label");
     }
 
     @Test
@@ -37,5 +38,10 @@ public class AccessoryDecoderTest {
     @Test
     public void testAddress() {
         assertEquals(new Integer(123), accessoryDecoder.getAddress());
+    }
+
+    @Test
+    public void testName() {
+        assertEquals("Label", accessoryDecoder.getName());
     }
 }
