@@ -14,7 +14,6 @@ import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
 
 import java.util.ArrayList;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -27,14 +26,13 @@ public class MacroServiceTest {
     private StepFactory stepFactory;
     private MacroRepository macroRepository;
     private MacroStepRepository macroStepRepository;
-    private LogStore logStore;
 
     @Before
     public void setup() {
         macroRepository = mock(MacroRepository.class);
         macroStepRepository = mock(MacroStepRepository.class);
         stepFactory = mock(StepFactory.class);
-        logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         macroService = new MacroService();
         macroService.setMacroRepository(macroRepository);
         macroService.setMacroStepRepository(macroStepRepository);

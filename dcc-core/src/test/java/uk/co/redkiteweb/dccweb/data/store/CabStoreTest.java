@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.Train;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
 
 import java.util.ArrayList;
@@ -28,17 +27,13 @@ public class CabStoreTest {
 
     private CabStore cabStore;
     private Train train;
-    private TrainRepository trainRepository;
-    private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
 
     @Before
     public void setup() {
-        decoderRepository = mock(DecoderRepository.class);
         decoderFunctionRepository = mock(DecoderFunctionRepository.class);
-        trainRepository = mock(TrainRepository.class);
+        final TrainRepository trainRepository = mock(TrainRepository.class);
         cabStore = new CabStore();
-        cabStore.setDecoderRepository(decoderRepository);
         cabStore.setDecoderFunctionRepository(decoderFunctionRepository);
         cabStore.setTrainRepository(trainRepository);
         train = new Train();
@@ -70,7 +65,6 @@ public class CabStoreTest {
     @Test
     public void testDecoderNoFunctions() {
         final Decoder decoder = new Decoder();
-        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(new ArrayList<DecoderFunction>());
         train.setDecoder(decoder);
         assertEquals(0, cabStore.getCab(train).getCabFunctions().size());
@@ -79,7 +73,6 @@ public class CabStoreTest {
     @Test
     public void testDecoderOneFunction() {
         final Decoder decoder = new Decoder();
-        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
         decoderFunctions.add(getDecoderFunction(1, "Name"));
         when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);
@@ -90,7 +83,6 @@ public class CabStoreTest {
     @Test
     public void testDecoderFunctionAdded() {
         final Decoder decoder = new Decoder();
-        when(decoderRepository.findOne(anyInt())).thenReturn(decoder);
         final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
         decoderFunctions.add(getDecoderFunction(1, "Name"));
         when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);

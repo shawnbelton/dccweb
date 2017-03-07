@@ -5,14 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
 import uk.co.redkiteweb.dccweb.decoders.DecoderDefinition;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by shawn on 15/09/16.

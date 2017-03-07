@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**

@@ -11,7 +11,6 @@ import uk.co.redkiteweb.dccweb.services.MacroService;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**

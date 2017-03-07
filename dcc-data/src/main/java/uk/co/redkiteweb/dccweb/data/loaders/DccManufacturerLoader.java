@@ -28,8 +28,7 @@ public class DccManufacturerLoader implements Loader {
 
     @Override
     public void load() {
-        DccManufacturer dccManufacturer;
-        dccManufacturer = dccManufacturerReader.read();
+        DccManufacturer dccManufacturer = dccManufacturerReader.read();
         while(dccManufacturer!=null) {
             dccManufacturerRepository.save(dccManufacturer);
             dccManufacturer = dccManufacturerReader.read();

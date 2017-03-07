@@ -12,7 +12,7 @@ import {StatusService} from "./status.service";
 })
 export class StatusComponent implements OnInit {
 
-    status: Status
+    status: Status;
 
     constructor(private statusService: StatusService) { }
 

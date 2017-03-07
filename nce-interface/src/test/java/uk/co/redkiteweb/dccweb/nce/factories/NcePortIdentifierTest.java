@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.core.env.Environment;
 import uk.co.redkiteweb.dccweb.data.service.SettingsService;
 
 import static org.junit.Assert.assertTrue;
@@ -20,15 +19,12 @@ import static org.mockito.Mockito.when;
 public class NcePortIdentifierTest {
 
     private NcePortIdentifier ncePortIdentifier;
-    private Environment environment;
     private SettingsService settingsService;
 
     @Before
     public void setUp() {
         settingsService = mock(SettingsService.class);
-        environment = mock(Environment.class);
         ncePortIdentifier = new NcePortIdentifier();
-        ncePortIdentifier.setEnvironment(environment);
         ncePortIdentifier.setSettingsService(settingsService);
     }
 

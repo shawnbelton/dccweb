@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.webapp.data.Settings;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -20,15 +19,13 @@ public class AppSettingsTest {
 
     private AppSettings appSettings;
     private SettingsService settingsService;
-    private LogStore logStore;
 
     @Before
     public void setup() {
         settingsService = mock(SettingsService.class);
-        logStore = mock(LogStore.class);
         appSettings = new AppSettings();
         appSettings.setSettingsService(settingsService);
-        appSettings.setLogStore(logStore);
+        appSettings.setLogStore(mock(LogStore.class));
     }
 
     @Test

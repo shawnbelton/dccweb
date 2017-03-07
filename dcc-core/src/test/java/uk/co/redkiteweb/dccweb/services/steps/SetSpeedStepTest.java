@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
 import uk.co.redkiteweb.dccweb.services.CabService;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**
@@ -21,13 +20,12 @@ public class SetSpeedStepTest {
     private SetSpeedStep setSpeedStep;
     private CabStore cabStore;
     private CabService cabService;
-    private MacroStep macroStep;
 
     @Before
     public void setup() {
         cabStore = mock(CabStore.class);
         cabService = mock(CabService.class);
-        macroStep = mock(MacroStep.class);
+        final MacroStep macroStep = mock(MacroStep.class);
         setSpeedStep = new SetSpeedStep();
         setSpeedStep.setCabStore(cabStore);
         setSpeedStep.setCabService(cabService);

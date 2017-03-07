@@ -4,14 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
 import uk.co.redkiteweb.dccweb.demo.registers.DecoderRegister;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**
@@ -36,7 +35,7 @@ public class DemoReadCVMessageTest {
         final ReadCVMessage message = new ReadCVMessage();
         message.setCvReg(8);
         final MessageResponse messageResponse = demoReadCVMessage.process(message);
-        assertEquals(new Integer(1), messageResponse.get("CVData"));
+        assertEquals(1, messageResponse.get("CVData"));
     }
 
 }

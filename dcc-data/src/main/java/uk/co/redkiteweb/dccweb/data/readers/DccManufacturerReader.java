@@ -2,27 +2,21 @@ package uk.co.redkiteweb.dccweb.data.readers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by shawn on 30/06/16.
  */
 @Component
-public class DccManufacturerReader implements Reader<DccManufacturer> {
+public class DccManufacturerReader extends AbstractReader implements Reader<DccManufacturer> {
 
-    private static final Logger LOGGER = LogManager.getLogger(DccManufacturerReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(AccessoryDecoderTypeReader.class);
 
-    private String dccManufacturersFile;
-    private BufferedReader bufferedReader = null;
-
-    @Value("${dccManufacturerFile}")
-    public void setDccManufacturersFile(final String dccManufacturersFile) {
-        this.dccManufacturersFile = dccManufacturersFile;
-    }
+    private static final String DCC_MANUFACTURER_FILE = "dcc-manufacturers.csv";
 
     @Override
     public DccManufacturer read() {
@@ -30,11 +24,14 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         try {
             dccManufacturer = getDccManufacturer(readLine());
         } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", dccManufacturersFile), ioException);
-        } catch (ReaderException readerException) {
-            LOGGER.error(readerException.getMessage(), readerException);
+            LOGGER.error(String.format("Unable to read %s", DCC_MANUFACTURER_FILE), ioException);
         }
         return dccManufacturer;
+    }
+
+    @Override
+    protected InputStream getInputStream() {
+        return this.getClass().getClassLoader().getResourceAsStream(DCC_MANUFACTURER_FILE);
     }
 
     private static DccManufacturer getDccManufacturer(final String readLine) {
@@ -56,27 +53,4 @@ public class DccManufacturerReader implements Reader<DccManufacturer> {
         return dccManufacturer;
     }
 
-    private BufferedReader getReader() throws ReaderException, IOException {
-        if (bufferedReader == null) {
-            try {
-                final InputStream inputStream = new FileInputStream(dccManufacturersFile);
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            } catch (FileNotFoundException exception) {
-                throw new ReaderException(String.format("%s not found.", dccManufacturersFile), exception);
-            }
-        }
-        return bufferedReader;
-    }
-
-    private String readLine() throws IOException, ReaderException {
-        final String readLine = getReader().readLine();
-        if (readLine == null) {
-            closeBufferedReader();
-        }
-        return readLine;
-    }
-
-    private void closeBufferedReader() throws IOException {
-        bufferedReader.close();
-    }
 }

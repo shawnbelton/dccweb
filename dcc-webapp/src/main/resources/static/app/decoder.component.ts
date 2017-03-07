@@ -94,7 +94,7 @@ export class DecoderComponent implements OnInit {
     private setCurrentDecoder(decoder: Decoder): void {
         this.currentDecoder = decoder;
         this.availableFunctions = new Array();
-        for(var index = 0; index < 29; index++) {
+        for(let index = 0; index < 29; index++) {
             if (!this.hasFunction(index)) {
                 this.availableFunctions.push(index);
             }
@@ -107,7 +107,7 @@ export class DecoderComponent implements OnInit {
     }
 
     private hasFunction(index: number): boolean {
-        var found = false;
+        let found = false;
         if (this.currentDecoder != null && this.currentDecoder.decoderFunctions != null) {
             for (let decoderFunction of this.currentDecoder.decoderFunctions) {
                 if (decoderFunction.number == index) {

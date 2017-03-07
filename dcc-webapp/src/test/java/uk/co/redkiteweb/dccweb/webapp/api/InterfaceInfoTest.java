@@ -17,12 +17,11 @@ public class InterfaceInfoTest {
 
     private InterfaceInfo interfaceInfo;
     private DccInterface dccInterface;
-    private DccInterfaceStatus dccInterfaceStatus;
 
     @Before
     public void setUp() {
         dccInterface = mock(DccInterface.class);
-        dccInterfaceStatus = mock(DccInterfaceStatus.class);
+        final DccInterfaceStatus dccInterfaceStatus = mock(DccInterfaceStatus.class);
         interfaceInfo = new InterfaceInfo();
         interfaceInfo.setDccInterface(dccInterface);
     }

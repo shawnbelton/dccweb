@@ -12,7 +12,7 @@ import java.util.List;
 @Component
 public class LogStore {
 
-    private List<LogEntry> logEntryStore;
+    private final List<LogEntry> logEntryStore;
 
     public LogStore() {
         logEntryStore = new ArrayList<LogEntry>();

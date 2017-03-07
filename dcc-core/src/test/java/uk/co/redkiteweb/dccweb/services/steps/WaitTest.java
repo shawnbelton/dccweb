@@ -32,7 +32,7 @@ public class WaitTest {
     }
 
     @Test
-    public void runWithIterruptionTest() {
+    public void runWithInterruptionTest() {
         when(step.getDelay()).thenReturn(10f);
         Thread.currentThread().interrupt();
         wait.run();

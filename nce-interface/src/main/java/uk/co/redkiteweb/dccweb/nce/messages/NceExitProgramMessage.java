@@ -3,7 +3,6 @@ package uk.co.redkiteweb.dccweb.nce.messages;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.nce.communication.NceData;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 
 /**

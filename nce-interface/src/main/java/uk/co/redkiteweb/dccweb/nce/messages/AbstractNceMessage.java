@@ -18,11 +18,11 @@ public abstract class AbstractNceMessage implements NceMessage {
         this.talkToNCE = talkToNCE;
     }
 
-    public TalkToNCE getTalkToNCE() {
+    TalkToNCE getTalkToNCE() {
         return talkToNCE;
     }
 
-    public MessageResponse getMessageResponse() {
+    MessageResponse getMessageResponse() {
         final MessageResponse messageResponse = new MessageResponse();
         messageResponse.setStatus(MessageResponse.MessageStatus.OK);
         return messageResponse;
@@ -31,7 +31,7 @@ public abstract class AbstractNceMessage implements NceMessage {
     @Override
     public abstract MessageResponse process(final Message message) throws ConnectionException;
 
-    protected static MessageResponse.MessageStatus readStatus(final Integer data) {
+    static MessageResponse.MessageStatus readStatus(final Integer data) {
         MessageResponse.MessageStatus status = MessageResponse.MessageStatus.ERROR;
         if (data != null && data == 33) {
             status = MessageResponse.MessageStatus.OK;

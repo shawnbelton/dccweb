@@ -100,4 +100,4 @@ hardware/blockcontroller/build/Makefile
 
 dcc-webapp/src/main/resources/static/app/*.js.map
 dcc-webapp/src/main/resources/static/app/*.js
-dcc-webapp/src/main/resources/static/node_modules/
+dcc-webapp/src/main/resources/static/node_modules/*/

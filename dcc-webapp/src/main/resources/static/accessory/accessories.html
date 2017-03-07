@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Accessories</span>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item" *ngFor="let accessory of accessoryDecoders">
+                    <span>{{accessory.name}}</span>
+                    <div class="pull-right">
+                        <input type="button" class="btn btn-success btn-xs" (click)="startEditAccessory(accessory)" value="Edit"/>
+                    </div>
+                    <ul class="list-inline">
+                        <li *ngFor="let operation of accessory.accessoryDecoderType.decoderTypeOperations">
+                            <input type="button" (click)="operateAccessory(accessory.address, operation.decoderOperationValue)" class="btn btn-xs btn-info" value="{{operation.decoderTypeOperation}}"/>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <span>Accessory Edit</span>
+            </div>
+            <div class="panel-body">
+                <form id="createAccessory" class="form-horizontal" name="createAccessory" (ngSubmit)="saveAccessory()" #accessoryForm="ngForm">
+                    <div class="form-group">
+                        <label for="accessoryNumber" class="col-sm-4 control-label">Acccessory Address</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="accessoryNumber" name="accessoryNumber" class="form-control" placeholder="Accessory Address"
+                                   [(ngModel)]="editAccessory.address" required="required" #accessoryNumber="ngModel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="accessoryName" class="col-sm-4 control-label">Acccessory Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="accessoryName" name="accessoryName" class="form-control" placeholder="Accessory Name"
+                                   [(ngModel)]="editAccessory.name" required="required" #accessoryName="ngModel"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="accessoryType" class="col-sm-4 control-label">Accessory Type</label>
+                        <div class="col-sm-8">
+                            <select name="accessoryType" ngControl="accessoryType" id="accessoryType"
+                                    class="form-control" required="required"
+                                    [(ngModel)]="editAccessory.accessoryDecoderType.decoderTypeId">
+                                <option *ngFor="let decoderType of accessoryDecoderTypes" [value]="decoderType.decoderTypeId">
+                                    {{decoderType.decoderType}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="pull-right">
+                                <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
+                                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!accessoryForm.form.valid"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

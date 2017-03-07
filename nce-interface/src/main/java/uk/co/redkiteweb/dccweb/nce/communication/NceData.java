@@ -8,7 +8,7 @@ import java.util.Queue;
  */
 public class NceData {
 
-    private Queue<Integer> nceData;
+    private final Queue<Integer> nceData;
     private int expectedValues;
 
     public NceData() {

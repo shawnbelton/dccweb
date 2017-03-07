@@ -50,15 +50,15 @@ public class NceUpdateFunctionsMessage extends AbstractNceMessage implements Nce
         return messageResponse;
     }
 
-    private MessageResponse.MessageStatus updateFunctions(final UpdateFunctionsMessage updateFunctionsMessage, final int opertation, final int value) throws ConnectionException {
+    private MessageResponse.MessageStatus updateFunctions(final UpdateFunctionsMessage updateFunctionsMessage, final int operation, final int value) throws ConnectionException {
         final NceData nceData = new NceData();
         nceData.addData(0xa2);
         nceData.addData((updateFunctionsMessage.getAddress() / 256) | getHighByteMask(updateFunctionsMessage.isAddressMode()));
         nceData.addData(updateFunctionsMessage.getAddress() % 256);
-        nceData.addData(opertation);
+        nceData.addData(operation);
         nceData.addData(value);
         nceData.setExpectedValues(1);
-        LOGGER.info(String.format("Sending operation %d value %d", opertation, value));
+        LOGGER.info(String.format("Sending operation %d value %d", operation, value));
         final NceData responseData = getTalkToNCE().sendData(nceData);
         return readStatus(responseData.readData());
     }

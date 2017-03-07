@@ -10,7 +10,6 @@ import uk.co.redkiteweb.dccweb.async.AsyncUncaughtHandler;
 import java.util.concurrent.Executor;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -20,13 +19,11 @@ import static org.mockito.Mockito.*;
 public class AsyncConfigTest {
 
     private AsyncConfig asyncConfig;
-    private AsyncUncaughtHandler asyncUncaughtHandler;
 
     @Before
     public void setup() {
-        asyncUncaughtHandler = mock(AsyncUncaughtHandler.class);
         asyncConfig = new AsyncConfig();
-        asyncConfig.setAsyncUncaughtExceptionHandler(asyncUncaughtHandler);
+        asyncConfig.setAsyncUncaughtExceptionHandler(mock(AsyncUncaughtHandler.class));
     }
 
     @Test

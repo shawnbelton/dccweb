@@ -23,15 +23,8 @@ public class DccManufacturerReaderTest {
 
     @Test
     public void readTest() {
-        dccManufacturerReader.setDccManufacturersFile("./src/test/resources/dcc-manufacturers.csv");
         assertNotNull(dccManufacturerReader.read());
         assertNull(dccManufacturerReader.read());
-        assertNull(dccManufacturerReader.read());
-    }
-
-    @Test
-    public void missingFileTest() {
-        dccManufacturerReader.setDccManufacturersFile("missing.csv");
         assertNull(dccManufacturerReader.read());
     }
 }

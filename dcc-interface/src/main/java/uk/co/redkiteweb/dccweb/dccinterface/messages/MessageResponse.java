@@ -14,7 +14,7 @@ public class MessageResponse {
     }
 
     private MessageStatus status;
-    private Map<String, Object> data;
+    private final Map<String, Object> data;
 
     public MessageResponse() {
         data = new HashMap<String, Object>();

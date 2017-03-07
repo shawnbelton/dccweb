@@ -18,7 +18,6 @@ import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
 import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**
@@ -29,20 +28,18 @@ public class DecodersTest {
 
     private Decoders decoders;
     private DecoderReader decoderReader;
-    private DecoderReaderFactory decoderReaderFactory;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
     private LinkedMacroRepository linkedMacroRepository;
-    private LogStore logStore;
 
     @Before
     public void setUp() {
         decoderReader = mock(DecoderReader.class);
-        decoderReaderFactory = mock(DecoderReaderFactory.class);
+        final DecoderReaderFactory decoderReaderFactory = mock(DecoderReaderFactory.class);
         when(decoderReaderFactory.createInstance()).thenReturn(decoderReader);
         decoderRepository = mock(DecoderRepository.class);
         decoderFunctionRepository = mock(DecoderFunctionRepository.class);
-        logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         linkedMacroRepository = mock(LinkedMacroRepository.class);
         decoders = new Decoders();
         decoders.setDecoderReaderFactory(decoderReaderFactory);

@@ -18,7 +18,7 @@ public class InterfaceInfo implements Serializable {
         return code;
     }
 
-    public void setCode(final String code) {
+    private void setCode(final String code) {
         this.code = code;
     }
 
@@ -26,7 +26,7 @@ public class InterfaceInfo implements Serializable {
         return name;
     }
 
-    public void setName(final String name) {
+    private void setName(final String name) {
         this.name = name;
     }
 

@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 
 /**
  * Created by shawn on 25/07/16.

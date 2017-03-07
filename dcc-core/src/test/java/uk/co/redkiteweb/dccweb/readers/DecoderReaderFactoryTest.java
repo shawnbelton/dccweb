@@ -18,11 +18,10 @@ import static org.mockito.Mockito.when;
 public class DecoderReaderFactoryTest {
 
     private DecoderReaderFactory decoderReaderFactory;
-    private ApplicationContext context;
 
     @Before
     public void setup() {
-        context = mock(ApplicationContext.class);
+        final ApplicationContext context = mock(ApplicationContext.class);
         final DecoderReader decoderReader = mock(DecoderReader.class);
         when(context.getBean(eq(DecoderReader.class))).thenReturn(decoderReader);
         decoderReaderFactory = new DecoderReaderFactory();
