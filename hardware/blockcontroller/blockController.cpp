@@ -13,7 +13,7 @@ blockController::blockController(int pBlockNumber, uint8_t pBlockInput) {
     occupied = true;
     blockChanged = false;
     aqv = -1;
-    aqc = -1;
+    aqc = -1.0f;
     last_occupied = false;
 }
 
@@ -54,11 +54,19 @@ void blockController::printAQV() {
     Serial.println(buffer);
 }
 
+void blockController::printCurrent(float current) {
+    char buffer[100];
+    sprintf(buffer, "Block %i Current ", blockNumber);
+    Serial.print(buffer);
+    Serial.println(current);
+}
+
 void blockController::determineOccupied(float adc_zero, float threshold) {
     float current = readCurrent(adc_zero);
     bool block_occupied = current > threshold;
     if (occupied != block_occupied) {
         if (blockChanged) {
+            printCurrent(current);
             occupied = block_occupied;
             blockChanged = false;
         } else {
@@ -78,7 +86,7 @@ float blockController::determineCQ(float aqv) {
     }
     CQ /= reps;
 
-    return CQ;
+    return CQ + 0.01f;
 }
 
 int blockController::determineQV() {

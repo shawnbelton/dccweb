@@ -6,6 +6,8 @@
 const int clockPin = 8;
 const int dataPin = 9;
 
+const char* app_name = APP_NAME;
+
 Notifier notifier = Notifier();
 ChainableLED chainableLED = ChainableLED(clockPin, dataPin, 4);
 blockController block1 = blockController(1, A0);
@@ -20,7 +22,9 @@ void setup() {
     Serial.print(ESC);
     Serial.print("[0m");
     Serial.print(ESC);
-    Serial.println("[2JBlock Controller:");
+    Serial.print("[2J");
+    Serial.print(app_name);
+    Serial.println(":");
     chainableLED.init();
     for(int index = 1; index <=4 ; index++) {
         chainableLED.setColorRGB(index, 0,0,0);

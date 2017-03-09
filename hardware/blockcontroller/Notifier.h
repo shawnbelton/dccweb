@@ -18,6 +18,8 @@ private:
     void setLEDOn(byte ledNumber);
     void setLEDOff(byte ledNumber);
     void setLED(byte ledNumber, bool state);
+    void printMAC();
+    void buildMacAddress();
 
 public:
     void init();

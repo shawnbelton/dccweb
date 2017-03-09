@@ -54,6 +54,8 @@ dcc-interface/dcc-interface.iml
 decoder-definitions/decoder-definitions.iml
 nce-interface/nce-interface.iml
 demo-interface/demo-interface.iml
+random-mac/random-mac.iml
+**/target
 
 # Gradle:
 .idea/gradle.xml

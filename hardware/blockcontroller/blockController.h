@@ -40,6 +40,7 @@ private:
     void determineOccupied(float adc_zero, float threshold);
     void printAQV();
     void printAQC();
+    void printCurrent(float current);
 public:
     blockController(int pBlockNumber, uint8_t pBlockInput);
     void init();

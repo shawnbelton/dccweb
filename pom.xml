@@ -46,6 +46,7 @@
         <module>nce-interface</module>
         <module>demo-interface</module>
         <module>dcc-webapp</module>
+        <module>random-mac</module>
     </modules>
 
     <properties>

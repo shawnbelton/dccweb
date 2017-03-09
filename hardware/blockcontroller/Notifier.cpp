@@ -4,28 +4,73 @@
 
 #include "Notifier.h"
 
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+const char* macAddress = MAC_ADDRESS;
+
+byte mac[6];
 
 IPAddress server(192,168,1,1);
 
 EthernetClient client;
+boolean networkReady;
 
 void Notifier::init() {
+
+    networkReady = false;
 
     pinMode(4, OUTPUT);
     digitalWrite(4, HIGH);
 
-    Serial.print(F("Starting Ethernet.."));
+    buildMacAddress();
+
+    Serial.print(F("Starting Ethernet with MAC Address("));
+    printMAC();
+    Serial.print(")...");
 
     if (!Ethernet.begin(mac)) {
         Serial.println("Fail");
     } else {
         Serial.print("Started with IP:");
         Serial.println(Ethernet.localIP());
+        networkReady = true;
     }
 
     delay(2000);
     Serial.println(F("Ready"));
+}
+
+void Notifier::buildMacAddress() {
+    byte macValue = 0;
+    byte hexValue;
+    bool firstByte = true;
+    byte* macPtr = mac;
+    char* macAddressPtr = strdup(macAddress);
+    char readValue = *macAddressPtr++;
+    while(readValue != 0) {
+        hexValue = (byte)(readValue - '0');
+        if (hexValue > 9) {
+            hexValue -= 7;
+        }
+        macValue += hexValue;
+        if (firstByte) {
+            macValue *= 16;
+        } else {
+            *macPtr++ = macValue;
+            macValue = 0;
+        }
+        firstByte = !firstByte;
+        readValue = *macAddressPtr++;
+    }
+}
+
+void Notifier::printMAC() {
+    int index;
+    byte* macAdd = mac;
+    for(index = 0; index < 6; index++) {
+        if (index > 0) {
+            Serial.print(", ");
+        }
+        Serial.print(*macAdd++);
+    }
 }
 
 void Notifier::setChainableLED(ChainableLED &pChainableLED) {
@@ -53,10 +98,12 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     setLED(blockNumber - 1, occupied);
     sprintf(params, "/block/%i/occupied/%s", blockNumber, occupied ? "true" : "false");
     Serial.println(params);
-    if (!getPage(server, serverPort, params)) {
-        Serial.println("Fail");
-    } else {
-        Serial.println("Pass");
+    if (networkReady) {
+        if (!getPage(server, serverPort, params)) {
+            Serial.println("Fail");
+        } else {
+            Serial.println("Pass");
+        }
     }
 }
 
