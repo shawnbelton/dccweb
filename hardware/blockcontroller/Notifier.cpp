@@ -73,8 +73,8 @@ void Notifier::printMAC() {
     }
 }
 
-void Notifier::setChainableLED(ChainableLED &pChainableLED) {
-    chainableLED = &pChainableLED;
+void Notifier::setLEDChain(ChainableLED &pLEDChain) {
+    LEDChain = &pLEDChain;
 }
 
 void Notifier::setLED(byte ledNumber, bool state) {
@@ -86,11 +86,11 @@ void Notifier::setLED(byte ledNumber, bool state) {
 }
 
 void Notifier::setLEDOn(byte ledNumber) {
-    chainableLED->setColorRGB(ledNumber, 16, 0, 0);
+    LEDChain->setColorRGB(ledNumber, 16, 0, 0);
 }
 
 void Notifier::setLEDOff(byte ledNumber) {
-    chainableLED->setColorRGB(ledNumber, 0, 16, 0);
+    LEDChain->setColorRGB(ledNumber, 0, 16, 0);
 }
 
 void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
@@ -107,7 +107,7 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     }
 }
 
-byte Notifier::getPage(IPAddress ipBuf, int thisPort, char *page) {
+byte Notifier::getPage(IPAddress ipBuf, uint16_t thisPort, char *page) {
     int inChar;
     char outBuf[128];
 

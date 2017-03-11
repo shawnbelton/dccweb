@@ -3,9 +3,6 @@
 //
 
 #include "blockController.h"
-#include <math.h>
-#include <Arduino.h>
-#include "Notifier.h"
 
 blockController::blockController(int pBlockNumber, uint8_t pBlockInput) {
     blockNumber = pBlockNumber;
@@ -124,7 +121,7 @@ float blockController::readCurrent(float adc_zero)
 
 void blockController::setSignal() {
     if (occupied != last_occupied) {
-        notifier->sendWebNotification(blockNumber, occupied);
+        notifier->sendWebNotification((byte)blockNumber, occupied);
         last_occupied = occupied;
     }
 }
