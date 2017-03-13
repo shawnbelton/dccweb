@@ -34,7 +34,7 @@ void Notifier::init() {
         networkReady = true;
     }
 
-    delay(2000);
+    //delay(2000);
     Serial.println(F("Ready"));
 }
 

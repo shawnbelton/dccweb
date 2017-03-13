@@ -18,8 +18,10 @@ const unsigned long numSamples = 200UL; // the number of samples divides sampleT
 const unsigned long sampleInterval = sampleTime/numSamples;  // the sampling interval
 //  must be longer than then ADC conversion time
 
-const float DETECTION_MULTIPLIER = 1.1;
+const float DETECTION_MULTIPLIER = 1.5;
 const char ESC = 27;
+
+static const int PRECISION = 10;
 
 class blockController {
 
@@ -41,6 +43,7 @@ private:
     void printAQV();
     void printAQC();
     void printCurrent(float current);
+    void printFloat(float fl);
 public:
     blockController(int pBlockNumber, uint8_t pBlockInput);
     void init();
