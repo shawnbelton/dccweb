@@ -11,10 +11,16 @@
 
 const char serverName[]  = "192.168.0.19";
 const uint16_t serverPort = 8080;
+const int clockPin = 8;
+const int dataPin = 9;
+
 
 class Notifier {
 private:
-    ChainableLED* LEDChain;
+    MACAddress macAddress;
+    EthernetClient client;
+    boolean networkReady;
+
     byte getPage(IPAddress ipBuf,uint16_t thisPort, char *page);
     void setLEDOn(byte ledNumber);
     void setLEDOff(byte ledNumber);
@@ -22,7 +28,6 @@ private:
 
 public:
     void init();
-    void setLEDChain(ChainableLED& pLEDChain);
     void sendWebNotification(byte blockNumber, bool occupied);
 };
 

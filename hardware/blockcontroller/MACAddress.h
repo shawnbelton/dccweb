@@ -12,17 +12,21 @@ static const int MAC_POS3 = 0xBE;
 #include <EEPROM.h>
 #include <Arduino.h>
 
-
 class MACAddress {
 private:
+    char macStringBuffer[25];
+    uint8_t mac[10];
+
     void copyAddress();
     void saveAddress();
     void createAddress();
     char toHexValue(char value);
+    char* macString(boolean withColons);
 public:
     void init();
     uint8_t* readAddress();
     char* macString();
+    char* fullMacString();
 };
 
 

@@ -7,14 +7,10 @@
 blockController::blockController(int pBlockNumber, uint8_t pBlockInput) {
     blockNumber = pBlockNumber;
     blockInput = pBlockInput;
+    aqv = -1;
     occupied = true;
     blockChanged = false;
-    aqv = -1;
     last_occupied = false;
-}
-
-bool blockController::isOccupied() {
-    return occupied;
 }
 
 void blockController::init() {
@@ -28,8 +24,8 @@ void blockController::setNotifier(Notifier& pNotifier) {
 void blockController::checkBlock() {
     if (aqv < 0) {
         aqv = determineQV();
-        aqc = -1.0f;
         printAQV();
+        aqc = -1.0f;
     }  else if (aqc < 0) {
         aqc =  determineCQ(aqv);
         printAQC();

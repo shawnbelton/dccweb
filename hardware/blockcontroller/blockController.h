@@ -48,7 +48,6 @@ public:
     blockController(int pBlockNumber, uint8_t pBlockInput);
     void init();
     void setNotifier(Notifier& pNotifier);
-    bool isOccupied();
     void checkBlock();
 };
 

@@ -4,16 +4,18 @@
 
 #include "Notifier.h"
 
-MACAddress macAddress;
 IPAddress server(192,168,1,1);
-
-EthernetClient client;
-boolean networkReady;
+ChainableLED LEDChain = ChainableLED(clockPin, dataPin, 4);
 
 void Notifier::init() {
 
     macAddress = MACAddress();
     macAddress.init();
+
+    LEDChain.init();
+    for(byte index = 1; index <= 4 ; index++) {
+        LEDChain.setColorRGB(index, 0,0,1);
+    }
 
     networkReady = false;
 
@@ -21,7 +23,7 @@ void Notifier::init() {
     digitalWrite(4, HIGH);
 
     Serial.print(F("Starting Ethernet with MAC Address("));
-    Serial.print(macAddress.macString());
+    Serial.print(macAddress.fullMacString());
     Serial.print(")...");
 
     if (!Ethernet.begin(macAddress.readAddress())) {
@@ -32,12 +34,7 @@ void Notifier::init() {
         networkReady = true;
     }
 
-    //delay(2000);
     Serial.println(F("Ready"));
-}
-
-void Notifier::setLEDChain(ChainableLED &pLEDChain) {
-    LEDChain = &pLEDChain;
 }
 
 void Notifier::setLED(byte ledNumber, bool state) {
@@ -49,11 +46,11 @@ void Notifier::setLED(byte ledNumber, bool state) {
 }
 
 void Notifier::setLEDOn(byte ledNumber) {
-    LEDChain->setColorRGB(ledNumber, 16, 0, 0);
+    LEDChain.setColorRGB(ledNumber, 1, 0, 0);
 }
 
 void Notifier::setLEDOff(byte ledNumber) {
-    LEDChain->setColorRGB(ledNumber, 0, 16, 0);
+    LEDChain.setColorRGB(ledNumber, 0, 1, 0);
 }
 
 void Notifier::sendWebNotification(byte blockNumber, bool occupied) {

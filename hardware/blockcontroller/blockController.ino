@@ -1,15 +1,11 @@
 #include <Arduino.h>
-#include <ChainableLED.h>
 #include "blockController.h"
 #include "Notifier.h"
 
-const int clockPin = 8;
-const int dataPin = 9;
 
 const char* app_name = APP_NAME;
 
 Notifier notifier = Notifier();
-ChainableLED LEDChain = ChainableLED(clockPin, dataPin, 4);
 blockController block1 = blockController(1, A0);
 blockController block2 = blockController(2, A1);
 blockController block3 = blockController(3, A2);
@@ -25,12 +21,7 @@ void setup() {
     Serial.print("[2J");
     Serial.print(app_name);
     Serial.println(":");
-    LEDChain.init();
-    for(int index = 1; index <=4 ; index++) {
-        LEDChain.setColorRGB(index, 0,0,0);
-    }
     notifier.init();
-    notifier.setLEDChain(LEDChain);
     block1.setNotifier(notifier);
     block2.setNotifier(notifier);
     block3.setNotifier(notifier);

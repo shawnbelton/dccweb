@@ -4,21 +4,19 @@
 
 #include "MACAddress.h"
 
-uint8_t mac[10];
-char macStringBuffer[13];
-
 void MACAddress::init() {
     randomSeed((unsigned int)analogRead(A7));
+    copyAddress();
 }
 
 uint8_t* MACAddress::readAddress() {
-    copyAddress();
     return mac;
 }
 
 void MACAddress::copyAddress() {
     if (((uint8_t)MAC_POS1) != mac[0]) {
         if (MAC_POS1 == EEPROM.read(0)) {
+            Serial.println("Copy MAC Address");
             for (int address = 0; address < 6; address++) {
                 mac[address] = EEPROM.read(address);
             }
@@ -47,17 +45,26 @@ void MACAddress::createAddress() {
 }
 
 char* MACAddress::macString() {
+    return macString(false);
+}
 
+char* MACAddress::fullMacString() {
+    return macString(true);
+}
+
+char* MACAddress::macString(boolean withColons) {
     uint8_t macValue;
-
-    copyAddress();
+    char* buffer = macStringBuffer;
 
     for(int ind = 0; ind < 6; ind++) {
         macValue = mac[ind];
-        macStringBuffer[(ind * 2)] = toHexValue((char)(macValue / 16));
-        macStringBuffer[(ind * 2) + 1] = toHexValue((char)(macValue % 16));
+        *buffer++ = toHexValue((char)(macValue / 16));
+        *buffer++ = toHexValue((char)(macValue % 16));
+        if (withColons && ind<5) {
+            *buffer++ = ':';
+        }
     }
-    macStringBuffer[13] = 0;
+    *buffer = 0;
     return macStringBuffer;
 }
 
