@@ -7,6 +7,7 @@
 
 #include <ChainableLED.h>
 #include <Ethernet.h>
+#include "MACAddress.h"
 
 const char serverName[]  = "192.168.0.19";
 const uint16_t serverPort = 8080;
@@ -18,8 +19,6 @@ private:
     void setLEDOn(byte ledNumber);
     void setLEDOff(byte ledNumber);
     void setLED(byte ledNumber, bool state);
-    void printMAC();
-    void buildMacAddress();
 
 public:
     void init();

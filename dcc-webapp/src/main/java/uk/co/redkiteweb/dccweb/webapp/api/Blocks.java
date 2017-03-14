@@ -20,10 +20,11 @@ public class Blocks {
         this.logStore = logStore;
     }
 
-    @RequestMapping(value = "/block/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
-    public @ResponseBody Boolean blockOccupancy(@PathVariable final Integer blockNumber,
+    @RequestMapping(value = "/block/{identifier}/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
+    public @ResponseBody Boolean blockOccupancy(@PathVariable final String identifier,
+                                                @PathVariable final Integer blockNumber,
                                                 @PathVariable final Boolean occupied) {
-        final String message = String.format("Block Number %d is now %s.", blockNumber, occupied?"Occupied":"Unoccupied");
+        final String message = String.format("Block Number %d of %s is now %s.", blockNumber, identifier, occupied?"Occupied":"Unoccupied");
         logStore.log("info", message);
         LOGGER.info(message);
         return Boolean.TRUE;

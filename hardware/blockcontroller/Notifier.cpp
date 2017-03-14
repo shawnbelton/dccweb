@@ -4,10 +4,7 @@
 
 #include "Notifier.h"
 
-const char* macAddress = MAC_ADDRESS;
-
-byte mac[6];
-
+MACAddress macAddress;
 IPAddress server(192,168,1,1);
 
 EthernetClient client;
@@ -15,18 +12,19 @@ boolean networkReady;
 
 void Notifier::init() {
 
+    macAddress = MACAddress();
+    macAddress.init();
+
     networkReady = false;
 
     pinMode(4, OUTPUT);
     digitalWrite(4, HIGH);
 
-    buildMacAddress();
-
     Serial.print(F("Starting Ethernet with MAC Address("));
-    printMAC();
+    Serial.print(macAddress.macString());
     Serial.print(")...");
 
-    if (!Ethernet.begin(mac)) {
+    if (!Ethernet.begin(macAddress.readAddress())) {
         Serial.println("Fail");
     } else {
         Serial.print("Started with IP:");
@@ -36,41 +34,6 @@ void Notifier::init() {
 
     //delay(2000);
     Serial.println(F("Ready"));
-}
-
-void Notifier::buildMacAddress() {
-    byte macValue = 0;
-    byte hexValue;
-    bool firstByte = true;
-    byte* macPtr = mac;
-    char* macAddressPtr = strdup(macAddress);
-    char readValue = *macAddressPtr++;
-    while(readValue != 0) {
-        hexValue = (byte)(readValue - '0');
-        if (hexValue > 9) {
-            hexValue -= 7;
-        }
-        macValue += hexValue;
-        if (firstByte) {
-            macValue *= 16;
-        } else {
-            *macPtr++ = macValue;
-            macValue = 0;
-        }
-        firstByte = !firstByte;
-        readValue = *macAddressPtr++;
-    }
-}
-
-void Notifier::printMAC() {
-    int index;
-    byte* macAdd = mac;
-    for(index = 0; index < 6; index++) {
-        if (index > 0) {
-            Serial.print(", ");
-        }
-        Serial.print(*macAdd++);
-    }
 }
 
 void Notifier::setLEDChain(ChainableLED &pLEDChain) {
@@ -94,9 +57,9 @@ void Notifier::setLEDOff(byte ledNumber) {
 }
 
 void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
-    char params[32];
+    char params[64];
     setLED(blockNumber - 1, occupied);
-    sprintf(params, "/block/%i/occupied/%s", blockNumber, occupied ? "true" : "false");
+    sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
     if (networkReady) {
         if (!getPage(server, serverPort, params)) {
