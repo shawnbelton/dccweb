@@ -23,7 +23,9 @@ const char ESC = 27;
 
 static const int PRECISION = 10;
 
+
 class blockController {
+
 
 private:
     int blockNumber;
@@ -34,14 +36,17 @@ private:
     int aqv;
     float aqc;
     Notifier* notifier;
+    int numReads;
+    float runningTotal;
+    enum State { DETERMINE_NORMAL, DETERMINE_NOISE, DETERMINE_OCCUPIED } state;
 
     void setSignal();
-    float readCurrent(float adc_zero);
-    int determineQV();
-    float determineCQ(float aqv);
-    void determineOccupied(float adc_zero, float threshold);
-    void printAQV();
-    void printAQC();
+    float readCurrent();
+    void determineZero();
+    void determineNoise();
+    void determineOccupied(float threshold);
+    void printZeroValue();
+    void printNoiseValue();
     void printCurrent(float current);
     void printFloat(float fl);
 public:

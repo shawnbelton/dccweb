@@ -37,5 +37,5 @@ void loop() {
     block2.checkBlock();
     block3.checkBlock();
     block4.checkBlock();
-    delay(50);
+    delayMicroseconds(10);
 }
