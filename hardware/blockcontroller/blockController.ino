@@ -6,10 +6,8 @@
 const char* app_name = APP_NAME;
 
 Notifier notifier = Notifier();
-blockController block1 = blockController(1, A0);
-blockController block2 = blockController(2, A1);
-blockController block3 = blockController(3, A2);
-blockController block4 = blockController(4, A3);
+blockController blocks[4];
+bool powerOn;
 
 void setup() {
     Serial.begin(9600);
@@ -21,21 +19,29 @@ void setup() {
     Serial.print("[2J");
     Serial.print(app_name);
     Serial.println(":");
+    Serial.println("Turning power off.");
+    powerOn = false;
     notifier.init();
-    block1.setNotifier(notifier);
-    block2.setNotifier(notifier);
-    block3.setNotifier(notifier);
-    block4.setNotifier(notifier);
-    block1.init();
-    block2.init();
-    block3.init();
-    block4.init();
+    blocks[0].setBlockInput(A0);
+    blocks[1].setBlockInput(A1);
+    blocks[2].setBlockInput(A2);
+    blocks[3].setBlockInput(A3);
+    for(int ind = 0; ind < 4; ind++) {
+        blocks[ind].setBlockNumber(ind + 1);
+        blocks[ind].setNotifier(notifier);
+        blocks[ind].init();
+    }
 }
 
 void loop() {
-    block1.checkBlock();
-    block2.checkBlock();
-    block3.checkBlock();
-    block4.checkBlock();
+    bool allConfigured = true;
+    for(int ind = 0; ind < 4; ind++) {
+        blocks[ind].checkBlock();
+        allConfigured &= blocks[ind].isConfigured();
+    }
+    if (allConfigured && !powerOn) {
+        Serial.println("Turning power on.");
+        powerOn = true;
+    }
     delayMicroseconds(10);
 }

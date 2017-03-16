@@ -50,10 +50,12 @@ private:
     void printCurrent(float current);
     void printFloat(float fl);
 public:
-    blockController(int pBlockNumber, uint8_t pBlockInput);
     void init();
     void setNotifier(Notifier& pNotifier);
+    void setBlockNumber(int pBlockNumber);
+    void setBlockInput(uint8_t pBlockInput);
     void checkBlock();
+    bool isConfigured();
 };
 
 

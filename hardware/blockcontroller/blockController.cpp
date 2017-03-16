@@ -4,8 +4,11 @@
 
 #include "blockController.h"
 
-blockController::blockController(int pBlockNumber, uint8_t pBlockInput) {
+void blockController::setBlockNumber(int pBlockNumber) {
     blockNumber = pBlockNumber;
+}
+
+void blockController::setBlockInput(uint8_t pBlockInput) {
     blockInput = pBlockInput;
 }
 
@@ -36,6 +39,10 @@ void blockController::checkBlock() {
             determineOccupied(aqc * DETECTION_MULTIPLIER);
             break;
     }
+}
+
+bool blockController::isConfigured() {
+    return state==DETERMINE_OCCUPIED;
 }
 
 void blockController::determineZero() {
