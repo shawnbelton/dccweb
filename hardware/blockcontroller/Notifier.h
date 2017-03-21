@@ -13,6 +13,7 @@ const char serverName[]  = "192.168.0.19";
 const uint16_t serverPort = 8080;
 const int clockPin = 8;
 const int dataPin = 9;
+const int SSD_SELECT = 4;
 
 
 class Notifier {
@@ -21,7 +22,7 @@ private:
     EthernetClient client;
     boolean networkReady;
 
-    byte getPage(IPAddress ipBuf,uint16_t thisPort, char *page);
+    byte getPage(char *page);
     void setLEDOn(byte ledNumber);
     void setLEDOff(byte ledNumber);
     void setLED(byte ledNumber, bool state);

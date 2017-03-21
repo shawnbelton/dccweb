@@ -19,8 +19,8 @@ void Notifier::init() {
 
     networkReady = false;
 
-    pinMode(4, OUTPUT);
-    digitalWrite(4, HIGH);
+    pinMode(SSD_SELECT, OUTPUT);
+    digitalWrite(SSD_SELECT, HIGH);
 
     Serial.print(F("Starting Ethernet with MAC Address("));
     Serial.print(macAddress.fullMacString());
@@ -59,7 +59,7 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
     if (networkReady) {
-        if (!getPage(server, serverPort, params)) {
+        if (!getPage(params)) {
             Serial.println("Fail");
         } else {
             Serial.println("Pass");
@@ -67,14 +67,14 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     }
 }
 
-byte Notifier::getPage(IPAddress ipBuf, uint16_t thisPort, char *page) {
+byte Notifier::getPage(char *page) {
     int inChar;
     char outBuf[128];
 
     Ethernet.maintain();
     byte retVal = 0;
     Serial.print(F("Connecting...."));
-    if (client.connect(ipBuf, thisPort)==1) {
+    if (client.connect(server, serverPort)==1) {
         Serial.println(F("Connected"));
         sprintf(outBuf,"GET %s HTTP/1.1",page);
         client.println(outBuf);
