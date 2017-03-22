@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.services;
+package uk.co.redkiteweb.dccweb.data.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

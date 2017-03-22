@@ -5,9 +5,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterfaceStatus;
-import uk.co.redkiteweb.dccweb.services.NotificationService;
 
 /**
  * Created by shawn on 17/06/16.
