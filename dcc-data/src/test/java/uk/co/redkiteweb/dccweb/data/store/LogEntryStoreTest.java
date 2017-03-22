@@ -4,8 +4,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 14/09/16.
@@ -14,10 +17,13 @@ import static org.junit.Assert.assertEquals;
 public class LogEntryStoreTest {
 
     private LogStore logStore;
+    private NotificationService notificationService;
 
     @Before
     public void setup() {
+        notificationService = mock(NotificationService.class);
         logStore = new LogStore();
+        logStore.setNotificationService(notificationService);
     }
 
     @Test
@@ -25,6 +31,7 @@ public class LogEntryStoreTest {
         logStore.log("info", "message");
         assertEquals("info", logStore.getLastSix().get(0).getLevel());
         assertEquals("message", logStore.getLastSix().get(0).getMessage());
+        verify(notificationService, times(1)).createNotification(anyString(), anyString());
     }
 
     @Test
