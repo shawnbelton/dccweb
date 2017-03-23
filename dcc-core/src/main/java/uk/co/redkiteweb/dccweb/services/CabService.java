@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
@@ -23,10 +24,16 @@ public class CabService {
     private static final Logger LOGGER = LogManager.getLogger(CabService.class);
 
     private DccInterface dccInterface;
+    private NotificationService notificationService;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
         this.dccInterface = dccInterface;
+    }
+
+    @Autowired
+    public void setNotificationService(final NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     public void updateCab(final Cab cab) {
@@ -39,6 +46,7 @@ public class CabService {
             changeSpeedMessage.setSpeed(cab.getSpeed());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
             dccInterface.sendMessage(changeSpeedMessage);
+            notificationService.createNotification("CAB", String.format("%d", cab.getTrain().getTrainId()));
         }
     }
 
@@ -51,6 +59,7 @@ public class CabService {
                 updateFunctionsMessage.addFunction(cabFunction.getNumber(), cabFunction.getState());
             }
             dccInterface.sendMessage(updateFunctionsMessage);
+            notificationService.createNotification("CAB", String.format("%d", cab.getTrain().getTrainId()));
         }
     }
 

@@ -3,8 +3,9 @@
  */
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
-import {Observable, BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Message} from "./message";
+import {NotificationService} from "./notification.service";
 
 @Injectable()
 export class MessageService {
@@ -15,8 +16,8 @@ export class MessageService {
     private _messages: BehaviorSubject<Message[]> = new BehaviorSubject([]);
     private messages: Observable<Message[]> = this._messages.asObservable();
 
-    constructor(private http: Http) {
-        this.startFetchingMessages();
+    constructor(private http: Http, private notificationService: NotificationService) {
+        this.notificationService.getMessageUpdates().subscribe(data => this.fetchMessages());
     }
 
     fetchMessages(): void {
@@ -27,10 +28,6 @@ export class MessageService {
 
     getMessages(): Observable<Message[]> {
         return this.messages;
-    }
-
-    startFetchingMessages(): void {
-        Observable.interval(2000).subscribe(data => this.fetchMessages());
     }
 
 }

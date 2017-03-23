@@ -29,7 +29,7 @@ public class PurgeNotifications {
     @Transactional
     public void purge() {
         final Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, -10);
+        calendar.add(Calendar.MINUTE, -2);
         notificationRepository.deleteByCreatedBefore(calendar.getTime());
         LOGGER.info("Deleted old notifications");
     }
