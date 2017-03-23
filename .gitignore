@@ -54,6 +54,8 @@ dcc-interface/dcc-interface.iml
 decoder-definitions/decoder-definitions.iml
 nce-interface/nce-interface.iml
 demo-interface/demo-interface.iml
+random-mac/random-mac.iml
+**/target
 
 # Gradle:
 .idea/gradle.xml
@@ -87,15 +89,10 @@ fabric.properties
 dccweb.db/
 logs/
 hardware/blockcontroller/.idea/
-hardware/blockcontroller/build/CMakeFiles/
-hardware/blockcontroller/build/*.eep
-hardware/blockcontroller/build/*.elf
-hardware/blockcontroller/build/*.hex
-hardware/blockcontroller/build/*.cpp
-hardware/blockcontroller/build/*.a
-hardware/blockcontroller/build/cmake_install.cmake
-hardware/blockcontroller/build/CMakeCache.txt
-hardware/blockcontroller/build/Makefile
+hardware/blockcontroller/build/*
+hardware/blockcontroller/cmake-build-debug/*
+!hardware/blockcontroller/build/ReadMe.txt
+!hardware/blockcontroller/build/build.sh
 
 
 dcc-webapp/src/main/resources/static/app/*.js.map

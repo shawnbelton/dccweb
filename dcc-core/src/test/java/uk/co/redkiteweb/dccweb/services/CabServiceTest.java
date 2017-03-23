@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
@@ -27,12 +28,15 @@ public class CabServiceTest {
 
     private CabService cabService;
     private DccInterface dccInterface;
+    private NotificationService notificationService;
 
     @Before
     public void setup() {
         dccInterface = mock(DccInterface.class);
+        notificationService = mock(NotificationService.class);
         cabService = new CabService();
         cabService.setDccInterface(dccInterface);
+        cabService.setNotificationService(notificationService);
     }
 
     @Test
@@ -48,6 +52,7 @@ public class CabServiceTest {
         cab.setTrain(train);
         cabService.updateCab(cab);
         verify(dccInterface, never()).sendMessage(any(Message.class));
+        verify(notificationService, never()).createNotification(anyString(), anyString());
     }
 
     @Test
@@ -56,6 +61,7 @@ public class CabServiceTest {
         cab.setDirection("UP");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     @Test
@@ -64,6 +70,7 @@ public class CabServiceTest {
         cab.setDirection("DOWN");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     @Test
@@ -73,6 +80,7 @@ public class CabServiceTest {
         cab.setSpeed(0);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     @Test
@@ -82,6 +90,7 @@ public class CabServiceTest {
         cab.setSpeed(0);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
 
@@ -91,6 +100,7 @@ public class CabServiceTest {
         cab.setSteps("28");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     @Test
@@ -99,12 +109,14 @@ public class CabServiceTest {
         cab.setSteps(null);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     @Test
     public void testUpdateFunctionNullTrain() {
         cabService.updateCabFunctions(new Cab());
         verify(dccInterface, never()).sendMessage(any(Message.class));
+        verify(notificationService, never()).createNotification(anyString(), anyString());
     }
 
     @Test
@@ -112,6 +124,7 @@ public class CabServiceTest {
         final Cab cab = getCab();
         cabService.updateCabFunctions(cab);
         verify(dccInterface, times(1)).sendMessage(any(UpdateFunctionsMessage.class));
+        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
     }
 
     private Cab getCab() {

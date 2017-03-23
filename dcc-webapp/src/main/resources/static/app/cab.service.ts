@@ -6,6 +6,7 @@ import {Headers, Http} from "@angular/http";
 import {Cab} from "./cab";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Train} from "./train";
+import {NotificationService} from "./notification.service";
 
 @Injectable()
 export class CabService {
@@ -19,7 +20,24 @@ export class CabService {
     private cab: Observable<Cab> = this._cab.asObservable();
     private response: boolean;
 
-    constructor(private http: Http) {}
+    constructor(private http: Http, private notificationService: NotificationService) {
+        this.notificationService.getCabUpdates().subscribe(data => this.checkUpdates(data));
+    }
+
+    checkUpdates(cabList: number[]): void {
+        let inList: boolean = false;
+        let current: Cab = this._cab.getValue();
+        if (null != current) {
+            for(let trainId of cabList) {
+                if (trainId == current.train.trainId) {
+                    inList = true;
+                }
+            }
+            if (inList) {
+                this.setTrain(current.train);
+            }
+        }
+    }
 
     updateCab(cab: Cab): void {
         this.http.post(this.updateCabUrl, cab).map(response => response.json()).subscribe(data => this.response = data);

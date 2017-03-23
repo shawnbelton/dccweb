@@ -3,9 +3,10 @@
  */
 import {Injectable} from "@angular/core";
 import {Headers, Http} from "@angular/http";
-import {Observable, BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "./status";
+import {NotificationService} from "./notification.service";
 
 @Injectable()
 export class StatusService {
@@ -16,8 +17,8 @@ export class StatusService {
     private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
     private status: Observable<Status> = this._status.asObservable();
 
-    constructor(private http: Http) {
-        this.startFetchingStatus();
+    constructor(private http: Http, private notificationService: NotificationService) {
+        this.notificationService.getStatusUpdates().subscribe(data => this.readStatus());
     }
 
     readStatus(): void {
@@ -31,12 +32,6 @@ export class StatusService {
         let status: Status = new Status();
         status.status = "Service Down";
         this._status.next(status);
-    }
-
-    startFetchingStatus(): void {
-        Observable.interval(2000).subscribe(data => {
-            this.readStatus();
-        });
     }
 
     getStatus(): Observable<Status> {

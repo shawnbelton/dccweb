@@ -4,32 +4,37 @@
 
 #include "Notifier.h"
 
-byte mac[] = {0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-
 IPAddress server(192,168,1,1);
-
-EthernetClient client;
+ChainableLED LEDChain = ChainableLED(clockPin, dataPin, 4);
 
 void Notifier::init() {
 
-    pinMode(4, OUTPUT);
-    digitalWrite(4, HIGH);
+    macAddress = MACAddress();
+    macAddress.init();
 
-    Serial.print(F("Starting Ethernet.."));
+    LEDChain.init();
+    for(byte index = 1; index <= 4 ; index++) {
+        LEDChain.setColorRGB(index, 0,0,1);
+    }
 
-    if (!Ethernet.begin(mac)) {
+    networkReady = false;
+
+    pinMode(SSD_SELECT, OUTPUT);
+    digitalWrite(SSD_SELECT, HIGH);
+
+    Serial.print(F("Starting Ethernet with MAC Address("));
+    Serial.print(macAddress.fullMacString());
+    Serial.print(")...");
+
+    if (!Ethernet.begin(macAddress.readAddress())) {
         Serial.println("Fail");
     } else {
         Serial.print("Started with IP:");
         Serial.println(Ethernet.localIP());
+        networkReady = true;
     }
 
-    delay(2000);
     Serial.println(F("Ready"));
-}
-
-void Notifier::setChainableLED(ChainableLED &pChainableLED) {
-    chainableLED = &pChainableLED;
 }
 
 void Notifier::setLED(byte ledNumber, bool state) {
@@ -41,33 +46,35 @@ void Notifier::setLED(byte ledNumber, bool state) {
 }
 
 void Notifier::setLEDOn(byte ledNumber) {
-    chainableLED->setColorRGB(ledNumber, 16, 0, 0);
+    LEDChain.setColorRGB(ledNumber, 1, 0, 0);
 }
 
 void Notifier::setLEDOff(byte ledNumber) {
-    chainableLED->setColorRGB(ledNumber, 0, 16, 0);
+    LEDChain.setColorRGB(ledNumber, 0, 1, 0);
 }
 
 void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
-    char params[32];
+    char params[64];
     setLED(blockNumber - 1, occupied);
-    sprintf(params, "/block/%i/occupied/%s", blockNumber, occupied ? "true" : "false");
+    sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
-    if (!getPage(server, serverPort, params)) {
-        Serial.println("Fail");
-    } else {
-        Serial.println("Pass");
+    if (networkReady) {
+        if (!getPage(params)) {
+            Serial.println("Fail");
+        } else {
+            Serial.println("Pass");
+        }
     }
 }
 
-byte Notifier::getPage(IPAddress ipBuf, int thisPort, char *page) {
+byte Notifier::getPage(char *page) {
     int inChar;
     char outBuf[128];
 
     Ethernet.maintain();
     byte retVal = 0;
     Serial.print(F("Connecting...."));
-    if (client.connect(ipBuf, thisPort)==1) {
+    if (client.connect(server, serverPort)==1) {
         Serial.println(F("Connected"));
         sprintf(outBuf,"GET %s HTTP/1.1",page);
         client.println(outBuf);

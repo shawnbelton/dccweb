@@ -1,7 +1,9 @@
 package uk.co.redkiteweb.dccweb.data.store;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.data.LogEntry;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,19 @@ import java.util.List;
 public class LogStore {
 
     private final List<LogEntry> logEntryStore;
+    private NotificationService notificationService;
 
     public LogStore() {
         logEntryStore = new ArrayList<LogEntry>();
     }
 
+    @Autowired
+    public void setNotificationService(final NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     public void log(final String level, final String message) {
+        notificationService.createNotification("MESSAGES","");
         final LogEntry logEntry = new LogEntry();
         logEntry.setLevel(level);
         logEntry.setMessage(message);

@@ -7,4 +7,4 @@ make
 
 To upload to a Arduino UNO use
 
-make blockcontroller-uno-upload
+make blockController-uno-upload

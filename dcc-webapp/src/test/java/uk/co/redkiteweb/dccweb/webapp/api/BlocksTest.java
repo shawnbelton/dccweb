@@ -26,13 +26,13 @@ public class BlocksTest {
 
     @Test
     public void occupiedTest() {
-        blocks.blockOccupancy(1, true);
+        blocks.blockOccupancy("identifier", 1, true);
         verify(logStore, times(1)).log(anyString(), anyString());
     }
 
     @Test
     public void unoccupiedTest() {
-        blocks.blockOccupancy(1, false);
+        blocks.blockOccupancy("identifier", 1, false);
         verify(logStore, times(1)).log(anyString(), anyString());
     }
 }

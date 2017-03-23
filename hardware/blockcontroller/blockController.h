@@ -2,8 +2,8 @@
 // Created by shawn on 01/06/16.
 //
 
-#ifndef BLOCKCONTROLLER_BLOCKCONTROLLER_H
-#define BLOCKCONTROLLER_BLOCKCONTROLLER_H
+#ifndef BLOCK_CONTROLLER_BLOCK_CONTROLLER_H
+#define BLOCK_CONTROLLER_BLOCK_CONTROLLER_H
 
 #include <stdint.h>
 #include <stdint-gcc.h>
@@ -18,10 +18,14 @@ const unsigned long numSamples = 200UL; // the number of samples divides sampleT
 const unsigned long sampleInterval = sampleTime/numSamples;  // the sampling interval
 //  must be longer than then ADC conversion time
 
-const float DETECTION_MULTIPLIER = 1.1;
+const float DETECTION_MULTIPLIER = 1.5;
 const char ESC = 27;
 
+static const int PRECISION = 10;
+
+
 class blockController {
+
 
 private:
     int blockNumber;
@@ -32,21 +36,27 @@ private:
     int aqv;
     float aqc;
     Notifier* notifier;
+    int numReads;
+    float runningTotal;
+    enum State { DETERMINE_NORMAL, DETERMINE_NOISE, DETERMINE_OCCUPIED } state;
 
     void setSignal();
-    float readCurrent(float adc_zero);
-    int determineQV();
-    float determineCQ(float aqv);
-    void determineOccupied(float adc_zero, float threshold);
-    void printAQV();
-    void printAQC();
+    float readCurrent();
+    void determineZero();
+    void determineNoise();
+    void determineOccupied(float threshold);
+    void printZeroValue();
+    void printNoiseValue();
+    void printCurrent(float current);
+    void printFloat(float fl);
 public:
-    blockController(int pBlockNumber, uint8_t pBlockInput);
     void init();
     void setNotifier(Notifier& pNotifier);
-    bool isOccupied();
+    void setBlockNumber(int pBlockNumber);
+    void setBlockInput(uint8_t pBlockInput);
     void checkBlock();
+    bool isConfigured();
 };
 
 
-#endif //BLOCKCONTROLLER_BLOCKCONTROLLER_H
+#endif //BLOCK_CONTROLLER_BLOCK_CONTROLLER_H

@@ -1,7 +1,9 @@
 package uk.co.redkiteweb.dccweb.dccinterface;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 /**
  * Created by shawn on 17/06/16.
@@ -17,9 +19,15 @@ public class DccInterfaceStatus {
     }
 
     private Status status;
+    private NotificationService notificationService;
 
     public DccInterfaceStatus() {
         status = Status.DISCONNECTED;
+    }
+
+    @Autowired
+    public void setNotificationService(final NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     public Status getStatus() {
@@ -27,14 +35,21 @@ public class DccInterfaceStatus {
     }
 
     public void setConnected() {
-        status = Status.CONNECTED;
+        setStatus(Status.CONNECTED);
     }
 
     public void setDisconnected() {
-        status = Status.DISCONNECTED;
+        setStatus(Status.DISCONNECTED);
     }
 
     public void setOffLine() {
-        status = Status.OFF_LINE;
+        setStatus(Status.OFF_LINE);
+    }
+
+    private void setStatus(final Status newStatus) {
+        if (status != newStatus) {
+            notificationService.createNotification("STATUS", "");
+        }
+        status = newStatus;
     }
 }
