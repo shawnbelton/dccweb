@@ -65,7 +65,7 @@ public class AccessoryService {
         return stringBuilder.toString();
     }
 
-    private String getOperationName(final AccessoryDecoder accessoryDecoder,
+    private static String getOperationName(final AccessoryDecoder accessoryDecoder,
                                     final Integer operation) {
         String operationValue = "";
         for(AccessoryDecoderTypeOperation accessoryDecoderTypeOperation
