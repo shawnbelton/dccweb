@@ -7,6 +7,7 @@ public class OperateAccessoryMessage implements Message {
 
     private Integer accessoryAddress;
     private Integer accessoryOperation;
+    private String logMessage;
 
     public Integer getAccessoryAddress() {
         return accessoryAddress;
@@ -24,8 +25,12 @@ public class OperateAccessoryMessage implements Message {
         this.accessoryOperation = accessoryOperation;
     }
 
+    public void setLogMessage(final String logMessage) {
+        this.logMessage = logMessage;
+    }
+
     @Override
     public String getLogMessage() {
-        return String.format("Setting accessory %d to %d", accessoryAddress, accessoryOperation);
+        return logMessage;
     }
 }

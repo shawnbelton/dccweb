@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
+import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 
@@ -19,12 +20,15 @@ public class AccessoryServiceTest {
 
     private AccessoryService accessoryService;
     private DccInterface dccInterface;
+    private AccessoryDecoderRepository accessoryDecoderRepository;
 
     @Before
     public void setup() {
         dccInterface = mock(DccInterface.class);
+        accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
+        accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
     }
 
     @Test
