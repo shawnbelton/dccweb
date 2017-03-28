@@ -13,7 +13,6 @@ import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 @Component("NceOperateAccessoryMessage")
 public class NceOperateAccessoryMessage extends AbstractNceMessage implements NceMessage {
 
-
     @Override
     public MessageResponse process(final Message message) throws ConnectionException {
         final OperateAccessoryMessage operateAccessoryMessage = (OperateAccessoryMessage)message;

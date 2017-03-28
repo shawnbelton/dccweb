@@ -20,6 +20,7 @@ public class OperateAccessoryMessageTest {
         message = new OperateAccessoryMessage();
         message.setAccessoryAddress(123);
         message.setAccessoryOperation(1);
+        message.setLogMessage("Setting accessory 123 to 1");
     }
 
     @Test
