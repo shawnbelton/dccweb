@@ -12,7 +12,9 @@
                     </div>
                     <ul class="list-inline">
                         <li *ngFor="let operation of accessory.accessoryDecoderType.decoderTypeOperations">
-                            <input type="button" (click)="operateAccessory(accessory.address, operation.decoderOperationValue)" class="btn btn-xs btn-info" value="{{operation.decoderTypeOperation}}"/>
+                            <input type="button" (click)="operateAccessory(accessory.address, operation.decoderOperationValue)"
+                                   [ngClass]="{'btn-primary': isState(accessory, operation), 'btn-default': !isState(accessory, operation)}"
+                                   class="btn btn-xs" value="{{operation.decoderTypeOperation}}"/>
                         </li>
                     </ul>
                 </div>
