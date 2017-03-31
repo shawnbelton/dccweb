@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 
@@ -25,6 +26,7 @@ public class AccessoryService {
 
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
+    private NotificationService notificationService;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -36,24 +38,34 @@ public class AccessoryService {
         this.accessoryDecoderRepository = accessoryDecoderRepository;
     }
 
+    @Autowired
+    public void setNotificationService(final NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
     @Async
     @Transactional
     public void operateService(final AccessoryOperation accessoryOperation) {
+        final List<AccessoryDecoder> accessoryDecoders =
+                accessoryDecoderRepository.findAccessoryDecodersByAddress(accessoryOperation.getAccessoryAddress());
         final OperateAccessoryMessage message = new OperateAccessoryMessage();
         message.setAccessoryAddress(accessoryOperation.getAccessoryAddress());
         message.setAccessoryOperation(accessoryOperation.getOperationValue());
-        final String logMessage = logUpdates(accessoryOperation);
+        final String logMessage = logUpdates(accessoryDecoders, accessoryOperation);
         message.setLogMessage(logMessage);
         LOGGER.info(logMessage);
         dccInterface.sendMessage(message);
+        for (AccessoryDecoder accessoryDecoder : accessoryDecoders) {
+            accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
+            accessoryDecoderRepository.save(accessoryDecoder);
+        }
+        notificationService.createNotification("ACCESSORY", accessoryOperation.getAccessoryAddress().toString());
     }
 
-    private String logUpdates(final AccessoryOperation accessoryOperation) {
+    private static String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Setting accessory ");
         String seperator = "";
-        final List<AccessoryDecoder> accessoryDecoders =
-                accessoryDecoderRepository.findAccessoryDecodersByAddress(accessoryOperation.getAccessoryAddress());
         for(AccessoryDecoder accessoryDecoder : accessoryDecoders) {
             stringBuilder.append(seperator);
             stringBuilder.append(

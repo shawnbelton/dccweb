@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 
@@ -27,14 +28,17 @@ public class AccessoryServiceTest {
     private AccessoryService accessoryService;
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
+    private NotificationService notificationService;
 
     @Before
     public void setup() {
         dccInterface = mock(DccInterface.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
+        notificationService = mock(NotificationService.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
+        accessoryService.setNotificationService(notificationService);
     }
 
     @Test

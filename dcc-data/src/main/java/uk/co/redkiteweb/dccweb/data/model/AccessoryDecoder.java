@@ -14,6 +14,7 @@ public class AccessoryDecoder implements Serializable {
     private AccessoryDecoderType accessoryDecoderType;
     private Integer address;
     private String name;
+    private Integer currentValue;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,5 +49,13 @@ public class AccessoryDecoder implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(Integer currentValue) {
+        this.currentValue = currentValue;
     }
 }
