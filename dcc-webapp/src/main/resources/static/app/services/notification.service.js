@@ -23,6 +23,8 @@ var NotificationService = (function () {
         this.statusUpdates = this._statusUpdates.asObservable();
         this._messageUpdates = new Rx_1.BehaviorSubject(null);
         this.messageUpdates = this._messageUpdates.asObservable();
+        this._blockUpdates = new Rx_1.BehaviorSubject(null);
+        this.blockUpdates = this._blockUpdates.asObservable();
         this._cabUpdates = new Rx_1.BehaviorSubject(null);
         this.cabUpdates = this._cabUpdates.asObservable();
         this._accessoryUpdates = new Rx_1.BehaviorSubject(null);
@@ -34,6 +36,7 @@ var NotificationService = (function () {
         var status = false;
         var messages = false;
         var accessories = false;
+        var blocks = false;
         var cabList = new Array();
         for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
             var notification = data_1[_i];
@@ -49,6 +52,9 @@ var NotificationService = (function () {
             else if ("CAB" == notification.type) {
                 cabList.push(Number(notification.value));
             }
+            else if ("BLOCK" == notification.type) {
+                blocks = true;
+            }
             if (notification.notificationId > this.notificationId) {
                 this.notificationId = notification.notificationId;
             }
@@ -61,6 +67,9 @@ var NotificationService = (function () {
         }
         if (accessories) {
             this._accessoryUpdates.next("AccessoryUpdate");
+        }
+        if (blocks) {
+            this._blockUpdates.next("BlockUpdate");
         }
         if (cabList.length > 0) {
             this._cabUpdates.next(cabList);
@@ -79,6 +88,9 @@ var NotificationService = (function () {
     };
     NotificationService.prototype.getMessageUpdates = function () {
         return this.messageUpdates;
+    };
+    NotificationService.prototype.getBlockUpdates = function () {
+        return this.blockUpdates;
     };
     NotificationService.prototype.getCabUpdates = function () {
         return this.cabUpdates;
