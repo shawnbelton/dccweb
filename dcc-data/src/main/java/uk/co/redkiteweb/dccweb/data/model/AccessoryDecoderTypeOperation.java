@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 public class AccessoryDecoderTypeOperation implements Serializable {
-    private static final long serialVersionUID = 9008;
+    private static final long serialVersionUID = 9009;
 
     private Integer decoderTypeOperationId;
     private Integer decoderTypeId;

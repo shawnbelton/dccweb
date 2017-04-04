@@ -18,6 +18,9 @@ export class NotificationService {
     private _messageUpdates: BehaviorSubject<string> = new BehaviorSubject(null);
     private messageUpdates: Observable<string> = this._messageUpdates.asObservable();
 
+    private _blockUpdates: BehaviorSubject<string> = new BehaviorSubject(null);
+    private blockUpdates: Observable<string> = this._blockUpdates.asObservable();
+
     private _cabUpdates: BehaviorSubject<number[]> = new BehaviorSubject(null);
     private cabUpdates: Observable<number[]> = this._cabUpdates.asObservable();
 
@@ -34,6 +37,7 @@ export class NotificationService {
         let status: boolean = false;
         let messages: boolean = false;
         let accessories: boolean = false;
+        let blocks: boolean = false;
         let cabList: number[] = new Array();
         for(let notification of data) {
             if ("STATUS" == notification.type) {
@@ -44,6 +48,8 @@ export class NotificationService {
                 accessories = true;
             } else if ("CAB" == notification.type) {
                 cabList.push(Number(notification.value));
+            } else if ("BLOCK" == notification.type) {
+                blocks = true;
             }
             if (notification.notificationId > this.notificationId) {
                 this.notificationId = notification.notificationId;
@@ -57,6 +63,9 @@ export class NotificationService {
         }
         if (accessories) {
             this._accessoryUpdates.next("AccessoryUpdate");
+        }
+        if (blocks) {
+            this._blockUpdates.next("BlockUpdate");
         }
         if (cabList.length > 0) {
             this._cabUpdates.next(cabList);
@@ -77,6 +86,10 @@ export class NotificationService {
 
     getMessageUpdates(): Observable<string> {
         return this.messageUpdates;
+    }
+
+    getBlockUpdates(): Observable<string> {
+        return this.blockUpdates;
     }
 
     getCabUpdates(): Observable<number[]> {

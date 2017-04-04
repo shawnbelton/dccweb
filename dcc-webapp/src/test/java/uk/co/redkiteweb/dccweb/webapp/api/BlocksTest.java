@@ -4,8 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.data.model.Block;
+import uk.co.redkiteweb.dccweb.services.BlockService;
 
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -15,24 +19,36 @@ import static org.mockito.Mockito.*;
 public class BlocksTest {
 
     private Blocks blocks;
-    private LogStore logStore;
+    private BlockService blockService;
 
     @Before
     public void setup() {
         blocks = new Blocks();
-        logStore = mock(LogStore.class);
-        blocks.setLogStore(logStore);
+        blockService = mock(BlockService.class);
+        blocks.setBlockService(blockService);
     }
 
     @Test
     public void occupiedTest() {
         blocks.blockOccupancy("identifier", 1, true);
-        verify(logStore, times(1)).log(anyString(), anyString());
+        verify(blockService, times(1)).updateBlock(anyString(), anyBoolean());
     }
 
     @Test
     public void unoccupiedTest() {
         blocks.blockOccupancy("identifier", 1, false);
-        verify(logStore, times(1)).log(anyString(), anyString());
+        verify(blockService, times(1)).updateBlock(anyString(), anyBoolean());
+    }
+
+    @Test
+    public void getAllBlocks() {
+        when(blockService.getAllBlocks()).thenReturn(new ArrayList<Block>());
+        assertNotNull(blocks.getAllBlocks());
+    }
+
+    @Test
+    public void saveTest() {
+        when(blockService.saveBlock(any(Block.class))).thenReturn(new ArrayList<Block>());
+        assertNotNull(blocks.saveBlock(new Block()));
     }
 }

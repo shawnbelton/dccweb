@@ -9,6 +9,7 @@ import {SettingsComponent} from "./components/settings.component";
 import {MacroComponent} from "./components/macro.component";
 import {PerformanceComponent} from "./components/performance.component";
 import {AccessoryComponent} from "./components/accessory.component";
+import {BlockComponent} from "./components/block.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'engine-shed', pathMatch: 'full'},
@@ -17,7 +18,8 @@ const routes: Routes = [
     { path: 'accessories', component: AccessoryComponent },
     { path: 'settings', component: SettingsComponent },
     { path: 'macro-edit', component: MacroComponent },
-    { path: 'performance', component: PerformanceComponent }
+    { path: 'performance', component: PerformanceComponent },
+    { path: 'blocks', component: BlockComponent }
 ];
 
 @NgModule({
