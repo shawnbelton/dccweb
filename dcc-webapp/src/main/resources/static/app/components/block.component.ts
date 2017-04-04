@@ -12,6 +12,7 @@ import {Block} from "../models/block";
 export class BlockComponent implements OnInit {
 
     blocks: Block[];
+    block: Block;
 
     constructor(private blockService: BlockService) {}
 
@@ -19,7 +20,29 @@ export class BlockComponent implements OnInit {
         this.blockService.getBlocks().subscribe(data => this.blocks = data);
     }
 
+    saveBlock(): void {
+        this.blockService.saveBlock(this.block);
+        this.resetBlock();
+    }
+
+    resetBlock(): void {
+        this.setBlock(new Block());
+    }
+
+    setBlock(block: Block): void {
+        this.block = block;
+    }
+
+    startBlockEdit(block: Block): void {
+        this.setBlock(block);
+    }
+
+    cancelEdit(): void {
+        this.resetBlock();
+    }
+
     ngOnInit(): void {
+        this.resetBlock();
         this.getBlocks();
     }
 }
