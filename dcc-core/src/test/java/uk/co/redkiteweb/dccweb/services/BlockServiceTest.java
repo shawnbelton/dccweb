@@ -42,7 +42,7 @@ public class BlockServiceTest {
     @Test
     public void updateNonExisting() {
         when(blockRepository.findOne(anyString())).thenReturn(null);
-        blockService.updateBlock("BlockId", true);
+        blockService.updateBlock("BlockId", false);
         verify(blockRepository, times(1)).save(any(Block.class));
         verify(notificationService, times(1)).createNotification(eq("BLOCK"), eq(""));
     }
