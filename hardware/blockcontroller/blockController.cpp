@@ -24,6 +24,8 @@ void blockController::init() {
     blockChanged = false;
     last_occupied = false;
     state = DETERMINE_NORMAL;
+    Serial.print("Block configured to read pin ");
+    Serial.println(blockInput);
     setSignal();
 }
 
