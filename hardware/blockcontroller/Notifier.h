@@ -6,7 +6,9 @@
 #define BLOCK_CONTROLLER_NOTIFIER_H
 
 #include <ChainableLED.h>
-#include <Ethernet.h>
+//Use #include <Ethernet.h> to use arduino ether net shield.
+#include <UIPEthernet.h>
+
 #include "MACAddress.h"
 
 const char serverName[]  = "192.168.0.19";

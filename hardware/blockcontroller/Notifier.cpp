@@ -92,7 +92,7 @@ byte Notifier::getPage(char *page) {
             if (connectLoop>10000) {
                 Serial.println();
                 Serial.println("Timeout");
-                client.status();
+                //client.status();
             }
             delay(1);
         }
