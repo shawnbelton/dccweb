@@ -38,4 +38,8 @@ public class Blocks {
         return blockService.saveBlock(block);
     }
 
+    @RequestMapping(value = "/block/delete", method = RequestMethod.POST)
+    public @ResponseBody List<Block> deleteBlock(@RequestBody final Block block) {
+        return blockService.deleteBlock(block);
+    }
 }

@@ -51,4 +51,10 @@ public class BlocksTest {
         when(blockService.saveBlock(any(Block.class))).thenReturn(new ArrayList<Block>());
         assertNotNull(blocks.saveBlock(new Block()));
     }
+
+    @Test
+    public void deleteTest() {
+        when(blockService.deleteBlock(any(Block.class))).thenReturn(new ArrayList<Block>());
+        assertNotNull(blocks.deleteBlock(new Block()));
+    }
 }

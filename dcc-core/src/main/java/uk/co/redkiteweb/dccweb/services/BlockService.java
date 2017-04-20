@@ -65,4 +65,10 @@ public class BlockService {
         logStore.log("info", String.format("Block %s saved.", block.getBlockId()));
         return getAllBlocks();
     }
+
+    public List<Block> deleteBlock(final Block block) {
+        blockRepository.delete(block);
+        logStore.log("info", String.format("Block %s deleted.", block.getBlockId()));
+        return getAllBlocks();
+    }
 }

@@ -71,4 +71,13 @@ public class BlockServiceTest {
         blockService.saveBlock(block);
         verify(blockRepository, times(1)).save(any(Block.class));
     }
+
+    @Test
+    public void deleteBlock() {
+        final Block block = new Block();
+        block.setBlockId("ident");
+        when(blockRepository.findAll()).thenReturn(new ArrayList<Block>());
+        blockService.deleteBlock(block);
+        verify(blockRepository, times(1)).delete(any(Block.class));
+    }
 }

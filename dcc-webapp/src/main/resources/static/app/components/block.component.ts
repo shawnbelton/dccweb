@@ -25,6 +25,11 @@ export class BlockComponent implements OnInit {
         this.resetBlock();
     }
 
+    deleteBlock(block: Block): void {
+        this.blockService.deleteBlock(block);
+        this.resetBlock();
+    }
+
     resetBlock(): void {
         this.setBlock(new Block());
     }
