@@ -9,6 +9,9 @@ import {TrainService} from "../services/train.service";
 import {Decoder} from "../models/decoder";
 import {DecoderFunction} from "../models/decoderFunction";
 import {MacroService} from "../services/macro.service";
+import {AccessoryDecoder} from "../models/accessoryDecoder";
+import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
+import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
 @Component({
     moduleId: module.id,
     templateUrl: '../../macroedit/macro.html'
@@ -17,9 +20,14 @@ export class MacroComponent implements OnInit {
 
     macro: Macro;
     trains: Train[];
+    accessories: AccessoryDecoder[];
     macros: Macro[];
 
-    constructor(private trainService: TrainService, private macroService: MacroService) {}
+    constructor(private trainService: TrainService, private accessoryService: AccessoryDecoderService, private macroService: MacroService) {}
+
+    getAccessories(): void {
+        this.accessoryService.getAccessories().subscribe(accessories => this.accessories = accessories);
+    }
 
     getTrains(): void {
         this.trainService.getTrains().subscribe(trains => this.trains = trains);
@@ -83,10 +91,20 @@ export class MacroComponent implements OnInit {
         step.editing = true;
     }
 
+    fetchAccessory(step: MacroStep): AccessoryDecoder {
+        let stepAccessory: AccessoryDecoder;
+        for(let accessory of this.accessories) {
+            if (accessory.accessoryDecoderId == step.targetId) {
+                stepAccessory = accessory;
+            }
+        }
+        return stepAccessory;
+    }
+
     fetchTrain(step: MacroStep): Train {
         let stepTrain: Train;
         for(let train of this.trains) {
-            if (train.trainId == step.trainId) {
+            if (train.trainId == step.targetId) {
                 stepTrain = train;
             }
         }
@@ -141,6 +159,10 @@ export class MacroComponent implements OnInit {
         return step.type == 'decoderFunction' || step.type == 'setSpeed';
     }
 
+    isAccessoryFunction(step: MacroStep): boolean {
+        return step.type == 'setAccessory';
+    }
+
     displayStep(step: MacroStep): string {
         let display: string = step.number.toString() + " ";
         switch(step.type) {
@@ -152,6 +174,10 @@ export class MacroComponent implements OnInit {
                 break;
             case "setSpeed":
                 display = display + this.displaySetSpeed(step);
+                break;
+            case "setAccessory":
+                display = display + this.displaySetAccessory(step);
+                break;
         }
         return display;
     }
@@ -166,8 +192,15 @@ export class MacroComponent implements OnInit {
 
     displaySetSpeed(step: MacroStep): string {
         let train: Train = this.fetchTrain(step);
-        let display: string = "Set speed to " + step.speed;
+        let display: string = "Set speed to " + step.value;
         display = display + " on " + this.displayTrainInfo(train);
+        return display;
+    }
+
+    displaySetAccessory(step: MacroStep): string {
+        let accessory: AccessoryDecoder = this.fetchAccessory(step);
+        let display: string = "Set Accessory " + accessory.name;
+        display = display + " to " + this.displayAccessoryOperation(step, accessory);
         return display;
     }
 
@@ -195,10 +228,26 @@ export class MacroComponent implements OnInit {
         return value;
     }
 
+    displayAccessoryOperation(step: MacroStep, accessory: AccessoryDecoder): string {
+        let accessoryOperation: string = "";
+        for(let operation of accessory.accessoryDecoderType.decoderTypeOperations) {
+            if (operation.decoderOperationValue == step.value) {
+                accessoryOperation = operation.decoderTypeOperation;
+            }
+        }
+        return accessoryOperation;
+    }
+
+    accessoryOperations(step: MacroStep): DecoderAccessoryTypeOperation[] {
+        let accessory: AccessoryDecoder = this.fetchAccessory(step);
+        return accessory.accessoryDecoderType.decoderTypeOperations;
+    }
+
     ngOnInit(): void {
         this.macro = new Macro();
         this.getMacro();
         this.getMacros();
         this.getTrains();
+        this.getAccessories();
     }
 }

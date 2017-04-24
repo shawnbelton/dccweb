@@ -22,7 +22,7 @@ public class SetSpeedStep extends AbstractMacroStep implements IStep {
     @Override
     public void run() {
         final Cab cab = getCab();
-        cab.setSpeed(getSpeed());
+        cab.setSpeed(getValue());
         cabService.updateCab(cab);
     }
 }

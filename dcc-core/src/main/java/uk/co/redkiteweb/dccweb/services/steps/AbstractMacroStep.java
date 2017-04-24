@@ -29,7 +29,7 @@ public abstract class AbstractMacroStep implements IStep {
     }
 
     Cab getCab() {
-        return cabStore.getCab(macroStep.getTrainId());
+        return cabStore.getCab(macroStep.getTargetId());
     }
 
     Integer getFunctionNumber() {
@@ -40,8 +40,12 @@ public abstract class AbstractMacroStep implements IStep {
         return "true".equalsIgnoreCase(this.macroStep.getFunctionStatus());
     }
 
-    Integer getSpeed() {
-        return this.macroStep.getSpeed();
+    Integer getTargetId() {
+        return macroStep.getTargetId();
+    }
+
+    Integer getValue() {
+        return this.macroStep.getValue();
     }
 
     @Override

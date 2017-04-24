@@ -15,10 +15,10 @@ public class MacroStep implements Serializable {
     private Integer number;
     private String type;
     private Float delay;
-    private Integer trainId;
+    private Integer targetId;
     private Integer functionNumber;
     private String functionStatus;
-    private Integer speed;
+    private Integer value;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -63,12 +63,12 @@ public class MacroStep implements Serializable {
         this.delay = delay;
     }
 
-    public Integer getTrainId() {
-        return trainId;
+    public Integer getTargetId() {
+        return targetId;
     }
 
-    public void setTrainId(final Integer trainId) {
-        this.trainId = trainId;
+    public void setTargetId(final Integer trainId) {
+        this.targetId = trainId;
     }
 
     public Integer getFunctionNumber() {
@@ -87,11 +87,11 @@ public class MacroStep implements Serializable {
         this.functionStatus = functionStatus;
     }
 
-    public Integer getSpeed() {
-        return speed;
+    public Integer getValue() {
+        return value;
     }
 
-    public void setSpeed(final Integer speed) {
-        this.speed = speed;
+    public void setValue(final Integer value) {
+        this.value = value;
     }
 }
