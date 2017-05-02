@@ -48,6 +48,16 @@ public abstract class AbstractMacroStep implements IStep {
         return this.macroStep.getValue();
     }
 
+    Integer getNextStepNumber() {
+        return this.macroStep.getNumber() + 1;
+    }
+
+    @Override
+    public Integer runStep() {
+        run();
+        return getNextStepNumber();
+    }
+
     @Override
     public abstract void run();
 }

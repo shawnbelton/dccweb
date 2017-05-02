@@ -7,5 +7,6 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
  */
 public interface IStep {
     void setMacroStep(final MacroStep macroStep);
+    Integer runStep();
     void run();
 }

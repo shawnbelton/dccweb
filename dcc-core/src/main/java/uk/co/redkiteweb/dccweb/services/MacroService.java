@@ -7,15 +7,14 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
-import uk.co.redkiteweb.dccweb.data.model.comparators.MacroStepComparator;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Map;
 
 
 /**
@@ -59,21 +58,27 @@ public class MacroService {
     public void runMacro(final Macro macro) {
         this.logStore.log("info", String.format("Running macro %s",macro.getName()));
         final List<MacroStep> macroSteps = macroStepRepository.getByMacroId(macro.getMacroId());
-        for(MacroStep step : orderSteps(macroSteps)) {
-            runStep(step);
+        final Map<Integer, MacroStep> steps = orderSteps(macroSteps);
+        Integer stepNumber = 1;
+        MacroStep step = steps.get(stepNumber);
+        while(step!=null) {
+            stepNumber = runStep(step);
+            step = steps.get(stepNumber);
         }
     }
 
-    private static Set<MacroStep> orderSteps(final List<MacroStep> unordered) {
-        final Set<MacroStep> ordered = new TreeSet<MacroStep>(new MacroStepComparator());
+    private static Map<Integer, MacroStep> orderSteps(final List<MacroStep> unordered) {
+        final Map<Integer, MacroStep> steps = new HashMap<Integer, MacroStep>();
         if (unordered != null) {
-            ordered.addAll(unordered);
+            for (MacroStep step : unordered) {
+                steps.put(step.getNumber(), step);
+            }
         }
-        return ordered;
+        return steps;
     }
 
-    private void runStep(final MacroStep step) {
+    private Integer runStep(final MacroStep step) {
         LOGGER.info(String.format("Running macro step %d", step.getNumber()));
-        this.stepFactory.getInstance(step).run();
+        return this.stepFactory.getInstance(step).runStep();
     }
 }

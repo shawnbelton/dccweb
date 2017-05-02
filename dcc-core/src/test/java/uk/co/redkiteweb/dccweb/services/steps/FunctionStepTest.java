@@ -30,6 +30,7 @@ public class FunctionStepTest {
     public void setup() {
         cabStore = mock(CabStore.class);
         step = mock(MacroStep.class);
+        when(step.getNumber()).thenReturn(1);
         cabService = mock(CabService.class);
         functionStep = new FunctionStep();
         functionStep.setMacroStep(step);
@@ -50,7 +51,7 @@ public class FunctionStepTest {
         cabFunction2.setNumber(2);
         cab.getCabFunctions().add(cabFunction2);
         when(cabStore.getCab(anyInt())).thenReturn(cab);
-        functionStep.run();
+        functionStep.runStep();
         verify(cabService, times(1)).updateCabFunctions(any(Cab.class));
     }
 }
