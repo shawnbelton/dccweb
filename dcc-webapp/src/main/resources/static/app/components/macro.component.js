@@ -16,11 +16,17 @@ var macro_1 = require("../models/macro");
 var macro_step_1 = require("../models/macro.step");
 var train_service_1 = require("../services/train.service");
 var macro_service_1 = require("../services/macro.service");
+var accessoryDecoder_service_1 = require("../services/accessoryDecoder.service");
 var MacroComponent = (function () {
-    function MacroComponent(trainService, macroService) {
+    function MacroComponent(trainService, accessoryService, macroService) {
         this.trainService = trainService;
+        this.accessoryService = accessoryService;
         this.macroService = macroService;
     }
+    MacroComponent.prototype.getAccessories = function () {
+        var _this = this;
+        this.accessoryService.getAccessories().subscribe(function (accessories) { return _this.accessories = accessories; });
+    };
     MacroComponent.prototype.getTrains = function () {
         var _this = this;
         this.trainService.getTrains().subscribe(function (trains) { return _this.trains = trains; });
@@ -72,11 +78,21 @@ var MacroComponent = (function () {
     MacroComponent.prototype.editStep = function (step) {
         step.editing = true;
     };
+    MacroComponent.prototype.fetchAccessory = function (step) {
+        var stepAccessory;
+        for (var _i = 0, _a = this.accessories; _i < _a.length; _i++) {
+            var accessory = _a[_i];
+            if (accessory.accessoryDecoderId == step.targetId) {
+                stepAccessory = accessory;
+            }
+        }
+        return stepAccessory;
+    };
     MacroComponent.prototype.fetchTrain = function (step) {
         var stepTrain;
         for (var _i = 0, _a = this.trains; _i < _a.length; _i++) {
             var train = _a[_i];
-            if (train.trainId == step.trainId) {
+            if (train.trainId == step.targetId) {
                 stepTrain = train;
             }
         }
@@ -123,6 +139,9 @@ var MacroComponent = (function () {
     MacroComponent.prototype.isTrainFunction = function (step) {
         return step.type == 'decoderFunction' || step.type == 'setSpeed';
     };
+    MacroComponent.prototype.isAccessoryFunction = function (step) {
+        return step.type == 'setAccessory';
+    };
     MacroComponent.prototype.displayStep = function (step) {
         var display = step.number.toString() + " ";
         switch (step.type) {
@@ -134,6 +153,10 @@ var MacroComponent = (function () {
                 break;
             case "setSpeed":
                 display = display + this.displaySetSpeed(step);
+                break;
+            case "setAccessory":
+                display = display + this.displaySetAccessory(step);
+                break;
         }
         return display;
     };
@@ -146,8 +169,14 @@ var MacroComponent = (function () {
     };
     MacroComponent.prototype.displaySetSpeed = function (step) {
         var train = this.fetchTrain(step);
-        var display = "Set speed to " + step.speed;
+        var display = "Set speed to " + step.value;
         display = display + " on " + this.displayTrainInfo(train);
+        return display;
+    };
+    MacroComponent.prototype.displaySetAccessory = function (step) {
+        var accessory = this.fetchAccessory(step);
+        var display = "Set Accessory " + accessory.name;
+        display = display + " to " + this.displayAccessoryOperation(step, accessory);
         return display;
     };
     MacroComponent.prototype.displayTrainInfo = function (train) {
@@ -173,18 +202,33 @@ var MacroComponent = (function () {
         }
         return value;
     };
+    MacroComponent.prototype.displayAccessoryOperation = function (step, accessory) {
+        var accessoryOperation = "";
+        for (var _i = 0, _a = accessory.accessoryDecoderType.decoderTypeOperations; _i < _a.length; _i++) {
+            var operation = _a[_i];
+            if (operation.decoderOperationValue == step.value) {
+                accessoryOperation = operation.decoderTypeOperation;
+            }
+        }
+        return accessoryOperation;
+    };
+    MacroComponent.prototype.accessoryOperations = function (step) {
+        var accessory = this.fetchAccessory(step);
+        return accessory.accessoryDecoderType.decoderTypeOperations;
+    };
     MacroComponent.prototype.ngOnInit = function () {
         this.macro = new macro_1.Macro();
         this.getMacro();
         this.getMacros();
         this.getTrains();
+        this.getAccessories();
     };
     MacroComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             templateUrl: '../../macroedit/macro.html'
         }), 
-        __metadata('design:paramtypes', [train_service_1.TrainService, macro_service_1.MacroService])
+        __metadata('design:paramtypes', [train_service_1.TrainService, accessoryDecoder_service_1.AccessoryDecoderService, macro_service_1.MacroService])
     ], MacroComponent);
     return MacroComponent;
 }());
