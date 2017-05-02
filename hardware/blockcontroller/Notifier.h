@@ -7,16 +7,15 @@
 
 #include <ChainableLED.h>
 //Use #include <Ethernet.h> to use arduino ether net shield.
-#include <UIPEthernet.h>
+#include <Ethernet.h>
 
 #include "MACAddress.h"
 
-const char serverName[]  = "192.168.0.19";
+const char serverName[]  = "192.168.1.1";
 const uint16_t serverPort = 8080;
 const int clockPin = 8;
 const int dataPin = 9;
 const int SSD_SELECT = 4;
-
 
 class Notifier {
 private:
