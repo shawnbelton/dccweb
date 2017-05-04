@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by shawn on 03/04/17.
@@ -14,6 +15,7 @@ public class Block {
     private String blockId;
     private String blockName;
     private Boolean occupied;
+    private Macro macro;
 
     @Id
     public String getBlockId() {
@@ -38,5 +40,14 @@ public class Block {
 
     public void setOccupied(final Boolean occupied) {
         this.occupied = occupied;
+    }
+
+    @ManyToOne
+    public Macro getMacro() {
+        return macro;
+    }
+
+    public void setMacro(Macro macro) {
+        this.macro = macro;
     }
 }
