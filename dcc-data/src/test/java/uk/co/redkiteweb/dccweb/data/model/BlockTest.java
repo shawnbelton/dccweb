@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by shawn on 03/04/17.
@@ -21,6 +22,7 @@ public class BlockTest {
         block.setBlockId("12345678-1");
         block.setBlockName("Block Name");
         block.setOccupied(Boolean.TRUE);
+        block.setMacro(new Macro());
     }
 
     @Test
@@ -36,5 +38,10 @@ public class BlockTest {
     @Test
     public void testOccupied() {
         assertEquals(true, block.getOccupied());
+    }
+
+    @Test
+    public void testMacro() {
+        assertNotNull(block.getMacro());
     }
 }

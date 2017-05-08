@@ -12,6 +12,8 @@ import {MacroService} from "../services/macro.service";
 import {AccessoryDecoder} from "../models/accessoryDecoder";
 import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
 import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
+import {BlockService} from "../services/block.service";
+import {Block} from "../models/block";
 @Component({
     moduleId: module.id,
     templateUrl: '../../macroedit/macro.html'
@@ -21,9 +23,11 @@ export class MacroComponent implements OnInit {
     macro: Macro;
     trains: Train[];
     accessories: AccessoryDecoder[];
+    blocks: Block[];
     macros: Macro[];
 
-    constructor(private trainService: TrainService, private accessoryService: AccessoryDecoderService, private macroService: MacroService) {}
+    constructor(private trainService: TrainService, private blockService: BlockService,
+                private accessoryService: AccessoryDecoderService, private macroService: MacroService) {}
 
     getAccessories(): void {
         this.accessoryService.getAccessories().subscribe(accessories => this.accessories = accessories);
@@ -31,6 +35,10 @@ export class MacroComponent implements OnInit {
 
     getTrains(): void {
         this.trainService.getTrains().subscribe(trains => this.trains = trains);
+    }
+
+    getBlocks(): void {
+        this.blockService.getBlocks().subscribe(blocks => this.blocks = blocks);
     }
 
     getMacros(): void {
@@ -178,6 +186,15 @@ export class MacroComponent implements OnInit {
             case "setAccessory":
                 display = display + this.displaySetAccessory(step);
                 break;
+            case "exitMacro":
+                display = display + "Exit Macro";
+                break;
+            case "thenGoTo":
+                display = display + "Then goto step " + step.value.toString();
+                break;
+            case "isBlock":
+                display = display + this.displayIsBlock(step);
+                break;
         }
         return display;
     }
@@ -243,11 +260,37 @@ export class MacroComponent implements OnInit {
         return accessory.accessoryDecoderType.decoderTypeOperations;
     }
 
+    displayIsBlock(step: MacroStep): string {
+        let state: string;
+        let display: string = "Is Block " + this.getBlock(step);
+        switch(step.value) {
+            case 0:
+                state = "unoccupied.";
+                break;
+            case 1:
+                state = "occupued.";
+                break;
+        }
+        display = display + " " + state;
+        return display;
+    }
+
+    getBlock(step: MacroStep): string {
+        let blockName: string;
+        for(let block of this.blocks) {
+            if (block.blockId == step.blockId) {
+                blockName = block.blockName;
+            }
+        }
+        return blockName;
+    }
+
     ngOnInit(): void {
         this.macro = new Macro();
         this.getMacro();
         this.getMacros();
         this.getTrains();
         this.getAccessories();
+        this.getBlocks();
     }
 }

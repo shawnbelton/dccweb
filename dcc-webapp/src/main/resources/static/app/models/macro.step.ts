@@ -7,6 +7,7 @@ export class MacroStep {
     type: string;
     delay: number;
     targetId: number;
+    blockId: string;
     functionNumber: number;
     functionStatus: string;
     value: number;

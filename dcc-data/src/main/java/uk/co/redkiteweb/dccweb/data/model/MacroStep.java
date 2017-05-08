@@ -16,6 +16,7 @@ public class MacroStep implements Serializable {
     private String type;
     private Float delay;
     private Integer targetId;
+    private String blockId;
     private Integer functionNumber;
     private String functionStatus;
     private Integer value;
@@ -69,6 +70,14 @@ public class MacroStep implements Serializable {
 
     public void setTargetId(final Integer trainId) {
         this.targetId = trainId;
+    }
+
+    public String getBlockId() {
+        return blockId;
+    }
+
+    public void setBlockId(final String blockId) {
+        this.blockId = blockId;
     }
 
     public Integer getFunctionNumber() {

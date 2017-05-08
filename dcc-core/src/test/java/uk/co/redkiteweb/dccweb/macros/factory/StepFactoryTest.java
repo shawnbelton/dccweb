@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.services.factory;
+package uk.co.redkiteweb.dccweb.macros.factory;
 
 import org.junit.Before;
 import org.junit.Test;

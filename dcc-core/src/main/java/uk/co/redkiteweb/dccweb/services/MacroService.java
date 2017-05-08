@@ -10,7 +10,9 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
+import uk.co.redkiteweb.dccweb.macros.MacroContext;
+import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,13 +58,14 @@ public class MacroService {
 
     @Async
     public void runMacro(final Macro macro) {
+        final MacroContext macroContext = new MacroContext();
         this.logStore.log("info", String.format("Running macro %s",macro.getName()));
         final List<MacroStep> macroSteps = macroStepRepository.getByMacroId(macro.getMacroId());
         final Map<Integer, MacroStep> steps = orderSteps(macroSteps);
         Integer stepNumber = 1;
         MacroStep step = steps.get(stepNumber);
         while(step!=null) {
-            stepNumber = runStep(step);
+            stepNumber = runStep(step, macroContext);
             step = steps.get(stepNumber);
         }
     }
@@ -77,8 +80,10 @@ public class MacroService {
         return steps;
     }
 
-    private Integer runStep(final MacroStep step) {
+    private Integer runStep(final MacroStep step, final MacroContext macroContext) {
+        final IStep stepImp = this.stepFactory.getInstance(step);
+        stepImp.setMacroContext(macroContext);
         LOGGER.info(String.format("Running macro step %d", step.getNumber()));
-        return this.stepFactory.getInstance(step).runStep();
+        return stepImp.runStep();
     }
 }

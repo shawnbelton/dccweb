@@ -25,6 +25,7 @@ public class MacroStepTest {
         macroStep.setNumber(1);
         macroStep.setFunctionStatus("True");
         macroStep.setTargetId(1);
+        macroStep.setBlockId("block-id");
         macroStep.setType("type");
         macroStep.setValue(50);
     }
@@ -72,5 +73,10 @@ public class MacroStepTest {
     @Test
     public void testSpeed() {
         assertEquals(new Integer(50), macroStep.getValue());
+    }
+
+    @Test
+    public void testBlockId() {
+        assertEquals("block-id", macroStep.getBlockId());
     }
 }

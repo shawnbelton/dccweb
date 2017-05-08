@@ -31,12 +31,30 @@ public class BlocksTest {
     @Test
     public void occupiedTest() {
         blocks.blockOccupancy("identifier", 1, true);
-        verify(blockService, times(1)).updateBlock(anyString(), anyBoolean());
+        verify(blockService, times(1)).updateBlockAsync(anyString(), anyBoolean());
     }
 
     @Test
     public void unoccupiedTest() {
         blocks.blockOccupancy("identifier", 1, false);
+        verify(blockService, times(1)).updateBlockAsync(anyString(), anyBoolean());
+    }
+
+    @Test
+    public void manualOccupiedTest() {
+        final Block block = new Block();
+        block.setOccupied(true);
+        block.setBlockId("identifer");
+        blocks.blockOccupancy(block);
+        verify(blockService, times(1)).updateBlock(anyString(), anyBoolean());
+    }
+
+    @Test
+    public void manualUnoccupiedTest() {
+        final Block block = new Block();
+        block.setOccupied(false);
+        block.setBlockId("identifer");
+        blocks.blockOccupancy(block);
         verify(blockService, times(1)).updateBlock(anyString(), anyBoolean());
     }
 

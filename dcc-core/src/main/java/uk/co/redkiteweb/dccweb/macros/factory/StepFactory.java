@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.services.factory;
+package uk.co.redkiteweb.dccweb.macros.factory;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;

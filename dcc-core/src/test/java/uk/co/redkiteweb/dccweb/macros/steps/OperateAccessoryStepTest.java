@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.services.steps;
+package uk.co.redkiteweb.dccweb.macros.steps;
 
 import org.junit.Before;
 import org.junit.Test;

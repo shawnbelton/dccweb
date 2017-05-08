@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Block;
+import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
@@ -26,16 +27,19 @@ public class BlockServiceTest {
     private BlockService blockService;
     private BlockRepository blockRepository;
     private NotificationService notificationService;
+    private MacroService macroService;
     private LogStore logStore;
 
     @Before
     public void setup() {
         logStore = mock(LogStore.class);
         blockRepository = mock(BlockRepository.class);
+        macroService = mock(MacroService.class);
         notificationService = mock(NotificationService.class);
         blockService = new BlockService();
         blockService.setLogStore(logStore);
         blockService.setBlockRepository(blockRepository);
+        blockService.setMacroService(macroService);
         blockService.setNotificationService(notificationService);
     }
 
@@ -44,6 +48,17 @@ public class BlockServiceTest {
         when(blockRepository.findOne(anyString())).thenReturn(null);
         blockService.updateBlock("BlockId", false);
         verify(blockRepository, times(1)).save(any(Block.class));
+        verify(notificationService, times(1)).createNotification(eq("BLOCK"), eq(""));
+    }
+
+    @Test
+    public void updateExistingBlockAsync() {
+        final Block block = new Block();
+        block.setOccupied(false);
+        block.setMacro(mock(Macro.class));
+        when(blockRepository.findOne(anyString())).thenReturn(block);
+        blockService.updateBlockAsync("BlockId", true);
+        verify(blockRepository, times(1)).save(eq(block));
         verify(notificationService, times(1)).createNotification(eq("BLOCK"), eq(""));
     }
 

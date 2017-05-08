@@ -58,6 +58,7 @@ public class BlockService {
         if (null == block) {
             block = new Block();
             block.setBlockId(blockId);
+            block.setBlockName(blockId);
             block.setOccupied(occupied);
         } else {
             block.setOccupied(occupied);

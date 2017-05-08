@@ -9,8 +9,8 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.services.factory.IStep;
-import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
+import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
 import java.util.ArrayList;
 
