@@ -22,6 +22,7 @@ public class BlockService {
 
     private BlockRepository blockRepository;
     private NotificationService notificationService;
+    private MacroService macroService;
     private LogStore logStore;
 
     @Autowired
@@ -35,11 +36,20 @@ public class BlockService {
     }
 
     @Autowired
+    public void setMacroService(final MacroService macroService) {
+        this.macroService = macroService;
+    }
+
+    @Autowired
     public void setLogStore(final LogStore logStore) {
         this.logStore = logStore;
     }
 
     @Async
+    public void updateBlockAsync(final String blockId, final Boolean occupied) {
+        updateBlock(blockId, occupied);
+    }
+
     public void updateBlock(final String blockId, final Boolean occupied) {
         final String message = String.format("Block %s is now %s.", blockId, occupied?"Occupied":"Unoccupied");
         logStore.log("info", message);
@@ -48,12 +58,16 @@ public class BlockService {
         if (null == block) {
             block = new Block();
             block.setBlockId(blockId);
+            block.setBlockName(blockId);
             block.setOccupied(occupied);
         } else {
             block.setOccupied(occupied);
         }
         blockRepository.save(block);
         notificationService.createNotification("BLOCK", "");
+        if (block.getMacro()!=null) {
+            macroService.runMacro(block.getMacro());
+        }
     }
 
     public List<Block> getAllBlocks() {
@@ -63,6 +77,12 @@ public class BlockService {
     public List<Block> saveBlock(final Block block) {
         blockRepository.save(block);
         logStore.log("info", String.format("Block %s saved.", block.getBlockId()));
+        return getAllBlocks();
+    }
+
+    public List<Block> deleteBlock(final Block block) {
+        blockRepository.delete(block);
+        logStore.log("info", String.format("Block %s deleted.", block.getBlockId()));
         return getAllBlocks();
     }
 }

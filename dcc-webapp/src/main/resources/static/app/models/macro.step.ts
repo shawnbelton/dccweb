@@ -6,9 +6,10 @@ export class MacroStep {
     number: number;
     type: string;
     delay: number;
-    trainId: number;
+    targetId: number;
+    blockId: string;
     functionNumber: number;
     functionStatus: string;
-    speed: number;
+    value: number;
     editing: boolean;
 }

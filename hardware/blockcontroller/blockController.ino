@@ -5,7 +5,7 @@
 
 const char* app_name = APP_NAME;
 const int LOOP_DELAY = 10;
-const int NUM_BLOCKS = 4;
+const int NUM_BLOCKS = 8;
 const uint8_t POWER_PIN = 7;
 
 Notifier notifier = Notifier();
@@ -27,13 +27,10 @@ void setup() {
     Serial.println("Turning power off.");
     powerOn = false;
     notifier.init();
-    blocks[0].setBlockInput(A0);
-    blocks[1].setBlockInput(A1);
-    blocks[2].setBlockInput(A2);
-    blocks[3].setBlockInput(A3);
     for(int ind = 0; ind < NUM_BLOCKS; ind++) {
         blocks[ind].setBlockNumber(ind + 1);
         blocks[ind].setNotifier(notifier);
+        blocks[ind].setBlockInput(A0 + ind);
         blocks[ind].init();
     }
 }

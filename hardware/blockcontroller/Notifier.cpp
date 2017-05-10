@@ -4,7 +4,6 @@
 
 #include "Notifier.h"
 
-IPAddress server(192,168,1,1);
 ChainableLED LEDChain = ChainableLED(clockPin, dataPin, 4);
 
 void Notifier::init() {
@@ -31,7 +30,11 @@ void Notifier::init() {
     } else {
         Serial.print("Started with IP:");
         Serial.println(Ethernet.localIP());
+        Serial.println(Ethernet.gatewayIP());
+        Serial.println(Ethernet.subnetMask());
+        Serial.println(Ethernet.dnsServerIP());
         networkReady = true;
+        delay(50);
     }
 
     Serial.println(F("Ready"));
@@ -59,49 +62,51 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
     if (networkReady) {
-        if (!getPage(params)) {
-            Serial.println("Fail");
-        } else {
-            Serial.println("Pass");
+        while(!getPage(params)) {
+            Serial.println("Failed");
+            delay(1000);
         }
     }
 }
 
 byte Notifier::getPage(char *page) {
-    int inChar;
     char outBuf[128];
-
+    long timeout;
+    bool notTimedOut;
     Ethernet.maintain();
+
     byte retVal = 0;
     Serial.print(F("Connecting...."));
-    if (client.connect(server, serverPort)==1) {
+    Serial.println(Ethernet.gatewayIP());
+    client.setTimeout(100l);
+    if (client.connect(Ethernet.gatewayIP(), serverPort)) {
         Serial.println(F("Connected"));
         sprintf(outBuf,"GET %s HTTP/1.1",page);
         client.println(outBuf);
-        sprintf(outBuf,"Host: %s",serverName);
-        client.println(outBuf);
+        client.print("Host: ");
+        client.println(Ethernet.gatewayIP());
         client.println(F("Connection: close\r\n"));
-        int connectLoop = 0;
-        while(client.connected()) {
-            while(client.available()) {
-                inChar = client.read();
-                Serial.write(inChar);
-                connectLoop = 0;
+        timeout = millis() + 5000l;
+        notTimedOut = true;
+        while(client.available()==0 && notTimedOut)
+        {
+            if (millis() > timeout) {
+                notTimedOut = false;
             }
-            connectLoop++;
-            if (connectLoop>10000) {
-                Serial.println();
-                Serial.println("Timeout");
-                client.status();
-            }
-            delay(1);
         }
-        Serial.println();
+        if (notTimedOut) {
+            int size;
+            while ((size = client.available()) > 0) {
+                uint8_t *msg = (uint8_t *) malloc(size);
+                size = client.read(msg, size);
+                Serial.write(msg, size);
+                free(msg);
+            }
+            Serial.println();
+        }
         Serial.println("Disconnecting");
         client.stop();
         retVal = 1;
-    } else {
-        Serial.println(F("Failed"));
     }
     return retVal;
 }

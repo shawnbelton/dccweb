@@ -13,6 +13,8 @@ export class BlockService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private blockUrl = '/block/all';
     private saveBlockUrl = '/block/save';
+    private deleteBlockUrl = '/block/delete';
+    private blockOccupiedUrl = '/block/occupied';
 
     private _blocks: BehaviorSubject<Block[]> = new BehaviorSubject(null);
     private blocks: Observable<Block[]> = this._blocks.asObservable();
@@ -30,6 +32,18 @@ export class BlockService {
 
     saveBlock(block: Block): void {
         this.http.post(this.saveBlockUrl, block).map(response => response.json()).subscribe(data => {
+            this._blocks.next(data);
+        }, error => console.log('Could not load blocks.'));
+    }
+
+    deleteBlock(block: Block): void {
+        this.http.post(this.deleteBlockUrl, block).map(response => response.json()).subscribe(data => {
+            this._blocks.next(data);
+        }, error => console.log('Could not load blocks.'));
+    }
+
+    setBlockOccupancy(block: Block): void {
+        this.http.post(this.blockOccupiedUrl, block).map(response => response.json()).subscribe(data => {
             this._blocks.next(data);
         }, error => console.log('Could not load blocks.'));
     }

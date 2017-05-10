@@ -9,8 +9,8 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.services.factory.IStep;
-import uk.co.redkiteweb.dccweb.services.factory.StepFactory;
+import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
 import java.util.ArrayList;
 
@@ -66,9 +66,10 @@ public class MacroServiceTest {
         macro.getSteps().add(step);
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
         final IStep stepImp = mock(IStep.class);
+        when(stepImp.runStep()).thenReturn(2);
         when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
         macroService.runMacro(macro);
-        verify(stepImp, times(1)).run();
+        verify(stepImp, times(1)).runStep();
     }
 
     @Test
@@ -78,12 +79,16 @@ public class MacroServiceTest {
         final MacroStep step = mock(MacroStep.class);
         when(step.getNumber()).thenReturn(1);
         macro.getSteps().add(step);
+        final MacroStep step2 = mock(MacroStep.class);
+        when(step2.getNumber()).thenReturn(2);
+        macro.getSteps().add(step2);
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
         final IStep stepImp = mock(IStep.class);
         when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
+        when(stepImp.runStep()).thenReturn(3);
         when(macroRepository.findByName(anyString())).thenReturn(macro);
         macroService.runMacroByName("MacroName");
-        verify(stepImp, times(1)).run();
+        verify(stepImp, times(1)).runStep();
     }
 
     private Macro createMacro() {

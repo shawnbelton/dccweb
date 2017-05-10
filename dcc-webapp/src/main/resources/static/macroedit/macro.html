@@ -29,9 +29,13 @@
                             <label for="stepType" class="form-label">Type</label>
                             <select id="stepType" name="stepType" class="form-control input-sm" [(ngModel)]="step.type"
                                     #stepType="ngModel" required="required">
+                                <option value="setAccessory">Set Accessory</option>
                                 <option value="decoderFunction">Train function</option>
                                 <option value="setSpeed">Set Speed</option>
                                 <option value="delay">Wait Seconds</option>
+                                <option value="exitMacro">Exit Macro</option>
+                                <option value="thenGoTo">Then goto</option>
+                                <option value="isBlock">Is Block</option>
                             </select>
                         </div>
                         <div class="form-group" *ngIf="step.type=='delay'">
@@ -39,15 +43,56 @@
                             <input type="number" id="seconds" name="seconds" class="form-control input-sm" [(ngModel)]="step.delay"
                                    #seconds="ngModel" required="required"/>
                         </div>
+                        <div class="form-group" *ngIf="step.type=='thenGoTo'">
+                            <label for="stepNumber" class="form-label">Step</label>
+                            <input type="number" id="stepNumber" name="stepNumber" class="form-control input-sm" [(ngModel)]="step.value"
+                                   #stepNumber="ngModel" required="required"/>
+                        </div>
+                        <span *ngIf="step.type=='isBlock'">
+                            <div class="form-group">
+                                <label for="blockId" class="form-label">Block Id</label>
+                                <select id="blockId" name="blockId" class="form-control input-sm" [(ngModel)]="step.blockId"
+                                    #blockId="ngModel" required="required">
+                                    <option *ngFor="let block of blocks" [value]="block.blockId">{{block.blockName}}</option>
+                                </select>
+                            </div>
+                            <span *ngIf="step.blockId!=null">
+                                <label for="blockState" class="form-label">Block State</label>
+                                <select id="blockState" name="blockState" class="form-control input-sm" [(ngModel)]="step.value"
+                                        #blockState="ngModel" required="required">
+                                    <option value="0">Unoccupied</option>
+                                    <option value="1">Occupied</option>
+                                </select>
+                            </span>
+                        </span>
+                        <span *ngIf="isAccessoryFunction(step)">
+                            <div class="form-group">
+                                <label for="stepAccessory" class="form-label">Accessory</label>
+                                <select id="stepAccessory" name="stepAccessory" class="form-control input-sm" [(ngModel)]="step.targetId"
+                                        #stepAccessory="ngModel" required="required">
+                                    <option *ngFor="let accessory of accessories" [value]="accessory.accessoryDecoderId">{{accessory.name}}</option>
+                                </select>
+                            </div>
+                            <span *ngIf="step.targetId!=null">
+                                <div class="form-group">
+                                    <label for="stepOperation" class="form-label">Operation</label>
+                                    <select id="stepOperation" name="stepOperation" class="form-control input-sm" [(ngModel)]="step.value"
+                                            #stepOperation="ngModel" required="required">
+                                        <option *ngFor="let accessoryOperation of accessoryOperations(step)"
+                                                [value]="accessoryOperation.decoderOperationValue">{{accessoryOperation.decoderTypeOperation}}</option>
+                                    </select>
+                                </div>
+                            </span>
+                        </span>
                         <span *ngIf="isTrainFunction(step)">
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <label for="stepTrain" class="form-label">Train</label>
-                                <select id="stepTrain" name="stepTrain" class="form-control input-sm" [(ngModel)]="step.trainId"
+                                <select id="stepTrain" name="stepTrain" class="form-control input-sm" [(ngModel)]="step.targetId"
                                         #stepTrain="ngModel" required="required">
                                     <option *ngFor="let train of trains" [value]="train.trainId">{{train.number}} {{train.name}}</option>
                                 </select>
                             </div>
-                            <span *ngIf="step.trainId!=null">
+                            <span *ngIf="step.targetId!=null">
                                 <div class="form-group" *ngIf="step.type=='decoderFunction'">
                                     <label for="stepFunction" class="form-label">Function</label>
                                     <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionNumber"
@@ -67,7 +112,7 @@
                                 </div>
                                 <div class="form-group" *ngIf="step.type=='setSpeed'">
                                     <label for="speed" class="form-label">Speed</label>
-                                    <input type="number" id="speed" name="speed" class="form-control input-sm" [(ngModel)]="step.speed"
+                                    <input type="number" id="speed" name="speed" class="form-control input-sm" [(ngModel)]="step.value"
                                         #speed="ngModel" required="required"/>
                                 </div>
                             </span>

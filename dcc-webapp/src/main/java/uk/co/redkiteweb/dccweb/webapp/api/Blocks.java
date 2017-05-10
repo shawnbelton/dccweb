@@ -24,8 +24,14 @@ public class Blocks {
     public @ResponseBody Boolean blockOccupancy(@PathVariable final String identifier,
                                                 @PathVariable final Integer blockNumber,
                                                 @PathVariable final Boolean occupied) {
-        blockService.updateBlock(String.format("%s-%d", identifier, blockNumber), occupied);
+        blockService.updateBlockAsync(String.format("%s-%d", identifier, blockNumber), occupied);
         return Boolean.TRUE;
+    }
+
+    @RequestMapping(value = "/block/occupied", method = RequestMethod.POST)
+    public @ResponseBody List<Block> blockOccupancy(@RequestBody final Block block) {
+        blockService.updateBlock(block.getBlockId(), block.getOccupied());
+        return getAllBlocks();
     }
 
     @RequestMapping(value = "/block/all", method = RequestMethod.GET)
@@ -38,4 +44,8 @@ public class Blocks {
         return blockService.saveBlock(block);
     }
 
+    @RequestMapping(value = "/block/delete", method = RequestMethod.POST)
+    public @ResponseBody List<Block> deleteBlock(@RequestBody final Block block) {
+        return blockService.deleteBlock(block);
+    }
 }
