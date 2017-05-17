@@ -90,7 +90,7 @@ dccweb.db/
 logs/
 hardware/blockcontroller/.idea/
 hardware/blockcontroller/build/*
-hardware/blockcontroller/cmake-build-debug/*
+hardware/blockcontroller/cmake-build-debug/
 !hardware/blockcontroller/build/ReadMe.txt
 !hardware/blockcontroller/build/build.sh
 
