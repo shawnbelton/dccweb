@@ -6,7 +6,7 @@
 const char* app_name = APP_NAME;
 const int LOOP_DELAY = 10;
 const int NUM_BLOCKS = 8;
-const uint8_t POWER_PIN = 7;
+const uint8_t POWER_PIN = 2;
 
 Notifier notifier = Notifier();
 blockController blocks[NUM_BLOCKS];

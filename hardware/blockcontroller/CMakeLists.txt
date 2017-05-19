@@ -9,23 +9,6 @@ execute_process(COMMAND echo -ne "Block Controller" OUTPUT_VARIABLE APP_NAME)
 message(${APP_NAME})
 add_definitions(-DAPP_NAME="${APP_NAME}")
 add_definitions(-DARDUINO_ARCH_AVR=ARDUINO_ARCH_AVR)
-#set(${CMAKE_PROJECT_NAME}-nano_PORT /dev/ttyUSB0)
-#set(${CMAKE_PROJECT_NAME}-nano_SERIAL minicom -D @SERIAL_PORT@ -b 9600)
-#set(${CMAKE_PROJECT_NAME}-uno_PORT /dev/ttyACM0)
-#set(${CMAKE_PROJECT_NAME}-uno_SERIAL minicom -D @SERIAL_PORT@ -b 9600)
-
-#set(${CMAKE_PROJECT_NAME}-nano_SKETCH BlockController.ino)
-#set(${CMAKE_PROJECT_NAME}-uno_SKETCH BlockController.ino)
-
-#generate_arduino_library(nano328_MACAddress
-#        SRCS libraries/MACAddress/MACAddress.cpp
-#        HDRS libraries/MACAddress/MACAddress.h
-#        BOARD nano328)
-
-#generate_arduino_library(nano328_Notifier
-#        SRCS Notifier/Notifier.cpp
-#        HDRS Notifier/Notifier.h
-#        BOARD nano328)
 
 generate_arduino_firmware(${CMAKE_PROJECT_NAME}-nano
         SKETCH BlockController
@@ -42,9 +25,6 @@ generate_arduino_firmware(${CMAKE_PROJECT_NAME}-uno
         PORT /dev/ttyACM0
         SERIAL minicom -D @SERIAL_PORT@ -b 9600
         )
-
-#generate_arduino_firmware(${CMAKE_PROJECT_NAME}-nano BOARD nano328 PORT /dev/ttyUSB0)
-#generate_arduino_firmware(${CMAKE_PROJECT_NAME}-uno BOARD uno PORT /dev/ttyACM0)
 
 TARGET_COMPILE_DEFINITIONS(uno_Notifier PUBLIC -DWITH_LEDS=1 -DWITH_SD=1)
 
