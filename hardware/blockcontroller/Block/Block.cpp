@@ -2,7 +2,7 @@
 // Created by shawn on 01/06/16.
 //
 
-#include "blockController.h"
+#include "Block.h"
 
 void blockController::setBlockNumber(int pBlockNumber) {
     blockNumber = pBlockNumber;

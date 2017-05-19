@@ -9,8 +9,8 @@ static const int MAC_POS1 = 0xDE;
 static const int MAC_POS2 = 0xAD;
 static const int MAC_POS3 = 0xBE;
 
-#include <EEPROM.h>
 #include <Arduino.h>
+#include "EEPROM.h"
 
 class MACAddress {
 private:
