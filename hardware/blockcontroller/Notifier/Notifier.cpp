@@ -4,22 +4,28 @@
 
 #include "Notifier.h"
 
+#ifdef WITH_LEDS
 ChainableLED LEDChain = ChainableLED(clockPin, dataPin, 4);
+#endif
 
 void Notifier::init() {
 
     macAddress = MACAddress();
     macAddress.init();
 
+#ifdef WITH_LEDS
     LEDChain.init();
     for(byte index = 1; index <= 4 ; index++) {
         LEDChain.setColorRGB(index, 0,0,1);
     }
+#endif
 
     networkReady = false;
 
+#ifdef WITH_SD
     pinMode(SSD_SELECT, OUTPUT);
     digitalWrite(SSD_SELECT, HIGH);
+#endif
 
     Serial.print(F("Starting Ethernet with MAC Address("));
     Serial.print(macAddress.fullMacString());
@@ -40,6 +46,7 @@ void Notifier::init() {
     Serial.println(F("Ready"));
 }
 
+#ifdef WITH_LEDS
 void Notifier::setLED(byte ledNumber, bool state) {
     if (state) {
         setLEDOn(ledNumber);
@@ -55,10 +62,13 @@ void Notifier::setLEDOn(byte ledNumber) {
 void Notifier::setLEDOff(byte ledNumber) {
     LEDChain.setColorRGB(ledNumber, 0, 1, 0);
 }
+#endif
 
 void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
     char params[64];
+#ifdef WITH_LEDS
     setLED(blockNumber - 1, occupied);
+#endif
     sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
     if (networkReady) {
