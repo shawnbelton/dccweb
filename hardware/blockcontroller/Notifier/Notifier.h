@@ -35,12 +35,15 @@ private:
 #ifdef WITH_LEDS
     void setLEDOn(byte ledNumber);
     void setLEDOff(byte ledNumber);
+    void setLEDInit(byte ledNumber);
     void setLED(byte ledNumber, bool state);
+    void printSetLED(byte ledNo, const char* colour);
 #endif
 
 public:
     void init();
     void sendWebNotification(byte blockNumber, bool occupied);
+
 };
 
 
