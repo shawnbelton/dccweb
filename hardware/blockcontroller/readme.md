@@ -22,8 +22,8 @@ If using an IDC connector and ribbon cable the pins are numbered as follows
 - 5 SCK     Pin 13 Arduino
 - 6 MOSI    Pin 11 Arduino
 - 7 MISO    Pin 12 Arduino
-- 8 NC
-- 9 NC
-- 10 NC
+- 8 GND
+- 9 POE+
+- 10 POE-
 
 from https://www.jdohnalek.com/arduino-nano-and-wiznet-w5100-red/
