@@ -27,6 +27,7 @@ public class AccessoryService {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private NotificationService notificationService;
+    private MacroService macroService;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -41,6 +42,11 @@ public class AccessoryService {
     @Autowired
     public void setNotificationService(final NotificationService notificationService) {
         this.notificationService = notificationService;
+    }
+
+    @Autowired
+    public void setMacroService(final MacroService macroService) {
+        this.macroService = macroService;
     }
 
     @Async
@@ -58,6 +64,9 @@ public class AccessoryService {
         for (AccessoryDecoder accessoryDecoder : accessoryDecoders) {
             accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
             accessoryDecoderRepository.save(accessoryDecoder);
+            if (accessoryDecoder.getMacro()!=null) {
+                macroService.runMacro(accessoryDecoder.getMacro());
+            }
         }
         notificationService.createNotification("ACCESSORY", accessoryOperation.getAccessoryAddress().toString());
     }

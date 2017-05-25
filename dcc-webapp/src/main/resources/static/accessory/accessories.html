@@ -55,6 +55,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="accessoryMacro" class="col-sm-4 control-label">Accessory Macro</label>
+                        <div class="col-sm-8">
+                            <select name="accessoryMacro" id="accessoryMacro" ngControl="accessoryMacro" class="form-control"
+                                    #accessoryMacro="ngModel" [(ngModel)]="editAccessory.macro.macroId">
+                                <option [value]=""></option>
+                                <option *ngFor="let macro of macros"
+                                        [value]="macro.macroId">{{macro.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
                                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>

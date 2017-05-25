@@ -15,8 +15,8 @@ void Notifier::init() {
 
 #ifdef WITH_LEDS
     LEDChain.init();
-    for(byte index = 1; index <= 4 ; index++) {
-        LEDChain.setColorRGB(index, 0,0,1);
+    for(byte index = 0; index < 8 ; index++) {
+        setLEDInit(index);
     }
 #endif
 
@@ -57,10 +57,23 @@ void Notifier::setLED(byte ledNumber, bool state) {
 
 void Notifier::setLEDOn(byte ledNumber) {
     LEDChain.setColorRGB(ledNumber, 1, 0, 0);
+    printSetLED(ledNumber, "red");
 }
 
 void Notifier::setLEDOff(byte ledNumber) {
     LEDChain.setColorRGB(ledNumber, 0, 1, 0);
+    printSetLED(ledNumber, "green");
+}
+
+void Notifier::setLEDInit(byte ledNumber) {
+    LEDChain.setColorRGB(ledNumber, 0, 0, 1);
+    printSetLED(ledNumber, "blue");
+}
+
+void Notifier::printSetLED(byte ledNumber, const char* colour) {
+    char ledInfo[64];
+    sprintf(ledInfo, "Setting %i to %s.", ledNumber, colour);
+    Serial.println(ledInfo);
 }
 #endif
 
