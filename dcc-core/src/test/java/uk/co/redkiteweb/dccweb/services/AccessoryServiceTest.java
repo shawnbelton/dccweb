@@ -8,6 +8,7 @@ import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
+import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
@@ -26,6 +27,7 @@ import static org.mockito.Mockito.*;
 public class AccessoryServiceTest {
 
     private AccessoryService accessoryService;
+    private MacroService macroService;
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private NotificationService notificationService;
@@ -35,10 +37,12 @@ public class AccessoryServiceTest {
         dccInterface = mock(DccInterface.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         notificationService = mock(NotificationService.class);
+        macroService = mock(MacroService.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryService.setNotificationService(notificationService);
+        accessoryService.setMacroService(macroService);
     }
 
     @Test
@@ -52,6 +56,22 @@ public class AccessoryServiceTest {
         accessoryOperation.setOperationValue(0);
         accessoryService.operateService(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
+    }
+
+    @Test
+    public void testOperateAccessoryWithMacro() {
+        final List<AccessoryDecoder> accessories = new ArrayList<AccessoryDecoder>();
+        final AccessoryDecoder accessoryDecoder = getAccessoryDecoder();
+        accessoryDecoder.setMacro(new Macro());
+        accessories.add(accessoryDecoder);
+        when(accessoryDecoderRepository.findAccessoryDecodersByAddress(anyInt()))
+                .thenReturn(accessories);
+        final AccessoryOperation accessoryOperation = new AccessoryOperation();
+        accessoryOperation.setAccessoryAddress(123);
+        accessoryOperation.setOperationValue(0);
+        accessoryService.operateService(accessoryOperation);
+        verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
+        verify(macroService, times(1)).runMacro(any(Macro.class));
     }
 
     private AccessoryDecoder getAccessoryDecoder() {

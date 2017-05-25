@@ -7,6 +7,8 @@ import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
 import {DecoderAccessoryType} from "../models/decoderAccessoryType";
 import {AccessoryOperation} from "../models/accessoryOperation";
 import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
+import {Macro} from "../models/macro";
+import {MacroService} from "../services/macro.service";
 
 @Component({
     moduleId: module.id,
@@ -16,13 +18,15 @@ export class AccessoryComponent implements OnInit {
 
     accessoryDecoders: AccessoryDecoder[];
     accessoryDecoderTypes: DecoderAccessoryType[];
+    macros: Macro[];
     editAccessory: AccessoryDecoder;
 
-    constructor(private accessoryDecoderService: AccessoryDecoderService) {
+    constructor(private accessoryDecoderService: AccessoryDecoderService, private macroService: MacroService) {
     }
 
     newAccessory(): void {
         this.editAccessory = new AccessoryDecoder();
+        this.editAccessory.macro = new Macro();
         this.editAccessory.accessoryDecoderType = new DecoderAccessoryType();
     }
 
@@ -40,6 +44,10 @@ export class AccessoryComponent implements OnInit {
         newAccessory.accessoryDecoderType = accessory.accessoryDecoderType;
         newAccessory.address = accessory.address;
         newAccessory.name = accessory.name;
+        newAccessory.macro = accessory.macro;
+        if (newAccessory.macro == null) {
+            newAccessory.macro = new Macro();
+        }
         this.setCurrentAccessory(newAccessory);
     }
 
@@ -48,6 +56,9 @@ export class AccessoryComponent implements OnInit {
     }
 
     saveAccessory(): void {
+        if (this.editAccessory.macro.macroId == null || this.editAccessory.macro.macroId.toString() == "") {
+            this.editAccessory.macro = null;
+        }
         this.accessoryDecoderService.saveAccessory(this.editAccessory);
         this.newAccessory();
     }
@@ -75,7 +86,16 @@ export class AccessoryComponent implements OnInit {
             .getAccessoryTypes().subscribe(data => this.accessoryDecoderTypes = data);
     }
 
+    getMacros(): void {
+        this.macroService.getMacros().subscribe(macros => this.setMacros(macros));
+    }
+
+    setMacros(macros: Macro[]): void {
+        this.macros = macros;
+    }
+
     ngOnInit(): void {
+        this.getMacros();
         this.getAccessories();
         this.getAccessoryTypes();
     }
