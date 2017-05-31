@@ -13,6 +13,7 @@ import uk.co.redkiteweb.dccweb.services.AsyncCabService;
  * Created by shawn on 12/09/16.
  */
 @RestController
+@RequestMapping("/api/trains/cab")
 public class CabInterface {
 
     private static final Logger LOGGER = LogManager.getLogger(CabInterface.class);
@@ -30,12 +31,12 @@ public class CabInterface {
         this.cabService = cabService;
     }
 
-    @RequestMapping(value = "/trains/cab", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Cab getCab(@RequestBody final Train train) {
         return cabStore.getCab(train);
     }
 
-    @RequestMapping(value = "/trains/cab/update", method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     public @ResponseBody Boolean updateCab(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating %s to %d speed %s direction.", cab.getTrain().getNumber(), cab.getSpeed(), cab.getDirection()));
         cabService.updateCab(cab);
@@ -43,7 +44,7 @@ public class CabInterface {
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/trains/cab/updateFunction", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateFunction", method = RequestMethod.POST)
     public @ResponseBody Boolean updateCabFunction(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating functions on %s", cab.getTrain().getNumber()));
         cabService.updateCabFunctions(cab);

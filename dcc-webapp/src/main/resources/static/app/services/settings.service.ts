@@ -11,8 +11,8 @@ import {InterfaceInfo} from "../models/interfaceInfo";
 export class SettingsService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private settingsUrl = '/application/settings';
-    private interfacesUrl = '/interfaces';
+    private settingsUrl = '/api/application/settings';
+    private interfacesUrl = '/api/interface/all';
 
     private _settings: BehaviorSubject<Settings> = new BehaviorSubject(new Settings());
     private settings: Observable<Settings> = this._settings.asObservable();

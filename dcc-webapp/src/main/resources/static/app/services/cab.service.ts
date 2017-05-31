@@ -12,9 +12,9 @@ import {NotificationService} from "./notification.service";
 export class CabService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private fetchCabUrl = '/trains/cab';
-    private updateCabUrl = '/trains/cab/update';
-    private updateCabFunctionUrl = '/trains/cab/updateFunction';
+    private fetchCabUrl = '/api/trains/cab';
+    private updateCabUrl = '/api/trains/cab/update';
+    private updateCabFunctionUrl = '/api/trains/cab/updateFunction';
 
     private _cab: BehaviorSubject<Cab> = new BehaviorSubject(null);
     private cab: Observable<Cab> = this._cab.asObservable();

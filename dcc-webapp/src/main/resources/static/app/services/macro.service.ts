@@ -20,32 +20,32 @@ export class MacroService {
     }
 
     editMacro(macro: Macro): void {
-        this.http.get("/macros/" + macro.macroId.toString()).map(response => response.json())
+        this.http.get("/api/macros/" + macro.macroId.toString()).map(response => response.json())
             .subscribe(data => {
                 this._macro.next(data);
             }, error => console.log("Unable to get macro."));
     }
 
     fetchMacros(): void {
-        this.http.get("/macros").map(response => response.json()).subscribe(data => {
+        this.http.get("/api/macros/all").map(response => response.json()).subscribe(data => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     saveMacro(macro: Macro): void {
-        this.http.post("/macros/save", macro).map(response => response.json()).subscribe(data => {
+        this.http.post("/api/macros/save", macro).map(response => response.json()).subscribe(data => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     deleteMacro(macro: Macro): void {
-        this.http.post("/macros/delete", macro).map(response => response.json()).subscribe(data => {
+        this.http.post("/api/macros/delete", macro).map(response => response.json()).subscribe(data => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     runMacro(macro: Macro): void {
-        this.http.post("/macros/run", macro).map(response => response.json()).subscribe(data => {},
+        this.http.post("/api/macros/run", macro).map(response => response.json()).subscribe(data => {},
         error => console.log("Unable to run macro."));
     }
 

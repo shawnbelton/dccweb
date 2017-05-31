@@ -11,8 +11,8 @@ import {Train} from "../models/train";
 export class TrainService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private trainsUrl = '/trains';
-    private saveUrl = '/trains/save';
+    private trainsUrl = '/api/trains/all';
+    private saveUrl = '/api/trains/save';
 
     private _trains: BehaviorSubject<Train[]> = new BehaviorSubject([]);
     private trains: Observable<Train[]> = this._trains.asObservable();

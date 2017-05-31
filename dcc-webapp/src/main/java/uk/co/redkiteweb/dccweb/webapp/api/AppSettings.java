@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.webapp.data.Settings;
  * Created by shawn on 26/11/16.
  */
 @RestController
+@RequestMapping("/api/application")
 public class AppSettings {
 
     private SettingsService settingsService;
@@ -25,7 +26,7 @@ public class AppSettings {
         this.logStore = logStore;
     }
 
-    @RequestMapping(value = "/application/settings", method = RequestMethod.GET)
+    @RequestMapping(value = "/settings", method = RequestMethod.GET)
     public @ResponseBody Settings getAppSettings() {
         final Settings settings = new Settings();
         settings.setDccSystem(settingsService.getSettingValue("InterfaceType", "Demo"));
@@ -33,7 +34,7 @@ public class AppSettings {
         return settings;
     }
 
-    @RequestMapping(value = "/application/settings", method = RequestMethod.POST)
+    @RequestMapping(value = "/settings", method = RequestMethod.POST)
     public @ResponseBody Settings saveAppSettins(@RequestBody final Settings settings) {
         settingsService.setSettingValue("InterfaceType", settings.getDccSystem());
         settingsService.setSettingValue("SerialPort", settings.getSerialPort());

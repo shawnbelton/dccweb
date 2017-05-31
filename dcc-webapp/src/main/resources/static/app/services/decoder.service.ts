@@ -12,13 +12,13 @@ import {LinkedMacro} from "../models/linked.macro";
 export class DecoderService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private decodersUrl = '/decoders/all';
-    private readDecoderUrl = '/decoders/read';
-    private fetchDecoderUrl = '/decoders/byId/';
-    private addFunctionUrl = '/decoders/function/add';
-    private deleteFunctionUrl = '/decoders/function/delete';
-    private linkMacroUrl = '/decoders/macro/link';
-    private unlinkMacroUrl = '/decoders/macro/unlink';
+    private decodersUrl = '/api/decoders/all';
+    private readDecoderUrl = '/api/decoders/read';
+    private fetchDecoderUrl = '/api/decoders/byId/';
+    private addFunctionUrl = '/api/decoders/function/add';
+    private deleteFunctionUrl = '/api/decoders/function/delete';
+    private linkMacroUrl = '/api/decoders/macro/link';
+    private unlinkMacroUrl = '/api/decoders/macro/unlink';
 
     private _decoders: BehaviorSubject<Decoder[]> = new BehaviorSubject([]);
     private decoders: Observable<Decoder[]> = this._decoders.asObservable();

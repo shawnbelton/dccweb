@@ -12,6 +12,7 @@ import java.util.List;
  * Created by shawn on 24/06/16.
  */
 @RestController
+@RequestMapping("/api/trains")
 public class Trains {
 
     private TrainRepository trainRepository;
@@ -27,19 +28,19 @@ public class Trains {
         this.logStore = logStore;
     }
 
-    @RequestMapping("/trains")
+    @RequestMapping("/all")
     public @ResponseBody List<Train> getAllTrains() {
         return (List<Train>)trainRepository.findAll();
     }
 
-    @RequestMapping(value = "/trains/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody List<Train> saveTrain(@RequestBody final Train train) {
         trainRepository.save(train);
         logStore.log("info", String.format("Saved train with number %s", train.getNumber()));
         return getAllTrains();
     }
 
-    @RequestMapping(value = "/trains/byId", method = RequestMethod.POST)
+    @RequestMapping(value = "/byId", method = RequestMethod.POST)
     public @ResponseBody Train getById(@RequestBody final Integer trainId) {
         return trainRepository.findOne(trainId);
     }

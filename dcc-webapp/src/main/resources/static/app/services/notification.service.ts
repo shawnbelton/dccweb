@@ -10,7 +10,7 @@ import {Notification} from "../models/notification";
 export class NotificationService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private notificationsUrl = '/notifications/';
+    private notificationsUrl = '/api/notifications/';
 
     private _statusUpdates: BehaviorSubject<string> = new BehaviorSubject(null);
     private statusUpdates: Observable<string> = this._statusUpdates.asObservable();

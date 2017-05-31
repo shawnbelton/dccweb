@@ -1,4 +1,4 @@
-<div class="panel panel-success" *ngIf="cab!=null">
+<div class="panel panel-success" *ngIf="cab!=null && cab.train.decoder != null">
     <div class="panel-heading">{{cab.train.number}} {{cab.train.name}}</div>
     <div class="panel-body">
         <form id="trainCab" name="trainCab" class="form-horizontal" #trainCab="ngForm">
