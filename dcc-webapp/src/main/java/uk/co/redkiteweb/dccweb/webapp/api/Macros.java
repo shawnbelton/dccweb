@@ -12,6 +12,7 @@ import java.util.List;
  * Created by shawn on 02/12/16.
  */
 @RestController
+@RequestMapping("/api/macros")
 public class Macros {
 
     private MacroRepository macroRepository;
@@ -27,30 +28,30 @@ public class Macros {
         this.macroService = macroService;
     }
 
-    @RequestMapping(value = "/macros", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Macro> getMacros() {
         return (List<Macro>)this.macroRepository.findAll();
     }
 
-    @RequestMapping(value = "/macros/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody List<Macro> saveMacro(@RequestBody final Macro macro) {
         this.macroRepository.save(macro);
         return getMacros();
     }
 
-    @RequestMapping(value = "/macros/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public @ResponseBody List<Macro> deleteMacro(@RequestBody final Macro macro) {
         this.macroRepository.delete(macro);
         return getMacros();
     }
 
-    @RequestMapping(value = "/macros/run", method = RequestMethod.POST)
+    @RequestMapping(value = "/run", method = RequestMethod.POST)
     public @ResponseBody Boolean runMacro(@RequestBody final Macro macro) {
         this.macroService.runMacro(macro);
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/macros/{macroId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{macroId}", method = RequestMethod.GET)
     public @ResponseBody Macro getMacro(@PathVariable final Integer macroId) {
         return this.macroRepository.findOne(macroId);
     }

@@ -15,6 +15,7 @@ import java.util.List;
  * Created by shawn on 22/02/17.
  */
 @RestController
+@RequestMapping("/api/accessory/decoder")
 public class AccessoryDecoders {
 
     private AccessoryDecoderRepository accessoryDecoderRepository;
@@ -36,23 +37,23 @@ public class AccessoryDecoders {
         this.accessoryService = accessoryService;
     }
 
-    @RequestMapping("/accessory/decoder/type/all")
+    @RequestMapping("/type/all")
     public @ResponseBody List<AccessoryDecoderType> allAccessoryDecoderTypes() {
         return (List<AccessoryDecoderType>)accessoryDecoderTypeRepository.findAll();
     }
 
-    @RequestMapping("/accessory/decoder/all")
+    @RequestMapping("/all")
     public @ResponseBody List<AccessoryDecoder> allAccessoryDecoders() {
         return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
     }
 
-    @RequestMapping(value = "/accessory/decoder/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody List<AccessoryDecoder> saveAccessoryDecoder(@RequestBody final AccessoryDecoder accessoryDecoder){
         accessoryDecoderRepository.save(accessoryDecoder);
         return allAccessoryDecoders();
     }
 
-    @RequestMapping(value = "/accessory/decoder/operate", method = RequestMethod.POST)
+    @RequestMapping(value = "/operate", method = RequestMethod.POST)
     public @ResponseBody Boolean operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
         accessoryService.operateService(accessoryOperation);
         return Boolean.TRUE;

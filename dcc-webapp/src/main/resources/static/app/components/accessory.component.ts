@@ -44,6 +44,7 @@ export class AccessoryComponent implements OnInit {
         newAccessory.accessoryDecoderType = accessory.accessoryDecoderType;
         newAccessory.address = accessory.address;
         newAccessory.name = accessory.name;
+        newAccessory.currentValue = accessory.currentValue;
         newAccessory.macro = accessory.macro;
         if (newAccessory.macro == null) {
             newAccessory.macro = new Macro();

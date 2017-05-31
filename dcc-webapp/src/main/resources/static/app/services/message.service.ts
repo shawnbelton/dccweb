@@ -11,7 +11,7 @@ import {NotificationService} from "./notification.service";
 export class MessageService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private logEntryUrl = '/messages';
+    private logEntryUrl = '/api/messages';
 
     private _messages: BehaviorSubject<Message[]> = new BehaviorSubject([]);
     private messages: Observable<Message[]> = this._messages.asObservable();

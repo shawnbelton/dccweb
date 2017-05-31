@@ -65,8 +65,12 @@ export class CabComponent implements OnInit {
         this.updateCabFunction();
     }
 
+    setCab(cab: Cab): void {
+        this.cab = cab;
+    }
+
     getCab(): void {
-        this.cabService.getCab().subscribe(cab => this.cab = cab);
+        this.cabService.getCab().subscribe(cab => this.setCab(cab));
     }
 
     ngOnInit(): void {

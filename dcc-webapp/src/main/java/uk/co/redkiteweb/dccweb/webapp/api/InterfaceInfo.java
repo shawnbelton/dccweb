@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by shawn on 17/06/16.
  */
 @RestController
+@RequestMapping("/api/interface")
 public class InterfaceInfo {
 
     private DccInterface dccInterface;
@@ -22,12 +24,12 @@ public class InterfaceInfo {
         this.dccInterface = dccInterface;
     }
 
-    @RequestMapping("/interface/status")
+    @RequestMapping(value = "/status", method = RequestMethod.GET)
     public @ResponseBody DccInterfaceStatus getStatus() {
         return dccInterface.getInterfaceStatus();
     }
 
-    @RequestMapping("/interfaces")
+    @RequestMapping(value="/all", method = RequestMethod.GET)
     public List<uk.co.redkiteweb.dccweb.dccinterface.data.InterfaceInfo> getInterfaces() {
         return dccInterface.getInterfaces();
     }

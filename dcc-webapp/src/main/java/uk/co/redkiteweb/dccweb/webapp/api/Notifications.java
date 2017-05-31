@@ -23,7 +23,7 @@ public class Notifications {
         this.notificationRepository = notificationRepository;
     }
 
-    @RequestMapping(value = "/notifications/{lastId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/notifications/{lastId}", method = RequestMethod.GET)
     public List<Notification> getNotifications(@PathVariable Long lastId) {
         return notificationRepository.findByNotificationIdAfterOrderByNotificationIdAsc(lastId);
     }

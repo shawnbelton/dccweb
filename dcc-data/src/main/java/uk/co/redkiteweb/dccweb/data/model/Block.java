@@ -3,12 +3,13 @@ package uk.co.redkiteweb.dccweb.data.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 /**
  * Created by shawn on 03/04/17.
  */
 @Entity
-public class Block {
+public class Block implements Serializable {
 
     private static final long serialVersionUID = 9010;
 

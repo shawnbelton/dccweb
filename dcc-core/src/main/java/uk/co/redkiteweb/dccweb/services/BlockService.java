@@ -51,9 +51,6 @@ public class BlockService {
     }
 
     public void updateBlock(final String blockId, final Boolean occupied) {
-        final String message = String.format("Block %s is now %s.", blockId, occupied?"Occupied":"Unoccupied");
-        logStore.log("info", message);
-        LOGGER.info(message);
         Block block = blockRepository.findOne(blockId);
         if (null == block) {
             block = new Block();
@@ -64,6 +61,10 @@ public class BlockService {
             block.setOccupied(occupied);
         }
         blockRepository.save(block);
+        final String message = String.format("Block %s is now %s.",
+                block.getBlockName(), block.getOccupied()?"Occupied":"Unoccupied");
+        logStore.log("info", message);
+        LOGGER.info(message);
         notificationService.createNotification("BLOCK", "");
         if (block.getMacro()!=null) {
             macroService.runMacro(block.getMacro());

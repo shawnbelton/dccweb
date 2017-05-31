@@ -26,7 +26,7 @@ public class LogMessages {
         this.logStore = logStore;
     }
 
-    @RequestMapping("/messages")
+    @RequestMapping("/api/messages")
     public @ResponseBody List<LogEntry> getMessages() {
         LOGGER.info("Log Messages Requested");
         return logStore.getLastSix();

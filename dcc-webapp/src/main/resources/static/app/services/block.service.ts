@@ -11,10 +11,10 @@ import {BehaviorSubject, Observable} from "rxjs/Rx";
 export class BlockService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private blockUrl = '/block/all';
-    private saveBlockUrl = '/block/save';
-    private deleteBlockUrl = '/block/delete';
-    private blockOccupiedUrl = '/block/occupied';
+    private blockUrl = '/api/block/all';
+    private saveBlockUrl = '/api/block/save';
+    private deleteBlockUrl = '/api/block/delete';
+    private blockOccupiedUrl = '/api/block/occupied';
 
     private _blocks: BehaviorSubject<Block[]> = new BehaviorSubject(null);
     private blocks: Observable<Block[]> = this._blocks.asObservable();

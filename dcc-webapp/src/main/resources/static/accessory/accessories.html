@@ -29,14 +29,14 @@
             <div class="panel-body">
                 <form id="createAccessory" class="form-horizontal" name="createAccessory" (ngSubmit)="saveAccessory()" #accessoryForm="ngForm">
                     <div class="form-group">
-                        <label for="accessoryNumber" class="col-sm-4 control-label">Acccessory Address</label>
+                        <label for="accessoryNumber" class="col-sm-4 control-label">Accessory Address</label>
                         <div class="col-sm-8">
                             <input type="text" id="accessoryNumber" name="accessoryNumber" class="form-control" placeholder="Accessory Address"
                                    [(ngModel)]="editAccessory.address" required="required" #accessoryNumber="ngModel"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="accessoryName" class="col-sm-4 control-label">Acccessory Name</label>
+                        <label for="accessoryName" class="col-sm-4 control-label">Accessory Name</label>
                         <div class="col-sm-8">
                             <input type="text" id="accessoryName" name="accessoryName" class="form-control" placeholder="Accessory Name"
                                    [(ngModel)]="editAccessory.name" required="required" #accessoryName="ngModel"/>

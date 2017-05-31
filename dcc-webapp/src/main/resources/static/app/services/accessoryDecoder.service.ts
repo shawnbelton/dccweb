@@ -13,10 +13,10 @@ import {NotificationService} from "./notification.service";
 export class AccessoryDecoderService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private fetchAccessoryTypeUrl = '/accessory/decoder/type/all';
-    private fetchAccessoriesUrl = '/accessory/decoder/all';
-    private saveAccessoryUrl = '/accessory/decoder/save';
-    private operateAccessoryUrl = '/accessory/decoder/operate';
+    private fetchAccessoryTypeUrl = '/api/accessory/decoder/type/all';
+    private fetchAccessoriesUrl = '/api/accessory/decoder/all';
+    private saveAccessoryUrl = '/api/accessory/decoder/save';
+    private operateAccessoryUrl = '/api/accessory/decoder/operate';
 
     private _accessoryTypes: BehaviorSubject<DecoderAccessoryType[]> = new BehaviorSubject(null);
     private accessoryTypes: Observable<DecoderAccessoryType[]> = this._accessoryTypes.asObservable();

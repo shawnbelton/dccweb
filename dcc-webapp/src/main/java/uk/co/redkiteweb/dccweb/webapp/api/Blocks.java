@@ -11,6 +11,7 @@ import java.util.List;
  * Created by shawn on 13/11/16.
  */
 @RestController
+@RequestMapping("/api/block")
 public class Blocks {
 
     private BlockService blockService;
@@ -20,7 +21,7 @@ public class Blocks {
         this.blockService = blockService;
     }
 
-    @RequestMapping(value = "/block/{identifier}/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{identifier}/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
     public @ResponseBody Boolean blockOccupancy(@PathVariable final String identifier,
                                                 @PathVariable final Integer blockNumber,
                                                 @PathVariable final Boolean occupied) {
@@ -28,23 +29,23 @@ public class Blocks {
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/block/occupied", method = RequestMethod.POST)
+    @RequestMapping(value = "/occupied", method = RequestMethod.POST)
     public @ResponseBody List<Block> blockOccupancy(@RequestBody final Block block) {
         blockService.updateBlock(block.getBlockId(), block.getOccupied());
         return getAllBlocks();
     }
 
-    @RequestMapping(value = "/block/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Block> getAllBlocks() {
         return blockService.getAllBlocks();
     }
 
-    @RequestMapping(value = "/block/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody List<Block> saveBlock(@RequestBody final Block block) {
         return blockService.saveBlock(block);
     }
 
-    @RequestMapping(value = "/block/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public @ResponseBody List<Block> deleteBlock(@RequestBody final Block block) {
         return blockService.deleteBlock(block);
     }

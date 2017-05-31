@@ -4,7 +4,6 @@
             <div class="panel-heading">Blocks</div>
             <div class="list-group">
                 <div class="list-group-item" *ngFor="let block of blocks">
-                    {{block.blockId}}
                     {{block.blockName}}
                     <div class="pull-right">
                         <input type="button" class="btn btn-success btn-xs" (click)="startBlockEdit(block)" value="Edit"/>

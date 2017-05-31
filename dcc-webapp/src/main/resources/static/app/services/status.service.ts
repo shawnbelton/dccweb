@@ -12,7 +12,7 @@ import {NotificationService} from "./notification.service";
 export class StatusService {
 
     private headers = new Headers({'Content-Type': 'application/json'});
-    private statusUrl = '/interface/status';
+    private statusUrl = '/api/interface/status';
 
     private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
     private status: Observable<Status> = this._status.asObservable();
