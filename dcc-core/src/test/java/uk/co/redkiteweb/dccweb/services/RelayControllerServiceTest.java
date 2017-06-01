@@ -6,8 +6,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.data.repositories.RelayControllerRepository;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -20,12 +25,21 @@ public class RelayControllerServiceTest {
 
     private RelayControllerService relayControllerService;
     private RelayControllerRepository relayControllerRepository;
+    private NotificationService notificationService;
+    private AsyncWebService asyncWebService;
 
     @Before
     public void setup() {
+        final LogStore logStore = mock(LogStore.class);
+        notificationService = mock(NotificationService.class);
+        asyncWebService = mock(AsyncWebService.class);
         relayControllerRepository = mock(RelayControllerRepository.class);
         relayControllerService = new RelayControllerService();
         relayControllerService.setRelayControllerRepository(relayControllerRepository);
+        relayControllerService.setLogStore(logStore);
+        relayControllerService.setNotificationService(notificationService);
+        relayControllerService.setAsyncWebService(asyncWebService);
+        when(relayControllerRepository.findAll()).thenReturn(new ArrayList<RelayController>());
     }
 
     @Test
@@ -49,4 +63,42 @@ public class RelayControllerServiceTest {
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
     }
 
+    @Test
+    public void allControllersTest() {
+        assertNotNull(relayControllerService.getAllControllers());
+    }
+
+    @Test
+    public void setRelayNoExist() {
+        relayControllerService.setRelay("ABCDEFGH",3);
+        verify(relayControllerRepository, never()).save(any(RelayController.class));
+    }
+
+    @Test
+    public void setRelayTest() {
+        final RelayController relayController = mock(RelayController.class);
+        when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
+        when(relayController.getValue()).thenReturn(2);
+        relayControllerService.setRelay("ABCDEFGH",3);
+        verify(relayController, times(1)).setValue(eq(10));
+        verify(relayControllerRepository, times(1)).save(any(RelayController.class));
+        verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
+    }
+
+    @Test
+    public void unsetRelayNoExist() {
+        relayControllerService.unsetRelay("ABCDEFGH",3);
+        verify(relayControllerRepository, never()).save(any(RelayController.class));
+    }
+
+    @Test
+    public void unsetRelayTest() {
+        final RelayController relayController = mock(RelayController.class);
+        when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
+        when(relayController.getValue()).thenReturn(10);
+        relayControllerService.unsetRelay("ABCDEFGH",3);
+        verify(relayController, times(1)).setValue(eq(2));
+        verify(relayControllerRepository, times(1)).save(any(RelayController.class));
+        verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
+    }
 }
