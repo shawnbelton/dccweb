@@ -28,6 +28,8 @@ import {AccessoryComponent} from "./components/accessory.component";
 import {NotificationService} from "./services/notification.service";
 import {BlockComponent} from "./components/block.component";
 import {BlockService} from "./services/block.service";
+import {RelayComponent} from "./components/relay.component";
+import {RelayService} from "./services/relay.service";
 
 @NgModule({
     imports: [
@@ -48,7 +50,8 @@ import {BlockService} from "./services/block.service";
         PerformanceComponent,
         InfoComponent,
         AccessoryComponent,
-        BlockComponent
+        BlockComponent,
+        RelayComponent
     ],
     providers: [
         MessageService,
@@ -62,7 +65,8 @@ import {BlockService} from "./services/block.service";
         InfoService,
         AccessoryDecoderService,
         NotificationService,
-        BlockService
+        BlockService,
+        RelayService
     ],
     bootstrap: [
         AppComponent,

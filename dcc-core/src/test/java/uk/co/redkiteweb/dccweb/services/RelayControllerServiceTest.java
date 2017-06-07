@@ -11,7 +11,6 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
@@ -47,7 +46,7 @@ public class RelayControllerServiceTest {
         final RelayController relayController = new RelayController();
         relayController.setIpAddress("192.168.1.1");
         relayController.setControllerId("ControllerId");
-        assertEquals(new Integer(0), relayControllerService.updateController(relayController));
+        assertNotNull(relayControllerService.updateController(relayController));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
     }
 
@@ -59,13 +58,18 @@ public class RelayControllerServiceTest {
         final RelayController relayController = new RelayController();
         relayController.setIpAddress("192.168.1.1");
         relayController.setControllerId("ControllerId");
-        assertEquals(new Integer(10), relayControllerService.updateController(relayController));
+        assertNotNull(relayControllerService.updateController(relayController));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
     }
 
     @Test
     public void allControllersTest() {
         assertNotNull(relayControllerService.getAllControllers());
+    }
+
+    @Test
+    public void saveTest() {
+        assertNotNull(relayControllerService.save(mock(RelayController.class)));
     }
 
     @Test

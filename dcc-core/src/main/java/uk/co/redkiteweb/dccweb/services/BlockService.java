@@ -77,13 +77,13 @@ public class BlockService {
 
     public List<Block> saveBlock(final Block block) {
         blockRepository.save(block);
-        logStore.log("info", String.format("Block %s saved.", block.getBlockId()));
+        logStore.log("info", String.format("Block %s saved.", block.getBlockName()));
         return getAllBlocks();
     }
 
     public List<Block> deleteBlock(final Block block) {
         blockRepository.delete(block);
-        logStore.log("info", String.format("Block %s deleted.", block.getBlockId()));
+        logStore.log("info", String.format("Block %s deleted.", block.getBlockName()));
         return getAllBlocks();
     }
 }

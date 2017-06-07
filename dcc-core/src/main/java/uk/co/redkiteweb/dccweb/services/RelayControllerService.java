@@ -40,7 +40,7 @@ public class RelayControllerService {
         this.asyncWebService = asyncWebService;
     }
 
-    public Integer updateController(final RelayController relayController) {
+    public RelayController updateController(final RelayController relayController) {
         RelayController controller = relayControllerRepository.findOne(relayController.getControllerId());
         if (controller == null) {
             controller = new RelayController();
@@ -51,7 +51,13 @@ public class RelayControllerService {
         controller.setIpAddress(relayController.getIpAddress());
         relayControllerRepository.save(controller);
         logStore.log("info", String.format("Relay controller %s updated.", controller.getControllerName()));
-        return controller.getValue();
+        return controller;
+    }
+
+    public List<RelayController> save(final RelayController relayController) {
+        relayControllerRepository.save(relayController);
+        logStore.log("info", String.format("Relay controller %s saved.", relayController.getControllerName()));
+        return getAllControllers();
     }
 
     public List<RelayController> getAllControllers() {

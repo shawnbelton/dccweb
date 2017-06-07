@@ -7,7 +7,9 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.services.RelayControllerService;
 
-import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,7 +32,19 @@ public class RelayControllersTest {
 
     @Test
     public void testUpdateController() {
-        when(relayControllerService.updateController(any(RelayController.class))).thenReturn(12);
-        assertEquals(new Integer(12), relayControllers.updateController(mock(RelayController.class)));
+        when(relayControllerService.updateController(any(RelayController.class))).thenReturn(mock(RelayController.class));
+        assertNotNull(relayControllers.updateController(mock(RelayController.class)));
+    }
+
+    @Test
+    public void testGetAllControllers() {
+        when(relayControllerService.getAllControllers()).thenReturn(new ArrayList<RelayController>());
+        assertNotNull(relayControllers.getAllControllers());
+    }
+
+    @Test
+    public void testSave() {
+        when(relayControllerService.save(any(RelayController.class))).thenReturn(new ArrayList<RelayController>());
+        assertNotNull(relayControllers.save(mock(RelayController.class)));
     }
 }

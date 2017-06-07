@@ -32,25 +32,48 @@ void Service::postInfo() {
     char info[256];
     char ipString[20];
     int dataLen;
+    long timeout;
+    bool notTimedOut;
+
     displayAddress(ipString, Ethernet.localIP());
     dataLen = sprintf(info, "{\"controllerId\":\"%s\",\"ipAddress\":\"%s\"}",macAddress.macString(),
             ipString);
-    //if (client.connect()) {
+    if (client.connect(Ethernet.gatewayIP(), serverPort)) {
         Serial.println("connected");
         // Next should ne client
-        Serial.println("POST /api/relay-controller/update HTTP/1.1");
-        Serial.print("Host:  ");
-        Serial.println(Ethernet.gatewayIP());
-        Serial.println("User-Agent: Arduino/1.0");
-        Serial.println("Connection: close");
-        Serial.println("Content-Type: application/json;");
-        Serial.print("Content-Length: ");
-        Serial.println(dataLen);
-        Serial.println();
-        Serial.println(info);
-//    } else {
-//        Serial.println("connection failed");
-//    }
+        client.println("POST /api/relay-controller/update HTTP/1.1");
+        client.print("Host:  ");
+        client.println(Ethernet.gatewayIP());
+        client.println("User-Agent: Arduino/1.0");
+        client.println("Connection: close");
+        client.println("Content-Type: application/json;");
+        client.print("Content-Length: ");
+        client.println(dataLen);
+        client.println();
+        client.println(info);
+        timeout = millis() + 5000l;
+        notTimedOut = true;
+        while(client.available()==0 && notTimedOut)
+        {
+            if (millis() > timeout) {
+                notTimedOut = false;
+            }
+        }
+        if (notTimedOut) {
+            int size;
+            while ((size = client.available()) > 0) {
+                uint8_t *msg = (uint8_t *) malloc(size);
+                size = client.read(msg, size);
+                Serial.write(msg, size);
+                free(msg);
+            }
+            Serial.println();
+        }
+        Serial.println("Disconnecting");
+        client.stop();
+    } else {
+        Serial.println("connection failed");
+    }
 }
 
 void Service::displayAddress(char *str, IPAddress ipAddress) {
