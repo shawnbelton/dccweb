@@ -21,6 +21,9 @@ export class NotificationService {
     private _blockUpdates: BehaviorSubject<string> = new BehaviorSubject(null);
     private blockUpdates: Observable<string> = this._blockUpdates.asObservable();
 
+    private _relayUpdates: BehaviorSubject<string> = new BehaviorSubject(null);
+    private relayUpdates: Observable<string> = this._relayUpdates.asObservable();
+
     private _cabUpdates: BehaviorSubject<number[]> = new BehaviorSubject(null);
     private cabUpdates: Observable<number[]> = this._cabUpdates.asObservable();
 
@@ -90,6 +93,10 @@ export class NotificationService {
 
     getBlockUpdates(): Observable<string> {
         return this.blockUpdates;
+    }
+
+    getRelayUpdates(): Observable<string> {
+        return this.relayUpdates;
     }
 
     getCabUpdates(): Observable<number[]> {

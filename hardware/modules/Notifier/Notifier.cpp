@@ -82,7 +82,7 @@ void Notifier::sendWebNotification(byte blockNumber, bool occupied) {
 #ifdef WITH_LEDS
     setLED(blockNumber - 1, occupied);
 #endif
-    sprintf(params, "/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
+    sprintf(params, "/api/block/%s/%i/occupied/%s", macAddress.macString(), blockNumber, occupied ? "true" : "false");
     Serial.println(params);
     if (networkReady) {
         while(!getPage(params)) {

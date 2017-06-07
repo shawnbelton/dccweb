@@ -91,6 +91,9 @@ logs/
 hardware/blockcontroller/.idea/
 hardware/blockcontroller/build/*
 hardware/blockcontroller/cmake-build-debug/
+hardware/relaycontroller/.idea/
+hardware/relaycontroller/build/*
+hardware/relaycontroller/cmake-build-debug/
 !hardware/blockcontroller/build/ReadMe.txt
 !hardware/blockcontroller/build/build.sh
 
