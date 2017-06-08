@@ -36,4 +36,8 @@ public class RelayControllers {
         return relayControllerService.save(relayController);
     }
 
+    @RequestMapping(value = "/update-value", method = RequestMethod.POST)
+    public @ResponseBody List<RelayController> updateValue(@RequestBody final RelayController relayController) {
+        return relayControllerService.updateValue(relayController);
+    }
 }

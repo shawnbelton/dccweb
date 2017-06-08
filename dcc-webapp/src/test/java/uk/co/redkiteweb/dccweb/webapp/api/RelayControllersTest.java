@@ -47,4 +47,10 @@ public class RelayControllersTest {
         when(relayControllerService.save(any(RelayController.class))).thenReturn(new ArrayList<RelayController>());
         assertNotNull(relayControllers.save(mock(RelayController.class)));
     }
+
+    @Test
+    public void testUpdateValue() {
+        when(relayControllerService.updateValue(any(RelayController.class))).thenReturn(new ArrayList<RelayController>());
+        assertNotNull(relayControllers.save(mock(RelayController.class)));
+    }
 }

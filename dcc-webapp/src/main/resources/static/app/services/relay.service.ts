@@ -13,6 +13,7 @@ export class RelayService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private allRelayControllersUrl = '/api/relay-controller/all';
     private saveUrl = '/api/relay-controller/save';
+    private updateUrl = '/api/relay-controller/update-value';
 
     private _relayControllers: BehaviorSubject<RelayController[]> = new BehaviorSubject(null);
     private relayControllers: Observable<RelayController[]> = this._relayControllers.asObservable();
@@ -30,6 +31,12 @@ export class RelayService {
 
     saveRelayController(relayController: RelayController): void {
         this.http.post(this.saveUrl, relayController).map(response => response.json()).subscribe(data => {
+            this._relayControllers.next(data);
+        }, error => console.log('Could not load relay controllers.'));
+    }
+
+    updateRelayValue(relayController: RelayController): void {
+        this.http.post(this.updateUrl, relayController).map(response => response.json()).subscribe(data => {
             this._relayControllers.next(data);
         }, error => console.log('Could not load relay controllers.'));
     }

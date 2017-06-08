@@ -47,6 +47,19 @@ export class RelayComponent implements OnInit {
         this.resetRelayController();
     }
 
+    showName(relay: RelayController, index: number): string {
+        return "" + (index + 1);
+    }
+
+    switchStatus(relay: RelayController, index: number): boolean {
+        return (relay.value & Math.pow(2, index)) > 0;
+    }
+
+    switchChange(relay: RelayController, index: number): void {
+        relay.value ^= Math.pow(2, index);
+        this.relayService.updateRelayValue(relay);
+    }
+
     ngOnInit(): void {
         this.resetRelayController();
         this.getRelayControllers();
