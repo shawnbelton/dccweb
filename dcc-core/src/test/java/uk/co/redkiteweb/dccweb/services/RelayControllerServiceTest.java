@@ -105,4 +105,13 @@ public class RelayControllerServiceTest {
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
         verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
     }
+
+    @Test
+    public void updateValueTest() {
+        final RelayController relayController = mock(RelayController.class);
+        when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
+        relayControllerService.updateValue(mock(RelayController.class));
+        verify(relayControllerRepository, times(1)).save(any(RelayController.class));
+        verify(notificationService, never()).createNotification(anyString(),anyString());
+    }
 }

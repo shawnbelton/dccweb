@@ -64,6 +64,19 @@ public class RelayControllerService {
         return (List<RelayController>)relayControllerRepository.findAll();
     }
 
+    public List<RelayController> updateValue(final RelayController relayController) {
+        final RelayController updateValue = relayControllerRepository.findOne(relayController.getControllerId());
+        updateValue.setValue(relayController.getValue());
+        relayControllerRepository.save(updateValue);
+        logStore.log("info", String.format("Relay Controller %s relays updated.", updateValue.getControllerName()));
+        updateRelay(relayController);
+        return getAllControllers();
+    }
+
+    private void updateRelay(final RelayController relayController) {
+        asyncWebService.asyncWebCall(String.format("http://%s/setrelay/%d", relayController.getIpAddress(), relayController.getValue()));
+    }
+
     public void setRelay(final String controllerId, final int number) {
         final RelayController relayController = relayControllerRepository.findOne(controllerId);
         if (relayController!=null) {
@@ -90,6 +103,6 @@ public class RelayControllerService {
 
     private void notify(final RelayController relayController) {
         notificationService.createNotification("RELAY", "");
-        asyncWebService.asyncWebCall(String.format("http://%s/setrelay/%d", relayController.getIpAddress(), relayController.getValue()));
+        updateRelay(relayController);
     }
 }
