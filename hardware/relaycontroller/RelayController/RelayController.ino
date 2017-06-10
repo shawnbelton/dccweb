@@ -18,8 +18,13 @@ void setup() {
     Serial.print(app_name);
     Serial.println(":");
     service.init();
+    for (uint8_t pin = 0;pin < 8; pin++) {
+        pinMode(pin, OUTPUT);
+        digitalWrite(pin, LOW);
+    }
 }
 
 void loop() {
+    service.service();
     delayMicroseconds(LOOP_DELAY);
 }
