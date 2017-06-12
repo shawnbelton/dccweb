@@ -22,8 +22,8 @@ public class RelayControllers {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public @ResponseBody RelayController updateController(@RequestBody final RelayController relayController) {
-        return relayControllerService.updateController(relayController);
+    public @ResponseBody Integer updateController(@RequestBody final RelayController relayController) {
+        return relayControllerService.updateController(relayController).getValue();
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)

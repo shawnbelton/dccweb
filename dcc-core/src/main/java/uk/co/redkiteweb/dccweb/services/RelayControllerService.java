@@ -69,7 +69,7 @@ public class RelayControllerService {
         updateValue.setValue(relayController.getValue());
         relayControllerRepository.save(updateValue);
         logStore.log("info", String.format("Relay Controller %s relays updated.", updateValue.getControllerName()));
-        updateRelay(relayController);
+        notify(relayController);
         return getAllControllers();
     }
 
@@ -81,7 +81,7 @@ public class RelayControllerService {
         final RelayController relayController = relayControllerRepository.findOne(controllerId);
         if (relayController!=null) {
             Integer relayValue = relayController.getValue();
-            relayValue |= (int)Math.pow(2,number);
+            relayValue |= (int)Math.pow(2,number - 1);
             relayController.setValue(relayValue);
             relayControllerRepository.save(relayController);
             logStore.log("info", String.format("Relay %d set on %s", number, relayController.getControllerName()));
@@ -93,7 +93,7 @@ public class RelayControllerService {
         final RelayController relayController = relayControllerRepository.findOne(controllerId);
         if (relayController!=null) {
             Integer relayValue = relayController.getValue();
-            relayValue &= (0xff ^ (int)Math.pow(2,number));
+            relayValue &= (0xff ^ (int)Math.pow(2,number - 1));
             relayController.setValue(relayValue);
             relayControllerRepository.save(relayController);
             logStore.log("info", String.format("Relay %d unset on %s", number, relayController.getControllerName()));

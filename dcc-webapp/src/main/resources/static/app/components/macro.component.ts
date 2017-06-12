@@ -14,6 +14,8 @@ import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
 import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
 import {BlockService} from "../services/block.service";
 import {Block} from "../models/block";
+import {RelayController} from "../models/relayController";
+import {RelayService} from "../services/relay.service";
 @Component({
     moduleId: module.id,
     templateUrl: '../../macroedit/macro.html'
@@ -24,10 +26,12 @@ export class MacroComponent implements OnInit {
     trains: Train[];
     accessories: AccessoryDecoder[];
     blocks: Block[];
+    relayControllers: RelayController[];
     macros: Macro[];
 
     constructor(private trainService: TrainService, private blockService: BlockService,
-                private accessoryService: AccessoryDecoderService, private macroService: MacroService) {}
+                private accessoryService: AccessoryDecoderService,
+                private relayService: RelayService, private macroService: MacroService) {}
 
     getAccessories(): void {
         this.accessoryService.getAccessories().subscribe(accessories => this.accessories = accessories);
@@ -39,6 +43,10 @@ export class MacroComponent implements OnInit {
 
     getBlocks(): void {
         this.blockService.getBlocks().subscribe(blocks => this.blocks = blocks);
+    }
+
+    getRelayContollers(): void {
+        this.relayService.getRelayControllers().subscribe(relayControllers => this.relayControllers = relayControllers);
     }
 
     getMacros(): void {
@@ -168,7 +176,7 @@ export class MacroComponent implements OnInit {
     }
 
     isAccessoryFunction(step: MacroStep): boolean {
-        return step.type == 'setAccessory';
+        return step.type == 'setAccessory' || step.type == 'isAccessory';
     }
 
     displayStep(step: MacroStep): string {
@@ -195,6 +203,12 @@ export class MacroComponent implements OnInit {
             case "isBlock":
                 display = display + this.displayIsBlock(step);
                 break;
+            case "isAccessory":
+                display = display + this.displayIsAccessory(step);
+                break;
+            case "setRelay":
+                display = display + this.displaySetRelay(step);
+                break;
         }
         return display;
     }
@@ -217,6 +231,13 @@ export class MacroComponent implements OnInit {
     displaySetAccessory(step: MacroStep): string {
         let accessory: AccessoryDecoder = this.fetchAccessory(step);
         let display: string = "Set Accessory " + accessory.name;
+        display = display + " to " + this.displayAccessoryOperation(step, accessory);
+        return display;
+    }
+
+    displayIsAccessory(step: MacroStep): string {
+        let accessory: AccessoryDecoder = this.fetchAccessory(step);
+        let display: string = "Is Accessory " + accessory.name;
         display = display + " to " + this.displayAccessoryOperation(step, accessory);
         return display;
     }
@@ -275,6 +296,26 @@ export class MacroComponent implements OnInit {
         return display;
     }
 
+    displaySetRelay(step: MacroStep): string {
+        let display: string = "Set Relay " + step.functionNumber + " of " + this.getRelay(step) + " to ";
+        if (0 == step.value) {
+            display = display + "off";
+        } else {
+            display = display + "on";
+        }
+        return display;
+    }
+
+    getRelay(step: MacroStep): string {
+        let relayName: string;
+        for(let relayController of this.relayControllers) {
+            if (relayController.controllerId == step.blockId) {
+                relayName = relayController.controllerName;
+            }
+        }
+        return relayName;
+    }
+
     getBlock(step: MacroStep): string {
         let blockName: string;
         for(let block of this.blocks) {
@@ -291,6 +332,7 @@ export class MacroComponent implements OnInit {
         this.getMacros();
         this.getTrains();
         this.getAccessories();
+        this.getRelayContollers();
         this.getBlocks();
     }
 }

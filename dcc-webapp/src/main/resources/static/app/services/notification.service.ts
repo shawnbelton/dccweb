@@ -41,6 +41,7 @@ export class NotificationService {
         let messages: boolean = false;
         let accessories: boolean = false;
         let blocks: boolean = false;
+        let relays: boolean = false;
         let cabList: number[] = new Array();
         for(let notification of data) {
             if ("STATUS" == notification.type) {
@@ -53,6 +54,8 @@ export class NotificationService {
                 cabList.push(Number(notification.value));
             } else if ("BLOCK" == notification.type) {
                 blocks = true;
+            } else if ("RELAY" == notification.type) {
+                relays = true;
             }
             if (notification.notificationId > this.notificationId) {
                 this.notificationId = notification.notificationId;
@@ -69,6 +72,9 @@ export class NotificationService {
         }
         if (blocks) {
             this._blockUpdates.next("BlockUpdate");
+        }
+        if (relays) {
+            this._relayUpdates.next("RelayUpdates");
         }
         if (cabList.length > 0) {
             this._cabUpdates.next(cabList);

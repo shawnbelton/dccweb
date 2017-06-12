@@ -84,7 +84,7 @@ public class RelayControllerServiceTest {
         when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
         when(relayController.getValue()).thenReturn(2);
         relayControllerService.setRelay("ABCDEFGH",3);
-        verify(relayController, times(1)).setValue(eq(10));
+        verify(relayController, times(1)).setValue(eq(6));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
         verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
     }
@@ -100,7 +100,7 @@ public class RelayControllerServiceTest {
         final RelayController relayController = mock(RelayController.class);
         when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
         when(relayController.getValue()).thenReturn(10);
-        relayControllerService.unsetRelay("ABCDEFGH",3);
+        relayControllerService.unsetRelay("ABCDEFGH",4);
         verify(relayController, times(1)).setValue(eq(2));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
         verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
@@ -112,6 +112,6 @@ public class RelayControllerServiceTest {
         when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
         relayControllerService.updateValue(mock(RelayController.class));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
-        verify(notificationService, never()).createNotification(anyString(),anyString());
+        verify(notificationService, times(1)).createNotification(anyString(),anyString());
     }
 }
