@@ -163,9 +163,9 @@ void Service::setRelays(long value) {
     long testValue = 1;
     for(int index = 0; index < 8; index++) {
         if ((testValue & value)>0) {
-            digitalWrite(index, HIGH);
+            digitalWrite(index + 2, HIGH);
         } else {
-            digitalWrite(index, LOW);
+            digitalWrite(index + 2, LOW);
         }
         testValue *= 2;
     }

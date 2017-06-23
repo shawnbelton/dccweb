@@ -18,7 +18,7 @@ void setup() {
     Serial.print(app_name);
     Serial.println(":");
     service.init();
-    for (uint8_t pin = 0;pin < 8; pin++) {
+    for (uint8_t pin = 2;pin < 10; pin++) {
         pinMode(pin, OUTPUT);
         digitalWrite(pin, LOW);
     }

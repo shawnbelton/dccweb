@@ -51,12 +51,12 @@ public class Decoders {
         this.logStore = logStore;
     }
 
-    @RequestMapping("/read")
+    @RequestMapping(value = "/read", method = RequestMethod.GET)
     public @ResponseBody Decoder readDecoder() {
         return decoderReaderFactory.createInstance().readDecoderOnProgram();
     }
 
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Decoder> allDecoders() {
         return (List<Decoder>)decoderRepository.findAll();
     }

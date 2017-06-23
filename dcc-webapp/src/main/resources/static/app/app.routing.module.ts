@@ -14,14 +14,14 @@ import {RelayComponent} from "./components/relay.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'engine-shed', pathMatch: 'full'},
-    { path: 'engine-shed', component: TrainComponent },
-    { path: 'decoders', component: DecoderComponent },
-    { path: 'accessories', component: AccessoryComponent },
-    { path: 'settings', component: SettingsComponent },
-    { path: 'macro-edit', component: MacroComponent },
-    { path: 'performance', component: PerformanceComponent },
-    { path: 'blocks', component: BlockComponent },
-    { path: 'relays', component: RelayComponent }
+    { path: 'engine-shed', component: TrainComponent, pathMatch: 'full' },
+    { path: 'decoders', component: DecoderComponent, pathMatch: 'full' },
+    { path: 'accessories', component: AccessoryComponent, pathMatch: 'full' },
+    { path: 'settings', component: SettingsComponent, pathMatch: 'full' },
+    { path: 'macro-edit', component: MacroComponent, pathMatch: 'full' },
+    { path: 'performance', component: PerformanceComponent, pathMatch: 'full' },
+    { path: 'blocks', component: BlockComponent, pathMatch: 'full' },
+    { path: 'relays', component: RelayComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
