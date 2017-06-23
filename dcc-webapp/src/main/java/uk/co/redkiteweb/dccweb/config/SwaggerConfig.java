@@ -23,14 +23,7 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("uk.co.redkiteweb.dccweb.webapp.api"))
                 .paths(PathSelectors.any())
-                .build()
-//                .pathProvider(new RelativePathProvider(servletContext) {
-//                    @Override
-//                    public String getApplicationBasePath() {
-//                        return "/swagger" + super.getApplicationBasePath();
-//                    }
-//                })
-                ;
+                .build();
     }
 
 }
