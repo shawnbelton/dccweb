@@ -56,10 +56,8 @@ public class BlockService {
             block = new Block();
             block.setBlockId(blockId);
             block.setBlockName(blockId);
-            block.setOccupied(occupied);
-        } else {
-            block.setOccupied(occupied);
         }
+        block.setOccupied(occupied);
         blockRepository.save(block);
         final String message = String.format("Block %s is now %s.",
                 block.getBlockName(), block.getOccupied()?"Occupied":"Unoccupied");

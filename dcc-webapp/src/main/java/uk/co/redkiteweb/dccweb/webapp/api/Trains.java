@@ -28,7 +28,7 @@ public class Trains {
         this.logStore = logStore;
     }
 
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Train> getAllTrains() {
         return (List<Train>)trainRepository.findAll();
     }

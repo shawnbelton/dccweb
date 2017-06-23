@@ -37,12 +37,12 @@ public class AccessoryDecoders {
         this.accessoryService = accessoryService;
     }
 
-    @RequestMapping("/type/all")
+    @RequestMapping(value = "/type/all", method = RequestMethod.GET)
     public @ResponseBody List<AccessoryDecoderType> allAccessoryDecoderTypes() {
         return (List<AccessoryDecoderType>)accessoryDecoderTypeRepository.findAll();
     }
 
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<AccessoryDecoder> allAccessoryDecoders() {
         return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
     }
