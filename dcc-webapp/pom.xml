@@ -34,7 +34,7 @@
                         <id>exec-npm-install</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/resources/static</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
                             <executable>${npm.executable}</executable>
                             <arguments>
                                 <argument>install</argument>
@@ -45,14 +45,14 @@
                         </goals>
                     </execution>
                     <execution>
-                        <id>exec-npm-run-tsc</id>
+                        <id>exec-npm-run-build</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/resources/static</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
                             <executable>${npm.executable}</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>tsc</argument>
+                                <argument>build</argument>
                             </arguments>
                         </configuration>
                         <goals>
