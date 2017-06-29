@@ -76,7 +76,7 @@
                 <executions>
                     <execution>
                         <id>instrument</id>
-                        <phase>package</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>cobertura</goal>
                         </goals>
