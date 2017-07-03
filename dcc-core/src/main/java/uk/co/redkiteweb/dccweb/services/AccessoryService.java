@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
+import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
@@ -26,6 +28,7 @@ public class AccessoryService {
 
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
+    private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private NotificationService notificationService;
     private MacroService macroService;
 
@@ -40,6 +43,11 @@ public class AccessoryService {
     }
 
     @Autowired
+    public void setAccessoryDecoderTypeRepository(AccessoryDecoderTypeRepository accessoryDecoderTypeRepository) {
+        this.accessoryDecoderTypeRepository = accessoryDecoderTypeRepository;
+    }
+
+    @Autowired
     public void setNotificationService(final NotificationService notificationService) {
         this.notificationService = notificationService;
     }
@@ -47,6 +55,20 @@ public class AccessoryService {
     @Autowired
     public void setMacroService(final MacroService macroService) {
         this.macroService = macroService;
+    }
+
+    public List<AccessoryDecoder> getAccessoryDecoders() {
+        return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
+    }
+
+    public List<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
+        final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findOne(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId());
+        accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
+        if (accessoryDecoder.getCurrentValue()==null) {
+            accessoryDecoder.setCurrentValue(accessoryDecoderType.getDecoderTypeOperations().get(0).getDecoderOperationValue());
+        }
+        accessoryDecoderRepository.save(accessoryDecoder);
+        return getAccessoryDecoders();
     }
 
     @Async

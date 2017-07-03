@@ -77,9 +77,13 @@ export class AccessoryComponent implements OnInit {
 
     getAccessories(): void {
         this.accessoryDecoderService
-            .getAccessories().subscribe(data => this.accessoryDecoders = data);
+            .getAccessories().subscribe(data => this.setAccessories(data));
         this.accessoryDecoderService
             .getAccessory().subscribe(accessory => this.setCurrentAccessory(accessory));
+    }
+
+    setAccessories(accessoryDecoders: AccessoryDecoder[]): void {
+      this.accessoryDecoders = accessoryDecoders;
     }
 
     getAccessoryTypes(): void {

@@ -44,13 +44,12 @@ public class AccessoryDecoders {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<AccessoryDecoder> allAccessoryDecoders() {
-        return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
+        return accessoryService.getAccessoryDecoders();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody List<AccessoryDecoder> saveAccessoryDecoder(@RequestBody final AccessoryDecoder accessoryDecoder){
-        accessoryDecoderRepository.save(accessoryDecoder);
-        return allAccessoryDecoders();
+        return accessoryService.saveAccessoryDecoder(accessoryDecoder);
     }
 
     @RequestMapping(value = "/operate", method = RequestMethod.POST)

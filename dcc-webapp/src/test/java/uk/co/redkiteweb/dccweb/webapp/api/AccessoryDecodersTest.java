@@ -47,15 +47,14 @@ public class AccessoryDecodersTest {
 
     @Test
     public void testAllAccessoryDecoders() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryService.getAccessoryDecoders()).thenReturn(new ArrayList<AccessoryDecoder>());
         assertNotNull(accessoryDecoders.allAccessoryDecoders());
     }
 
     @Test
     public void testSaveAccessoryDecoder() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryService.saveAccessoryDecoder(any(AccessoryDecoder.class))).thenReturn(new ArrayList<AccessoryDecoder>());
         assertNotNull(accessoryDecoders.saveAccessoryDecoder(new AccessoryDecoder()));
-        verify(accessoryDecoderRepository, times(1)).save(any(AccessoryDecoder.class));
     }
 
     @Test
