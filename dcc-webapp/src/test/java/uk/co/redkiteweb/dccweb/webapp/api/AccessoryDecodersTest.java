@@ -59,6 +59,6 @@ public class AccessoryDecodersTest {
     @Test
     public void testOperateAccessory() {
         assertNotNull(accessoryDecoders.operateAccessory(new AccessoryOperation()));
-        verify(accessoryService, times(1)).operateServiceAsyc(any(AccessoryOperation.class));
+        verify(accessoryService, times(1)).operateService(any(AccessoryOperation.class));
     }
 }
