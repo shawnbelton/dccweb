@@ -64,10 +64,11 @@ export class AccessoryComponent implements OnInit {
         this.newAccessory();
     }
 
-    operateAccessory(accessoryAddress: number, operationValue: number): void {
+    operateAccessory(accessory: AccessoryDecoder, operationValue: number): void {
         let accessoryOperation: AccessoryOperation = new AccessoryOperation();
-        accessoryOperation.accessoryAddress = accessoryAddress;
+        accessoryOperation.accessoryAddress = accessory.address;
         accessoryOperation.operationValue = operationValue;
+        accessory.currentValue = operationValue;
         this.accessoryDecoderService.operateAccessory(accessoryOperation);
     }
 
@@ -77,9 +78,13 @@ export class AccessoryComponent implements OnInit {
 
     getAccessories(): void {
         this.accessoryDecoderService
-            .getAccessories().subscribe(data => this.accessoryDecoders = data);
+            .getAccessories().subscribe(data => this.setAccessories(data));
         this.accessoryDecoderService
             .getAccessory().subscribe(accessory => this.setCurrentAccessory(accessory));
+    }
+
+    setAccessories(accessoryDecoders: AccessoryDecoder[]): void {
+      this.accessoryDecoders = accessoryDecoders;
     }
 
     getAccessoryTypes(): void {

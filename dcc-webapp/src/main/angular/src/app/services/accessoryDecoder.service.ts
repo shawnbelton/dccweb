@@ -53,9 +53,9 @@ export class AccessoryDecoderService {
 
     operateAccessory(accessoryOperation: AccessoryOperation): void {
         let retval: boolean = false;
-        this.http.post(this.operateAccessoryUrl, accessoryOperation).map(response => response.json())
-            .subscribe(data => retval = data,
-                error => console.log('Could not operate accessory.'));
+        this.http.post(this.operateAccessoryUrl, accessoryOperation).map(response => response.json()).subscribe(data => {
+            this._accessories.next(data);
+        }, error => console.log('Could not operate accessory.'));
     }
 
     getAccessories(): Observable<AccessoryDecoder[]> {
