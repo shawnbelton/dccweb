@@ -73,6 +73,11 @@ public class AccessoryService {
 
     @Async
     @Transactional
+    public void operateServiceAsyc(final AccessoryOperation accessoryOperation) {
+        operateService(accessoryOperation);
+    }
+
+    @Transactional
     public void operateService(final AccessoryOperation accessoryOperation) {
         final List<AccessoryDecoder> accessoryDecoders =
                 accessoryDecoderRepository.findAccessoryDecodersByAddress(accessoryOperation.getAccessoryAddress());

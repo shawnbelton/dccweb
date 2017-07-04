@@ -74,7 +74,7 @@ public class AccessoryServiceTest {
         final AccessoryOperation accessoryOperation = new AccessoryOperation();
         accessoryOperation.setAccessoryAddress(123);
         accessoryOperation.setOperationValue(0);
-        accessoryService.operateService(accessoryOperation);
+        accessoryService.operateServiceAsyc(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
         verify(macroService, times(1)).runMacro(any(Macro.class));
     }

@@ -35,7 +35,7 @@ public class OperateAccessoryStep extends AbstractMacroStep implements IStep {
         final AccessoryOperation accessoryOperation = new AccessoryOperation();
         accessoryOperation.setAccessoryAddress(accessoryDecoder.getAddress());
         accessoryOperation.setOperationValue(getValue());
-        accessoryService.operateService(accessoryOperation);
+        accessoryService.operateServiceAsyc(accessoryOperation);
     }
 
 }

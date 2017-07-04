@@ -64,10 +64,11 @@ export class AccessoryComponent implements OnInit {
         this.newAccessory();
     }
 
-    operateAccessory(accessoryAddress: number, operationValue: number): void {
+    operateAccessory(accessory: AccessoryDecoder, operationValue: number): void {
         let accessoryOperation: AccessoryOperation = new AccessoryOperation();
-        accessoryOperation.accessoryAddress = accessoryAddress;
+        accessoryOperation.accessoryAddress = accessory.address;
         accessoryOperation.operationValue = operationValue;
+        accessory.currentValue = operationValue;
         this.accessoryDecoderService.operateAccessory(accessoryOperation);
     }
 

@@ -14,7 +14,6 @@ import uk.co.redkiteweb.dccweb.services.AccessoryService;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -59,7 +58,7 @@ public class AccessoryDecodersTest {
 
     @Test
     public void testOperateAccessory() {
-        assertTrue(accessoryDecoders.operateAccessory(new AccessoryOperation()));
-        verify(accessoryService, times(1)).operateService(any(AccessoryOperation.class));
+        assertNotNull(accessoryDecoders.operateAccessory(new AccessoryOperation()));
+        verify(accessoryService, times(1)).operateServiceAsyc(any(AccessoryOperation.class));
     }
 }

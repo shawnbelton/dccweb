@@ -43,6 +43,6 @@ public class OperateAccessoryStepTest {
         when(accessoryDecoder.getAddress()).thenReturn(120);
         when(accessoryDecoderRepository.findOne(anyInt())).thenReturn(accessoryDecoder);
         operateAccessoryStep.run();
-        verify(accessoryService, times(1)).operateService(any(AccessoryOperation.class));
+        verify(accessoryService, times(1)).operateServiceAsyc(any(AccessoryOperation.class));
     }
 }

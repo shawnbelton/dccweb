@@ -53,8 +53,8 @@ public class AccessoryDecoders {
     }
 
     @RequestMapping(value = "/operate", method = RequestMethod.POST)
-    public @ResponseBody Boolean operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
+    public @ResponseBody List<AccessoryDecoder> operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
         accessoryService.operateService(accessoryOperation);
-        return Boolean.TRUE;
+        return accessoryService.getAccessoryDecoders();
     }
 }
