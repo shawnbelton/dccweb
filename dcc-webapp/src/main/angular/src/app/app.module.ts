@@ -30,6 +30,7 @@ import {PerformanceService} from "./services/performance.service";
 import {InfoService} from "./services/info.service";
 import {AccessoryDecoderService} from "./services/accessoryDecoder.service";
 import {NotificationService} from "./services/notification.service";
+import {BlockItem} from "./components/block.item.component";
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {NotificationService} from "./services/notification.service";
     InfoComponent,
     AccessoryComponent,
     BlockComponent,
-    RelayComponent
+    RelayComponent,
+    BlockItem
   ],
   imports: [
     BrowserModule,

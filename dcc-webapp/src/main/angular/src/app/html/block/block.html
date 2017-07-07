@@ -1,71 +1,53 @@
 <div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Blocks</div>
-            <div class="list-group">
-                <div class="list-group-item" *ngFor="let block of blocks">
-                    {{block.blockName}}
-                    <div class="pull-right">
-                        <input type="button" class="btn btn-success btn-xs" (click)="startBlockEdit(block)" value="Edit"/>
-                        <input type="button" class="btn btn-xs btn-danger" (click)="deleteBlock(block)" value="X"/>
-                    </div>
-                    <ul class="list-inline">
-                        <li>
-                            <input type="button" class="btn btn-xs" value="Occupied"
-                                   (click)="setBlockOccupancy(block, true)"
-                                   [ngClass]="{'btn-danger': block.occupied, 'btn-default': !block.occupied}"/>
-                        </li>
-                        <li>
-                            <input type="button" class="btn btn-xs" value="Unoccupied"
-                                   (click)="setBlockOccupancy(block, false)"
-                                   [ngClass]="{'btn-default': block.occupied, 'btn-success': !block.occupied}"/>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+  <div class="col-sm-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Blocks</div>
+      <div class="list-group">
+        <block-item class="list-group-item" [block]="block" *ngFor="let block of blocks"></block-item>
+      </div>
     </div>
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Edit Block</div>
-            <div class="panel-body">
-                <form id="createBlock" class="form-horizontal" name="createBlock" (ngSubmit)="saveBlock()" #blockForm="ngForm">
-                    <div class="form-group">
-                        <label for="blockId" class="col-sm-4 control-label">Block Id</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="blockId" name="blockId" class="form-control" placeholder="Block Id"
-                                   [(ngModel)]="block.blockId" required="required" #blockId="ngModel" readonly="readonly"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="blockName" class="col-sm-4 control-label">Block Name</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="blockName" name="blockName" class="form-control" placeholder="Block Name"
-                                   [(ngModel)]="block.blockName" required="required" #blockName="ngModel"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="blockMacro" class="col-sm-4 control-label">Block Macro</label>
-                        <div class="col-sm-8">
-                            <select name="blockMacro" id="blockMacro" ngControl="blockMacro" class="form-control"
-                                    #blockMacro="ngModel" [(ngModel)]="block.macro.macroId">
-                                <option [value]=""></option>
-                                <option *ngFor="let macro of macros"
-                                        [value]="macro.macroId">{{macro.name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="pull-right">
-                                <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
-                                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!blockForm.form.valid"/>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+  </div>
+  <div class="col-sm-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Edit Block</div>
+      <div class="panel-body">
+        <form id="createBlock" class="form-horizontal" name="createBlock" (ngSubmit)="saveBlock()" #blockForm="ngForm">
+          <div class="form-group">
+            <label for="blockId" class="col-sm-4 control-label">Block Id</label>
+            <div class="col-sm-8">
+              <input type="text" id="blockId" name="blockId" class="form-control" placeholder="Block Id"
+                     [(ngModel)]="block.blockId" required="required" #blockId="ngModel" readonly="readonly"/>
             </div>
-        </div>
+          </div>
+          <div class="form-group">
+            <label for="blockName" class="col-sm-4 control-label">Block Name</label>
+            <div class="col-sm-8">
+              <input type="text" id="blockName" name="blockName" class="form-control" placeholder="Block Name"
+                     [(ngModel)]="block.blockName" required="required" #blockName="ngModel"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="blockMacro" class="col-sm-4 control-label">Block Macro</label>
+            <div class="col-sm-8">
+              <select name="blockMacro" id="blockMacro" ngControl="blockMacro" class="form-control"
+                      #blockMacro="ngModel" [(ngModel)]="block.macro.macroId">
+                <option [value]=""></option>
+                <option *ngFor="let macro of macros"
+                        [value]="macro.macroId">{{macro.name}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12">
+              <div class="pull-right">
+                <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
+                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!blockForm.form.valid"/>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
