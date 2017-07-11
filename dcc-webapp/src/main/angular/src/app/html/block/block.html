@@ -3,7 +3,11 @@
     <div class="panel panel-primary">
       <div class="panel-heading">Blocks</div>
       <div class="list-group">
-        <block-item class="list-group-item" [block]="block" *ngFor="let block of blocks"></block-item>
+        <app-pagination [items]="blocks" [pageSize]="4">
+          <ng-template let-item>
+            <block-item [block]="item"></block-item>
+          </ng-template>
+        </app-pagination>
       </div>
     </div>
   </div>

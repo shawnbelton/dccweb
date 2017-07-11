@@ -1,0 +1,21 @@
+<div class="list-group-item clearfix">
+  <nav aria-label="Page navigation" class="pull-right">
+    <div class="pagination pagination-sm btn-group btn-group-sm">
+      <button type="button" aria-label="Previous" class="btn btn-default" [disabled]="currentPage==1"
+              (click)="decrementPage()">
+        <span aria-hidden="true">&laquo;</span>
+      </button>
+      <button type="button" class="btn" *ngFor="let index of getPages()"
+              [ngClass]="{'btn-primary': currentPage == index, 'btn-default': currentPage != index}"
+              (click)="goToPage(index)">{{index}}
+      </button>
+      <button type="button" aria-label="Next" class="btn btn-default" [disabled]="currentPage == getNumberOfPages()"
+              (click)="incrementPage()">
+        <span aria-hidden="true">&raquo;</span>
+      </button>
+    </div>
+  </nav>
+</div>
+<div class="list-group-item" *ngFor="let item of pageItems()">
+  <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit:item}"></ng-container>
+</div>
