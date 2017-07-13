@@ -8,71 +8,73 @@ import {Macro} from "../models/macro";
 import {MacroService} from "../services/macro.service";
 
 @Component({
-    moduleId: module.id,
-    templateUrl: './../html/block/block.html',
+  moduleId: module.id,
+  templateUrl: './../html/block/block.html'
 })
 export class BlockComponent implements OnInit {
 
-    blocks: Block[];
-    macros: Macro[];
-    block: Block;
+  blocks: Block[];
+  macros: Macro[];
+  block: Block;
 
-    constructor(private blockService: BlockService, private macroService: MacroService) {}
+  constructor(private blockService: BlockService, private macroService: MacroService) {
+  }
 
-    getBlocks(): void {
-        this.blockService.getBlocks().subscribe(data => this.blocks = data);
+  getBlocks(): void {
+    this.blockService.getBlocks().subscribe(data => this.blocks = data);
+  }
+
+  getBlock(): void {
+    this.blockService.getBlock().subscribe(data => this.block = data);
+  }
+
+  getMacros(): void {
+    this.macroService.getMacros().subscribe(macros => this.setMacros(macros));
+  }
+
+  setMacros(macros: Macro[]): void {
+    this.macros = macros;
+  }
+
+  saveBlock(): void {
+    if (this.block.macro.macroId == null || this.block.macro.macroId.toString() == "") {
+      this.block.macro = null;
     }
+    this.blockService.saveBlock(this.block);
+    this.resetBlock();
+  }
 
-    getMacros(): void {
-        this.macroService.getMacros().subscribe(macros => this.setMacros(macros));
-    }
+  deleteBlock(block: Block): void {
+    this.blockService.deleteBlock(block);
+    this.resetBlock();
+  }
 
-    setMacros(macros: Macro[]): void {
-        this.macros = macros;
-    }
+  resetBlock(): void {
+    let block: Block = new Block();
+    block.macro = new Macro();
+    this.blockService.setBlock(block);
+  }
 
-    saveBlock(): void {
-        if (this.block.macro.macroId == null || this.block.macro.macroId.toString() == "") {
-            this.block.macro = null;
-        }
-        this.blockService.saveBlock(this.block);
-        this.resetBlock();
+  startBlockEdit(block: Block): void {
+    if (block.macro == null) {
+      block.macro = new Macro();
     }
+    this.blockService.setBlock(block);
+  }
 
-    deleteBlock(block: Block): void {
-        this.blockService.deleteBlock(block);
-        this.resetBlock();
-    }
+  cancelEdit(): void {
+    this.resetBlock();
+  }
 
-    resetBlock(): void {
-        let block: Block = new Block();
-        block.macro = new Macro();
-        this.setBlock(block);
-    }
+  setBlockOccupancy(block: Block, state: boolean): void {
+    block.occupied = state;
+    this.blockService.setBlockOccupancy(block);
+  }
 
-    setBlock(block: Block): void {
-        this.block = block;
-    }
-
-    startBlockEdit(block: Block): void {
-        if (block.macro == null) {
-            block.macro = new Macro();
-        }
-        this.setBlock(block);
-    }
-
-    cancelEdit(): void {
-        this.resetBlock();
-    }
-
-    setBlockOccupancy(block: Block, state: boolean): void {
-        block.occupied = state;
-        this.blockService.setBlockOccupancy(block);
-    }
-
-    ngOnInit(): void {
-        this.resetBlock();
-        this.getMacros();
-        this.getBlocks();
-    }
+  ngOnInit(): void {
+    this.getBlock();
+    this.resetBlock();
+    this.getMacros();
+    this.getBlocks();
+  }
 }

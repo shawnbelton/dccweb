@@ -3,24 +3,28 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Relay Controllers</div>
             <div class="list-group">
-                <div class="list-group-item" *ngFor="let relayController of relayControllers">
-                    {{relayController.controllerName}}
+              <app-pagination [items]="relayControllers" [pageSize]="5">
+                <ng-template let-item>
+                  <div>
+                    {{item.controllerName}}
                     <div class="pull-right">
-                        <input type="button" class="btn btn-success btn-xs"
-                               (click)="startRelayControllerEdit(relayController)" value="Edit"/>
-                        <input type="button" class="btn btn-xs btn-danger"
-                               (click)="deleteRelayController(relayController)" value="X"/>
+                      <input type="button" class="btn btn-success btn-xs"
+                             (click)="startRelayControllerEdit(item)" value="Edit"/>
+                      <input type="button" class="btn btn-xs btn-danger"
+                             (click)="deleteRelayController(item)" value="X"/>
                     </div>
                     <ul class="list-inline">
-                        <li *ngFor="let index of [0,1,2,3,4,5,6,7]">
-                            <small>{{showName(relayController, index)}}</small>
-                            <label class="switch">
-                                <input type="checkbox" (change)="switchChange(relayController, index)" [checked]="switchStatus(relayController, index)"/>
-                                <div class="slider round"></div>
-                            </label>
-                        </li>
+                      <li *ngFor="let index of [0,1,2,3,4,5,6,7]">
+                        <small>{{showName(item, index)}}</small>
+                        <label class="switch">
+                          <input type="checkbox" (change)="switchChange(item, index)" [checked]="switchStatus(item, index)"/>
+                          <div class="slider round"></div>
+                        </label>
+                      </li>
                     </ul>
-                </div>
+                  </div>
+                </ng-template>
+              </app-pagination>
             </div>
         </div>
     </div>

@@ -10,45 +10,56 @@ import {BehaviorSubject, Observable} from "rxjs/Rx";
 @Injectable()
 export class BlockService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
-    private blockUrl = '/api/block/all';
-    private saveBlockUrl = '/api/block/save';
-    private deleteBlockUrl = '/api/block/delete';
-    private blockOccupiedUrl = '/api/block/occupied';
+  private headers = new Headers({'Content-Type': 'application/json'});
+  private blockUrl = '/api/block/all';
+  private saveBlockUrl = '/api/block/save';
+  private deleteBlockUrl = '/api/block/delete';
+  private blockOccupiedUrl = '/api/block/occupied';
 
-    private _blocks: BehaviorSubject<Block[]> = new BehaviorSubject(null);
-    private blocks: Observable<Block[]> = this._blocks.asObservable();
+  private _blocks: BehaviorSubject<Block[]> = new BehaviorSubject(null);
+  private blocks: Observable<Block[]> = this._blocks.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
-        this.fetchBlocks();
-        this.notificationService.getBlockUpdates().subscribe(data => this.fetchBlocks());
-    }
+  private _block: BehaviorSubject<Block> = new BehaviorSubject(null);
+  private block: Observable<Block> = this._block.asObservable();
 
-    fetchBlocks(): void {
-        this.http.get(this.blockUrl).map(response => response.json()).subscribe(data => {
-            this._blocks.next(data);
-        }, error => console.log('Could not load blocks.'));
-    }
+  constructor(private http: Http, private notificationService: NotificationService) {
+    this.fetchBlocks();
+    this.notificationService.getBlockUpdates().subscribe(data => this.fetchBlocks());
+  }
 
-    saveBlock(block: Block): void {
-        this.http.post(this.saveBlockUrl, block).map(response => response.json()).subscribe(data => {
-            this._blocks.next(data);
-        }, error => console.log('Could not load blocks.'));
-    }
+  fetchBlocks(): void {
+    this.http.get(this.blockUrl).map(response => response.json()).subscribe(data => {
+      this._blocks.next(data);
+    }, error => console.log('Could not load blocks.'));
+  }
 
-    deleteBlock(block: Block): void {
-        this.http.post(this.deleteBlockUrl, block).map(response => response.json()).subscribe(data => {
-            this._blocks.next(data);
-        }, error => console.log('Could not load blocks.'));
-    }
+  saveBlock(block: Block): void {
+    this.http.post(this.saveBlockUrl, block).map(response => response.json()).subscribe(data => {
+      this._blocks.next(data);
+    }, error => console.log('Could not load blocks.'));
+  }
 
-    setBlockOccupancy(block: Block): void {
-        this.http.post(this.blockOccupiedUrl, block).map(response => response.json()).subscribe(data => {
-            this._blocks.next(data);
-        }, error => console.log('Could not load blocks.'));
-    }
+  deleteBlock(block: Block): void {
+    this.http.post(this.deleteBlockUrl, block).map(response => response.json()).subscribe(data => {
+      this._blocks.next(data);
+    }, error => console.log('Could not load blocks.'));
+  }
 
-    getBlocks(): Observable<Block[]> {
-        return this.blocks;
-    }
+  setBlockOccupancy(block: Block): void {
+    this.http.post(this.blockOccupiedUrl, block).map(response => response.json()).subscribe(data => {
+      this._blocks.next(data);
+    }, error => console.log('Could not load blocks.'));
+  }
+
+  getBlocks(): Observable<Block[]> {
+    return this.blocks;
+  }
+
+  setBlock(block: Block): void {
+    this._block.next(block);
+  }
+
+  getBlock(): Observable<Block> {
+    return this.block;
+  }
 }
