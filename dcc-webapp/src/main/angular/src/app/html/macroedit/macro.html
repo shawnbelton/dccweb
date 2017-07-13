@@ -2,16 +2,20 @@
     <div class="col-sm-6">
         <div class="panel panel-primary">
             <div class="panel-heading">Macros</div>
-            <ul class="list-group">
-                <li class="list-group-item" *ngFor="let macro of macros">
-                    <input type="button" class="btn btn-xs btn-success" (click)="runMacro(macro)" value="Run"/>
-                    {{macro.name}}
+            <div class="list-group">
+              <app-pagination [items]="macros" [pageSize]="5">
+                <ng-template let-item>
+                  <div>
+                    <input type="button" class="btn btn-xs btn-success" (click)="runMacro(item)" value="Run"/>
+                    {{item.name}}
                     <div class="pull-right">
-                        <input type="button" class="btn btn-xs btn-info" (click)="editMacro(macro)" value="Edit"/>
-                        <input type="button" class="btn btn-xs btn-danger" (click)="deleteMacro(macro)" value="X"/>
+                      <input type="button" class="btn btn-xs btn-info" (click)="editMacro(item)" value="Edit"/>
+                      <input type="button" class="btn btn-xs btn-danger" (click)="deleteMacro(item)" value="X"/>
                     </div>
-                </li>
-            </ul>
+                  </div>
+                </ng-template>
+              </app-pagination>
+            </div>
         </div>
     </div>
     <div class="col-sm-6">

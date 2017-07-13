@@ -5,19 +5,23 @@
                 <span>Accessories</span>
             </div>
             <div class="list-group">
-                <div class="list-group-item" *ngFor="let accessory of accessoryDecoders">
-                    <span>{{accessory.name}}</span>
+              <app-pagination [items]="accessoryDecoders" [pageSize]="5">
+                <ng-template let-item>
+                  <div>
+                    <span>{{item.name}}</span>
                     <div class="pull-right">
-                        <input type="button" class="btn btn-success btn-xs" (click)="startEditAccessory(accessory)" value="Edit"/>
+                      <input type="button" class="btn btn-success btn-xs" (click)="startEditAccessory(item)" value="Edit"/>
                     </div>
                     <ul class="list-inline">
-                        <li *ngFor="let operation of accessory.accessoryDecoderType.decoderTypeOperations">
-                            <input type="button" (click)="operateAccessory(accessory, operation.decoderOperationValue)"
-                                   [ngClass]="{'btn-primary': isState(accessory, operation), 'btn-default': !isState(accessory, operation)}"
-                                   class="btn btn-xs" value="{{operation.decoderTypeOperation}}"/>
-                        </li>
+                      <li *ngFor="let operation of item.accessoryDecoderType.decoderTypeOperations">
+                        <input type="button" (click)="operateAccessory(item, operation.decoderOperationValue)"
+                               [ngClass]="{'btn-primary': isState(item, operation), 'btn-default': !isState(item, operation)}"
+                               class="btn btn-xs" value="{{operation.decoderTypeOperation}}"/>
+                      </li>
                     </ul>
-                </div>
+                  </div>
+                </ng-template>
+              </app-pagination>
             </div>
         </div>
     </div>

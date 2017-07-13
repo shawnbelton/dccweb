@@ -3,15 +3,19 @@
         <div class="panel panel-primary">
             <div class="panel-heading"><span>Decoders</span></div>
             <div class="list-group">
-                <div class="list-group-item" *ngFor="let decoder of decoders">
+              <app-pagination [items]="decoders" [pageSize]="5">
+                <ng-template let-item>
+                  <div>
                     <div>
-                        Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}
-                        <div class="pull-right">
-                            <input type="button" class="btn btn-success btn-xs" (click)="editDecoder(decoder)"
-                                   value="Edit"/>
-                        </div>
+                      Long Address: {{item.longAddress}} Short Address: {{item.shortAddress}}
+                      <div class="pull-right">
+                        <input type="button" class="btn btn-success btn-xs" (click)="editDecoder(item)"
+                               value="Edit"/>
+                      </div>
                     </div>
-                </div>
+                  </div>
+                </ng-template>
+              </app-pagination>
             </div>
         </div>
     </div>
