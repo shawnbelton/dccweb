@@ -68,8 +68,8 @@ public class MacroStep implements Serializable {
         return targetId;
     }
 
-    public void setTargetId(final Integer trainId) {
-        this.targetId = trainId;
+    public void setTargetId(final Integer locoId) {
+        this.targetId = locoId;
     }
 
     public String getBlockId() {

@@ -16,13 +16,13 @@ import {MacroComponent} from "./components/macro.component";
 import {SettingsComponent} from "./components/settings.component";
 import {CabComponent} from "./components/cab.component";
 import {DecoderComponent} from "./components/decoder.component";
-import {TrainComponent} from "./components/train.component";
+import {LocoComponent} from "./components/loco.component";
 import {RelayService} from "./services/relay.service";
 import {BlockService} from "./services/block.service";
 import {MacroService} from "./services/macro.service";
 import {SettingsService} from "./services/settings.service";
 import {CabService} from "./services/cab.service";
-import {TrainService} from "./services/train.service";
+import {LocoService} from "./services/loco.service";
 import {DecoderService} from "./services/decoder.service";
 import {StatusService} from "./services/status.service";
 import {MessageService} from "./services/message.service";
@@ -39,7 +39,7 @@ import {PaginationComponent} from "./components/pagination.component";
     StatusComponent,
     MessageComponent,
     PaginationComponent,
-    TrainComponent,
+    LocoComponent,
     DecoderComponent,
     CabComponent,
     SettingsComponent,
@@ -61,7 +61,7 @@ import {PaginationComponent} from "./components/pagination.component";
     MessageService,
     StatusService,
     DecoderService,
-    TrainService,
+    LocoService,
     CabService,
     SettingsService,
     MacroService,

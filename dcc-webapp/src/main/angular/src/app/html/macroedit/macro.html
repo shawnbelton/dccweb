@@ -50,7 +50,7 @@
                                     #stepType="ngModel" required="required">
                                 <option value="setAccessory">Set Accessory</option>
                                 <option value="setRelay">Set Relay</option>
-                                <option value="decoderFunction">Train function</option>
+                                <option value="decoderFunction">Loco function</option>
                                 <option value="setSpeed">Set Speed</option>
                                 <option value="delay">Wait Seconds</option>
                                 <option value="exitMacro">Exit Macro</option>
@@ -129,12 +129,12 @@
                                 </div>
                             </span>
                         </span>
-                        <span *ngIf="isTrainFunction(step)">
+                        <span *ngIf="isLocoFunction(step)">
                             <div class="form-group">
-                                <label for="stepTrain" class="form-label">Train</label>
-                                <select id="stepTrain" name="stepTrain" class="form-control input-sm" [(ngModel)]="step.targetId"
-                                        #stepTrain="ngModel" required="required">
-                                    <option *ngFor="let train of trains" [value]="train.trainId">{{train.number}} {{train.name}}</option>
+                                <label for="stepLoco" class="form-label">Loco</label>
+                                <select id="stepLoco" name="stepLoco" class="form-control input-sm" [(ngModel)]="step.targetId"
+                                        #stepLoco="ngModel" required="required">
+                                    <option *ngFor="let loco of locos" [value]="loco.locoId">{{loco.number}} {{loco.name}}</option>
                                 </select>
                             </div>
                             <span *ngIf="step.targetId!=null">

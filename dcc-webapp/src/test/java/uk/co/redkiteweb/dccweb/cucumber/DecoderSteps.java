@@ -31,8 +31,8 @@ public class DecoderSteps extends BaseSteps {
         this.decoderRegister = decoderRegister;
     }
 
-    @Given("^a train on the program track fitted with a decoder with CV Values$")
-    public void a_train_on_the_program_track_fitted_with_a_decoder_with_CV_Values(final DataTable cvValues) {
+    @Given("^a loco on the program track fitted with a decoder with CV Values$")
+    public void a_loco_on_the_program_track_fitted_with_a_decoder_with_CV_Values(final DataTable cvValues) {
         decoderRegister.initialise();
         for (DataTableRow cvValue : cvValues.getGherkinRows()) {
             decoderRegister.setCV(Integer.parseInt(cvValue.getCells().get(0)),

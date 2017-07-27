@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
-import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
@@ -40,16 +40,16 @@ public class CabServiceTest {
     }
 
     @Test
-    public void testNullTrain() {
+    public void testNullLoco() {
         cabService.updateCab(new Cab());
         verify(dccInterface, never()).sendMessage(any(Message.class));
     }
 
     @Test
     public void testNullDecoder() {
-        final Train train = new Train();
+        final Loco loco = new Loco();
         final Cab cab = new Cab();
-        cab.setTrain(train);
+        cab.setLoco(loco);
         cabService.updateCab(cab);
         verify(dccInterface, never()).sendMessage(any(Message.class));
         verify(notificationService, never()).createNotification(anyString(), anyString());
@@ -113,14 +113,14 @@ public class CabServiceTest {
     }
 
     @Test
-    public void testUpdateFunctionNullTrain() {
+    public void testUpdateFunctionNullLoco() {
         cabService.updateCabFunctions(new Cab());
         verify(dccInterface, never()).sendMessage(any(Message.class));
         verify(notificationService, never()).createNotification(anyString(), anyString());
     }
 
     @Test
-    public void testUpdateFunctionTrain() {
+    public void testUpdateFunctionLoco() {
         final Cab cab = getCab();
         cabService.updateCabFunctions(cab);
         verify(dccInterface, times(1)).sendMessage(any(UpdateFunctionsMessage.class));
@@ -131,12 +131,12 @@ public class CabServiceTest {
         final Decoder decoder = new Decoder();
         decoder.setCurrentAddress(1234);
         decoder.setAddressMode(true);
-        final Train train = new Train();
-        train.setDecoder(decoder);
+        final Loco loco = new Loco();
+        loco.setDecoder(decoder);
         final Cab cab = new Cab();
         cab.setSpeed(127);
         cab.setSteps("128");
-        cab.setTrain(train);
+        cab.setLoco(loco);
         final Set<CabFunction> cabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
         final CabFunction cabFunction = new CabFunction();
         cabFunction.setNumber(1);

@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 23/11/16.
  */
-import {Train} from "./train";
+import {Loco} from "./loco";
 import {CabFunction} from "./cabFunction";
 
 export class Cab {
-    train: Train;
+    loco: Loco;
     speed: number;
     direction: string;
     steps: string;

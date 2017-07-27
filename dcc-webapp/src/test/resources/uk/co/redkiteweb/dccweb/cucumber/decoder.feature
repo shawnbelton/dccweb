@@ -1,6 +1,6 @@
 Feature: Programming on the Program Track
   Scenario: Read Decoder
-    Given a train on the program track fitted with a decoder with CV Values
+    Given a loco on the program track fitted with a decoder with CV Values
     | 8 | 151 |
     | 7 | 255 |
     | 1 | 3  |

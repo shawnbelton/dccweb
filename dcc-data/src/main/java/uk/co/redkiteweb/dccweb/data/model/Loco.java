@@ -7,23 +7,23 @@ import java.io.Serializable;
  * Created by shawn on 24/06/16.
  */
 @Entity
-public class Train implements Serializable {
+public class Loco implements Serializable {
 
     private static final long serialVersionUID = 9001;
 
-    private Integer trainId;
+    private Integer locoId;
     private String number;
     private String name;
     private Decoder decoder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Integer getTrainId() {
-        return trainId;
+    public Integer getLocoId() {
+        return locoId;
     }
 
-    public void setTrainId(final Integer trainId) {
-        this.trainId = trainId;
+    public void setLocoId(final Integer locoId) {
+        this.locoId = locoId;
     }
 
     public String getNumber() {

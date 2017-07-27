@@ -3,7 +3,7 @@
  */
 import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
-import {TrainComponent} from "./components/train.component";
+import {LocoComponent} from "./components/loco.component";
 import {DecoderComponent} from "./components/decoder.component";
 import {SettingsComponent} from "./components/settings.component";
 import {MacroComponent} from "./components/macro.component";
@@ -14,7 +14,7 @@ import {RelayComponent} from "./components/relay.component";
 
 const routes: Routes = [
     { path: '', redirectTo: 'engine-shed', pathMatch: 'full'},
-    { path: 'engine-shed', component: TrainComponent, pathMatch: 'full' },
+    { path: 'engine-shed', component: LocoComponent, pathMatch: 'full' },
     { path: 'decoders', component: DecoderComponent, pathMatch: 'full' },
     { path: 'accessories', component: AccessoryComponent, pathMatch: 'full' },
     { path: 'settings', component: SettingsComponent, pathMatch: 'full' },

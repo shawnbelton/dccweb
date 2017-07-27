@@ -7,9 +7,9 @@ import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
-import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.TrainRepository;
+import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
 
 import java.util.*;
 
@@ -20,7 +20,7 @@ import java.util.*;
 public class CabStore {
 
     private DecoderFunctionRepository decoderFunctionRepository;
-    private TrainRepository trainRepository;
+    private LocoRepository locoRepository;
     private final Map<Integer, Cab> cabStore;
 
     public CabStore() {
@@ -33,27 +33,27 @@ public class CabStore {
     }
 
     @Autowired
-    public void setTrainRepository(final TrainRepository trainRepository) {
-        this.trainRepository = trainRepository;
+    public void setLocoRepository(final LocoRepository locoRepository) {
+        this.locoRepository = locoRepository;
     }
 
     public void putCab(final Cab cab) {
-        cabStore.put(cab.getTrain().getTrainId(), cab);
+        cabStore.put(cab.getLoco().getLocoId(), cab);
     }
 
-    public Cab getCab(final Integer trainId) {
-        return getCab(trainRepository.findOne(trainId));
+    public Cab getCab(final Integer locoId) {
+        return getCab(locoRepository.findOne(locoId));
     }
 
-    public Cab getCab(final Train train) {
-        final Train reloadTrain = trainRepository.findOne(train.getTrainId());
+    public Cab getCab(final Loco loco) {
+        final Loco reloadLoco = locoRepository.findOne(loco.getLocoId());
         Cab cab = new Cab();
-        if (cabStore.containsKey(train.getTrainId())) {
-            cab = cabStore.get(train.getTrainId());
-            cab.setTrain(reloadTrain);
+        if (cabStore.containsKey(loco.getLocoId())) {
+            cab = cabStore.get(loco.getLocoId());
+            cab.setLoco(reloadLoco);
             buildSetCabFunctions(cab);
         } else {
-            cab.setTrain(reloadTrain);
+            cab.setLoco(reloadLoco);
             buildSetCabFunctions(cab);
             cab.setDirection("UP");
             cab.setSpeed(0);
@@ -65,8 +65,8 @@ public class CabStore {
 
     private void buildSetCabFunctions(final Cab cab) {
         final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
-        if (cab.getTrain().getDecoder()!=null) {
-            for(DecoderFunction decoderFunction : getDecoderFunctions(cab.getTrain().getDecoder())) {
+        if (cab.getLoco().getDecoder()!=null) {
+            for(DecoderFunction decoderFunction : getDecoderFunctions(cab.getLoco().getDecoder())) {
                 newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));
             }
         }
