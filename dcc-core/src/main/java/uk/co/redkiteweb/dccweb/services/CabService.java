@@ -38,33 +38,33 @@ public class CabService {
 
     public void updateCab(final Cab cab) {
         if (hasDecoder(cab)) {
-            LOGGER.info(String.format("Updating cab %d", cab.getTrain().getDecoder().getCurrentAddress()));
+            LOGGER.info(String.format("Updating cab %d", cab.getLoco().getDecoder().getCurrentAddress()));
             final ChangeSpeedMessage changeSpeedMessage = new ChangeSpeedMessage();
-            changeSpeedMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
-            changeSpeedMessage.setAddressMode(cab.getTrain().getDecoder().getAddressMode());
+            changeSpeedMessage.setAddress(cab.getLoco().getDecoder().getCurrentAddress());
+            changeSpeedMessage.setAddressMode(cab.getLoco().getDecoder().getAddressMode());
             changeSpeedMessage.setSpeedSteps(toSpeedSteps(cab.getSteps()));
             changeSpeedMessage.setSpeed(cab.getSpeed());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
             dccInterface.sendMessage(changeSpeedMessage);
-            notificationService.createNotification("CAB", String.format("%d", cab.getTrain().getTrainId()));
+            notificationService.createNotification("CAB", String.format("%d", cab.getLoco().getLocoId()));
         }
     }
 
     public void updateCabFunctions(final Cab cab) {
         if (hasDecoder(cab)) {
             final UpdateFunctionsMessage updateFunctionsMessage = new UpdateFunctionsMessage();
-            updateFunctionsMessage.setAddress(cab.getTrain().getDecoder().getCurrentAddress());
-            updateFunctionsMessage.setAddressMode(cab.getTrain().getDecoder().getAddressMode());
+            updateFunctionsMessage.setAddress(cab.getLoco().getDecoder().getCurrentAddress());
+            updateFunctionsMessage.setAddressMode(cab.getLoco().getDecoder().getAddressMode());
             for(CabFunction cabFunction : cab.getCabFunctions()) {
                 updateFunctionsMessage.addFunction(cabFunction.getNumber(), cabFunction.getState());
             }
             dccInterface.sendMessage(updateFunctionsMessage);
-            notificationService.createNotification("CAB", String.format("%d", cab.getTrain().getTrainId()));
+            notificationService.createNotification("CAB", String.format("%d", cab.getLoco().getLocoId()));
         }
     }
 
     private static boolean hasDecoder(final Cab cab) {
-        return cab.getTrain() != null && cab.getTrain().getDecoder() != null;
+        return cab.getLoco() != null && cab.getLoco().getDecoder() != null;
     }
 
     private static ChangeSpeedMessage.SpeedSteps toSpeedSteps(final String stepsStr) {

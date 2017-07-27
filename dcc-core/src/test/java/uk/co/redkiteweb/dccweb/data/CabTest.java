@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 
 import java.util.TreeSet;
 
@@ -20,13 +20,13 @@ public class CabTest {
 
     @Before
     public void setup() {
-        final Train train = new Train();
-        train.setNumber("12345");
+        final Loco loco = new Loco();
+        loco.setNumber("12345");
         cab = new Cab();
         cab.setSpeed(0);
         cab.setDirection("UP");
         cab.setSteps("128");
-        cab.setTrain(train);
+        cab.setLoco(loco);
         cab.setCabFunctions(new TreeSet<CabFunction>());
     }
 
@@ -41,8 +41,8 @@ public class CabTest {
     }
 
     @Test
-    public void testTrain() {
-        assertEquals("12345", cab.getTrain().getNumber());
+    public void testLoco() {
+        assertEquals("12345", cab.getLoco().getNumber());
     }
 
     @Test

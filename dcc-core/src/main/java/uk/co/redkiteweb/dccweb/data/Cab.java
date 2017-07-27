@@ -1,6 +1,6 @@
 package uk.co.redkiteweb.dccweb.data;
 
-import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -12,18 +12,18 @@ public class Cab implements Serializable {
 
     static final long serialVersionUID = 8000;
 
-    private Train train;
+    private Loco loco;
     private int speed;
     private String direction;
     private String steps;
     private Set<CabFunction> cabFunctions;
 
-    public Train getTrain() {
-        return train;
+    public Loco getLoco() {
+        return loco;
     }
 
-    public void setTrain(final Train train) {
-        this.train = train;
+    public void setLoco(final Loco loco) {
+        this.loco = loco;
     }
 
     public int getSpeed() {

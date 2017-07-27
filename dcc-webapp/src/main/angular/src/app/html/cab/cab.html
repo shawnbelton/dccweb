@@ -1,7 +1,7 @@
-<div class="panel panel-success" *ngIf="cab!=null && cab.train.decoder != null">
-    <div class="panel-heading">{{cab.train.number}} {{cab.train.name}}</div>
+<div class="panel panel-success" *ngIf="cab!=null && cab.loco.decoder != null">
+    <div class="panel-heading">{{cab.loco.number}} {{cab.loco.name}}</div>
     <div class="panel-body">
-        <form id="trainCab" name="trainCab" class="form-horizontal" #trainCab="ngForm">
+        <form id="locoCab" name="locoCab" class="form-horizontal" #locoCab="ngForm">
             <div class="input-group-lg">
                 <input id="slider1" name="slider1" class="form-control" type="range" [(ngModel)]="cab.speed" (change)="speedChange()"
                        min="0" max="127" step="1" #slider1="ngModel" [disabled]="cab.direction == 'FSTOP' || cab.direction == 'RSTOP'" />
@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="list-inline">
-                        <li *ngFor="let linkedMacro of cab.train.decoder.linkedMacros">
+                        <li *ngFor="let linkedMacro of cab.loco.decoder.linkedMacros">
                             <input type="button" (click)="runMacro(linkedMacro.macro)" class="btn btn-sm btn-default" value="{{linkedMacro.macro.name}}"/>
                         </li>
                     </ul>

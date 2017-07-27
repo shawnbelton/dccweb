@@ -3,14 +3,14 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Engine Shed</div>
             <div class="list-group" *ngIf="!mode">
-              <app-pagination [items]="trains" [pageSize]="5">
+              <app-pagination [items]="locos" [pageSize]="5">
                 <ng-template let-item>
                   <div>
                     <div class="list-group-item-heading">
-                      <input type="button" class="btn btn-info btn-xs" value="Drive" (click)="driveTrain(item)"/>
+                      <input type="button" class="btn btn-info btn-xs" value="Drive" (click)="driveLoco(item)"/>
                       {{item.number}} {{item.name}}
                       <div class="pull-right">
-                        <input type="button" class="btn btn-success btn-xs" (click)="startEditTrain(item)" value="Edit"/>
+                        <input type="button" class="btn btn-success btn-xs" (click)="startEditLoco(item)" value="Edit"/>
                         <input type="button" class="btn btn-primary btn-xs" (click)="configure(item)" value="Configure"/>
                       </div>
                     </div>
@@ -36,29 +36,29 @@
               </app-pagination>
             </div>
             <div class="panel-footer clearfix" *ngIf="!mode">
-                <input type="button" class="btn btn-success btn-sm pull-right" value="Add Train" (click)="newTrain()"/>
+                <input type="button" class="btn btn-success btn-sm pull-right" value="Add Loco" (click)="newLoco()"/>
             </div>
             <div class="panel-body" *ngIf="mode">
-                <form id="createTrain" class="form-horizontal" name="createTrain" (ngSubmit)="saveTrain()" #trainForm="ngForm">
+                <form id="createLoco" class="form-horizontal" name="createLoco" (ngSubmit)="saveLoco()" #locoForm="ngForm">
                     <div class="form-group">
-                        <label for="trainNumber" class="col-sm-3 control-label">Train Number</label>
+                        <label for="locoNumber" class="col-sm-3 control-label">Loco Number</label>
                         <div class="col-sm-9">
-                            <input type="text" id="trainNumber" name="trainNumber" class="form-control" placeholder="Train Number"
-                                   [(ngModel)]="editTrain.number" required="required" #trainNumber="ngModel"/>
+                            <input type="text" id="locoNumber" name="locoNumber" class="form-control" placeholder="Loco Number"
+                                   [(ngModel)]="editLoco.number" required="required" #locoNumber="ngModel"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="trainName" class="col-sm-3 control-label">Train Name</label>
+                        <label for="locoName" class="col-sm-3 control-label">Loco Name</label>
                         <div class="col-sm-9">
-                            <input type="text" id="trainName" name="trainName" class="form-control" placeholder="Train Name"
-                                [(ngModel)]="editTrain.name" #trainName="ngModel"/>
+                            <input type="text" id="locoName" name="locoName" class="form-control" placeholder="Loco Name"
+                                   [(ngModel)]="editLoco.name" #locoName="ngModel"/>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <div class="pull-right">
                                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
-                                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!trainForm.form.valid"/>
+                                <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!locoForm.form.valid"/>
                             </div>
                         </div>
                     </div>

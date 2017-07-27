@@ -61,7 +61,7 @@ public class MacroStepTest {
     }
 
     @Test
-    public void testTrainId() {
+    public void testLocoId() {
         assertEquals(new Integer(1), macroStep.getTargetId());
     }
 

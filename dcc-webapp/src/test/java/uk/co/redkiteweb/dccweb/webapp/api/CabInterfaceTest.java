@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.Cab;
-import uk.co.redkiteweb.dccweb.data.model.Train;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
 import uk.co.redkiteweb.dccweb.services.AsyncCabService;
 
@@ -32,17 +32,17 @@ public class CabInterfaceTest {
 
     @Test
     public void testGetCab() {
-        cabInterface.getCab(new Train());
-        verify(cabStore, times(1)).getCab(any(Train.class));
+        cabInterface.getCab(new Loco());
+        verify(cabStore, times(1)).getCab(any(Loco.class));
     }
 
     @Test
     public void testUpdateCab() {
         final Cab cab = new Cab();
-        final Train train = new Train();
-        train.setNumber("12345");
-        train.setTrainId(1);
-        cab.setTrain(train);
+        final Loco loco = new Loco();
+        loco.setNumber("12345");
+        loco.setLocoId(1);
+        cab.setLoco(loco);
         cab.setSpeed(100);
         cab.setDirection("UP");
         cabInterface.updateCab(cab);
@@ -53,10 +53,10 @@ public class CabInterfaceTest {
     @Test
     public void testUpdateFunction() {
         final Cab cab = new Cab();
-        final Train train = new Train();
-        train.setNumber("12345");
-        train.setTrainId(1);
-        cab.setTrain(train);
+        final Loco loco = new Loco();
+        loco.setNumber("12345");
+        loco.setLocoId(1);
+        cab.setLoco(loco);
         cabInterface.updateCabFunction(cab);
         verify(cabService, times(1)).updateCabFunctions(any(Cab.class));
         verify(cabStore, times(1)).putCab(any(Cab.class));

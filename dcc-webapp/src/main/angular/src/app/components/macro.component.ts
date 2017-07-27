@@ -4,8 +4,8 @@
 import {Component, OnInit} from "@angular/core";
 import {Macro} from "../models/macro";
 import {MacroStep} from "../models/macro.step";
-import {Train} from "../models/train";
-import {TrainService} from "../services/train.service";
+import {Loco} from "../models/loco";
+import {LocoService} from "../services/loco.service";
 import {Decoder} from "../models/decoder";
 import {DecoderFunction} from "../models/decoderFunction";
 import {MacroService} from "../services/macro.service";
@@ -16,6 +16,7 @@ import {BlockService} from "../services/block.service";
 import {Block} from "../models/block";
 import {RelayController} from "../models/relayController";
 import {RelayService} from "../services/relay.service";
+
 @Component({
     moduleId: module.id,
     templateUrl: './../html/macroedit/macro.html'
@@ -23,13 +24,13 @@ import {RelayService} from "../services/relay.service";
 export class MacroComponent implements OnInit {
 
     macro: Macro;
-    trains: Train[];
+    locos: Loco[];
     accessories: AccessoryDecoder[];
     blocks: Block[];
     relayControllers: RelayController[];
     macros: Macro[];
 
-    constructor(private trainService: TrainService, private blockService: BlockService,
+    constructor(private locoService: LocoService, private blockService: BlockService,
                 private accessoryService: AccessoryDecoderService,
                 private relayService: RelayService, private macroService: MacroService) {}
 
@@ -37,8 +38,8 @@ export class MacroComponent implements OnInit {
         this.accessoryService.getAccessories().subscribe(accessories => this.accessories = accessories);
     }
 
-    getTrains(): void {
-        this.trainService.getTrains().subscribe(trains => this.trains = trains);
+    getLocos(): void {
+        this.locoService.getLocos().subscribe(locos => this.locos = locos);
     }
 
     getBlocks(): void {
@@ -117,18 +118,18 @@ export class MacroComponent implements OnInit {
         return stepAccessory;
     }
 
-    fetchTrain(step: MacroStep): Train {
-        let stepTrain: Train;
-        for(let train of this.trains) {
-            if (train.trainId == step.targetId) {
-                stepTrain = train;
+    fetchLoco(step: MacroStep): Loco {
+        let stepLoco: Loco;
+        for(let loco of this.locos) {
+            if (loco.locoId == step.targetId) {
+                stepLoco = loco;
             }
         }
-        return stepTrain;
+        return stepLoco;
     }
 
     fetchDecoder(step: MacroStep): Decoder {
-        return this.fetchTrain(step).decoder;
+        return this.fetchLoco(step).decoder;
     }
 
     isFirst(step: MacroStep): boolean {
@@ -171,7 +172,7 @@ export class MacroComponent implements OnInit {
         }
     }
 
-    isTrainFunction(step: MacroStep): boolean {
+    isLocoFunction(step: MacroStep): boolean {
         return step.type == 'decoderFunction' || step.type == 'setSpeed';
     }
 
@@ -214,17 +215,17 @@ export class MacroComponent implements OnInit {
     }
 
     displayFunction(step: MacroStep): string {
-        let train: Train = this.fetchTrain(step);
+        let loco: Loco = this.fetchLoco(step);
         let display: string = "Turn " + this.getState(step.functionStatus);
-        display = display + " " + this.displayFunctionName(train, step.functionNumber);
-        display = display + " on " + this.displayTrainInfo(train);
+        display = display + " " + this.displayFunctionName(loco, step.functionNumber);
+        display = display + " on " + this.displayLocoInfo(loco);
         return display;
     }
 
     displaySetSpeed(step: MacroStep): string {
-        let train: Train = this.fetchTrain(step);
+        let loco: Loco = this.fetchLoco(step);
         let display: string = "Set speed to " + step.value;
-        display = display + " on " + this.displayTrainInfo(train);
+        display = display + " on " + this.displayLocoInfo(loco);
         return display;
     }
 
@@ -242,13 +243,13 @@ export class MacroComponent implements OnInit {
         return display;
     }
 
-    displayTrainInfo(train: Train): string {
-        return train.number + " " + train.name;
+    displayLocoInfo(loco: Loco): string {
+        return loco.number + " " + loco.name;
     }
 
-    displayFunctionName(train: Train, functionNumber: number): string {
+    displayFunctionName(loco: Loco, functionNumber: number): string {
         let decoderFunction: DecoderFunction;
-        for(let iFunction of train.decoder.decoderFunctions) {
+        for(let iFunction of loco.decoder.decoderFunctions) {
             if (iFunction.number == functionNumber) {
                 decoderFunction = iFunction;
             }
@@ -330,7 +331,7 @@ export class MacroComponent implements OnInit {
         this.macro = new Macro();
         this.getMacro();
         this.getMacros();
-        this.getTrains();
+        this.getLocos();
         this.getAccessories();
         this.getRelayContollers();
         this.getBlocks();
