@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
-import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
@@ -18,14 +17,8 @@ import java.util.List;
 @RequestMapping("/api/accessory/decoder")
 public class AccessoryDecoders {
 
-    private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private AccessoryService accessoryService;
-
-    @Autowired
-    public void setAccessoryDecoderRepository(final AccessoryDecoderRepository accessoryDecoderRepository) {
-        this.accessoryDecoderRepository = accessoryDecoderRepository;
-    }
 
     @Autowired
     public void setAccessoryDecoderTypeRepository(final AccessoryDecoderTypeRepository accessoryDecoderTypeRepository) {

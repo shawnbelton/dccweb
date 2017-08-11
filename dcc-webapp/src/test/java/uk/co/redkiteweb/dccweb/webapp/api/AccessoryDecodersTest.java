@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
-import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
@@ -23,17 +22,14 @@ import static org.mockito.Mockito.*;
 public class AccessoryDecodersTest {
 
     private AccessoryDecoders accessoryDecoders;
-    private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private AccessoryService accessoryService;
 
     @Before
     public void setup() {
-        accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
         accessoryService = mock(AccessoryService.class);
         accessoryDecoders = new AccessoryDecoders();
-        accessoryDecoders.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryDecoders.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
         accessoryDecoders.setAccessoryService(accessoryService);
     }

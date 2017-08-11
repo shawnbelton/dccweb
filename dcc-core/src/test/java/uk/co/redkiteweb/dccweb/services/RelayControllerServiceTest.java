@@ -25,13 +25,12 @@ public class RelayControllerServiceTest {
     private RelayControllerService relayControllerService;
     private RelayControllerRepository relayControllerRepository;
     private NotificationService notificationService;
-    private AsyncWebService asyncWebService;
 
     @Before
     public void setup() {
         final LogStore logStore = mock(LogStore.class);
         notificationService = mock(NotificationService.class);
-        asyncWebService = mock(AsyncWebService.class);
+        AsyncWebService asyncWebService = mock(AsyncWebService.class);
         relayControllerRepository = mock(RelayControllerRepository.class);
         relayControllerService = new RelayControllerService();
         relayControllerService.setRelayControllerRepository(relayControllerRepository);

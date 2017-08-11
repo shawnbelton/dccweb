@@ -19,14 +19,13 @@ import static org.mockito.Mockito.*;
 public class IsBlockStepTest {
 
     private IsBlockStep isBlockStep;
-    private BlockRepository blockRepository;
     private Block block;
     private MacroContext macroContext;
     private MacroStep macroStep;
 
     @Before
     public void setup() {
-        blockRepository = mock(BlockRepository.class);
+        BlockRepository blockRepository = mock(BlockRepository.class);
         block = mock(Block.class);
         macroContext = mock(MacroContext.class);
         macroStep = mock(MacroStep.class);

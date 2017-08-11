@@ -20,7 +20,7 @@ public class NotificationTest {
     @Before
     public void setup() {
         notification = new Notification();
-        notification.setNotificationId(1l);
+        notification.setNotificationId(1L);
         notification.setType("STATUS");
         notification.setValue("Connected");
         notification.setCreated(new Date(100000));
