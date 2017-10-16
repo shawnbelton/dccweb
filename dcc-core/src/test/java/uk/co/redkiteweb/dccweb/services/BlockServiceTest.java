@@ -27,14 +27,12 @@ public class BlockServiceTest {
     private BlockService blockService;
     private BlockRepository blockRepository;
     private NotificationService notificationService;
-    private MacroService macroService;
-    private LogStore logStore;
 
     @Before
     public void setup() {
-        logStore = mock(LogStore.class);
+        LogStore logStore = mock(LogStore.class);
         blockRepository = mock(BlockRepository.class);
-        macroService = mock(MacroService.class);
+        MacroService macroService = mock(MacroService.class);
         notificationService = mock(NotificationService.class);
         blockService = new BlockService();
         blockService.setLogStore(logStore);

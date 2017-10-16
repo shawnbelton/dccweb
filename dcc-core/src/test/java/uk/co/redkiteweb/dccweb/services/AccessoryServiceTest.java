@@ -33,14 +33,13 @@ public class AccessoryServiceTest {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
-    private NotificationService notificationService;
 
     @Before
     public void setup() {
         dccInterface = mock(DccInterface.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
-        notificationService = mock(NotificationService.class);
+        NotificationService notificationService = mock(NotificationService.class);
         macroService = mock(MacroService.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);

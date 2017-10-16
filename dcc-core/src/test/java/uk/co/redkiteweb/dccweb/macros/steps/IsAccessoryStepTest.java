@@ -19,7 +19,6 @@ import static org.mockito.Mockito.*;
 public class IsAccessoryStepTest {
 
     private IsAccessoryStep isAccessoryStep;
-    private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoder accessoryDecoder;
     private MacroStep macroStep;
     private MacroContext macroContext;
@@ -27,7 +26,7 @@ public class IsAccessoryStepTest {
     @Before
     public void setup() {
         macroStep = mock(MacroStep.class);
-        accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
+        AccessoryDecoderRepository accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoder = mock(AccessoryDecoder.class);
         macroContext = mock(MacroContext.class);
         isAccessoryStep = new IsAccessoryStep();

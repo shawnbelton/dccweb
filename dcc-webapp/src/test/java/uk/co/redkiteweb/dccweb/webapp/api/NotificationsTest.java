@@ -33,6 +33,6 @@ public class NotificationsTest {
     @Test
     public void testGetNotifications() {
         when(notificationRepository.findByNotificationIdAfterOrderByNotificationIdAsc(anyLong())).thenReturn(new ArrayList<Notification>());
-        assertNotNull(notifications.getNotifications(-1l));
+        assertNotNull(notifications.getNotifications(-1L));
     }
 }

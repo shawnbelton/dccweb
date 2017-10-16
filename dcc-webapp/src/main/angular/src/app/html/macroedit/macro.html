@@ -142,8 +142,8 @@
                                     <label for="stepFunction" class="form-label">Function</label>
                                     <select id="stepFunction" name="stepFunction" class="form-control input-sm" [(ngModel)]="step.functionNumber"
                                             #stepFunction="ngModel" required="required">
-                                        <option *ngFor="let function of fetchDecoder(step).decoderFunctions" [value]="function.number">
-                                            {{function.name}}
+                                        <option *ngFor="let decoderFunction of fetchDecoder(step).decoderFunctions" [value]="decoderFunction.number">
+                                            {{decoderFunction.name}}
                                         </option>
                                     </select>
                                 </div>
