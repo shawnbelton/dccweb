@@ -1,9 +1,11 @@
 pipeline {
     agent any
-    stage('build') {
-        steps {
-            sh 'mvn clean package'
-            archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
+    stages {
+        stage('build') {
+            steps {
+                sh 'mvn clean package'
+                archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
+            }
         }
     }
 }
