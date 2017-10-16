@@ -4,6 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn clean package'
+                junit '**/target/*.xml'
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
             }
         }
