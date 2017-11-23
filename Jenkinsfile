@@ -12,6 +12,11 @@ pipeline {
                 sh 'mvn verify'
             }
         }
+        stage('Sonar') {
+            steps {
+                sh 'mvn sonar:sonar'
+            }
+        }
         stage('Archive') {
             steps {
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
