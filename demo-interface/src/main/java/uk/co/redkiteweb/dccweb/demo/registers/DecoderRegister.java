@@ -32,7 +32,7 @@ public class DecoderRegister {
         decoder.getCvs().add(cv);
     }
 
-    public int getCV(final int cvNumber) {
+    public Integer getCV(final int cvNumber) {
         Integer value = null;
         for (CV cv : decoder.getCvs()) {
             if (cv.getCvNumber()==cvNumber) {
