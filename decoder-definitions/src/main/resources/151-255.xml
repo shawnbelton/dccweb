@@ -9,7 +9,7 @@
         <value name="Manufacturer" type="value" low="0" high="255"/>
     </cv>
     <cv number="17,18">
-        <value name="Long Address" type="value" low="192" high="10239" mask="16383"/>
+        <value name="Long Address" type="value" low="128" high="10239" mask="16383"/>
     </cv>
     <cv number="29">
         <value name="Address Mode" type="flag" bit="5"/>

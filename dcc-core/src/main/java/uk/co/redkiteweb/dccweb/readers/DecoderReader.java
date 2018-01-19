@@ -13,6 +13,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import java.util.Map;
@@ -71,13 +72,10 @@ public class DecoderReader {
         Decoder decoder = new Decoder();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             try {
-                logStore.log("info", "Reading manufacturer");
-                final Integer manufacturerId = cvReader.readCV(8);
-                if (manufacturerId != null) {
-                    decoder = readDecoder(manufacturerId);
-                } else {
-                    logStore.log("info", "No decoder detected.");
-                }
+                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
+                decoder = readDecoder(definitionReader);
+            } catch (DecoderNotDetectedException exception) {
+                logStore.log("info", "No decoder detected.");
             } catch (DefinitionException exception) {
                 logStore.log("error", exception.getMessage());
             }
@@ -88,15 +86,11 @@ public class DecoderReader {
         return decoder;
     }
 
-    private Decoder readDecoder(final Integer manufacturerId) throws DefinitionException {
+    private Decoder readDecoder(final DefinitionReader definitionReader) throws DefinitionException {
         final Decoder decoder = new Decoder();
-        logStore.log("info", "Reading Revision");
-        final Integer revision = cvReader.readCV(7);
-        final DefinitionReader definitionReader = definitionReaderFactory.getInstance(manufacturerId, revision);
-        definitionReader.setCvReader(cvReader);
+        decoder.setDccManufacturer(dccManufacturerRepository.findOne(definitionReader.readValue("Manufacturer")));
+        decoder.setVersion(definitionReader.readValue("Revision"));
         decoder.setAddressMode(definitionReader.readValue("Address Mode") == 1);
-        decoder.setDccManufacturer(dccManufacturerRepository.findOne(manufacturerId));
-        decoder.setVersion(revision);
         decoder.setShortAddress(definitionReader.readValue("Short Address"));
         decoder.setLongAddress(definitionReader.readValue("Long Address"));
         if (decoder.getAddressMode()) {
@@ -104,6 +98,11 @@ public class DecoderReader {
         } else {
             decoder.setCurrentAddress(decoder.getShortAddress());
         }
+        copyExistingDecoder(decoder);
+        return saveDecoder(cvReader.getCVCache(), decoder);
+    }
+
+    private void copyExistingDecoder(final Decoder decoder) {
         final Decoder existingDecoder = decoderRepository.findByCurrentAddress(decoder.getCurrentAddress());
         if (existingDecoder != null) {
             decoder.setDecoderId(existingDecoder.getDecoderId());
@@ -111,8 +110,6 @@ public class DecoderReader {
             decoder.setLinkedMacros(existingDecoder.getLinkedMacros());
             decoder.setDecoderFunctions(existingDecoder.getDecoderFunctions());
         }
-        //Integer addressMode = readCV(29);  // Default value 12, Long Address value 34 so bit 5 is value 32
-        return saveDecoder(cvReader.getCVCache(), decoder);
     }
 
     private Decoder saveDecoder(final Map<Integer, Integer> cachedCvs,final Decoder decoder) {

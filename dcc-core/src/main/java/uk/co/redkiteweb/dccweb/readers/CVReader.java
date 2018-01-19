@@ -42,13 +42,17 @@ public class CVReader {
         if (cachedCVs.containsKey(cvNumber)) {
             cvValue = cachedCVs.get(cvNumber);
         } else {
-            final ReadCVMessage readCVMessage = new ReadCVMessage();
-            readCVMessage.setCvReg(cvNumber);
-            cvValue = getCvValue(dccInterface.sendMessage(readCVMessage));
+            cvValue = readFromProgramTrack(cvNumber);
             addToCache(cvNumber, cvValue);
         }
         LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
+    }
+
+    private Integer readFromProgramTrack(int cvNumber) {
+        final ReadCVMessage readCVMessage = new ReadCVMessage();
+        readCVMessage.setCvReg(cvNumber);
+        return getCvValue(dccInterface.sendMessage(readCVMessage));
     }
 
     private void addToCache(final int cvNumber, final Integer cvValue) {
