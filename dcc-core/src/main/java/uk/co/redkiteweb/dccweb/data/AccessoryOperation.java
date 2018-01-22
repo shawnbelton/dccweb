@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class AccessoryOperation implements Serializable {
 
-    static final long serialVersionUID = 8002;
+    static final long serialVersionUID = 8003;
 
     private Integer accessoryAddress;
     private Integer operationValue;

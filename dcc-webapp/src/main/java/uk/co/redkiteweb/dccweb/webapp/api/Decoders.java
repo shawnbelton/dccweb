@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
@@ -54,6 +55,11 @@ public class Decoders {
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public @ResponseBody Decoder readDecoder() {
         return decoderReaderFactory.createInstance().readDecoderOnProgram();
+    }
+
+    @RequestMapping(value = "/read/{decoderId}", method = RequestMethod.GET)
+    public @ResponseBody List<DecoderSetting> readId(@PathVariable final Integer decoderId) {
+        return decoderReaderFactory.createInstance().readFullOnProgram(decoderId);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)

@@ -4,12 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.context.ApplicationContext;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -20,32 +21,20 @@ import static org.mockito.Mockito.when;
 public class ValueTypeFactoryTest {
 
     private ValueTypeFactory valueTypeFactory;
+    private ApplicationContext context;
 
     @Before
     public void setup() {
-        final Value value = mock(Value.class);
-        final Flag flag = mock(Flag.class);
+        context = mock(ApplicationContext.class);
         valueTypeFactory = new ValueTypeFactory();
-        valueTypeFactory.setValue(value);
-        valueTypeFactory.setFlag(flag);
+        valueTypeFactory.setApplicationContext(context);
     }
 
     @Test
     public void testGetValueInstance() {
+        when(context.getBean(anyString(), eq(ValueType.class))).thenReturn(mock(ValueType.class));
         final Node node = getValueType("value");
-        assertNotNull(valueTypeFactory.getInstance(node));
-    }
-
-    @Test
-    public void testGetFlagInstance() {
-        final Node node = getValueType("flag");
-        assertNotNull(valueTypeFactory.getInstance(node));
-    }
-
-    @Test
-    public void testGetInvalidInstance() {
-        final Node node = getValueType("invalid");
-        assertNull(valueTypeFactory.getInstance(node));
+        assertNotNull(valueTypeFactory.getInstance(node, mock(CVReader.class)));
     }
 
     private Node getValueType(String flag) {

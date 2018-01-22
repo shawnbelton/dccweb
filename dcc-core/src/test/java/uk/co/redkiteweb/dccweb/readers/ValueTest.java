@@ -8,6 +8,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -19,27 +20,30 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnit4.class)
 public class ValueTest {
 
-    private Value value;
-    private CVReader cvReader;
-    private Node node;
+    private ValueType value;
     private NamedNodeMap namedNodeMap;
 
     @Before
     public void setup() {
-        cvReader = mock(CVReader.class);
+        final CVReader cvReader = mock(CVReader.class);
         when(cvReader.readCV(anyInt())).thenReturn(1);
-        node = mock(Node.class);
+        final Node node = mock(Node.class);
+        final Node nameNode = mock(Node.class);
         namedNodeMap = mock(NamedNodeMap.class);
         when(node.getParentNode()).thenReturn(node);
         when(node.getAttributes()).thenReturn(namedNodeMap);
         when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);
+        when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
+        when(nameNode.getTextContent()).thenReturn("Name");
         when(node.getTextContent()).thenReturn("1,2");
         value = new Value();
+        value.setValueNode(node);
+        value.setCVReader(cvReader);
     }
 
     @Test
     public void testGetValue() {
-        assertEquals(new Integer(257), value.getValue(cvReader, node));
+        assertEquals(new Integer(257), value.getValue());
     }
 
     @Test
@@ -47,6 +51,11 @@ public class ValueTest {
         final Node maskNode = mock(Node.class);
         when(namedNodeMap.getNamedItem(eq("mask"))).thenReturn(maskNode);
         when(maskNode.getTextContent()).thenReturn("255");
-        assertEquals(new Integer(1), value.getValue(cvReader, node));
+        assertEquals(new Integer(1), value.getValue());
+    }
+
+    @Test
+    public void testGetSetting() {
+        assertNotNull(value.getSetting());
     }
 }

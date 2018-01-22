@@ -3,6 +3,7 @@ package uk.co.redkiteweb.dccweb.readers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.CV;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
@@ -16,6 +17,8 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -84,6 +87,26 @@ public class DecoderReader {
             logStore.log("error", "Unable to enter program mode.");
         }
         return decoder;
+    }
+
+    public List<DecoderSetting> readFullOnProgram(final Integer decoderId) {
+        List<DecoderSetting> decoderSettings = new ArrayList<>();
+        final Decoder decoder = decoderRepository.findOne(decoderId);
+        if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
+            try {
+                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
+                decoderSettings = definitionReader.readAllValues();
+                saveDecoder(cvReader.getCVCache(), decoder);
+            } catch (DecoderNotDetectedException exception) {
+                logStore.log("info", "No decoder detected.");
+            } catch (DefinitionException exception) {
+                logStore.log("error", exception.getMessage());
+            }
+            dccInterface.sendMessage(new ExitProgramMessage());
+        } else {
+            logStore.log("error", "Unable to enter program mode.");
+        }
+        return decoderSettings;
     }
 
     private Decoder readDecoder(final DefinitionReader definitionReader) throws DefinitionException {
