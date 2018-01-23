@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
@@ -15,10 +16,14 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -65,6 +70,14 @@ public class DecoderReaderTest {
     }
 
     @Test
+    public void errorEnterProgramFullTest() {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+    }
+
+    @Test
     public void readDecoderOKTest() throws DefinitionException {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         readDecoderOK();
@@ -76,6 +89,37 @@ public class DecoderReaderTest {
         when(decoderRepository.findByCurrentAddress(anyInt())).thenReturn(new Decoder());
         readDecoderOK();
     }
+
+    @Test
+    public void readFullOKTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(decoderRepository.findOne(anyInt())).thenReturn(mock(Decoder.class));
+        final List<DecoderSetting> decoderSettings = new ArrayList<>();
+        decoderSettings.add(mock(DecoderSetting.class));
+        when(definitionReader.readAllValues()).thenReturn(decoderSettings);
+        assertFalse(decoderReader.readFullOnProgram(1).isEmpty());
+    }
+
+    @Test
+    public void noDecoderFullTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DecoderNotDetectedException.class));
+        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+    }
+
+    @Test
+    public void definitionExceptionFullTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DefinitionException.class));
+        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+    }
+
 
     private void readDecoderOK() throws DefinitionException {
         final Map<Integer, Integer> cachedCvs = new HashMap<Integer, Integer>();
