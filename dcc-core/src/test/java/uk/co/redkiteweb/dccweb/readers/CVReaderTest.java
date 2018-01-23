@@ -4,9 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.model.CV;
+import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -31,6 +36,20 @@ public class CVReaderTest {
         cvReader = new CVReader();
         cvReader.setDccInterface(dccInterface);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+    }
+
+    @Test
+    public void testSetDecoder() {
+        final Decoder decoder = mock(Decoder.class);
+        final List<CV> cvs = new ArrayList<>();
+        final CV cv = mock(CV.class);
+        when(cv.getCvNumber()).thenReturn(1,2);
+        when(cv.getCvValue()).thenReturn(5,3);
+        cvs.add(cv);
+        cvs.add(cv);
+        when(decoder.getCvs()).thenReturn(cvs);
+        cvReader.setDecoder(decoder);
+        assertEquals(2, cvReader.getCVCache().keySet().size());
     }
 
     @Test

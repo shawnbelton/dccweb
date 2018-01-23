@@ -56,8 +56,14 @@ public class DecodersTest {
     }
 
     @Test
-    public void testReadAll() {
-        when(decoderRepository.findAll()).thenReturn(new ArrayList<Decoder>());
+    public void testReadDecoderAll() {
+        when(decoderReader.readFullOnProgram(anyInt())).thenReturn(new ArrayList<>());
+        assertNotNull(decoders.readId(1));
+    }
+
+    @Test
+    public void testFetchAll() {
+        when(decoderRepository.findAll()).thenReturn(new ArrayList<>());
         assertNotNull(decoders.allDecoders());
     }
 

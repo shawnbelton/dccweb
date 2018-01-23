@@ -91,9 +91,10 @@ public class DecoderReader {
 
     public List<DecoderSetting> readFullOnProgram(final Integer decoderId) {
         List<DecoderSetting> decoderSettings = new ArrayList<>();
-        final Decoder decoder = decoderRepository.findOne(decoderId);
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             try {
+                final Decoder decoder = decoderRepository.findOne(decoderId);
+                cvReader.setDecoder(decoder);
                 final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
                 decoderSettings = definitionReader.readAllValues();
                 saveDecoder(cvReader.getCVCache(), decoder);

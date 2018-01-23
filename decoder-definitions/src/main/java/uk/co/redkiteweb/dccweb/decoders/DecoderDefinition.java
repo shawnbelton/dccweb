@@ -59,7 +59,7 @@ public class DecoderDefinition {
         }
     }
 
-    private XPathExpression getXPathExpression(final String xPathString) throws XPathExpressionException {
+    private static XPathExpression getXPathExpression(final String xPathString) throws XPathExpressionException {
         final XPathFactory xPathFactory = XPathFactory.newInstance();
         final XPath xPath = xPathFactory.newXPath();
         return xPath.compile(xPathString);
