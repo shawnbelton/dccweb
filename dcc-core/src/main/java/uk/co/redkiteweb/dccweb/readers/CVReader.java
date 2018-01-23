@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.model.CV;
+import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
@@ -25,12 +27,19 @@ public class CVReader {
     private DccInterface dccInterface;
 
     public CVReader() {
-        cachedCVs = new HashMap<Integer, Integer>();
+        cachedCVs = new HashMap<>();
     }
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
         this.dccInterface = dccInterface;
+    }
+
+    public void setDecoder(final Decoder decoder) {
+        cachedCVs.clear();
+        for(CV cv : decoder.getCvs()) {
+            addToCache(cv.getCvNumber(), cv.getCvValue());
+        }
     }
 
     public Map<Integer, Integer> getCVCache() {
@@ -42,13 +51,17 @@ public class CVReader {
         if (cachedCVs.containsKey(cvNumber)) {
             cvValue = cachedCVs.get(cvNumber);
         } else {
-            final ReadCVMessage readCVMessage = new ReadCVMessage();
-            readCVMessage.setCvReg(cvNumber);
-            cvValue = getCvValue(dccInterface.sendMessage(readCVMessage));
+            cvValue = readFromProgramTrack(cvNumber);
             addToCache(cvNumber, cvValue);
         }
         LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
+    }
+
+    private Integer readFromProgramTrack(int cvNumber) {
+        final ReadCVMessage readCVMessage = new ReadCVMessage();
+        readCVMessage.setCvReg(cvNumber);
+        return getCvValue(dccInterface.sendMessage(readCVMessage));
     }
 
     private void addToCache(final int cvNumber, final Integer cvValue) {

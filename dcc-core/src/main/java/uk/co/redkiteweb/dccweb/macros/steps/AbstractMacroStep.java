@@ -26,7 +26,7 @@ public abstract class AbstractMacroStep implements IStep {
         this.macroStep = macroStep;
     }
 
-    public MacroContext getMacroContext() {
+    MacroContext getMacroContext() {
         return macroContext;
     }
 

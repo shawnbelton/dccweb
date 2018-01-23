@@ -12,6 +12,7 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class DecoderReaderTest {
         decoderReader.setLogStore(logStore);
         decoderReader.setDefinitionReaderFactory(definitionReaderFactory);
         decoderReader.setCvReader(cvReader);
-        when(definitionReaderFactory.getInstance(anyInt(), anyInt())).thenReturn(definitionReader);
+        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenReturn(definitionReader);
     }
 
     @Test
@@ -102,17 +103,17 @@ public class DecoderReaderTest {
     }
 
     @Test
-    public void readManufacturerIdNull() {
+    public void readManufacturerIdNull() throws DefinitionException {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(cvReader.readCV(anyInt())).thenReturn(null);
+        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DecoderNotDetectedException.class));
         assertNotNull(decoderReader.readDecoderOnProgram());
     }
 
     @Test
     public void readNotDefinedDefinition() throws DefinitionException {
-        when(definitionReaderFactory.getInstance(anyInt(), anyInt())).thenThrow(new DefinitionException("Error"));
+        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(new DefinitionException("Error"));
         readDecoderOK();
         verify(logStore, times(1)).log(eq("error"), anyString());
     }

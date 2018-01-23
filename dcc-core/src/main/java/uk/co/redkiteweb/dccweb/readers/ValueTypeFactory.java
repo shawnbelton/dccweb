@@ -1,38 +1,33 @@
 package uk.co.redkiteweb.dccweb.readers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Node;
+
+import java.util.Locale;
 
 /**
  * Created by shawn on 18/09/16.
  */
 @Component
 @Scope("prototype")
-public class ValueTypeFactory {
+public class ValueTypeFactory implements ApplicationContextAware {
 
-    private Value value;
-    private Flag flag;
+    private ApplicationContext context;
 
-    @Autowired
-    public void setValue(final Value value) {
-        this.value = value;
+    @Override
+    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
 
-    @Autowired
-    public void setFlag(final Flag flag) {
-        this.flag = flag;
-    }
-
-    public ValueType getInstance(final Node valueNode) {
+    public ValueType getInstance(final Node valueNode, final CVReader cvReader) {
         final String type = valueNode.getAttributes().getNamedItem("type").getTextContent();
-        ValueType valueType = null;
-        if ("value".equalsIgnoreCase(type)) {
-            valueType = value;
-        } else if ("flag".equalsIgnoreCase(type)) {
-            valueType = flag;
-        }
+        final ValueType valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
+        valueType.setValueNode(valueNode);
+        valueType.setCVReader(cvReader);
         return valueType;
     }
 

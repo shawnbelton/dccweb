@@ -5,11 +5,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderDefinition;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -35,13 +37,22 @@ public class DefinitionReaderTest {
         definitionReader.setValueTypeFactory(valueTypeFactory);
         definitionReader.setCvReader(cvReader);
         when(decoderDefinition.getValueNode(anyString())).thenReturn(valueNode);
-        when(valueTypeFactory.getInstance(any(Node.class))).thenReturn(valueType);
-        when(valueType.getValue(any(CVReader.class), any(Node.class))).thenReturn(1);
+        when(valueTypeFactory.getInstance(any(Node.class), any(CVReader.class))).thenReturn(valueType);
+        when(valueType.getValue()).thenReturn(1);
     }
 
     @Test
     public void testReadNamedCV() throws DefinitionException {
         assertEquals(new Integer(1), definitionReader.readValue("NamedCV"));
+    }
+
+    @Test
+    public void testReadAllValues() throws DefinitionException {
+        final NodeList nodeList = mock(NodeList.class);
+        when(nodeList.getLength()).thenReturn(1);
+        when(nodeList.item(anyInt())).thenReturn(mock(Node.class));
+        when(decoderDefinition.getValueNodes()).thenReturn(nodeList);
+        assertNotNull(definitionReader.readAllValues());
     }
 
     @Test

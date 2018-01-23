@@ -26,7 +26,7 @@ public class DecoderRegisterTest {
         decoderRegister.setCV(1, 2);
         decoderRegister.setCV(2, 3);
         decoderRegister.setCV(3, 4);
-        assertEquals(2, decoderRegister.getCV(1));
+        assertEquals(new Integer(2), decoderRegister.getCV(1));
     }
 
 
