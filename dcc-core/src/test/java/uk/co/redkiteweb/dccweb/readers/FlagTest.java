@@ -9,8 +9,7 @@ import org.w3c.dom.Node;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -42,17 +41,18 @@ public class FlagTest {
         flag = new Flag();
         flag.setValueNode(node);
         flag.setCVReader(cvReader);
+        flag.setUseCache(true);
     }
 
     @Test
     public void testTrue() {
-        when(cvReader.readCV(anyInt())).thenReturn(8);
+        when(cvReader.readCV(anyInt(), anyBoolean())).thenReturn(8);
         assertEquals(new Integer(1), flag.getValue());
     }
 
     @Test
     public void testFalse() {
-        when(cvReader.readCV(anyInt())).thenReturn(0xf7);
+        when(cvReader.readCV(anyInt(), anyBoolean())).thenReturn(0xf7);
         assertEquals(new Integer(0), flag.getValue());
     }
 

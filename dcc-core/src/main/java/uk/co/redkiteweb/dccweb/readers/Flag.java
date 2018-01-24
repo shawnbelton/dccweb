@@ -13,7 +13,7 @@ public class Flag extends AbstractValueType implements ValueType {
     @Override
     public Integer getValue() {
         final String cv = getValueNode().getParentNode().getAttributes().getNamedItem("number").getTextContent();
-        final long value = getCvReader().readCV(Integer.parseInt(cv));
+        final long value = getCVValue(Integer.parseInt(cv));
         final int bit = Integer.parseInt(getValueNode().getAttributes().getNamedItem("bit").getTextContent());
         final long bitMask = Math.round(Math.pow(2,bit));
         final long flagValue = (value & bitMask);

@@ -58,6 +58,7 @@ public class CVReaderTest {
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
         assertEquals(new Integer(123), cvReader.readCV(1));
         assertEquals(new Integer(123), cvReader.readCV(1));
+        assertEquals(new Integer(123), cvReader.readCV(1,false));
         assertEquals(1, cvReader.getCVCache().size());
     }
 
