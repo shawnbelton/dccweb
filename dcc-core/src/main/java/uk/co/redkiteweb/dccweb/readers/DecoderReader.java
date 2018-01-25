@@ -89,13 +89,13 @@ public class DecoderReader {
         return decoder;
     }
 
-    public List<DecoderSetting> readFullOnProgram(final Integer decoderId) {
+    public List<DecoderSetting> readFullOnProgram() {
         List<DecoderSetting> decoderSettings = new ArrayList<>();
         if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
             try {
-                final Decoder decoder = decoderRepository.findOne(decoderId);
-                cvReader.setDecoder(decoder);
                 final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
+                final Decoder decoder = readDecoder(definitionReader);
+                cvReader.setDecoder(decoder);
                 decoderSettings = definitionReader.readAllValues();
                 saveDecoder(cvReader.getCVCache(), decoder);
             } catch (DecoderNotDetectedException exception) {

@@ -57,8 +57,8 @@ public class DecodersTest {
 
     @Test
     public void testReadDecoderAll() {
-        when(decoderReader.readFullOnProgram(anyInt())).thenReturn(new ArrayList<>());
-        assertNotNull(decoders.readId(1));
+        when(decoderReader.readFullOnProgram()).thenReturn(new ArrayList<>());
+        assertNotNull(decoders.readFull());
     }
 
     @Test
