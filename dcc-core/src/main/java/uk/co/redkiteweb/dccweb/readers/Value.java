@@ -17,7 +17,7 @@ public class Value extends AbstractValueType implements ValueType {
         int value = 0;
         for(String cv : cvs) {
             value *= 256;
-            value += getCvReader().readCV(Integer.parseInt(cv));
+            value += getCVValue(Integer.parseInt(cv));
         }
         final Node maskNode = getValueNode().getAttributes().getNamedItem("mask");
         if (maskNode!=null) {

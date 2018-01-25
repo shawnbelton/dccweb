@@ -34,7 +34,7 @@ public class ValueTypeFactoryTest {
     public void testGetValueInstance() {
         when(context.getBean(anyString(), eq(ValueType.class))).thenReturn(mock(ValueType.class));
         final Node node = getValueType("value");
-        assertNotNull(valueTypeFactory.getInstance(node, mock(CVReader.class)));
+        assertNotNull(valueTypeFactory.getInstance(node, mock(CVReader.class), true));
     }
 
     private Node getValueType(String flag) {

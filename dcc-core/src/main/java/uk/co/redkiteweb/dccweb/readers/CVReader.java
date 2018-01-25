@@ -47,15 +47,33 @@ public class CVReader {
     }
 
     public Integer readCV(final int cvNumber) {
+        return readCV(cvNumber, true);
+    }
+
+    public Integer readCV(final int cvNumber, final boolean useCache) {
+        Integer cvValue;
+        if (useCache) {
+            cvValue = readCVUseCache(cvNumber);
+        } else {
+            cvValue = readCVDirect(cvNumber);
+        }
+        LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
+        return cvValue;
+    }
+
+    private Integer readCVUseCache(final int cvNumber) {
         Integer cvValue;
         if (cachedCVs.containsKey(cvNumber)) {
             cvValue = cachedCVs.get(cvNumber);
         } else {
-            cvValue = readFromProgramTrack(cvNumber);
+            cvValue = readCVDirect(cvNumber);
             addToCache(cvNumber, cvValue);
         }
-        LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
+    }
+
+    private Integer readCVDirect(final int cvNumber) {
+        return readFromProgramTrack(cvNumber);
     }
 
     private Integer readFromProgramTrack(int cvNumber) {

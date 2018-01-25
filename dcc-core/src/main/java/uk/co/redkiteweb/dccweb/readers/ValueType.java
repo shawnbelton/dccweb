@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 public interface ValueType {
     void setValueNode(final Node valueNode);
     void setCVReader(final CVReader cvReader);
+    void setUseCache(final boolean useCache);
     Integer getValue();
     DecoderSetting getSetting();
 }

@@ -51,7 +51,7 @@ public class DefinitionReader {
     public Integer readValue(final String valueName) throws DefinitionException {
         logStore.log("info", String.format("Reading %s", valueName));
         final Node valueNode = decoderDefinition.getValueNode(valueName);
-        final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvReader);
+        final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvReader, true);
         return valueType.getValue();
     }
 
@@ -60,7 +60,7 @@ public class DefinitionReader {
         final NodeList allValueNodes = decoderDefinition.getValueNodes();
         for(int index = 0; index < allValueNodes.getLength(); index++) {
             final Node valueNode = allValueNodes.item(index);
-            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvReader);
+            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvReader, true);
             decoderSettings.add(valueType.getSetting());
         }
         return decoderSettings;

@@ -7,23 +7,29 @@ public abstract class AbstractValueType implements ValueType {
 
     private Node valueNode;
     private CVReader cvReader;
+    private boolean useCache;
 
     @Override
-    public void setValueNode(Node valueNode) {
+    public void setValueNode(final Node valueNode) {
         this.valueNode = valueNode;
     }
 
     @Override
-    public void setCVReader(CVReader cvReader) {
+    public void setCVReader(final CVReader cvReader) {
         this.cvReader = cvReader;
+    }
+
+    @Override
+    public void setUseCache(final boolean useCache) {
+        this.useCache = useCache;
     }
 
     protected Node getValueNode() {
         return valueNode;
     }
 
-    protected CVReader getCvReader() {
-        return cvReader;
+    protected Integer getCVValue(final Integer cvNumber) {
+        return cvReader.readCV(cvNumber, useCache);
     }
 
     @Override

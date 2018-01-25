@@ -23,11 +23,12 @@ public class ValueTypeFactory implements ApplicationContextAware {
         this.context = applicationContext;
     }
 
-    public ValueType getInstance(final Node valueNode, final CVReader cvReader) {
+    public ValueType getInstance(final Node valueNode, final CVReader cvReader, final boolean direct) {
         final String type = valueNode.getAttributes().getNamedItem("type").getTextContent();
         final ValueType valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
         valueType.setValueNode(valueNode);
         valueType.setCVReader(cvReader);
+        valueType.setUseCache(direct);
         return valueType;
     }
 
