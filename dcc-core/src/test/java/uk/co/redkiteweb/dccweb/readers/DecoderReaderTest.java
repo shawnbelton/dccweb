@@ -74,7 +74,7 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+        assertTrue(decoderReader.readFullOnProgram().isEmpty());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class DecoderReaderTest {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(mock(DecoderSetting.class));
         when(definitionReader.readAllValues()).thenReturn(decoderSettings);
-        assertFalse(decoderReader.readFullOnProgram(1).isEmpty());
+        assertFalse(decoderReader.readFullOnProgram().isEmpty());
     }
 
     @Test
@@ -108,7 +108,7 @@ public class DecoderReaderTest {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
         when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DecoderNotDetectedException.class));
-        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+        assertTrue(decoderReader.readFullOnProgram().isEmpty());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class DecoderReaderTest {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
         when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DefinitionException.class));
-        assertTrue(decoderReader.readFullOnProgram(1).isEmpty());
+        assertTrue(decoderReader.readFullOnProgram().isEmpty());
     }
 
 

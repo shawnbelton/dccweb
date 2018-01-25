@@ -57,9 +57,9 @@ public class Decoders {
         return decoderReaderFactory.createInstance().readDecoderOnProgram();
     }
 
-    @RequestMapping(value = "/read/{decoderId}", method = RequestMethod.GET)
-    public @ResponseBody List<DecoderSetting> readId(@PathVariable final Integer decoderId) {
-        return decoderReaderFactory.createInstance().readFullOnProgram(decoderId);
+    @RequestMapping(value = "/read/full", method = RequestMethod.GET)
+    public @ResponseBody List<DecoderSetting> readFull() {
+        return decoderReaderFactory.createInstance().readFullOnProgram();
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
