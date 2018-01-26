@@ -36,9 +36,10 @@ public class CVReader {
     }
 
     public void setDecoder(final Decoder decoder) {
-        cachedCVs.clear();
-        for(CV cv : decoder.getCvs()) {
-            addToCache(cv.getCvNumber(), cv.getCvValue());
+        if (decoder.getCvs() != null) {
+            for (CV cv : decoder.getCvs()) {
+                addToCache(cv.getCvNumber(), cv.getCvValue());
+            }
         }
     }
 
@@ -77,6 +78,7 @@ public class CVReader {
     }
 
     private Integer readFromProgramTrack(int cvNumber) {
+        LOGGER.info(String.format("Reading CV %d from track.", cvNumber));
         final ReadCVMessage readCVMessage = new ReadCVMessage();
         readCVMessage.setCvReg(cvNumber);
         return getCvValue(dccInterface.sendMessage(readCVMessage));
