@@ -17,6 +17,14 @@
           </ng-template>
         </app-pagination>
       </div>
+      <div class="panel-footer clearfix">
+        <span class="pull-right">
+          <input id="readDecoder" type="button" class="btn btn-info btn-xs"
+                 (click)="readDecoder()" value="Read Basic Values"/>
+          <input id="readFullDecoder" type="button" class="btn btn-info btn-xs"
+                 (click)="readFullDecoder()" value="Read Full Values"/>
+        </span>
+      </div>
     </div>
   </div>
   <div class="col-sm-6">
@@ -42,14 +50,6 @@
           <label class="col-sm-3">Long Address:</label>
           <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.longAddress}}</span>
         </p>
-        <div class="row" *ngIf="!isEmptyDecoder()">
-          <div class="col-sm-12">
-            <span class="pull-right">
-              <input id="readDecoder" type="button" class="btn btn-info btn-xs" (click)="readDecoder()"
-                     value="Read Values"/>
-            </span>
-          </div>
-        </div>
       </div>
       <ul class="decoders nav nav-tabs" *ngIf="isEmptyDecoder()">
         <li role="presentation" [ngClass]="{'active': isFunctionsTab()}"><a href="/decoders"

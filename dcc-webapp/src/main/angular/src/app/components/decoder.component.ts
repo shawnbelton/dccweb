@@ -8,6 +8,7 @@ import {MacroService} from "../services/macro.service";
 import {DecoderFunction} from "../models/decoderFunction";
 import {Macro} from "../models/macro";
 import {LinkedMacro} from "../models/linked.macro";
+import {DecoderSetting} from "../models/decoderSetting";
 
 @Component({
     moduleId: module.id,
@@ -16,6 +17,7 @@ import {LinkedMacro} from "../models/linked.macro";
 export class DecoderComponent implements OnInit {
 
     decoders: Decoder[];
+    decoderSettings: DecoderSetting[];
     macros: Macro[];
     currentDecoder: Decoder;
     availableFunctions: number[];
@@ -23,7 +25,8 @@ export class DecoderComponent implements OnInit {
     linkedMacro: LinkedMacro;
     decoderTabState: string;
 
-    constructor(private decoderService: DecoderService, private macroService: MacroService) {
+    constructor(private decoderService: DecoderService,
+                private macroService: MacroService) {
         this.decoderTabState = "FUNCTIONS";
     }
 
@@ -53,8 +56,16 @@ export class DecoderComponent implements OnInit {
         this.decoderService.readDecoder();
     }
 
+    readFullDecoder(): void {
+      this.decoderService.readFullDecoder();
+    }
+
     editDecoder(decoder: Decoder): void {
         this.decoderService.fetchDecoder(decoder.decoderId);
+    }
+
+    refreshDecoders(): void {
+      this.decoderService.fetchDecoders();
     }
 
     getDecoders(): void {
@@ -62,6 +73,11 @@ export class DecoderComponent implements OnInit {
             .getDecoders().subscribe(decoders => this.decoders = decoders);
         this.decoderService
             .getDecoder().subscribe(decoder => this.setCurrentDecoder(decoder));
+    }
+
+    getDecoderSettings(): void {
+      this.decoderService.getDecoderSettings()
+        .subscribe(decoderSettings => this.decoderSettings = decoderSettings);
     }
 
     getMacros(): void {

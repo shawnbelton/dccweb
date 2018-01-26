@@ -95,7 +95,7 @@ export class NotificationService {
             .map(response => response.json())
             .subscribe(data => {
             this.processNotifications(data);
-        }, error => console.log("Could not fetch notifications."));
+        }, error => this._statusUpdates.next("StatusUpdate"));
     }
 
     getStatusUpdates(): Observable<string> {
