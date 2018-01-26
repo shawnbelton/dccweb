@@ -13,8 +13,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -40,16 +39,23 @@ public class CVReaderTest {
 
     @Test
     public void testSetDecoder() {
-        final Decoder decoder = mock(Decoder.class);
+        final Decoder decoder = new Decoder();
         final List<CV> cvs = new ArrayList<>();
+        decoder.setCvs(cvs);
         final CV cv = mock(CV.class);
         when(cv.getCvNumber()).thenReturn(1,2);
         when(cv.getCvValue()).thenReturn(5,3);
         cvs.add(cv);
         cvs.add(cv);
-        when(decoder.getCvs()).thenReturn(cvs);
         cvReader.setDecoder(decoder);
         assertEquals(2, cvReader.getCVCache().keySet().size());
+    }
+
+    @Test
+    public void testSetDecoderNullCvs() {
+        final Decoder decoder = new Decoder();
+        cvReader.setDecoder(decoder);
+        assertTrue(cvReader.getCVCache().keySet().isEmpty());
     }
 
     @Test

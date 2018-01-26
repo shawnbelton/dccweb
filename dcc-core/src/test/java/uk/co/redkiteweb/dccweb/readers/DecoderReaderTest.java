@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
@@ -39,6 +40,7 @@ public class DecoderReaderTest {
     private DefinitionReaderFactory definitionReaderFactory;
     private DefinitionReader definitionReader;
     private CVReader cvReader;
+    private NotificationService notificationService;
 
     @Before
     public void setUp() throws DefinitionException {
@@ -50,6 +52,7 @@ public class DecoderReaderTest {
         definitionReaderFactory = mock(DefinitionReaderFactory.class);
         definitionReader = mock(DefinitionReader.class);
         cvReader = mock(CVReader.class);
+        notificationService = mock(NotificationService.class);
         decoderReader = new DecoderReader();
         decoderReader.setDccInterface(dccInterface);
         decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
@@ -58,6 +61,7 @@ public class DecoderReaderTest {
         decoderReader.setLogStore(logStore);
         decoderReader.setDefinitionReaderFactory(definitionReaderFactory);
         decoderReader.setCvReader(cvReader);
+        decoderReader.setNotificationService(notificationService);
         when(definitionReaderFactory.getInstance(any(CVReader.class))).thenReturn(definitionReader);
     }
 
@@ -81,6 +85,7 @@ public class DecoderReaderTest {
     public void readDecoderOKTest() throws DefinitionException {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         readDecoderOK();
+        verify(notificationService, times(1)).createNotification(anyString(), anyString());
     }
 
     @Test
@@ -88,6 +93,7 @@ public class DecoderReaderTest {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         when(decoderRepository.findByCurrentAddress(anyInt())).thenReturn(new Decoder());
         readDecoderOK();
+        verify(notificationService, times(1)).createNotification(anyString(), anyString());
     }
 
     @Test
@@ -100,6 +106,7 @@ public class DecoderReaderTest {
         decoderSettings.add(mock(DecoderSetting.class));
         when(definitionReader.readAllValues()).thenReturn(decoderSettings);
         assertFalse(decoderReader.readFullOnProgram().isEmpty());
+        verify(notificationService, times(2)).createNotification(anyString(), anyString());
     }
 
     @Test

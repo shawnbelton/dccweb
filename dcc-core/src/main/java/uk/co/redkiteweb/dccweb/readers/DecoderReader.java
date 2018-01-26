@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
+import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
@@ -33,8 +34,14 @@ public class DecoderReader {
     private CVRepository cvRepository;
     private DccManufacturerRepository dccManufacturerRepository;
     private DefinitionReaderFactory definitionReaderFactory;
+    private NotificationService notificationService;
     private LogStore logStore;
     private CVReader cvReader;
+
+    @Autowired
+    public void setNotificationService(final NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     @Autowired
     public void setCvRepository(final CVRepository cvRepository) {
@@ -145,6 +152,7 @@ public class DecoderReader {
             cv.setCvValue(cvValue.getValue());
             cvRepository.save(cv);
         }
+        notificationService.createNotification("DECODERS", "");
         return decoderRepository.findOne(decoder.getDecoderId());
     }
 }
