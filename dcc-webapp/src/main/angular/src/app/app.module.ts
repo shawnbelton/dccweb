@@ -32,6 +32,7 @@ import {AccessoryDecoderService} from "./services/accessoryDecoder.service";
 import {NotificationService} from "./services/notification.service";
 import {BlockItem} from "./components/block.item.component";
 import {PaginationComponent} from "./components/pagination.component";
+import {DecoderSettingComponent} from "./components/decoderSettings/decoderSetting.component";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {PaginationComponent} from "./components/pagination.component";
     AccessoryComponent,
     BlockComponent,
     RelayComponent,
-    BlockItem
+    BlockItem,
+    DecoderSettingComponent
   ],
   imports: [
     BrowserModule,
