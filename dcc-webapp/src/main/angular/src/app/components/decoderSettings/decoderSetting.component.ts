@@ -7,7 +7,7 @@ import {DecoderSetting} from "../../models/decoderSetting";
 @Component({
   moduleId: module.id,
   selector: 'decoderSetting',
-  template: '<div>decoderSetting</div>'
+  templateUrl: './../../html/decoder/decoderSetting.html'
 })
 export class DecoderSettingComponent {
 

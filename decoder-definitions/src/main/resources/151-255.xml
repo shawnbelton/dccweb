@@ -1,6 +1,21 @@
 <decoder manufacturer="151" revision="255">
     <cv number="1">
-        <value name="Short Address" type="value" low="1" high="192"/>
+        <value name="Short Address" type="value" low="1" high="127"/>
+    </cv>
+    <cv number="2">
+        <value name="Start Voltage" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="3">
+        <value name="Acceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="4">
+        <value name="Deceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="5">
+        <value name="Maximum Speed" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="6">
+        <value name="Vmid" type="value" low="0" high="255"/>
     </cv>
     <cv number="7">
         <value name="Revision" type="value" low="0" high="255"/>
@@ -12,6 +27,11 @@
         <value name="Long Address" type="value" low="128" high="10239" mask="16383"/>
     </cv>
     <cv number="29">
+        <value name="Direction" type="flag" bit="0"/>
+        <value name="Speed Steps" type="flag" bit="1"/>
+        <value name="Analog Mode" type="flag" bit="2"/>
+        <value name="RailCom" type="flag" bit="3"/>
+        <value name="Speed Curve" type="flag" bit="4"/>
         <value name="Address Mode" type="flag" bit="5"/>
     </cv>
 </decoder>

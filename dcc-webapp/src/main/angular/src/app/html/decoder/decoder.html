@@ -34,20 +34,20 @@
       </div>
       <div class="panel-body">
         <p class="row">
-          <label class="col-sm-3">Manufacturer:</label>
-          <span class="col-sm-9">{{currentDecoder.dccManufacturer.manufacturer}}</span>
+          <label class="col-sm-5">Manufacturer:</label>
+          <span class="col-sm-7">{{currentDecoder.dccManufacturer.manufacturer}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Version:</label>
-          <span class="col-sm-9">{{currentDecoder.version}}</span>
+          <label class="col-sm-5">Version:</label>
+          <span class="col-sm-7">{{currentDecoder.version}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Short Address:</label>
-          <span class="col-sm-9">{{currentDecoder.shortAddress}}</span>
+          <label class="col-sm-5">Short Address:</label>
+          <span class="col-sm-7">{{currentDecoder.shortAddress}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Long Address:</label>
-          <span class="col-sm-9">{{currentDecoder.longAddress}}</span>
+          <label class="col-sm-5">Long Address:</label>
+          <span class="col-sm-7">{{currentDecoder.longAddress}}</span>
         </p>
       </div>
       <ul class="decoders nav nav-tabs">
@@ -127,9 +127,9 @@
         <span>Full Decoder Settings</span>
       </div>
       <div class="panel-body">
-        <div class="row" *ngFor="let decoderSetting of decoderSettings">
+        <ng-container *ngFor="let decoderSetting of decoderSettings">
           <decoderSetting [setting]="decoderSetting"></decoderSetting>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
