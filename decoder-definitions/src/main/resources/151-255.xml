@@ -15,7 +15,7 @@
         <value name="Maximum Speed" type="value" low="0" high="255"/>
     </cv>
     <cv number="6">
-        <value name="Vmid" type="value" low="0" high="255"/>
+        <value name="Medium Speed" type="value" low="0" high="255"/>
     </cv>
     <cv number="7">
         <value name="Revision" type="value" low="0" high="255"/>
@@ -23,8 +23,51 @@
     <cv number="8">
         <value name="Manufacturer" type="value" low="0" high="255"/>
     </cv>
+    <cv number="13">
+        <value name="Analog F1" type="flag" bit="0"/>
+        <value name="Analog F2" type="flag" bit="1"/>
+        <value name="Analog F3" type="flag" bit="2"/>
+        <value name="Analog F4" type="flag" bit="3"/>
+        <value name="Analog F5" type="flag" bit="4"/>
+        <value name="Analog F6" type="flag" bit="5"/>
+        <value name="Analog F7" type="flag" bit="6"/>
+        <value name="Analog F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="14">
+        <value name="Analog F0" type="flag" bit="0"/>
+        <value name="Analog F9" type="flag" bit="1"/>
+        <value name="Analog F10" type="flag" bit="2"/>
+        <value name="Analog F11" type="flag" bit="3"/>
+        <value name="Analog F12" type="flag" bit="4"/>
+        <value name="Analog F13" type="flag" bit="5"/>
+        <value name="Analog F14" type="flag" bit="6"/>
+        <value name="Analog F15" type="flag" bit="7"/>
+    </cv>
     <cv number="17,18">
         <value name="Long Address" type="value" low="128" high="10239" mask="16383"/>
+    </cv>
+    <cv number="19">
+        <value name="Consist Address" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="21">
+        <value name="Consist F1" type="flag" bit="0"/>
+        <value name="Consist F2" type="flag" bit="1"/>
+        <value name="Consist F3" type="flag" bit="2"/>
+        <value name="Consist F4" type="flag" bit="3"/>
+        <value name="Consist F5" type="flag" bit="4"/>
+        <value name="Consist F6" type="flag" bit="5"/>
+        <value name="Consist F7" type="flag" bit="6"/>
+        <value name="Consist F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="22">
+        <value name="Consist F0" type="flag" bit="0"/>
+        <value name="Consist F9" type="flag" bit="1"/>
+        <value name="Consist F10" type="flag" bit="2"/>
+        <value name="Consist F11" type="flag" bit="3"/>
+        <value name="Consist F12" type="flag" bit="4"/>
+        <value name="Consist F13" type="flag" bit="5"/>
+        <value name="Consist F14" type="flag" bit="6"/>
+        <value name="Consist F15" type="flag" bit="7"/>
     </cv>
     <cv number="29">
         <value name="Direction" type="flag" bit="0"/>

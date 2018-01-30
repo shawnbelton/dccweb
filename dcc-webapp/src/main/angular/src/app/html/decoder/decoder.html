@@ -126,9 +126,9 @@
       <div class="panel-heading">
         <span>Full Decoder Settings</span>
       </div>
-      <div class="panel-body">
+      <div class="form-horizontal">
         <ng-container *ngFor="let decoderSetting of decoderSettings">
-          <decoderSetting [setting]="decoderSetting"></decoderSetting>
+          <decoderSetting class="form-group" [setting]="decoderSetting"></decoderSetting>
         </ng-container>
       </div>
     </div>

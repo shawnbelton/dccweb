@@ -1,4 +1,16 @@
-<div class="row">
-  <label class="col-sm-5">{{decoderSetting.name}}</label>
-  <span class="col-sm-7">{{decoderSetting.value}}</span>
-</div>
+<ng-container [ngSwitch]="decoderSetting.type">
+  <ng-container *ngSwitchCase="'value'">
+    <label class="col-sm-5 control-label">{{decoderSetting.name}}</label>
+    <div class="col-sm-3">
+      <input type="number" class="form-control input-sm" [value]="decoderSetting.value"/>
+    </div>
+  </ng-container>
+  <div *ngSwitchCase="'flag'" class="col-sm-offset-5 col-sm-7">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" [checked]="decoderSetting.value == 1"/>
+        {{decoderSetting.name}}
+      </label>
+    </div>
+  </div>
+</ng-container>
