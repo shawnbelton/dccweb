@@ -9,7 +9,7 @@ import org.w3c.dom.Node;
  */
 @Component("valueValueType")
 @Scope("prototype")
-public class Value extends AbstractValueType implements ValueType {
+public class ValueValueType extends AbstractValueType implements ValueType {
 
     @Override
     public Integer getValue() {

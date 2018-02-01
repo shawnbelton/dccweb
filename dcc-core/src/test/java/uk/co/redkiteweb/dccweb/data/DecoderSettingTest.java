@@ -5,7 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
 public class DecoderSettingTest {
@@ -18,6 +21,7 @@ public class DecoderSettingTest {
         decoderSetting.setName("SettingName");
         decoderSetting.setType("SettingType");
         decoderSetting.setValue(1);
+        decoderSetting.setDecoderSettingOptions(new ArrayList<>());
     }
 
     @Test
@@ -33,5 +37,10 @@ public class DecoderSettingTest {
     @Test
     public void testValue() {
         assertEquals(new Integer(1), decoderSetting.getValue());
+    }
+
+    @Test
+    public void testDecoderSettingOptions() {
+        assertNotNull(decoderSetting.getDecoderSettingOptions());
     }
 }

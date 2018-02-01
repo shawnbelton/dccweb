@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  */
 @Component("flagValueType")
 @Scope("prototype")
-public class Flag extends AbstractValueType implements ValueType {
+public class FlagValueType extends AbstractValueType implements ValueType {
 
     @Override
     public Integer getValue() {

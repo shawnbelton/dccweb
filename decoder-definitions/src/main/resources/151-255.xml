@@ -70,7 +70,10 @@
         <value name="Consist F15" type="flag" bit="7"/>
     </cv>
     <cv number="29">
-        <value name="Direction" type="flag" bit="0"/>
+        <value name="Direction" type="option" bit="0">
+            <option value="0">Normal</option>
+            <option value="1">Reversed</option>
+        </value>
         <value name="Speed Steps" type="flag" bit="1"/>
         <value name="Analog Mode" type="flag" bit="2"/>
         <value name="RailCom" type="flag" bit="3"/>

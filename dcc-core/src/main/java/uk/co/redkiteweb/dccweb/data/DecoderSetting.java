@@ -1,6 +1,7 @@
 package uk.co.redkiteweb.dccweb.data;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class DecoderSetting implements Serializable {
 
@@ -9,6 +10,7 @@ public class DecoderSetting implements Serializable {
     private String name;
     private String type;
     private Integer value;
+    private List<DecoderSettingOption> decoderSettingOptions;
 
     public String getName() {
         return name;
@@ -32,5 +34,13 @@ public class DecoderSetting implements Serializable {
 
     public void setValue(final Integer value) {
         this.value = value;
+    }
+
+    public List<DecoderSettingOption> getDecoderSettingOptions() {
+        return decoderSettingOptions;
+    }
+
+    public void setDecoderSettingOptions(final List<DecoderSettingOption> decoderSettingOptions) {
+        this.decoderSettingOptions = decoderSettingOptions;
     }
 }

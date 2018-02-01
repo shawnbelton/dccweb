@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
  * Created by shawn on 19/09/16.
  */
 @RunWith(JUnit4.class)
-public class ValueTest {
+public class ValueValueTypeTest {
 
     private ValueType value;
     private NamedNodeMap namedNodeMap;
@@ -35,7 +35,7 @@ public class ValueTest {
         when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
         when(nameNode.getTextContent()).thenReturn("Name");
         when(node.getTextContent()).thenReturn("1,2");
-        value = new Value();
+        value = new ValueValueType();
         value.setValueNode(node);
         value.setCVReader(cvReader);
         value.setUseCache(false);

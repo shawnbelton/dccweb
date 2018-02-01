@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
  * Created by shawn on 20/09/16.
  */
 @RunWith(JUnit4.class)
-public class FlagTest {
+public class FlagValueTypeTest {
 
     private ValueType flag;
     private CVReader cvReader;
@@ -38,7 +38,7 @@ public class FlagTest {
         final Node bitNode = mock(Node.class);
         when(namedNodeMap.getNamedItem(eq("bit"))).thenReturn(bitNode);
         when(bitNode.getTextContent()).thenReturn("3");
-        flag = new Flag();
+        flag = new FlagValueType();
         flag.setValueNode(node);
         flag.setCVReader(cvReader);
         flag.setUseCache(true);

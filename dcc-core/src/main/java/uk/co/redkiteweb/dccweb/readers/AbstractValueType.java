@@ -2,6 +2,10 @@ package uk.co.redkiteweb.dccweb.readers;
 
 import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.data.DecoderSettingOption;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractValueType implements ValueType {
 
@@ -43,10 +47,16 @@ public abstract class AbstractValueType implements ValueType {
         setting.setType(getType());
         setting.setName(getName());
         setting.setValue(getValue());
+        setting.setDecoderSettingOptions(getOptions());
         return setting;
     }
 
     private String getName() {
         return valueNode.getAttributes().getNamedItem("name").getTextContent();
     }
+
+    protected List<DecoderSettingOption> getOptions() {
+        return new ArrayList<>();
+    }
+
 }
