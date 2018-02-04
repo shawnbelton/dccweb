@@ -29,7 +29,7 @@ public class OptionValueType extends FlagValueType {
         return decoderSettingOptions;
     }
 
-    private DecoderSettingOption createDecoderSettingOption(final Node optionNode) {
+    private static DecoderSettingOption createDecoderSettingOption(final Node optionNode) {
         final DecoderSettingOption decoderSettingOption = new DecoderSettingOption();
         decoderSettingOption.setValue(Integer.parseInt(optionNode.getAttributes().getNamedItem("value").getTextContent()));
         decoderSettingOption.setOption(optionNode.getAttributes().getNamedItem("option").getTextContent());
