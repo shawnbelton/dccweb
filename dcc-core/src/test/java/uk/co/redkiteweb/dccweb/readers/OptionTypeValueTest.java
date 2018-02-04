@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -25,32 +26,9 @@ public class OptionTypeValueTest {
     public void setup() {
         cvReader = mock(CVReader.class);
         when(cvReader.readCV(anyInt())).thenReturn(1);
-        final Node node = mock(Node.class);
-        final Node nameNode = mock(Node.class);
-        final NamedNodeMap namedNodeMap = mock(NamedNodeMap.class);
-        final NodeList optionNodes = mock(NodeList.class);
-        when(node.getParentNode()).thenReturn(node);
-        when(node.getAttributes()).thenReturn(namedNodeMap);
-        when(node.getChildNodes()).thenReturn(optionNodes);
-        final Node optionNode = mock(Node.class);
-        when(optionNodes.getLength()).thenReturn(1);
-        when(optionNodes.item(anyInt())).thenReturn(optionNode);
-        final NamedNodeMap optionAttributes = mock(NamedNodeMap.class);
-        when(optionNode.getAttributes()).thenReturn(optionAttributes);
-        final Node valueNode = mock(Node.class);
-        when(optionAttributes.getNamedItem(eq("value"))).thenReturn(valueNode);
-        when(valueNode.getTextContent()).thenReturn("1");
-        when(optionAttributes.getNamedItem(eq("option"))).thenReturn(optionNode);
-        when(optionNode.getTextContent()).thenReturn("optionName");
-        when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);
-        when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
-        when(nameNode.getTextContent()).thenReturn("Name");
-        when(node.getTextContent()).thenReturn("1");
-        final Node bitNode = mock(Node.class);
-        when(namedNodeMap.getNamedItem(eq("bit"))).thenReturn(bitNode);
-        when(bitNode.getTextContent()).thenReturn("3");
+        final Node valueNode = createValueNode();
         optionValueType = new OptionValueType();
-        optionValueType.setValueNode(node);
+        optionValueType.setValueNode(valueNode);
         optionValueType.setCVReader(cvReader);
         optionValueType.setUseCache(true);
     }
@@ -65,4 +43,42 @@ public class OptionTypeValueTest {
         assertFalse(optionValueType.getSetting().getDecoderSettingOptions().isEmpty());
     }
 
+    private Node createValueNode() {
+        final Node valueNode = mock(Node.class);
+        final Node cvNode = mock(Node.class);
+        final NamedNodeMap valueNodeAttributes = mock(NamedNodeMap.class);
+        final NamedNodeMap cvNodeAttributes = mock(NamedNodeMap.class);
+        when(valueNode.getAttributes()).thenReturn(valueNodeAttributes);
+        when(valueNode.getParentNode()).thenReturn(cvNode);
+        when(cvNode.getAttributes()).thenReturn(cvNodeAttributes);
+        final Node numberNode = mock(Node.class);
+        final Node bitNode = mock(Node.class);
+        final Node nameAttribute = mock(Node.class);
+        when(valueNodeAttributes.getNamedItem(eq("name"))).thenReturn(nameAttribute);
+        when(cvNodeAttributes.getNamedItem(eq("number"))).thenReturn(numberNode);
+        when(valueNodeAttributes.getNamedItem(eq("bit"))).thenReturn(bitNode);
+        when(nameAttribute.getTextContent()).thenReturn("name");
+        when(numberNode.getTextContent()).thenReturn("1");
+        when(bitNode.getTextContent()).thenReturn("0");
+        final NodeList optionNodes = createOptionNodes();
+        when(valueNode.getChildNodes()).thenReturn(optionNodes);
+        return valueNode;
+    }
+
+    private NodeList createOptionNodes() {
+        final NodeList optionNodes = mock(NodeList.class);
+        when(optionNodes.getLength()).thenReturn(2);
+        when(optionNodes.item(eq(0))).thenReturn(mock(Node.class));
+        final Element optionNode = mock(Element.class);
+        when(optionNodes.item(eq(1))).thenReturn(optionNode);
+        final NamedNodeMap optionAttributes = mock(NamedNodeMap.class);
+        when(optionNode.getAttributes()).thenReturn(optionAttributes);
+        final Node valueNode = mock(Node.class);
+        final Node optionTextNode = mock(Node.class);
+        when(optionAttributes.getNamedItem("value")).thenReturn(valueNode);
+        when(optionAttributes.getNamedItem("option")).thenReturn(optionTextNode);
+        when(valueNode.getTextContent()).thenReturn("1");
+        when(optionTextNode.getTextContent()).thenReturn("option");
+        return optionNodes;
+    }
 }
