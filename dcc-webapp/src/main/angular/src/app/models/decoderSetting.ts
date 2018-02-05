@@ -4,6 +4,7 @@
 import {DecoderSettingOption} from "./decoderSettingOption";
 
 export class DecoderSetting {
+  id: string;
   name: string;
   type: string;
   value: number;

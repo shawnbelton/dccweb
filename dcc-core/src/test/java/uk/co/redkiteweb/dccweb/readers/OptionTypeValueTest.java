@@ -46,6 +46,7 @@ public class OptionTypeValueTest {
     private Node createValueNode() {
         final Node valueNode = mock(Node.class);
         final Node cvNode = mock(Node.class);
+        final Node idNode = mock(Node.class);
         final NamedNodeMap valueNodeAttributes = mock(NamedNodeMap.class);
         final NamedNodeMap cvNodeAttributes = mock(NamedNodeMap.class);
         when(valueNode.getAttributes()).thenReturn(valueNodeAttributes);
@@ -54,9 +55,11 @@ public class OptionTypeValueTest {
         final Node numberNode = mock(Node.class);
         final Node bitNode = mock(Node.class);
         final Node nameAttribute = mock(Node.class);
+        when(valueNodeAttributes.getNamedItem(eq("id"))).thenReturn(idNode);
         when(valueNodeAttributes.getNamedItem(eq("name"))).thenReturn(nameAttribute);
         when(cvNodeAttributes.getNamedItem(eq("number"))).thenReturn(numberNode);
         when(valueNodeAttributes.getNamedItem(eq("bit"))).thenReturn(bitNode);
+        when(idNode.getTextContent()).thenReturn("id1");
         when(nameAttribute.getTextContent()).thenReturn("name");
         when(numberNode.getTextContent()).thenReturn("1");
         when(bitNode.getTextContent()).thenReturn("0");

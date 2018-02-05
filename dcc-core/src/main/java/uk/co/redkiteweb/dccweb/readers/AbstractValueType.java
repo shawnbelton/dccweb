@@ -44,11 +44,16 @@ public abstract class AbstractValueType implements ValueType {
     @Override
     public DecoderSetting getSetting() {
         final DecoderSetting setting = new DecoderSetting();
+        setting.setId(getId());
         setting.setType(getType());
         setting.setName(getName());
         setting.setValue(getValue());
         setting.setDecoderSettingOptions(getOptions());
         return setting;
+    }
+
+    protected String getId() {
+        return valueNode.getAttributes().getNamedItem("id").getTextContent();
     }
 
     private String getName() {

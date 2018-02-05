@@ -68,6 +68,10 @@ export class DecoderComponent implements OnInit {
     this.decoderService.readFullDecoder();
   }
 
+  writeCVs(): void {
+    this.decoderService.writeCVs(this.decoderSettings);
+  }
+
   editDecoder(decoder: Decoder): void {
     this.decoderService.fetchDecoder(decoder.decoderId);
   }

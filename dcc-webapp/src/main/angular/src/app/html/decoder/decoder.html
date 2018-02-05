@@ -127,9 +127,14 @@
         <span>Full Decoder Settings</span>
       </div>
       <div class="form-horizontal">
-        <ng-container *ngFor="let decoderSetting of decoderSettings">
-          <decoderSetting class="form-group" [setting]="decoderSetting"></decoderSetting>
-        </ng-container>
+        <app-pagination [items]="decoderSettings" [pageSize]="5">
+          <ng-template let-item>
+            <decoderSetting class="form-group block" [setting]="item"></decoderSetting>
+          </ng-template>
+        </app-pagination>
+        <div class="list-group-item">
+          <input type="button" class="btn btn-danger" (click)="writeCVs()" value="Write CVs"/>
+        </div>
       </div>
     </div>
   </div>

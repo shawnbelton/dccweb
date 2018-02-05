@@ -28,13 +28,16 @@ public class ValueValueTypeTest {
         when(cvReader.readCV(anyInt(), anyBoolean())).thenReturn(1);
         final Node node = mock(Node.class);
         final Node nameNode = mock(Node.class);
+        final Node idNode = mock(Node.class);
         namedNodeMap = mock(NamedNodeMap.class);
         when(node.getParentNode()).thenReturn(node);
         when(node.getAttributes()).thenReturn(namedNodeMap);
         when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);
         when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
+        when(namedNodeMap.getNamedItem("id")).thenReturn(idNode);
         when(nameNode.getTextContent()).thenReturn("Name");
         when(node.getTextContent()).thenReturn("1,2");
+        when(idNode.getTextContent()).thenReturn("id1");
         value = new ValueValueType();
         value.setValueNode(node);
         value.setCVReader(cvReader);

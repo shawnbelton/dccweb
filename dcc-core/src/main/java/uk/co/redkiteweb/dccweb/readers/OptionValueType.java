@@ -26,16 +26,17 @@ public class OptionValueType extends FlagValueType {
         for(int index = 0; index < optionNodes.getLength(); index++) {
             final Node optionNode = optionNodes.item(index);
             if (optionNode instanceof Element){
-                decoderSettingOptions.add(createDecoderSettingOption(optionNode));
+                decoderSettingOptions.add(createDecoderSettingOption(optionNode, getId()));
             }
         }
         return decoderSettingOptions;
     }
 
-    private static DecoderSettingOption createDecoderSettingOption(final Node optionNode) {
+    private static DecoderSettingOption createDecoderSettingOption(final Node optionNode, final String id) {
         final DecoderSettingOption decoderSettingOption = new DecoderSettingOption();
         decoderSettingOption.setValue(Integer.parseInt(optionNode.getAttributes().getNamedItem("value").getTextContent()));
         decoderSettingOption.setOption(optionNode.getTextContent());
+        decoderSettingOption.setId(String.format("%s%d", id, decoderSettingOption.getValue()));
         return decoderSettingOption;
     }
 }
