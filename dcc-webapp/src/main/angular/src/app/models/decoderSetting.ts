@@ -8,5 +8,6 @@ export class DecoderSetting {
   name: string;
   type: string;
   value: number;
+  newValue: number;
   decoderSettingOptions: DecoderSettingOption[];
 }

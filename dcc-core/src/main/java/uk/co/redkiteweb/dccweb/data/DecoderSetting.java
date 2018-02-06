@@ -11,6 +11,7 @@ public class DecoderSetting implements Serializable {
     private String name;
     private String type;
     private Integer value;
+    private Integer newValue;
     private List<DecoderSettingOption> decoderSettingOptions;
 
     public String getId() {
@@ -43,6 +44,14 @@ public class DecoderSetting implements Serializable {
 
     public void setValue(final Integer value) {
         this.value = value;
+    }
+
+    public Integer getNewValue() {
+        return newValue;
+    }
+
+    public void setNewValue(final Integer newValue) {
+        this.newValue = newValue;
     }
 
     public List<DecoderSettingOption> getDecoderSettingOptions() {

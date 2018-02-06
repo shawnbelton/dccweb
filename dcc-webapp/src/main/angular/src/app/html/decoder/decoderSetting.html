@@ -2,13 +2,15 @@
   <ng-container *ngSwitchCase="'value'">
     <label [for]="decoderSetting.id" class="col-sm-5 control-label">{{decoderSetting.name}}</label>
     <div class="col-sm-3">
-      <input [id]="decoderSetting.id" type="number" class="form-control input-sm" [value]="decoderSetting.value"/>
+      <input [id]="decoderSetting.id" type="number" class="form-control input-sm"
+             (change)="decoderSettingChanged($event)" [value]="decoderSetting.value"/>
     </div>
   </ng-container>
   <div *ngSwitchCase="'flag'" class="col-sm-offset-5 col-sm-7">
     <div class="checkbox">
       <label [for]="decoderSetting.id">
-        <input [id]="decoderSetting.id" type="checkbox" [checked]="decoderSetting.value"/>
+        <input [id]="decoderSetting.id" type="checkbox" (change)="decoderSettingChanged($event)"
+               [value]="decoderSetting.value"/>
         {{decoderSetting.name}}
       </label>
     </div>
@@ -19,6 +21,7 @@
       <div class="radio" *ngFor="let decoderSettingOption of decoderSetting.decoderSettingOptions">
         <label>
           <input type="radio" [name]="decoderSetting.id" [id]="decoderSettingOption.id"
+                 (change)="decoderSettingChanged($event)"
                  [value]="decoderSettingOption.value" [checked]="decoderSetting.value == decoderSettingOption.value"/>
           {{decoderSettingOption.option}}
         </label>

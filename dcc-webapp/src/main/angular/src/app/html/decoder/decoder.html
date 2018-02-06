@@ -126,7 +126,7 @@
       <div class="panel-heading">
         <span>Full Decoder Settings</span>
       </div>
-      <div class="form-horizontal">
+      <form id="fullSetting" name="fullSetting" class="form-horizontal" #fullSetting="ngForm">
         <app-pagination [items]="decoderSettings" [pageSize]="5">
           <ng-template let-item>
             <decoderSetting class="form-group block" [setting]="item"></decoderSetting>
@@ -135,7 +135,7 @@
         <div class="list-group-item">
           <input type="button" class="btn btn-danger" (click)="writeCVs()" value="Write CVs"/>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

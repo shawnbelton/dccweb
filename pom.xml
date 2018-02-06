@@ -95,7 +95,7 @@
                         <goals>
                             <goal>cobertura</goal>
                         </goals>
-                        <phase>prepare-package</phase>
+                        <phase>test</phase>
                     </execution>
                 </executions>
             </plugin>

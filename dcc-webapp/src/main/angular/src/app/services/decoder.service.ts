@@ -17,6 +17,7 @@ export class DecoderService {
     private decodersUrl = '/api/decoders/all';
     private readDecoderUrl = '/api/decoders/read';
     private readFullDecoderUrl = '/api/decoders/read/full';
+    private writeDecoderUrl = '/api/decoders/write';
     private fetchDecoderUrl = '/api/decoders/byId/';
     private addFunctionUrl = '/api/decoders/function/add';
     private deleteFunctionUrl = '/api/decoders/function/delete';
@@ -67,7 +68,9 @@ export class DecoderService {
     }
 
     writeCVs(decoderSettings: DecoderSetting[]) {
-
+      this.http.post(this.writeDecoderUrl, decoderSettings).map(response => response.json()).subscribe(data => {
+        this._decoderSettings.next(null);
+      });
     }
 
     addDecoderFunction(decoderFunction: DecoderFunction): void {

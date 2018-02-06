@@ -62,6 +62,12 @@ public class Decoders {
         return decoderReaderFactory.createInstance().readFullOnProgram();
     }
 
+    @RequestMapping(value = "/write", method = RequestMethod.POST)
+    public @ResponseBody Boolean writeCVs(@RequestBody final List<DecoderSetting> decoderSettings) {
+        logStore.log("info", String.format("decodersettings %d", decoderSettings.size()));
+        return Boolean.TRUE;
+    }
+
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody List<Decoder> allDecoders() {
         return (List<Decoder>)decoderRepository.findAll();
