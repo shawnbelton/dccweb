@@ -47,7 +47,11 @@ public class DecoderSetting implements Serializable {
     }
 
     public Integer getNewValue() {
-        return newValue;
+        Integer retValue = newValue;
+        if (retValue == null) {
+            retValue = value;
+        }
+        return retValue;
     }
 
     public void setNewValue(final Integer newValue) {
@@ -60,5 +64,9 @@ public class DecoderSetting implements Serializable {
 
     public void setDecoderSettingOptions(final List<DecoderSettingOption> decoderSettingOptions) {
         this.decoderSettingOptions = decoderSettingOptions;
+    }
+
+    public boolean isChanged() {
+        return !getValue().equals(getNewValue());
     }
 }
