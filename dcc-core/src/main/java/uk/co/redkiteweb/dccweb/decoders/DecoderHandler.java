@@ -122,18 +122,7 @@ public class DecoderHandler {
         try {
             enterProgramMode();
             try {
-                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
-                final Decoder decoder = readDecoder(definitionReader);
-                if (correctDecoder(definitionReader, decoderSettings)) {
-                    final Map<Integer, Integer> cvMap = definitionReader.buildCVs(decoderSettings);
-                    for(CV originalCv : decoder.getCvs()) {
-                        if (cvMap.containsKey(originalCv.getCvNumber())) {
-                            if (!originalCv.getCvValue().equals(cvMap.get(originalCv.getCvNumber()))) {
-                                logStore.log("info", String.format("Writing CV %d with value %d", originalCv.getCvNumber(), cvMap.get(originalCv.getCvNumber())));
-                            }
-                        }
-                    }
-                }
+                writeToDecoder(decoderSettings);
             } catch (DecoderNotDetectedException exception) {
                 logStore.log("info", "No decoder detected.");
             } catch (DefinitionException exception) {
@@ -142,6 +131,26 @@ public class DecoderHandler {
             exitProgramMode();
         } catch (ProgramModeException exception) {
             logStore.log("error", "Unable to enter program mode.");
+        }
+    }
+
+    private void writeToDecoder(final List<DecoderSetting> decoderSettings) throws DefinitionException {
+        final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
+        if (correctDecoder(definitionReader, decoderSettings)) {
+            writeToDecoder(decoderSettings, definitionReader);
+        } else {
+            logStore.log("error", "Incorrect decoder detected on Program Track");
+        }
+    }
+
+    private void writeToDecoder(final List<DecoderSetting> decoderSettings, final DefinitionReader definitionReader) throws DefinitionException {
+        final Decoder decoder = readDecoder(definitionReader);
+        final Map<Integer, Integer> cvMap = definitionReader.buildCVs(decoderSettings);
+        for(CV originalCv : decoder.getCvs()) {
+            if (cvMap.containsKey(originalCv.getCvNumber())
+                    && !originalCv.getCvValue().equals(cvMap.get(originalCv.getCvNumber()))) {
+                    logStore.log("info", String.format("Writing CV %d with value %d", originalCv.getCvNumber(), cvMap.get(originalCv.getCvNumber())));
+            }
         }
     }
 
@@ -155,7 +164,7 @@ public class DecoderHandler {
         return isMatch;
     }
 
-    private boolean checkValue(final DefinitionReader definitionReader, final String valueName, final List<DecoderSetting> decoderSettings) throws DefinitionException {
+    private static boolean checkValue(final DefinitionReader definitionReader, final String valueName, final List<DecoderSetting> decoderSettings) throws DefinitionException {
         boolean isMatched = false;
         final Integer checkValue = definitionReader.readValue(valueName);
         for (DecoderSetting decoderSetting : decoderSettings) {
