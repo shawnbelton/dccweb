@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.decoders;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 
 import java.util.ArrayList;
 import java.util.List;

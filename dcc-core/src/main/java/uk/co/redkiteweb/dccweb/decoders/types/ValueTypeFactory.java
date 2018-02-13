@@ -1,7 +1,5 @@
 package uk.co.redkiteweb.dccweb.decoders.types;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
@@ -9,7 +7,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Node;
-import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import java.util.Locale;
@@ -21,7 +18,6 @@ import java.util.Locale;
 @Scope("prototype")
 public class ValueTypeFactory implements ApplicationContextAware {
 
-    private static final Logger LOGGER = LogManager.getLogger(ValueTypeFactory.class);
     private ApplicationContext context;
 
     @Override

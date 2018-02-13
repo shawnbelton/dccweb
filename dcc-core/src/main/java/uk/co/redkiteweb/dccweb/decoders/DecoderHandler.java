@@ -15,6 +15,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.exceptions.ProgramModeException;
 
 import java.util.ArrayList;
@@ -154,7 +155,7 @@ public class DecoderHandler {
         }
     }
 
-    private boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
+    private static boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
         boolean isMatch = true;
         isMatch &= checkValue(definitionReader,"Manufacturer", decoderSettings);
         isMatch &= checkValue(definitionReader,"Revision", decoderSettings);

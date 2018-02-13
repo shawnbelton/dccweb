@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.decoders;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

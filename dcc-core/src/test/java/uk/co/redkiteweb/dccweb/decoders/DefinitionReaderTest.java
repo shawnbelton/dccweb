@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
 

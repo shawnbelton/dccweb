@@ -14,6 +14,7 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
+import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;

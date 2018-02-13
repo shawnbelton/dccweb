@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

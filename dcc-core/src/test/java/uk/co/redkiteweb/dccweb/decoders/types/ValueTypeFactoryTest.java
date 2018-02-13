@@ -8,7 +8,6 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
-import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import static org.junit.Assert.assertNotNull;

@@ -3,7 +3,6 @@ package uk.co.redkiteweb.dccweb.decoders.types;
 import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.DecoderSettingOption;
-import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 
 import java.util.ArrayList;
 import java.util.List;
