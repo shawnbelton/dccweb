@@ -12,8 +12,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.readers.DecoderReader;
-import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
+import uk.co.redkiteweb.dccweb.decoders.DecoderHandler;
+import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 
 import java.util.ArrayList;
 
@@ -27,22 +27,22 @@ import static org.mockito.Mockito.*;
 public class DecodersTest {
 
     private Decoders decoders;
-    private DecoderReader decoderReader;
+    private DecoderHandler decoderHandler;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
     private LinkedMacroRepository linkedMacroRepository;
 
     @Before
     public void setUp() {
-        decoderReader = mock(DecoderReader.class);
-        final DecoderReaderFactory decoderReaderFactory = mock(DecoderReaderFactory.class);
-        when(decoderReaderFactory.createInstance()).thenReturn(decoderReader);
+        decoderHandler = mock(DecoderHandler.class);
+        final DecoderHandlerFactory decoderHandlerFactory = mock(DecoderHandlerFactory.class);
+        when(decoderHandlerFactory.createInstance()).thenReturn(decoderHandler);
         decoderRepository = mock(DecoderRepository.class);
         decoderFunctionRepository = mock(DecoderFunctionRepository.class);
         final LogStore logStore = mock(LogStore.class);
         linkedMacroRepository = mock(LinkedMacroRepository.class);
         decoders = new Decoders();
-        decoders.setDecoderReaderFactory(decoderReaderFactory);
+        decoders.setDecoderHandlerFactory(decoderHandlerFactory);
         decoders.setDecoderRepository(decoderRepository);
         decoders.setDecoderFunctionRepository(decoderFunctionRepository);
         decoders.setLinkedMacroRepository(linkedMacroRepository);
@@ -51,13 +51,13 @@ public class DecodersTest {
 
     @Test
     public void testReadDecoder() {
-        when(decoderReader.readDecoderOnProgram()).thenReturn(new Decoder());
+        when(decoderHandler.readDecoderOnProgram()).thenReturn(new Decoder());
         assertNotNull(decoders.readDecoder());
     }
 
     @Test
     public void testReadDecoderAll() {
-        when(decoderReader.readFullOnProgram()).thenReturn(new ArrayList<>());
+        when(decoderHandler.readFullOnProgram()).thenReturn(new ArrayList<>());
         assertNotNull(decoders.readFull());
     }
 

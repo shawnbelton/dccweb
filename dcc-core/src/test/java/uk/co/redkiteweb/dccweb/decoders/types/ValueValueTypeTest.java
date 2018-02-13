@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,8 +25,8 @@ public class ValueValueTypeTest {
 
     @Before
     public void setup() {
-        final CVReader cvReader = mock(CVReader.class);
-        when(cvReader.readCV(anyInt(), anyBoolean())).thenReturn(1);
+        final CVHandler cvHandler = mock(CVHandler.class);
+        when(cvHandler.readCV(anyInt(), anyBoolean())).thenReturn(1);
         final Node node = mock(Node.class);
         final Node nameNode = mock(Node.class);
         final Node idNode = mock(Node.class);
@@ -40,7 +41,7 @@ public class ValueValueTypeTest {
         when(idNode.getTextContent()).thenReturn("id1");
         value = new ValueValueType();
         value.setValueNode(node);
-        value.setCVReader(cvReader);
+        value.setCVReader(cvHandler);
         value.setUseCache(false);
     }
 

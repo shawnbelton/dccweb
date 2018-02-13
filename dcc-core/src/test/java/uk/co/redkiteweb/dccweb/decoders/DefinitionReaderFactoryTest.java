@@ -1,12 +1,10 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
-import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
-import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import static org.mockito.Mockito.*;
 
@@ -31,16 +29,16 @@ public class DefinitionReaderFactoryTest {
 
     @Test
     public void testGetInstance() throws DefinitionException {
-        final CVReader cvReader = mock(CVReader.class);
-        when(cvReader.readCV(eq(8))).thenReturn(1);
-        definitionReaderFactory.getInstance(cvReader);
+        final CVHandler cvHandler = mock(CVHandler.class);
+        when(cvHandler.readCV(eq(8))).thenReturn(1);
+        definitionReaderFactory.getInstance(cvHandler);
         verify(definitionReader, times(1)).setDecoderFile(anyString());
     }
 
     @Test(expected = DecoderNotDetectedException.class)
     public void testNoDecoder() throws DefinitionException {
-        final CVReader cvReader = mock(CVReader.class);
-        when(cvReader.readCV(eq(8))).thenReturn(null);
-        definitionReaderFactory.getInstance(cvReader);
+        final CVHandler cvHandler = mock(CVHandler.class);
+        when(cvHandler.readCV(eq(8))).thenReturn(null);
+        definitionReaderFactory.getInstance(cvHandler);
     }
 }

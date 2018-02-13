@@ -7,7 +7,8 @@ import org.junit.runners.JUnit4;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
 public class DecoderSettingTest {
@@ -48,13 +49,6 @@ public class DecoderSettingTest {
     public void testNewValueNotSet() {
         decoderSetting.setNewValue(null);
         assertEquals(new Integer(1), decoderSetting.getNewValue());
-    }
-
-    @Test
-    public void testIsChanged() {
-        assertTrue(decoderSetting.isChanged());
-        decoderSetting.setNewValue(1);
-        assertFalse(decoderSetting.isChanged());
     }
 
     @Test

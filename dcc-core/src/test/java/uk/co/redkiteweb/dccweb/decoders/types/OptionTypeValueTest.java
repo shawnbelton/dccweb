@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import uk.co.redkiteweb.dccweb.decoders.CVHandler;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -20,16 +21,16 @@ import static org.mockito.Mockito.when;
 public class OptionTypeValueTest {
 
     private OptionValueType optionValueType;
-    private CVReader cvReader;
+    private CVHandler cvHandler;
 
     @Before
     public void setup() {
-        cvReader = mock(CVReader.class);
-        when(cvReader.readCV(anyInt())).thenReturn(1);
+        cvHandler = mock(CVHandler.class);
+        when(cvHandler.readCV(anyInt())).thenReturn(1);
         final Node valueNode = createValueNode();
         optionValueType = new OptionValueType();
         optionValueType.setValueNode(valueNode);
-        optionValueType.setCVReader(cvReader);
+        optionValueType.setCVReader(cvHandler);
         optionValueType.setUseCache(true);
     }
 

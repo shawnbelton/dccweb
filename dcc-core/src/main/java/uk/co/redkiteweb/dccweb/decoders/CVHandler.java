@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,14 +19,14 @@ import java.util.Map;
  */
 @Component
 @Scope("prototype")
-public class CVReader {
+public class CVHandler {
 
-    private static final Logger LOGGER = LogManager.getLogger(CVReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(CVHandler.class);
 
     private final Map<Integer, Integer> cachedCVs;
     private DccInterface dccInterface;
 
-    public CVReader() {
+    public CVHandler() {
         cachedCVs = new HashMap<>();
     }
 

@@ -66,6 +66,10 @@ public class DecoderDefinition {
         return (NodeList) getXPathValue("//value", XPathConstants.NODESET);
     }
 
+    public NodeList getCVNodes() throws DefinitionException {
+        return (NodeList) getXPathValue("//cv", XPathConstants.NODESET);
+    }
+
     private Object getXPathValue(final String xPathString, final QName returnType) throws DefinitionException {
         try {
             return getXPathExpression(xPathString).evaluate(decoderDefDocument, returnType);

@@ -66,7 +66,4 @@ public class DecoderSetting implements Serializable {
         this.decoderSettingOptions = decoderSettingOptions;
     }
 
-    public boolean isChanged() {
-        return !getValue().equals(getNewValue());
-    }
 }

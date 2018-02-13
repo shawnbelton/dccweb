@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,8 +15,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
-import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+import uk.co.redkiteweb.dccweb.exceptions.ProgramModeException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ import java.util.Map;
  */
 @Component
 @Scope("prototype")
-public class DecoderReader {
+public class DecoderHandler {
 
     private DccInterface dccInterface;
     private DecoderRepository decoderRepository;
@@ -36,7 +35,7 @@ public class DecoderReader {
     private DefinitionReaderFactory definitionReaderFactory;
     private NotificationService notificationService;
     private LogStore logStore;
-    private CVReader cvReader;
+    private CVHandler cvHandler;
 
     @Autowired
     public void setNotificationService(final NotificationService notificationService) {
@@ -74,23 +73,24 @@ public class DecoderReader {
     }
 
     @Autowired
-    public void setCvReader(final CVReader cvReader) {
-        this.cvReader = cvReader;
+    public void setCvHandler(final CVHandler cvHandler) {
+        this.cvHandler = cvHandler;
     }
 
     public Decoder readDecoderOnProgram() {
         Decoder decoder = new Decoder();
-        if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
+        try {
+            enterProgramMode();
             try {
-                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
+                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
                 decoder = readDecoder(definitionReader);
             } catch (DecoderNotDetectedException exception) {
                 logStore.log("info", "No decoder detected.");
             } catch (DefinitionException exception) {
                 logStore.log("error", exception.getMessage());
             }
-            dccInterface.sendMessage(new ExitProgramMessage());
-        } else {
+            exitProgramMode();
+        } catch (ProgramModeException exception) {
             logStore.log("error", "Unable to enter program mode.");
         }
         return decoder;
@@ -98,26 +98,85 @@ public class DecoderReader {
 
     public List<DecoderSetting> readFullOnProgram() {
         List<DecoderSetting> decoderSettings = new ArrayList<>();
-        if (MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
+        try {
+            enterProgramMode();
             try {
-                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvReader);
+                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
                 final Decoder decoder = readDecoder(definitionReader);
-                cvReader.setDecoder(decoder);
+                cvHandler.setDecoder(decoder);
                 decoderSettings = definitionReader.readAllValues();
-                saveDecoder(cvReader.getCVCache(), decoder);
+                saveDecoder(cvHandler.getCVCache(), decoder);
             } catch (DecoderNotDetectedException exception) {
                 logStore.log("info", "No decoder detected.");
             } catch (DefinitionException exception) {
                 logStore.log("error", exception.getMessage());
             }
-            dccInterface.sendMessage(new ExitProgramMessage());
-        } else {
+            exitProgramMode();
+        } catch (ProgramModeException exception) {
             logStore.log("error", "Unable to enter program mode.");
         }
         return decoderSettings;
     }
 
-    private Decoder readDecoder(final DefinitionReader definitionReader) throws DefinitionException {
+    public void writeSettingsToDecoder(final List<DecoderSetting> decoderSettings) {
+        try {
+            enterProgramMode();
+            try {
+                final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
+                final Decoder decoder = readDecoder(definitionReader);
+                if (correctDecoder(definitionReader, decoderSettings)) {
+                    final Map<Integer, Integer> cvMap = definitionReader.buildCVs(decoderSettings);
+                    for(CV originalCv : decoder.getCvs()) {
+                        if (cvMap.containsKey(originalCv.getCvNumber())) {
+                            if (!originalCv.getCvValue().equals(cvMap.get(originalCv.getCvNumber()))) {
+                                logStore.log("info", String.format("Writing CV %d with value %d", originalCv.getCvNumber(), cvMap.get(originalCv.getCvNumber())));
+                            }
+                        }
+                    }
+                }
+            } catch (DecoderNotDetectedException exception) {
+                logStore.log("info", "No decoder detected.");
+            } catch (DefinitionException exception) {
+                logStore.log("error", exception.getMessage());
+            }
+            exitProgramMode();
+        } catch (ProgramModeException exception) {
+            logStore.log("error", "Unable to enter program mode.");
+        }
+    }
+
+    private boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
+        boolean isMatch = true;
+        isMatch &= checkValue(definitionReader,"Manufacturer", decoderSettings);
+        isMatch &= checkValue(definitionReader,"Revision", decoderSettings);
+        isMatch &= checkValue(definitionReader,"Address Mode", decoderSettings);
+        isMatch &= checkValue(definitionReader,"Short Address", decoderSettings);
+        isMatch &= checkValue(definitionReader,"Long Address", decoderSettings);
+        return isMatch;
+    }
+
+    private boolean checkValue(final DefinitionReader definitionReader, final String valueName, final List<DecoderSetting> decoderSettings) throws DefinitionException {
+        boolean isMatched = false;
+        final Integer checkValue = definitionReader.readValue(valueName);
+        for (DecoderSetting decoderSetting : decoderSettings) {
+            if (valueName.equals(decoderSetting.getName())) {
+                isMatched = checkValue.equals(decoderSetting.getValue());
+            }
+        }
+        return isMatched;
+    }
+
+    private void enterProgramMode() throws ProgramModeException {
+        if (!MessageResponse.MessageStatus.OK.equals(dccInterface.sendMessage(new EnterProgramMessage()).getStatus())) {
+            throw new ProgramModeException("Unable to set Program Mode");
+        }
+    }
+
+    private void exitProgramMode() {
+        dccInterface.sendMessage(new ExitProgramMessage());
+    }
+
+    private Decoder readDecoderNoSave(final DefinitionReader definitionReader) throws DefinitionException {
         final Decoder decoder = new Decoder();
         decoder.setDccManufacturer(dccManufacturerRepository.findOne(definitionReader.readValue("Manufacturer")));
         decoder.setVersion(definitionReader.readValue("Revision"));
@@ -130,7 +189,12 @@ public class DecoderReader {
             decoder.setCurrentAddress(decoder.getShortAddress());
         }
         copyExistingDecoder(decoder);
-        return saveDecoder(cvReader.getCVCache(), decoder);
+        return decoder;
+    }
+
+    private Decoder readDecoder(final DefinitionReader definitionReader) throws DefinitionException {
+        final Decoder decoder = readDecoderNoSave(definitionReader);
+        return saveDecoder(cvHandler.getCVCache(), decoder);
     }
 
     private void copyExistingDecoder(final Decoder decoder) {

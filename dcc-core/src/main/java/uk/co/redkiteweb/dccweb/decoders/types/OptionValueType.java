@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

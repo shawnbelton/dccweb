@@ -1,15 +1,19 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.CVHandler;
+
+import java.util.List;
 
 /**
  * Created by shawn on 16/09/16.
  */
 public interface ValueType {
     void setValueNode(final Node valueNode);
-    void setCVReader(final CVReader cvReader);
+    void setCVReader(final CVHandler cvHandler);
     void setUseCache(final boolean useCache);
     Integer getValue();
     DecoderSetting getSetting();
+    Integer getCVValue(final Integer cvNumber, final List<DecoderSetting> decoderSettings);
 }

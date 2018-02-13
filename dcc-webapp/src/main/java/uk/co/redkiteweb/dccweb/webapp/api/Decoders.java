@@ -10,7 +10,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.readers.DecoderReaderFactory;
+import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/decoders")
 public class Decoders {
 
-    private DecoderReaderFactory decoderReaderFactory;
+    private DecoderHandlerFactory decoderHandlerFactory;
     private DecoderRepository decoderRepository;
     private DecoderFunctionRepository decoderFunctionRepository;
     private LinkedMacroRepository linkedMacroRepository;
@@ -43,8 +43,8 @@ public class Decoders {
     }
 
     @Autowired
-    public void setDecoderReaderFactory(final DecoderReaderFactory decoderReaderFactory) {
-        this.decoderReaderFactory = decoderReaderFactory;
+    public void setDecoderHandlerFactory(final DecoderHandlerFactory decoderHandlerFactory) {
+        this.decoderHandlerFactory = decoderHandlerFactory;
     }
 
     @Autowired
@@ -54,17 +54,17 @@ public class Decoders {
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public @ResponseBody Decoder readDecoder() {
-        return decoderReaderFactory.createInstance().readDecoderOnProgram();
+        return decoderHandlerFactory.createInstance().readDecoderOnProgram();
     }
 
     @RequestMapping(value = "/read/full", method = RequestMethod.GET)
     public @ResponseBody List<DecoderSetting> readFull() {
-        return decoderReaderFactory.createInstance().readFullOnProgram();
+        return decoderHandlerFactory.createInstance().readFullOnProgram();
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public @ResponseBody Boolean writeCVs(@RequestBody final List<DecoderSetting> decoderSettings) {
-        logStore.log("info", String.format("decodersettings %d", decoderSettings.size()));
+        decoderHandlerFactory.createInstance().writeSettingsToDecoder(decoderSettings);
         return Boolean.TRUE;
     }
 

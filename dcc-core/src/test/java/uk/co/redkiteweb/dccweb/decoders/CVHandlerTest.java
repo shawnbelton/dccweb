@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,17 +23,17 @@ import static org.mockito.Mockito.when;
  * Created by shawn on 18/09/16.
  */
 @RunWith(JUnit4.class)
-public class CVReaderTest {
+public class CVHandlerTest {
 
-    private CVReader cvReader;
+    private CVHandler cvHandler;
     private MessageResponse messageResponse;
 
     @Before
     public void setup() {
         final DccInterface dccInterface = mock(DccInterface.class);
         messageResponse = mock(MessageResponse.class);
-        cvReader = new CVReader();
-        cvReader.setDccInterface(dccInterface);
+        cvHandler = new CVHandler();
+        cvHandler.setDccInterface(dccInterface);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
     }
 
@@ -47,32 +47,32 @@ public class CVReaderTest {
         when(cv.getCvValue()).thenReturn(5,3);
         cvs.add(cv);
         cvs.add(cv);
-        cvReader.setDecoder(decoder);
-        assertEquals(2, cvReader.getCVCache().keySet().size());
+        cvHandler.setDecoder(decoder);
+        assertEquals(2, cvHandler.getCVCache().keySet().size());
     }
 
     @Test
     public void testSetDecoderNullCvs() {
         final Decoder decoder = new Decoder();
-        cvReader.setDecoder(decoder);
-        assertTrue(cvReader.getCVCache().keySet().isEmpty());
+        cvHandler.setDecoder(decoder);
+        assertTrue(cvHandler.getCVCache().keySet().isEmpty());
     }
 
     @Test
     public void readCVTest() {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
-        assertEquals(new Integer(123), cvReader.readCV(1));
-        assertEquals(new Integer(123), cvReader.readCV(1));
-        assertEquals(new Integer(123), cvReader.readCV(1,false));
-        assertEquals(1, cvReader.getCVCache().size());
+        assertEquals(new Integer(123), cvHandler.readCV(1));
+        assertEquals(new Integer(123), cvHandler.readCV(1));
+        assertEquals(new Integer(123), cvHandler.readCV(1,false));
+        assertEquals(1, cvHandler.getCVCache().size());
     }
 
     @Test
     public void readFailTest() {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
-        assertNull(cvReader.readCV(1));
+        assertNull(cvHandler.readCV(1));
     }
 
 }

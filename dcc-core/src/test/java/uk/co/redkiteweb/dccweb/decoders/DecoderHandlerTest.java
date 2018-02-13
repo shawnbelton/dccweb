@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +14,6 @@ import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
-import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,15 +29,15 @@ import static org.mockito.Mockito.*;
  * Created by shawn on 07/07/16.
  */
 @RunWith(JUnit4.class)
-public class DecoderReaderTest {
+public class DecoderHandlerTest {
 
-    private DecoderReader decoderReader;
+    private DecoderHandler decoderHandler;
     private DccInterface dccInterface;
     private DecoderRepository decoderRepository;
     private LogStore logStore;
     private DefinitionReaderFactory definitionReaderFactory;
     private DefinitionReader definitionReader;
-    private CVReader cvReader;
+    private CVHandler cvHandler;
     private NotificationService notificationService;
 
     @Before
@@ -51,18 +49,18 @@ public class DecoderReaderTest {
         final DccManufacturerRepository dccManufacturerRepository = mock(DccManufacturerRepository.class);
         definitionReaderFactory = mock(DefinitionReaderFactory.class);
         definitionReader = mock(DefinitionReader.class);
-        cvReader = mock(CVReader.class);
+        cvHandler = mock(CVHandler.class);
         notificationService = mock(NotificationService.class);
-        decoderReader = new DecoderReader();
-        decoderReader.setDccInterface(dccInterface);
-        decoderReader.setDccManufacturerRepository(dccManufacturerRepository);
-        decoderReader.setDecoderRepository(decoderRepository);
-        decoderReader.setCvRepository(cvRepository);
-        decoderReader.setLogStore(logStore);
-        decoderReader.setDefinitionReaderFactory(definitionReaderFactory);
-        decoderReader.setCvReader(cvReader);
-        decoderReader.setNotificationService(notificationService);
-        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenReturn(definitionReader);
+        decoderHandler = new DecoderHandler();
+        decoderHandler.setDccInterface(dccInterface);
+        decoderHandler.setDccManufacturerRepository(dccManufacturerRepository);
+        decoderHandler.setDecoderRepository(decoderRepository);
+        decoderHandler.setCvRepository(cvRepository);
+        decoderHandler.setLogStore(logStore);
+        decoderHandler.setDefinitionReaderFactory(definitionReaderFactory);
+        decoderHandler.setCvHandler(cvHandler);
+        decoderHandler.setNotificationService(notificationService);
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenReturn(definitionReader);
     }
 
     @Test
@@ -70,7 +68,7 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        assertNotNull(decoderReader.readDecoderOnProgram());
+        assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
     @Test
@@ -78,7 +76,7 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        assertTrue(decoderReader.readFullOnProgram().isEmpty());
+        assertTrue(decoderHandler.readFullOnProgram().isEmpty());
     }
 
     @Test
@@ -105,7 +103,7 @@ public class DecoderReaderTest {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(mock(DecoderSetting.class));
         when(definitionReader.readAllValues()).thenReturn(decoderSettings);
-        assertFalse(decoderReader.readFullOnProgram().isEmpty());
+        assertFalse(decoderHandler.readFullOnProgram().isEmpty());
         verify(notificationService, times(2)).createNotification(anyString(), anyString());
     }
 
@@ -114,8 +112,8 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DecoderNotDetectedException.class));
-        assertTrue(decoderReader.readFullOnProgram().isEmpty());
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DecoderNotDetectedException.class));
+        assertTrue(decoderHandler.readFullOnProgram().isEmpty());
     }
 
     @Test
@@ -123,8 +121,8 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DefinitionException.class));
-        assertTrue(decoderReader.readFullOnProgram().isEmpty());
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DefinitionException.class));
+        assertTrue(decoderHandler.readFullOnProgram().isEmpty());
     }
 
 
@@ -134,12 +132,12 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(cvReader.readCV(anyInt())).thenReturn(1);
+        when(cvHandler.readCV(anyInt())).thenReturn(1);
         when(definitionReader.readValue(eq("Short Address"))).thenReturn(1);
         when(definitionReader.readValue(eq("Long Address"))).thenReturn(192);
-        when(cvReader.getCVCache()).thenReturn(cachedCvs);
+        when(cvHandler.getCVCache()).thenReturn(cachedCvs);
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
-        assertNotNull(decoderReader.readDecoderOnProgram());
+        assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
     @Test
@@ -150,7 +148,7 @@ public class DecoderReaderTest {
         when(messageResponseError.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponseOK).thenReturn(messageResponseError);
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
-        assertNotNull(decoderReader.readDecoderOnProgram());
+        assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
     @Test
@@ -158,13 +156,13 @@ public class DecoderReaderTest {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(mock(DecoderNotDetectedException.class));
-        assertNotNull(decoderReader.readDecoderOnProgram());
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DecoderNotDetectedException.class));
+        assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
     @Test
     public void readNotDefinedDefinition() throws DefinitionException {
-        when(definitionReaderFactory.getInstance(any(CVReader.class))).thenThrow(new DefinitionException("Error"));
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(new DefinitionException("Error"));
         readDecoderOK();
         verify(logStore, times(1)).log(eq("error"), anyString());
     }

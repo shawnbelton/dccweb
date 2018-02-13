@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,8 +7,8 @@ import org.junit.runners.JUnit4;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.decoders.DecoderDefinition;
-import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
+import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,14 +30,14 @@ public class DefinitionReaderTest {
         final ValueTypeFactory valueTypeFactory = mock(ValueTypeFactory.class);
         final Node valueNode = mock(Node.class);
         final ValueType valueType = mock(ValueType.class);
-        final CVReader cvReader = mock(CVReader.class);
+        final CVHandler cvHandler = mock(CVHandler.class);
         definitionReader = new DefinitionReader();
         definitionReader.setLogStore(logStore);
         definitionReader.setDecoderDefinition(decoderDefinition);
         definitionReader.setValueTypeFactory(valueTypeFactory);
-        definitionReader.setCvReader(cvReader);
+        definitionReader.setCvHandler(cvHandler);
         when(decoderDefinition.getValueNode(anyString())).thenReturn(valueNode);
-        when(valueTypeFactory.getInstance(any(Node.class), any(CVReader.class), anyBoolean())).thenReturn(valueType);
+        when(valueTypeFactory.getInstance(any(Node.class), any(CVHandler.class), anyBoolean())).thenReturn(valueType);
         when(valueType.getValue()).thenReturn(1);
     }
 
