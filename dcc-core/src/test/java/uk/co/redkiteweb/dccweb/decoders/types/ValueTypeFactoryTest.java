@@ -36,14 +36,14 @@ public class ValueTypeFactoryTest {
     public void testGetValueInstance() throws DefinitionException {
         when(context.getBean(anyString(), eq(ValueType.class))).thenReturn(mock(ValueType.class));
         final Node node = getValueType("value");
-        assertNotNull(valueTypeFactory.getInstance(node, mock(CVHandler.class), true));
+        assertNotNull(valueTypeFactory.getInstance(node, mock(CVHandler.class)));
     }
 
     @Test(expected = DefinitionException.class)
     public void testGetValueInstanceException() throws DefinitionException {
         when(context.getBean(anyString(), eq(ValueType.class))).thenThrow(mock(NoSuchBeanDefinitionException.class));
         final Node node = getValueType("value");
-        valueTypeFactory.getInstance(node, mock(CVHandler.class), true);
+        valueTypeFactory.getInstance(node, mock(CVHandler.class));
     }
 
     private Node getValueType(String flag) {

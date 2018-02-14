@@ -54,7 +54,7 @@ public class DefinitionReader {
 
     public ValueType getValueType(final String valueName) throws DefinitionException {
         final Node valueNode = decoderDefinition.getValueNode(valueName);
-        return valueTypeFactory.getInstance(valueNode, cvHandler, true);
+        return valueTypeFactory.getInstance(valueNode, cvHandler);
     }
 
     public Integer readValue(final String valueName) throws DefinitionException {
@@ -67,7 +67,7 @@ public class DefinitionReader {
         final NodeList allValueNodes = decoderDefinition.getValueNodes();
         for(int index = 0; index < allValueNodes.getLength(); index++) {
             final Node valueNode = allValueNodes.item(index);
-            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler, true);
+            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler);
             decoderSettings.add(valueType.getSetting());
         }
         return decoderSettings;
@@ -96,7 +96,7 @@ public class DefinitionReader {
         Integer cvValue = 0;
         for(int valueIndex = 0; valueIndex < valueNodes.getLength(); valueIndex++) {
             final Node valueNode = valueNodes.item(valueIndex);
-            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler, true);
+            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler);
             cvValue |= valueType.getCVValue(cvNumber, decoderSettings);
         }
         return cvValue;

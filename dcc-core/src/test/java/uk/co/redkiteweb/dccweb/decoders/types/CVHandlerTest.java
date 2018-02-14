@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
-import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,6 @@ public class CVHandlerTest {
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
         assertEquals(new Integer(123), cvHandler.readCV(1));
         assertEquals(new Integer(123), cvHandler.readCV(1));
-        assertEquals(new Integer(123), cvHandler.readCV(1,false));
         assertEquals(1, cvHandler.getCVCache().size());
     }
 

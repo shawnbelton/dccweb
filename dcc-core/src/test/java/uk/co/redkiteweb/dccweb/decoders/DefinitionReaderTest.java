@@ -38,7 +38,7 @@ public class DefinitionReaderTest {
         definitionReader.setValueTypeFactory(valueTypeFactory);
         definitionReader.setCvHandler(cvHandler);
         when(decoderDefinition.getValueNode(anyString())).thenReturn(valueNode);
-        when(valueTypeFactory.getInstance(any(Node.class), any(CVHandler.class), anyBoolean())).thenReturn(valueType);
+        when(valueTypeFactory.getInstance(any(Node.class), any(CVHandler.class))).thenReturn(valueType);
         when(valueType.getValue()).thenReturn(1);
     }
 

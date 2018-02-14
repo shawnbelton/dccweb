@@ -9,7 +9,8 @@ import org.w3c.dom.Node;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,7 +26,7 @@ public class ValueValueTypeTest {
     @Before
     public void setup() {
         final CVHandler cvHandler = mock(CVHandler.class);
-        when(cvHandler.readCV(anyInt(), anyBoolean())).thenReturn(1);
+        when(cvHandler.readCV(anyInt())).thenReturn(1);
         final Node node = mock(Node.class);
         final Node nameNode = mock(Node.class);
         final Node idNode = mock(Node.class);
@@ -41,7 +42,6 @@ public class ValueValueTypeTest {
         value = new ValueValueType();
         value.setValueNode(node);
         value.setCVReader(cvHandler);
-        value.setUseCache(false);
     }
 
     @Test

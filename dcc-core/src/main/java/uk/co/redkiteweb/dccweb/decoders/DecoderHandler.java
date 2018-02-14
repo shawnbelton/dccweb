@@ -147,21 +147,32 @@ public class DecoderHandler {
     private void writeToDecoder(final List<DecoderSetting> decoderSettings, final DefinitionReader definitionReader) throws DefinitionException {
         final Decoder decoder = readDecoder(definitionReader);
         final Map<Integer, Integer> cvMap = definitionReader.buildCVs(decoderSettings);
-        for(CV originalCv : decoder.getCvs()) {
-            if (cvMap.containsKey(originalCv.getCvNumber())
-                    && !originalCv.getCvValue().equals(cvMap.get(originalCv.getCvNumber()))) {
-                    logStore.log("info", String.format("Writing CV %d with value %d", originalCv.getCvNumber(), cvMap.get(originalCv.getCvNumber())));
-            }
+        for (CV originalCv : decoder.getCvs()) {
+            writeCVToDecoder(cvMap, originalCv);
+        }
+        cvHandler.setDecoder(decoder);
+        readBaseDecoderValues(definitionReader, decoder);
+        decoderRepository.save(decoder);
+        notificationService.createNotification("DECODERS", "");
+    }
+
+    private void writeCVToDecoder(final Map<Integer, Integer> cvMap, final CV originalCv) {
+        if (cvMap.containsKey(originalCv.getCvNumber())
+                && !originalCv.getCvValue().equals(cvMap.get(originalCv.getCvNumber()))) {
+            logStore.log("info", String.format("Writing CV %d with value %d", originalCv.getCvNumber(), cvMap.get(originalCv.getCvNumber())));
+            originalCv.setCvValue(cvMap.get(originalCv.getCvNumber()));
+            cvHandler.writeCV(originalCv);
+            cvRepository.save(originalCv);
         }
     }
 
     private static boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
         boolean isMatch = true;
-        isMatch &= checkValue(definitionReader,"Manufacturer", decoderSettings);
-        isMatch &= checkValue(definitionReader,"Revision", decoderSettings);
-        isMatch &= checkValue(definitionReader,"Address Mode", decoderSettings);
-        isMatch &= checkValue(definitionReader,"Short Address", decoderSettings);
-        isMatch &= checkValue(definitionReader,"Long Address", decoderSettings);
+        isMatch &= checkValue(definitionReader, "Manufacturer", decoderSettings);
+        isMatch &= checkValue(definitionReader, "Revision", decoderSettings);
+        isMatch &= checkValue(definitionReader, "Address Mode", decoderSettings);
+        isMatch &= checkValue(definitionReader, "Short Address", decoderSettings);
+        isMatch &= checkValue(definitionReader, "Long Address", decoderSettings);
         return isMatch;
     }
 
@@ -190,6 +201,12 @@ public class DecoderHandler {
         final Decoder decoder = new Decoder();
         decoder.setDccManufacturer(dccManufacturerRepository.findOne(definitionReader.readValue("Manufacturer")));
         decoder.setVersion(definitionReader.readValue("Revision"));
+        readBaseDecoderValues(definitionReader, decoder);
+        copyExistingDecoder(decoder);
+        return decoder;
+    }
+
+    private void readBaseDecoderValues(final DefinitionReader definitionReader, final Decoder decoder) throws DefinitionException {
         decoder.setAddressMode(definitionReader.readValue("Address Mode") == 1);
         decoder.setShortAddress(definitionReader.readValue("Short Address"));
         decoder.setLongAddress(definitionReader.readValue("Long Address"));
@@ -198,8 +215,6 @@ public class DecoderHandler {
         } else {
             decoder.setCurrentAddress(decoder.getShortAddress());
         }
-        copyExistingDecoder(decoder);
-        return decoder;
     }
 
     private Decoder readDecoder(final DefinitionReader definitionReader) throws DefinitionException {
@@ -217,7 +232,7 @@ public class DecoderHandler {
         }
     }
 
-    private Decoder saveDecoder(final Map<Integer, Integer> cachedCvs,final Decoder decoder) {
+    private Decoder saveDecoder(final Map<Integer, Integer> cachedCvs, final Decoder decoder) {
         decoderRepository.save(decoder);
         for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
             final CV cv = new CV();

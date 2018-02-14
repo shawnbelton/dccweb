@@ -30,7 +30,6 @@ public class OptionTypeValueTest {
         optionValueType = new OptionValueType();
         optionValueType.setValueNode(valueNode);
         optionValueType.setCVReader(cvHandler);
-        optionValueType.setUseCache(true);
     }
 
     @Test

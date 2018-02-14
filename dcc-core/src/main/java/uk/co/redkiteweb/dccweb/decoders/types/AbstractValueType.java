@@ -11,7 +11,6 @@ public abstract class AbstractValueType implements ValueType {
 
     private Node valueNode;
     private CVHandler cvHandler;
-    private boolean useCache;
 
     @Override
     public void setValueNode(final Node valueNode) {
@@ -23,17 +22,12 @@ public abstract class AbstractValueType implements ValueType {
         this.cvHandler = cvHandler;
     }
 
-    @Override
-    public void setUseCache(final boolean useCache) {
-        this.useCache = useCache;
-    }
-
     protected Node getValueNode() {
         return valueNode;
     }
 
     protected Integer getCVValue(final Integer cvNumber) {
-        return cvHandler.readCV(cvNumber, useCache);
+        return cvHandler.readCV(cvNumber);
     }
 
     @Override

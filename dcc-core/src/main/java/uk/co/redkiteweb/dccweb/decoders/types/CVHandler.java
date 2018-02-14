@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.WriteCVMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,17 +48,14 @@ public class CVHandler {
         return cachedCVs;
     }
 
-    public Integer readCV(final int cvNumber) {
-        return readCV(cvNumber, true);
+    public void writeCV(final CV cv) {
+        final WriteCVMessage writeCVMessage = new WriteCVMessage();
+        writeCVMessage.setCv(cv);
+        dccInterface.sendMessage(writeCVMessage);
     }
 
-    public Integer readCV(final int cvNumber, final boolean useCache) {
-        Integer cvValue;
-        if (useCache) {
-            cvValue = readCVUseCache(cvNumber);
-        } else {
-            cvValue = readCVDirect(cvNumber);
-        }
+    public Integer readCV(final int cvNumber) {
+        final Integer cvValue = readCVUseCache(cvNumber);
         LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
     }

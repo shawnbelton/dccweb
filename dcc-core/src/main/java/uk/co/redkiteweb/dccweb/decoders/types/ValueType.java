@@ -11,7 +11,6 @@ import java.util.List;
 public interface ValueType {
     void setValueNode(final Node valueNode);
     void setCVReader(final CVHandler cvHandler);
-    void setUseCache(final boolean useCache);
     Integer getValue();
     DecoderSetting getSetting();
     Integer getCVValue(final Integer cvNumber, final List<DecoderSetting> decoderSettings);
