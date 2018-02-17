@@ -16,8 +16,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 18/09/16.
@@ -27,10 +26,11 @@ public class CVHandlerTest {
 
     private CVHandler cvHandler;
     private MessageResponse messageResponse;
+    private DccInterface dccInterface;
 
     @Before
     public void setup() {
-        final DccInterface dccInterface = mock(DccInterface.class);
+        dccInterface = mock(DccInterface.class);
         messageResponse = mock(MessageResponse.class);
         cvHandler = new CVHandler();
         cvHandler.setDccInterface(dccInterface);
@@ -65,6 +65,12 @@ public class CVHandlerTest {
         assertEquals(new Integer(123), cvHandler.readCV(1));
         assertEquals(new Integer(123), cvHandler.readCV(1));
         assertEquals(1, cvHandler.getCVCache().size());
+    }
+
+    @Test
+    public void testWriteCV() {
+        cvHandler.writeCV(new CV());
+        verify(dccInterface, times(1)).sendMessage(any(Message.class));
     }
 
     @Test

@@ -206,7 +206,7 @@ public class DecoderHandler {
         return decoder;
     }
 
-    private void readBaseDecoderValues(final DefinitionReader definitionReader, final Decoder decoder) throws DefinitionException {
+    private static void readBaseDecoderValues(final DefinitionReader definitionReader, final Decoder decoder) throws DefinitionException {
         decoder.setAddressMode(definitionReader.readValue("Address Mode") == 1);
         decoder.setShortAddress(definitionReader.readValue("Short Address"));
         decoder.setLongAddress(definitionReader.readValue("Long Address"));

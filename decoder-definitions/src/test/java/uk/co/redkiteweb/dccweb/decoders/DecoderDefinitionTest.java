@@ -51,6 +51,12 @@ public class DecoderDefinitionTest {
     }
 
     @Test
+    public void testGetCVNodes() throws DefinitionException {
+        decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
+        assertNotNull(decoderDefinition.getCVNodes());
+    }
+
+    @Test
     public void testFromFile() throws DefinitionException {
         decoderDefinition.setDefinitionsPath(DEFINITIONS_PATH);
         decoderDefinition.setDecoderDefFile(TEST_FILE_XML);

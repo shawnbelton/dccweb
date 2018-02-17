@@ -6,6 +6,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -60,5 +64,31 @@ public class ValueValueTypeTest {
     @Test
     public void testGetSetting() {
         assertNotNull(value.getSetting());
+    }
+
+    @Test
+    public void testCVValueNoMask() {
+        final List<DecoderSetting> decoderSettings = new ArrayList<>();
+        decoderSettings.add(createDecoderSetting("Flag", 1));
+        decoderSettings.add(createDecoderSetting("Name", 1));
+        assertEquals(new Integer(0), value.getCVValue(1, decoderSettings));
+    }
+
+    @Test
+    public void testCVValueWithMask() {
+        final Node maskNode = mock(Node.class);
+        when(maskNode.getTextContent()).thenReturn("127");
+        when(namedNodeMap.getNamedItem(eq("mask"))).thenReturn(maskNode);
+        final List<DecoderSetting> decoderSettings = new ArrayList<>();
+        decoderSettings.add(createDecoderSetting("Flag", 1));
+        decoderSettings.add(createDecoderSetting("Name", 1));
+        assertEquals(new Integer(129), value.getCVValue(2, decoderSettings));
+    }
+
+    private DecoderSetting createDecoderSetting(final String name, final Integer value) {
+        final DecoderSetting decoderSetting = new DecoderSetting();
+        decoderSetting.setName(name);
+        decoderSetting.setNewValue(value);
+        return decoderSetting;
     }
 }

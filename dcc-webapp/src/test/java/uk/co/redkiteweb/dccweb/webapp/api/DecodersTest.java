@@ -62,6 +62,12 @@ public class DecodersTest {
     }
 
     @Test
+    public void testWriteCvs() {
+        decoders.writeCVs(new ArrayList<>());
+        verify(decoderHandler, times(1)).writeSettingsToDecoder(anyList());
+    }
+
+    @Test
     public void testFetchAll() {
         when(decoderRepository.findAll()).thenReturn(new ArrayList<>());
         assertNotNull(decoders.allDecoders());

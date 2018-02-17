@@ -81,6 +81,15 @@ public class DecoderHandlerTest {
     }
 
     @Test
+    public void errorEnterProgramWriteTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        messageResponse.setStatus(MessageResponse.MessageStatus.ERROR);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        decoderHandler.writeSettingsToDecoder(new ArrayList<>());
+        verify(definitionReaderFactory, never()).getInstance(eq(cvHandler));
+    }
+
+    @Test
     public void readDecoderOKTest() throws DefinitionException {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         readDecoderOK();
@@ -118,12 +127,32 @@ public class DecoderHandlerTest {
     }
 
     @Test
+    public void noDecoderWriteCVTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DecoderNotDetectedException.class));
+        decoderHandler.writeSettingsToDecoder(new ArrayList<>());
+        verify(definitionReader, never()).readValue(anyString());
+    }
+
+    @Test
     public void definitionExceptionFullTest() throws DefinitionException {
         final MessageResponse messageResponse = mock(MessageResponse.class);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
         when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DefinitionException.class));
         assertTrue(decoderHandler.readFullOnProgram().isEmpty());
+    }
+
+    @Test
+    public void definitionExceptionWriteCVTest() throws DefinitionException {
+        final MessageResponse messageResponse = mock(MessageResponse.class);
+        when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
+        when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
+        when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenThrow(mock(DefinitionException.class));
+        decoderHandler.writeSettingsToDecoder(new ArrayList<>());
+        verify(definitionReader, never()).readValue(anyString());
     }
 
 

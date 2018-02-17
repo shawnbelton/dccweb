@@ -18,11 +18,17 @@ public class DecoderSettingTest {
     @Before
     public void setup() {
         decoderSetting = new DecoderSetting();
+        decoderSetting.setId("Id");
         decoderSetting.setName("SettingName");
         decoderSetting.setType("SettingType");
         decoderSetting.setValue(1);
         decoderSetting.setNewValue(2);
         decoderSetting.setDecoderSettingOptions(new ArrayList<>());
+    }
+
+    @Test
+    public void testId() {
+        assertEquals("Id", decoderSetting.getId());
     }
 
     @Test

@@ -15,8 +15,14 @@ public class DecoderSettingOptionsTest {
     @Before
     public void setup() {
         decoderSettingOption = new DecoderSettingOption();
+        decoderSettingOption.setId("Id");
         decoderSettingOption.setOption("Option");
         decoderSettingOption.setValue(1);
+    }
+
+    @Test
+    public void testId() {
+        assertEquals("Id", decoderSettingOption.getId());
     }
 
     @Test
