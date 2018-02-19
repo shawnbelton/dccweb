@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,22 +15,22 @@ import static org.mockito.Mockito.when;
  * Created by shawn on 11/11/16.
  */
 @RunWith(JUnit4.class)
-public class DecoderReaderFactoryTest {
+public class DecoderHandlerFactoryTest {
 
-    private DecoderReaderFactory decoderReaderFactory;
+    private DecoderHandlerFactory decoderHandlerFactory;
 
     @Before
     public void setup() {
         final ApplicationContext context = mock(ApplicationContext.class);
-        final DecoderReader decoderReader = mock(DecoderReader.class);
-        when(context.getBean(eq(DecoderReader.class))).thenReturn(decoderReader);
-        decoderReaderFactory = new DecoderReaderFactory();
-        decoderReaderFactory.setApplicationContext(context);
+        final DecoderHandler decoderHandler = mock(DecoderHandler.class);
+        when(context.getBean(eq(DecoderHandler.class))).thenReturn(decoderHandler);
+        decoderHandlerFactory = new DecoderHandlerFactory();
+        decoderHandlerFactory.setApplicationContext(context);
     }
 
     @Test
     public void testCreateInstance() {
-        assertNotNull(decoderReaderFactory.createInstance());
+        assertNotNull(decoderHandlerFactory.createInstance());
     }
 
 }

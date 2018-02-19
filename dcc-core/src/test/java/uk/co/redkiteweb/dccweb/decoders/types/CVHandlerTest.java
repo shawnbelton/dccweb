@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,60 +13,71 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by shawn on 18/09/16.
  */
 @RunWith(JUnit4.class)
-public class CVReaderTest {
+public class CVHandlerTest {
 
-    private CVReader cvReader;
+    private CVHandler cvHandler;
     private MessageResponse messageResponse;
+    private DccInterface dccInterface;
 
     @Before
     public void setup() {
-        final DccInterface dccInterface = mock(DccInterface.class);
+        dccInterface = mock(DccInterface.class);
         messageResponse = mock(MessageResponse.class);
-        cvReader = new CVReader();
-        cvReader.setDccInterface(dccInterface);
+        cvHandler = new CVHandler();
+        cvHandler.setDccInterface(dccInterface);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
     }
 
     @Test
     public void testSetDecoder() {
-        final Decoder decoder = mock(Decoder.class);
+        final Decoder decoder = new Decoder();
         final List<CV> cvs = new ArrayList<>();
+        decoder.setCvs(cvs);
         final CV cv = mock(CV.class);
         when(cv.getCvNumber()).thenReturn(1,2);
         when(cv.getCvValue()).thenReturn(5,3);
         cvs.add(cv);
         cvs.add(cv);
-        when(decoder.getCvs()).thenReturn(cvs);
-        cvReader.setDecoder(decoder);
-        assertEquals(2, cvReader.getCVCache().keySet().size());
+        cvHandler.setDecoder(decoder);
+        assertEquals(2, cvHandler.getCVCache().keySet().size());
+    }
+
+    @Test
+    public void testSetDecoderNullCvs() {
+        final Decoder decoder = new Decoder();
+        cvHandler.setDecoder(decoder);
+        assertTrue(cvHandler.getCVCache().keySet().isEmpty());
     }
 
     @Test
     public void readCVTest() {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.OK);
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
-        assertEquals(new Integer(123), cvReader.readCV(1));
-        assertEquals(new Integer(123), cvReader.readCV(1));
-        assertEquals(new Integer(123), cvReader.readCV(1,false));
-        assertEquals(1, cvReader.getCVCache().size());
+        assertEquals(new Integer(123), cvHandler.readCV(1));
+        assertEquals(new Integer(123), cvHandler.readCV(1));
+        assertEquals(1, cvHandler.getCVCache().size());
+    }
+
+    @Test
+    public void testWriteCV() {
+        cvHandler.writeCV(new CV());
+        verify(dccInterface, times(1)).sendMessage(any(Message.class));
     }
 
     @Test
     public void readFailTest() {
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(messageResponse.get(eq("CVData"))).thenReturn(123);
-        assertNull(cvReader.readCV(1));
+        assertNull(cvHandler.readCV(1));
     }
 
 }

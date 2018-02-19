@@ -1,11 +1,13 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Node;
+import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
 
 import java.util.Locale;
 
@@ -23,12 +25,16 @@ public class ValueTypeFactory implements ApplicationContextAware {
         this.context = applicationContext;
     }
 
-    public ValueType getInstance(final Node valueNode, final CVReader cvReader, final boolean direct) {
+    public ValueType getInstance(final Node valueNode, final CVHandler cvHandler) throws DefinitionException {
+        ValueType valueType;
         final String type = valueNode.getAttributes().getNamedItem("type").getTextContent();
-        final ValueType valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
-        valueType.setValueNode(valueNode);
-        valueType.setCVReader(cvReader);
-        valueType.setUseCache(direct);
+        try {
+            valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
+            valueType.setValueNode(valueNode);
+            valueType.setCVReader(cvHandler);
+        } catch (NoSuchBeanDefinitionException exception) {
+            throw new DefinitionException(String.format("Unable to find value type for %s", type), exception);
+        }
         return valueType;
     }
 

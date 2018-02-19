@@ -1,17 +1,98 @@
 <decoder manufacturer="151" revision="255">
     <cv number="1">
-        <value name="Short Address" type="value" low="1" high="192"/>
+        <value id="cv1" name="Short Address" type="value" low="1" high="127"/>
+    </cv>
+    <cv number="2">
+        <value id="cv2" name="Start Voltage" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="3">
+        <value id="cv3" name="Acceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="4">
+        <value id="cv4" name="Deceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="5">
+        <value id="cv5" name="Maximum Speed" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="6">
+        <value id="cv6" name="Medium Speed" type="value" low="0" high="255"/>
     </cv>
     <cv number="7">
-        <value name="Revision" type="value" low="0" high="255"/>
+        <value id="cv7" name="Revision" type="value" low="0" high="255"/>
     </cv>
     <cv number="8">
-        <value name="Manufacturer" type="value" low="0" high="255"/>
+        <value id="cv8" name="Manufacturer" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="13">
+        <value id="cv13bit0" name="Analog F1" type="flag" bit="0"/>
+        <value id="cv13bit1" name="Analog F2" type="flag" bit="1"/>
+        <value id="cv13bit2" name="Analog F3" type="flag" bit="2"/>
+        <value id="cv13bit3" name="Analog F4" type="flag" bit="3"/>
+        <value id="cv13bit4" name="Analog F5" type="flag" bit="4"/>
+        <value id="cv13bit5" name="Analog F6" type="flag" bit="5"/>
+        <value id="cv13bit6" name="Analog F7" type="flag" bit="6"/>
+        <value id="cv13bit7" name="Analog F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="14">
+        <value id="cv14bit0" name="Analog F0" type="flag" bit="0"/>
+        <value id="cv14bit1" name="Analog F9" type="flag" bit="1"/>
+        <value id="cv14bit2" name="Analog F10" type="flag" bit="2"/>
+        <value id="cv14bit3" name="Analog F11" type="flag" bit="3"/>
+        <value id="cv14bit4" name="Analog F12" type="flag" bit="4"/>
+        <value id="cv14bit5" name="Analog F13" type="flag" bit="5"/>
+        <value id="cv14bit6" name="Analog F14" type="flag" bit="6"/>
+        <value id="cv14bit7" name="Analog F15" type="flag" bit="7"/>
     </cv>
     <cv number="17,18">
-        <value name="Long Address" type="value" low="128" high="10239" mask="16383"/>
+        <value id="cv1718" name="Long Address" type="value" low="128" high="10239" mask="16383"/>
+    </cv>
+    <cv number="19">
+        <value id="cv19" name="Consist Address" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="21">
+        <value id="cv21bit0" name="Consist F1" type="flag" bit="0"/>
+        <value id="cv21bit1" name="Consist F2" type="flag" bit="1"/>
+        <value id="cv21bit2" name="Consist F3" type="flag" bit="2"/>
+        <value id="cv21bit3" name="Consist F4" type="flag" bit="3"/>
+        <value id="cv21bit4" name="Consist F5" type="flag" bit="4"/>
+        <value id="cv21bit5" name="Consist F6" type="flag" bit="5"/>
+        <value id="cv21bit6" name="Consist F7" type="flag" bit="6"/>
+        <value id="cv21bit7" name="Consist F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="22">
+        <value id="cv22bit0" name="Consist F0" type="flag" bit="0"/>
+        <value id="cv22bit1" name="Consist F9" type="flag" bit="1"/>
+        <value id="cv22bit2" name="Consist F10" type="flag" bit="2"/>
+        <value id="cv22bit3" name="Consist F11" type="flag" bit="3"/>
+        <value id="cv22bit4" name="Consist F12" type="flag" bit="4"/>
+        <value id="cv22bit5" name="Consist F13" type="flag" bit="5"/>
+        <value id="cv22bit6" name="Consist F14" type="flag" bit="6"/>
+        <value id="cv22bit7" name="Consist F15" type="flag" bit="7"/>
     </cv>
     <cv number="29">
-        <value name="Address Mode" type="flag" bit="5"/>
+        <value id="cv29bit0" name="Direction" type="option" bit="0">
+            <option value="0">Normal</option>
+            <option value="1">Reversed</option>
+        </value>
+        <value id="cv29bit1" name="Speed Steps" type="option" bit="1">
+            <option value="0">14 Speed Steps</option>
+            <option value="1">28 or 128 Speed Steps</option>
+        </value>
+        <value id="cv29bit2" name="Analog Mode" type="option" bit="2">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </value>
+        <value id="cv29bit3" name="RailCom" type="option" bit="3">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </value>
+        <value id="cv29bit4" name="Speed Curve" type="option" bit="4">
+            <option value="0">CV 2,5 and 6</option>
+            <option value="1">CV 67-94</option>
+        </value>
+        <value id="cv29bit5" name="Address Mode" type="option" bit="5">
+            <option value="0">Short Address</option>
+            <option value="1">Long Address</option>
+        </value>
     </cv>
 </decoder>

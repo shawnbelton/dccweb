@@ -1,14 +1,15 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 
 /**
  * Created by shawn on 16/09/16.
  */
 @Component("flagValueType")
 @Scope("prototype")
-public class Flag extends AbstractValueType implements ValueType {
+public class FlagValueType extends AbstractValueType implements ValueType {
 
     @Override
     public Integer getValue() {
@@ -23,5 +24,12 @@ public class Flag extends AbstractValueType implements ValueType {
     @Override
     protected String getType() {
         return "flag";
+    }
+
+    @Override
+    protected Integer getCVValue(final Integer cvNumber, final DecoderSetting decoderSetting) {
+        final int bit = Integer.parseInt(getValueNode().getAttributes().getNamedItem("bit").getTextContent());
+        final Integer bitMask = (int)Math.round(Math.pow(2, bit));
+        return (decoderSetting.getNewValue()>0)?bitMask:0;
     }
 }

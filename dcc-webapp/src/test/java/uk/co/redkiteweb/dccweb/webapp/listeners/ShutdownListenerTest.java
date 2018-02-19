@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.context.event.ContextClosedEvent;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
 import static org.mockito.Mockito.*;
@@ -27,7 +26,7 @@ public class ShutdownListenerTest {
 
     @Test
     public void shutdownTest() {
-        shutdownListener.onApplicationEvent(mock(ContextClosedEvent.class));
+        shutdownListener.onApplicationEvent();
         verify(dccInterface, times(1)).shutdown();
     }
 }

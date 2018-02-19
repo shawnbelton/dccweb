@@ -20,7 +20,12 @@ export class PaginationComponent {
   }
 
   getNumberOfPages(): number {
-    const realPages: number = this.items.length / this.pageSize;
+    let realPages: number;
+    if (this.items == null) {
+      realPages = 0;
+    } else {
+      realPages = this.items.length / this.pageSize;
+    }
     let numPages: number = Math.floor(realPages);
     if (realPages !== numPages) {
       numPages++;
@@ -56,8 +61,10 @@ export class PaginationComponent {
     const pagedItems: any[] = [];
     const offset: number = ((this.currentPage - 1) * this.pageSize);
     for (let index = 0; index < this.pageSize; index++) {
-      if ((offset + index) < this.items.length) {
-        pagedItems.push(this.items[(offset + index)]);
+      if (this.items != null) {
+        if ((offset + index) < this.items.length) {
+          pagedItems.push(this.items[(offset + index)]);
+        }
       }
     }
     return pagedItems;

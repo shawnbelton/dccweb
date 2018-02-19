@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.decoders;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -12,8 +13,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Created by shawn on 16/09/16.
@@ -23,24 +23,39 @@ import java.io.InputStream;
 public class DecoderDefinition {
 
     private Document decoderDefDocument;
+    private String definitionsPath;
+
+
+    @Value("${dccweb.definitions.path}")
+    public void setDefinitionsPath(final String definitionsPath) {
+        this.definitionsPath = definitionsPath;
+    }
 
     public void setDecoderDefFile(final String decoderDefFile) throws DefinitionException {
         try {
-            final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            final InputStream xmlStream = DecoderDefinition.class.getResourceAsStream(decoderDefFile);
+            final InputStream xmlStream = getInput(decoderDefFile);
             if (xmlStream != null) {
+                final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 this.decoderDefDocument = documentBuilder.parse(xmlStream);
             } else {
                 throw new DefinitionException(String.format("File Not Found %s", decoderDefFile));
             }
-        } catch (ParserConfigurationException exception) {
-            throw new DefinitionException(exception);
-        } catch (SAXException exception) {
-            throw new DefinitionException(exception);
-        } catch (IOException exception) {
+        } catch (IOException | SAXException | ParserConfigurationException exception) {
             throw new DefinitionException(exception);
         }
+    }
+
+    private InputStream getInput(final String decoderDefFile) throws FileNotFoundException {
+        InputStream xmlStream;
+        final String fullFileName = String.format("%s/%s", definitionsPath, decoderDefFile);
+        final File definitionsFile = new File(fullFileName);
+        if (definitionsFile.exists()) {
+            xmlStream = new FileInputStream(definitionsFile);
+        } else {
+            xmlStream = DecoderDefinition.class.getResourceAsStream(decoderDefFile);
+        }
+        return xmlStream;
     }
 
     public Node getValueNode(final String valueName) throws DefinitionException {
@@ -49,6 +64,10 @@ public class DecoderDefinition {
 
     public NodeList getValueNodes() throws DefinitionException {
         return (NodeList) getXPathValue("//value", XPathConstants.NODESET);
+    }
+
+    public NodeList getCVNodes() throws DefinitionException {
+        return (NodeList) getXPathValue("//cv", XPathConstants.NODESET);
     }
 
     private Object getXPathValue(final String xPathString, final QName returnType) throws DefinitionException {

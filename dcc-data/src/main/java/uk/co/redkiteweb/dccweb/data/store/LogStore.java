@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.data.store;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.data.LogEntry;
@@ -14,6 +16,8 @@ import java.util.List;
 @Component
 public class LogStore {
 
+    private static final Logger LOGGER = LogManager.getLogger(LogStore.class);
+
     private final List<LogEntry> logEntryStore;
     private NotificationService notificationService;
 
@@ -27,6 +31,7 @@ public class LogStore {
     }
 
     public void log(final String level, final String message) {
+        LOGGER.info(message);
         notificationService.createNotification("MESSAGES","");
         final LogEntry logEntry = new LogEntry();
         logEntry.setLevel(level);

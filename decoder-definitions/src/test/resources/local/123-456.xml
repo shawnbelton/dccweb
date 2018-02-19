@@ -1,0 +1,5 @@
+<decoder manufacturer="123" revision="456">
+    <cv number="1">
+        <value id="cv1" name="Short Address" type="value" low="1" high="127"/>
+    </cv>
+</decoder>

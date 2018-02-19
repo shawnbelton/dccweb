@@ -1,17 +1,17 @@
 <decoder manufacturer="36" revision="34">
     <cv number="1">
-        <value name="Short Address" type="value" low="1" high="192"/>
+        <value id="cv1" name="Short Address" type="value" low="1" high="192"/>
     </cv>
     <cv number="7">
-        <value name="Revision" type="value" low="0" high="255"/>
+        <value id="cv7" name="Revision" type="value" low="0" high="255"/>
     </cv>
     <cv number="8">
-        <value name="Manufacturer" type="value" low="0" high="255"/>
+        <value id="cv8" name="Manufacturer" type="value" low="0" high="255"/>
     </cv>
     <cv number="17,18">
-        <value name="Long Address" type="value" low="192" high="10239" mask="16383"/>
+        <value id="cv1718" name="Long Address" type="value" low="192" high="10239" mask="16383"/>
     </cv>
     <cv number="29">
-        <value name="Address Mode" type="flag" bit="5"/>
+        <value id="cv29bit5" name="Address Mode" type="flag" bit="5"/>
     </cv>
 </decoder>

@@ -1,11 +1,10 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.decoders.DecoderNotDetectedException;
-import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 
 /**
  * Created by shawn on 15/09/16.
@@ -20,14 +19,14 @@ public class DefinitionReaderFactory implements ApplicationContextAware {
         this.context = applicationContext;
     }
 
-    public DefinitionReader getInstance(final CVReader cvReader) throws DefinitionException {
-        final Integer manufacturerId = cvReader.readCV(8);
+    public DefinitionReader getInstance(final CVHandler cvHandler) throws DefinitionException {
+        final Integer manufacturerId = cvHandler.readCV(8);
         if (manufacturerId == null) {
             throw new DecoderNotDetectedException("No Decoder Detected");
         }
-        final Integer version = cvReader.readCV(7);
+        final Integer version = cvHandler.readCV(7);
         final DefinitionReader definitionReader = getDefinitionReader(manufacturerId, version);
-        definitionReader.setCvReader(cvReader);
+        definitionReader.setCvHandler(cvHandler);
         return definitionReader;
     }
 

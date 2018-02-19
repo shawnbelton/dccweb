@@ -17,41 +17,40 @@
           </ng-template>
         </app-pagination>
       </div>
+      <div class="panel-footer clearfix">
+        <span class="pull-right">
+          <input id="readDecoder" type="button" class="btn btn-info btn-xs"
+                 (click)="readDecoder()" value="Read Basic Values"/>
+          <input id="readFullDecoder" type="button" class="btn btn-info btn-xs"
+                 (click)="readFullDecoder()" value="Read Full Values"/>
+        </span>
+      </div>
     </div>
   </div>
   <div class="col-sm-6">
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" *ngIf="isNotEmptyDecoder()">
       <div class="panel-heading">
         <span>Decoder Settings</span>
       </div>
       <div class="panel-body">
         <p class="row">
-          <label class="col-sm-3">Manufacturer:</label>
-          <span class="col-sm-9"
-                *ngIf="isEmptyDecoder()">{{currentDecoder.dccManufacturer.manufacturer}}</span>
+          <label class="col-sm-5">Manufacturer:</label>
+          <span class="col-sm-7">{{currentDecoder.dccManufacturer.manufacturer}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Version:</label>
-          <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.version}}</span>
+          <label class="col-sm-5">Version:</label>
+          <span class="col-sm-7">{{currentDecoder.version}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Short Address:</label>
-          <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.shortAddress}}</span>
+          <label class="col-sm-5">Short Address:</label>
+          <span class="col-sm-7">{{currentDecoder.shortAddress}}</span>
         </p>
         <p class="row">
-          <label class="col-sm-3">Long Address:</label>
-          <span class="col-sm-9" *ngIf="isEmptyDecoder()">{{currentDecoder.longAddress}}</span>
+          <label class="col-sm-5">Long Address:</label>
+          <span class="col-sm-7">{{currentDecoder.longAddress}}</span>
         </p>
-        <div class="row" *ngIf="!isEmptyDecoder()">
-          <div class="col-sm-12">
-            <span class="pull-right">
-              <input id="readDecoder" type="button" class="btn btn-info btn-xs" (click)="readDecoder()"
-                     value="Read Values"/>
-            </span>
-          </div>
-        </div>
       </div>
-      <ul class="decoders nav nav-tabs" *ngIf="isEmptyDecoder()">
+      <ul class="decoders nav nav-tabs">
         <li role="presentation" [ngClass]="{'active': isFunctionsTab()}"><a href="/decoders"
                                                                             (click)="setFunctionsTab()">Decoder
           Functions</a></li>
@@ -122,6 +121,21 @@
           </form>
         </div>
       </div>
+    </div>
+    <div class="panel panel-primary" *ngIf="isNotEmptySettings()">
+      <div class="panel-heading">
+        <span>Full Decoder Settings</span>
+      </div>
+      <form id="fullSetting" name="fullSetting" class="form-horizontal" #fullSetting="ngForm">
+        <app-pagination [items]="decoderSettings" [pageSize]="5">
+          <ng-template let-item>
+            <decoderSetting class="form-group block" [setting]="item"></decoderSetting>
+          </ng-template>
+        </app-pagination>
+        <div class="list-group-item">
+          <input type="button" class="btn btn-danger" (click)="writeCVs()" value="Write CVs"/>
+        </div>
+      </form>
     </div>
   </div>
 </div>

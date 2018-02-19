@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.readers;
+package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ReadCVMessage;
+import uk.co.redkiteweb.dccweb.dccinterface.messages.WriteCVMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,14 +20,14 @@ import java.util.Map;
  */
 @Component
 @Scope("prototype")
-public class CVReader {
+public class CVHandler {
 
-    private static final Logger LOGGER = LogManager.getLogger(CVReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(CVHandler.class);
 
     private final Map<Integer, Integer> cachedCVs;
     private DccInterface dccInterface;
 
-    public CVReader() {
+    public CVHandler() {
         cachedCVs = new HashMap<>();
     }
 
@@ -36,9 +37,10 @@ public class CVReader {
     }
 
     public void setDecoder(final Decoder decoder) {
-        cachedCVs.clear();
-        for(CV cv : decoder.getCvs()) {
-            addToCache(cv.getCvNumber(), cv.getCvValue());
+        if (decoder.getCvs() != null) {
+            for (CV cv : decoder.getCvs()) {
+                addToCache(cv.getCvNumber(), cv.getCvValue());
+            }
         }
     }
 
@@ -46,17 +48,14 @@ public class CVReader {
         return cachedCVs;
     }
 
-    public Integer readCV(final int cvNumber) {
-        return readCV(cvNumber, true);
+    public void writeCV(final CV cv) {
+        final WriteCVMessage writeCVMessage = new WriteCVMessage();
+        writeCVMessage.setCv(cv);
+        dccInterface.sendMessage(writeCVMessage);
     }
 
-    public Integer readCV(final int cvNumber, final boolean useCache) {
-        Integer cvValue;
-        if (useCache) {
-            cvValue = readCVUseCache(cvNumber);
-        } else {
-            cvValue = readCVDirect(cvNumber);
-        }
+    public Integer readCV(final int cvNumber) {
+        final Integer cvValue = readCVUseCache(cvNumber);
         LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
         return cvValue;
     }
@@ -77,6 +76,7 @@ public class CVReader {
     }
 
     private Integer readFromProgramTrack(int cvNumber) {
+        LOGGER.info(String.format("Reading CV %d from track.", cvNumber));
         final ReadCVMessage readCVMessage = new ReadCVMessage();
         readCVMessage.setCvReg(cvNumber);
         return getCvValue(dccInterface.sendMessage(readCVMessage));

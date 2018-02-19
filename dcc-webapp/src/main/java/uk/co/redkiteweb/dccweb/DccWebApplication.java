@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableScheduling
 @EnableAsync
-@PropertySource({"file:config/application.properties"})
+@PropertySource({"classpath:/settings.properties","file:config/application.properties"})
 public class DccWebApplication {
 
     @Bean

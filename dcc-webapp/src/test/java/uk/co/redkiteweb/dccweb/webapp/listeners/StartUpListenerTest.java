@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.event.ContextRefreshedEvent;
 import uk.co.redkiteweb.dccweb.data.loaders.Loader;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 
@@ -39,8 +38,7 @@ public class StartUpListenerTest {
 
     @Test
     public void contextRefreshed() {
-        final ContextRefreshedEvent contextRefreshedEvent = mock(ContextRefreshedEvent.class);
-        startUpListener.onApplicationEvent(contextRefreshedEvent);
+        startUpListener.onApplicationEvent();
         verify(dccInterface, times(1)).initialise();
         verify(loader, times(1)).load();
     }
