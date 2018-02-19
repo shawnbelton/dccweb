@@ -17,6 +17,7 @@ public class DecoderDefaultReader extends AbstractReader implements Reader<CVVal
         return DEFAULT_DECODER_VALUES;
     }
 
+    @Override
     public CVValue read() {
         return getCVValue(readLine());
     }
