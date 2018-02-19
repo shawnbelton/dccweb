@@ -8,6 +8,7 @@ import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.readers.AccessoryDecoderTypeOperationReader;
 import uk.co.redkiteweb.dccweb.data.readers.AccessoryDecoderTypeReader;
+import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeOperationRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 
@@ -45,6 +46,13 @@ public class AccessoryDecoderTypeLoaderTest {
         accessoryDecoderTypeLoader.load();
         verify(accessoryDecoderTypeRepository, times(1)).save(any(AccessoryDecoderType.class));
         verify(accessoryDecoderTypeOperationRepository, times(1)).save(any(AccessoryDecoderTypeOperation.class));
+    }
+
+    @Test
+    public void testReadError() {
+        when(accessoryDecoderTypeReader.read()).thenThrow(new ReaderException("Error"));
+        accessoryDecoderTypeLoader.load();
+        verify(accessoryDecoderTypeRepository, never()).save(any(AccessoryDecoderType.class));
     }
 
 }

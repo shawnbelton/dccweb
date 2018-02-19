@@ -12,15 +12,24 @@ public abstract class AbstractReader {
 
     private BufferedReader bufferedReader = null;
 
-    protected abstract InputStream getInputStream();
+    protected InputStream getInputStream() {
+        return this.getClass().getClassLoader().getResourceAsStream(getFileName());
+    }
 
-    String readLine() throws IOException {
-        if (bufferedReader == null) {
-            bufferedReader = new BufferedReader(new InputStreamReader(getInputStream()));
-        }
-        final String readLine = bufferedReader.readLine();
-        if (readLine == null) {
-            closeBufferedReader();
+    protected abstract String getFileName();
+
+    protected String readLine() {
+        String readLine;
+        try {
+            if (bufferedReader == null) {
+                bufferedReader = new BufferedReader(new InputStreamReader(getInputStream()));
+            }
+            readLine = bufferedReader.readLine();
+            if (readLine == null) {
+                closeBufferedReader();
+            }
+        } catch (IOException exception) {
+            throw new ReaderException(String.format("Unable to read %s", getFileName()), exception);
         }
         return readLine;
     }

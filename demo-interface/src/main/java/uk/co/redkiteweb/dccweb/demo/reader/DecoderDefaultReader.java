@@ -1,33 +1,24 @@
 package uk.co.redkiteweb.dccweb.demo.reader;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import uk.co.redkiteweb.dccweb.data.readers.AbstractReader;
+import uk.co.redkiteweb.dccweb.data.readers.Reader;
 
 /**
  * Created by shawn on 26/07/16.
  */
 @Component
-public class DecoderDefaultReader {
+public class DecoderDefaultReader extends AbstractReader implements Reader<CVValue> {
 
-    private static final Logger LOGGER = LogManager.getLogger(DecoderDefaultReader.class);
     private static final String DEFAULT_DECODER_VALUES = "decoderDefaults.csv";
 
-    private BufferedReader bufferedReader = null;
+    @Override
+    protected String getFileName() {
+        return DEFAULT_DECODER_VALUES;
+    }
 
     public CVValue read() {
-        CVValue cvValue = null;
-        try {
-            cvValue = getCVValue(readLine());
-        } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", DEFAULT_DECODER_VALUES), ioException);
-        }
-        return cvValue;
+        return getCVValue(readLine());
     }
 
     private static CVValue getCVValue(final String readLine) {
@@ -48,23 +39,4 @@ public class DecoderDefaultReader {
         return cvValue;
     }
 
-    private BufferedReader getReader() {
-        if (bufferedReader == null) {
-            final InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_DECODER_VALUES);
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-        }
-        return bufferedReader;
-    }
-
-    private String readLine() throws IOException {
-        final String readLine = getReader().readLine();
-        if (readLine == null) {
-            closeBufferedReader();
-        }
-        return readLine;
-    }
-
-    private void closeBufferedReader() throws IOException {
-        bufferedReader.close();
-    }
 }

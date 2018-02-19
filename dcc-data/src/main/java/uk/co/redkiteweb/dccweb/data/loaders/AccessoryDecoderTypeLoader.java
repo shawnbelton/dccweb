@@ -1,11 +1,14 @@
 package uk.co.redkiteweb.dccweb.data.loaders;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.readers.AccessoryDecoderTypeOperationReader;
 import uk.co.redkiteweb.dccweb.data.readers.AccessoryDecoderTypeReader;
+import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeOperationRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 
@@ -14,6 +17,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
  */
 @Component("AccessoryDecoderTypes")
 public class AccessoryDecoderTypeLoader implements Loader {
+
+    private static final Logger LOGGER = LogManager.getLogger(AccessoryDecoderTypeLoader.class);
 
     private AccessoryDecoderTypeReader accessoryDecoderTypeReader;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
@@ -42,8 +47,12 @@ public class AccessoryDecoderTypeLoader implements Loader {
 
     @Override
     public void load() {
-        loadAccessoryDecoderTypes();
-        loadAccessoryDecoderTypeOperations();
+        try {
+            loadAccessoryDecoderTypes();
+            loadAccessoryDecoderTypeOperations();
+        } catch (ReaderException exception) {
+            LOGGER.error(exception.getMessage());
+        }
     }
 
     private void loadAccessoryDecoderTypes() {

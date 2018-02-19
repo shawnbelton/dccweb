@@ -1,9 +1,12 @@
 package uk.co.redkiteweb.dccweb.data.loaders;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 import uk.co.redkiteweb.dccweb.data.readers.Reader;
+import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 
 /**
@@ -11,6 +14,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
  */
 @Component("DccManufacturer")
 public class DccManufacturerLoader implements Loader {
+
+    private static final Logger LOGGER = LogManager.getLogger(DccManufacturerLoader.class);
 
     private DccManufacturerRepository dccManufacturerRepository;
 
@@ -28,10 +33,14 @@ public class DccManufacturerLoader implements Loader {
 
     @Override
     public void load() {
-        DccManufacturer dccManufacturer = dccManufacturerReader.read();
-        while(dccManufacturer!=null) {
-            dccManufacturerRepository.save(dccManufacturer);
-            dccManufacturer = dccManufacturerReader.read();
+        try {
+            DccManufacturer dccManufacturer = dccManufacturerReader.read();
+            while (dccManufacturer != null) {
+                dccManufacturerRepository.save(dccManufacturer);
+                dccManufacturer = dccManufacturerReader.read();
+            }
+        } catch (ReaderException exception) {
+            LOGGER.error(exception.getMessage());
         }
     }
 

@@ -5,9 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 /**
  * Created by shawn on 16/02/17.
  */
@@ -20,18 +17,12 @@ public class AccessoryDecoderTypeOperationReader extends AbstractReader implemen
 
     @Override
     public AccessoryDecoderTypeOperation read() {
-        AccessoryDecoderTypeOperation accessoryDecoderTypeOperation = null;
-        try {
-            accessoryDecoderTypeOperation = getAccessoryDecoderTypeOperation(readLine());
-        } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", ACCESSORY_DECODER_TYPE_OPERATION_FILE), ioException);
-        }
-        return accessoryDecoderTypeOperation;
+        return getAccessoryDecoderTypeOperation(readLine());
     }
 
     @Override
-    protected InputStream getInputStream() {
-        return this.getClass().getClassLoader().getResourceAsStream(ACCESSORY_DECODER_TYPE_OPERATION_FILE);
+    protected String getFileName() {
+        return ACCESSORY_DECODER_TYPE_OPERATION_FILE;
     }
 
     private static AccessoryDecoderTypeOperation getAccessoryDecoderTypeOperation(final String readLine) {
