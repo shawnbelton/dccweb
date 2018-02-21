@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.data.readers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 
@@ -7,18 +9,22 @@ import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
  * Created by shawn on 30/06/16.
  */
 @Component
-public class DccManufacturerReader extends AbstractReader implements Reader<DccManufacturer> {
+@Scope("prototype")
+public class DccManufacturerReader implements Reader<DccManufacturer> {
 
     private static final String DCC_MANUFACTURER_FILE = "dcc-manufacturers.csv";
 
-    @Override
-    public DccManufacturer read() {
-        return getDccManufacturer(readLine());
+    private ResourceFileReader reader;
+
+    @Autowired
+    public void setReader(final ResourceFileReader reader) {
+        this.reader = reader;
+        this.reader.setResourceFile(DCC_MANUFACTURER_FILE);
     }
 
     @Override
-    protected String getFileName() {
-        return DCC_MANUFACTURER_FILE;
+    public DccManufacturer read() {
+        return getDccManufacturer(reader.readLine());
     }
 
     private static DccManufacturer getDccManufacturer(final String readLine) {

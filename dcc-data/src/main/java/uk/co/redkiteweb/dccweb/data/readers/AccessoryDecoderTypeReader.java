@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.data.readers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 
@@ -7,18 +9,22 @@ import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
  * Created by shawn on 26/01/17.
  */
 @Component
-public class AccessoryDecoderTypeReader extends AbstractReader implements Reader<AccessoryDecoderType> {
+@Scope("prototype")
+public class AccessoryDecoderTypeReader implements Reader<AccessoryDecoderType> {
 
     private static final String ACCESSORY_DECODER_TYPE_FILE = "accessoryDecoderTypes.csv";
 
-    @Override
-    public AccessoryDecoderType read() {
-        return getAccessoryDecoderType(readLine());
+    private ResourceFileReader reader;
+
+    @Autowired
+    public void setReader(final ResourceFileReader reader) {
+        this.reader = reader;
+        this.reader.setResourceFile(ACCESSORY_DECODER_TYPE_FILE);
     }
 
     @Override
-    protected String getFileName() {
-        return ACCESSORY_DECODER_TYPE_FILE;
+    public AccessoryDecoderType read() {
+        return getAccessoryDecoderType(reader.readLine());
     }
 
     private static AccessoryDecoderType getAccessoryDecoderType(final String readLine) {

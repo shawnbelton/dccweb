@@ -1,25 +1,31 @@
 package uk.co.redkiteweb.dccweb.demo.reader;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.data.readers.AbstractReader;
 import uk.co.redkiteweb.dccweb.data.readers.Reader;
+import uk.co.redkiteweb.dccweb.data.readers.ResourceFileReader;
 
 /**
  * Created by shawn on 26/07/16.
  */
 @Component
-public class DecoderDefaultReader extends AbstractReader implements Reader<CVValue> {
+@Scope("prototype")
+public class DecoderDefaultReader implements Reader<CVValue> {
 
     private static final String DEFAULT_DECODER_VALUES = "decoderDefaults.csv";
 
-    @Override
-    protected String getFileName() {
-        return DEFAULT_DECODER_VALUES;
+    private ResourceFileReader reader;
+
+    @Autowired
+    public void setReader(final ResourceFileReader reader) {
+        this.reader = reader;
+        this.reader.setResourceFile(DEFAULT_DECODER_VALUES);
     }
 
     @Override
     public CVValue read() {
-        return getCVValue(readLine());
+        return getCVValue(reader.readLine());
     }
 
     private static CVValue getCVValue(final String readLine) {

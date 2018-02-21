@@ -1,8 +1,9 @@
 package uk.co.redkiteweb.dccweb.data.loaders;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
@@ -16,6 +17,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
  * Created by shawn on 21/02/17.
  */
 @Component("AccessoryDecoderTypes")
+@Scope("prototype")
 public class AccessoryDecoderTypeLoader implements Loader {
 
     private static final Logger LOGGER = LogManager.getLogger(AccessoryDecoderTypeLoader.class);

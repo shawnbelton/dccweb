@@ -1,8 +1,9 @@
 package uk.co.redkiteweb.dccweb.demo.loaders;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.loaders.Loader;
 import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
@@ -14,6 +15,7 @@ import uk.co.redkiteweb.dccweb.demo.registers.DecoderRegister;
  * Created by shawn on 26/07/16.
  */
 @Component
+@Scope("prototype")
 public class DecoderLoader implements Loader {
 
     private static final Logger LOGGER = LogManager.getLogger(DecoderLoader.class);
