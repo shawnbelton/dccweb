@@ -36,5 +36,6 @@ public class WaitTest {
         when(step.getDelay()).thenReturn(10f);
         Thread.currentThread().interrupt();
         wait.run();
+        Thread.interrupted();
     }
 }

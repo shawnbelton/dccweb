@@ -70,7 +70,7 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public List<InterfaceInfo> getInterfaces() {
-        final List<InterfaceInfo> interfaces = new ArrayList<InterfaceInfo>();
+        final List<InterfaceInfo> interfaces = new ArrayList<>();
         for(MessageProcessor messageProcessor : messageProcessorFactory.getAllInterfaces()) {
             interfaces.add(InterfaceInfo.getInstance(messageProcessor));
         }

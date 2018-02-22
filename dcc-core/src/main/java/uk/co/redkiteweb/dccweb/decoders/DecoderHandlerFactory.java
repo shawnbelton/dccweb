@@ -1,6 +1,5 @@
 package uk.co.redkiteweb.dccweb.decoders;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -14,7 +13,7 @@ public class DecoderHandlerFactory implements ApplicationContextAware {
     private ApplicationContext context;
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext) {
         this.context = applicationContext;
     }
 

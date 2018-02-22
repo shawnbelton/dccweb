@@ -71,7 +71,7 @@ public class MacroService {
     }
 
     private static Map<Integer, MacroStep> orderSteps(final List<MacroStep> unordered) {
-        final Map<Integer, MacroStep> steps = new HashMap<Integer, MacroStep>();
+        final Map<Integer, MacroStep> steps = new HashMap<>();
         if (unordered != null) {
             for (MacroStep step : unordered) {
                 steps.put(step.getNumber(), step);

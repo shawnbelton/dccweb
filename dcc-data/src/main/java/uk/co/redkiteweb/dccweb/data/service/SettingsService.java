@@ -19,7 +19,7 @@ public class SettingsService {
     private final Map<String, SystemParameter> settingsMap;
 
     public SettingsService() {
-        this.settingsMap = new HashMap<String, SystemParameter>();
+        this.settingsMap = new HashMap<>();
     }
 
     @Autowired

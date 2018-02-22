@@ -22,7 +22,7 @@ public class LogStore {
     private NotificationService notificationService;
 
     public LogStore() {
-        logEntryStore = new ArrayList<LogEntry>();
+        logEntryStore = new ArrayList<>();
     }
 
     @Autowired
@@ -40,7 +40,7 @@ public class LogStore {
     }
 
     public List<LogEntry> getLastSix() {
-        final List<LogEntry> lastSix = new ArrayList<LogEntry>();
+        final List<LogEntry> lastSix = new ArrayList<>();
         for(int index = logEntryStore.size()-1; index > logEntryStore.size()-7; index--) {
             if (index>=0) {
                 lastSix.add(logEntryStore.get(index));

@@ -12,7 +12,8 @@ public class ThenGoToStep extends AbstractMacroStep {
 
     @Override
     public void run() {
-
+        // This is a controlling step and only controls
+        // which is the next step to execute
     }
 
     @Override

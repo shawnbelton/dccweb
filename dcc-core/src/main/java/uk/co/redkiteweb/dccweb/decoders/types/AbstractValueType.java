@@ -30,9 +30,6 @@ public abstract class AbstractValueType implements ValueType {
         return cvHandler.readCV(cvNumber);
     }
 
-    @Override
-    public abstract Integer getValue();
-
     protected abstract String getType();
 
     @Override

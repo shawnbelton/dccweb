@@ -4,8 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 /**
  * Created by shawn on 06/05/17.
@@ -17,7 +19,9 @@ public class ExitMacroStepTest {
 
     @Before
     public void setup() {
+        final LogStore logStore = mock(LogStore.class);
         exitMacroStep = new ExitMacroStep();
+        exitMacroStep.setLogStore(logStore);
     }
 
     @Test

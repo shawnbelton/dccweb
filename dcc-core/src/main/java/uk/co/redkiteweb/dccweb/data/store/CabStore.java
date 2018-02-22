@@ -21,10 +21,10 @@ public class CabStore {
 
     private DecoderFunctionRepository decoderFunctionRepository;
     private LocoRepository locoRepository;
-    private final Map<Integer, Cab> cabStore;
+    private final Map<Integer, Cab> cabStoreMap;
 
     public CabStore() {
-        cabStore = new HashMap<Integer, Cab>();
+        cabStoreMap = new HashMap<>();
     }
 
     @Autowired
@@ -38,7 +38,7 @@ public class CabStore {
     }
 
     public void putCab(final Cab cab) {
-        cabStore.put(cab.getLoco().getLocoId(), cab);
+        cabStoreMap.put(cab.getLoco().getLocoId(), cab);
     }
 
     public Cab getCab(final Integer locoId) {
@@ -48,8 +48,8 @@ public class CabStore {
     public Cab getCab(final Loco loco) {
         final Loco reloadLoco = locoRepository.findOne(loco.getLocoId());
         Cab cab = new Cab();
-        if (cabStore.containsKey(loco.getLocoId())) {
-            cab = cabStore.get(loco.getLocoId());
+        if (cabStoreMap.containsKey(loco.getLocoId())) {
+            cab = cabStoreMap.get(loco.getLocoId());
             cab.setLoco(reloadLoco);
             buildSetCabFunctions(cab);
         } else {
@@ -64,7 +64,7 @@ public class CabStore {
     }
 
     private void buildSetCabFunctions(final Cab cab) {
-        final Set<CabFunction> newCabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
+        final Set<CabFunction> newCabFunctions = new TreeSet<>(new CabFunctionComparator());
         if (cab.getLoco().getDecoder()!=null) {
             for(DecoderFunction decoderFunction : getDecoderFunctions(cab.getLoco().getDecoder())) {
                 newCabFunctions.add(getCabFunction(decoderFunction, cab.getCabFunctions()));

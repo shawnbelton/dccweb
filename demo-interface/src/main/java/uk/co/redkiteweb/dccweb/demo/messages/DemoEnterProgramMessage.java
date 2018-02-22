@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  * Created by shawn on 25/07/16.
  */
 @Component("DemoEnterProgramMessage")
-public class DemoEnterProgramMessage extends AbstractDemoMessage implements DemoMessage {
+public class DemoEnterProgramMessage implements DefaultResponseDemoMessage, DemoMessage {
 
     @Override
     public MessageResponse process(Message message) {

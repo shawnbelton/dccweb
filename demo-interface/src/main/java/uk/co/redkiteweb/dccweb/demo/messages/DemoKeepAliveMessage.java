@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  * Created by shawn on 25/07/16.
  */
 @Component("DemoKeepAliveMessage")
-public class DemoKeepAliveMessage extends AbstractSingleResponseMessage implements DemoMessage {
+public class DemoKeepAliveMessage implements DefaultResponseSingleResponseMessage, DemoMessage {
 
     @Override
     public MessageResponse process(final Message message) {

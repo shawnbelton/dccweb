@@ -69,19 +69,15 @@ public class CabService {
 
     private static ChangeSpeedMessage.SpeedSteps toSpeedSteps(final String stepsStr) {
         ChangeSpeedMessage.SpeedSteps steps = STEPS_128;
-        if ("128".equalsIgnoreCase(stepsStr)) {
-            steps = STEPS_128;
-        } else if ("28".equalsIgnoreCase(stepsStr)) {
+        if ("28".equalsIgnoreCase(stepsStr)) {
             steps = STEPS_28;
         }
         return steps;
     }
 
     private static ChangeSpeedMessage.Direction toDirection(final String directionStr) {
-        ChangeSpeedMessage.Direction direction = RSTOP;
-        if ("UP".equalsIgnoreCase(directionStr)) {
-            direction = UP;
-        } else if ("DOWN".equalsIgnoreCase(directionStr)) {
+        ChangeSpeedMessage.Direction direction = UP;
+        if ("DOWN".equalsIgnoreCase(directionStr)) {
             direction = DOWN;
         } else if ("RSTOP".equalsIgnoreCase(directionStr)) {
             direction = RSTOP;
