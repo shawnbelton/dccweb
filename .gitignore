@@ -98,8 +98,5 @@ hardware/relaycontroller/cmake-build-debug/
 !hardware/blockcontroller/build/build.sh
 
 
-dcc-webapp/src/main/resources/static/app/**/*.js
-dcc-webapp/src/main/resources/static/app/**/*.js.map
-dcc-webapp/src/main/resources/static/node_modules/**/
-!dcc-webapp/src/main/resources/static/node_modules/readme.txt
-dcc-webapp/src/main/resources/static/package-lock.json
+dcc-webapp/src/main/angular/package-lock.json
+
