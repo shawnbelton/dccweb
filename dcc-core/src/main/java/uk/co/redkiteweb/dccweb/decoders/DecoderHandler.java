@@ -194,7 +194,7 @@ public class DecoderHandler {
 
     private static boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
         boolean isMatch = true;
-        isMatch &= checkValue(definitionReader, MANUFACTURER, decoderSettings);
+        isMatch = checkValue(definitionReader, MANUFACTURER, decoderSettings);
         isMatch &= checkValue(definitionReader, REVISION, decoderSettings);
         isMatch &= checkValue(definitionReader, ADDRESS_MODE, decoderSettings);
         isMatch &= checkValue(definitionReader, SHORT_ADDRESS, decoderSettings);

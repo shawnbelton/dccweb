@@ -52,7 +52,7 @@ public class DefinitionReader {
         decoderDefinition.setDecoderDefFile(decoderFile);
     }
 
-    public ValueType getValueType(final String valueName) throws DefinitionException {
+    private ValueType getValueType(final String valueName) throws DefinitionException {
         final Node valueNode = decoderDefinition.getValueNode(valueName);
         return valueTypeFactory.getInstance(valueNode, cvHandler);
     }
