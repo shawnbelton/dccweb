@@ -33,6 +33,7 @@ import {NotificationService} from "./services/notification.service";
 import {BlockItem} from "./components/block.item.component";
 import {PaginationComponent} from "./components/pagination.component";
 import {DecoderSettingComponent} from "./components/decoderSettings/decoderSetting.component";
+import {StompService} from "./services/stomp.service";
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import {DecoderSettingComponent} from "./components/decoderSettings/decoderSetti
     AccessoryDecoderService,
     NotificationService,
     BlockService,
-    RelayService
+    RelayService,
+    StompService
   ],
   bootstrap: [
     AppComponent,

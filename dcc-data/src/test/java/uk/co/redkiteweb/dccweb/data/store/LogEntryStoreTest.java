@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 import static org.junit.Assert.assertEquals;
@@ -24,6 +25,7 @@ public class LogEntryStoreTest {
         notificationService = mock(NotificationService.class);
         logStore = new LogStore();
         logStore.setNotificationService(notificationService);
+        logStore.setMessagingTemplate(mock(SimpMessagingTemplate.class));
     }
 
     @Test
