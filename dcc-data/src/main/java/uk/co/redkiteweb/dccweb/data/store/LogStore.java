@@ -20,16 +20,10 @@ public class LogStore {
     private static final Logger LOGGER = LogManager.getLogger(LogStore.class);
 
     private final List<LogEntry> logEntryStore;
-    private NotificationService notificationService;
     private SimpMessagingTemplate messagingTemplate;
 
     public LogStore() {
         logEntryStore = new ArrayList<>();
-    }
-
-    @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
     }
 
     @Autowired
@@ -39,7 +33,6 @@ public class LogStore {
 
     public void log(final String level, final String message) {
         LOGGER.info(message);
-        notificationService.createNotification("MESSAGES","");
         final LogEntry logEntry = new LogEntry();
         logEntry.setLevel(level);
         logEntry.setMessage(message);
