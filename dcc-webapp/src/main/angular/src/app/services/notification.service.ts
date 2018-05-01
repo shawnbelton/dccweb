@@ -12,9 +12,6 @@ export class NotificationService {
     private headers = new Headers({'Content-Type': 'application/json'});
     private notificationsUrl = '/api/notifications/';
 
-    private _statusUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-    private statusUpdates: Observable<string> = this._statusUpdates.asObservable();
-
     private _blockUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private blockUpdates: Observable<string> = this._blockUpdates.asObservable();
 
@@ -37,16 +34,13 @@ export class NotificationService {
     }
 
     processNotifications(data: Notification[]): void {
-        let status: boolean = false;
         let accessories: boolean = false;
         let blocks: boolean = false;
         let relays: boolean = false;
         let decoders: boolean = false;
         let cabList: number[] = new Array();
         for(let notification of data) {
-            if ("STATUS" == notification.type) {
-                status = true;
-            } else if ("ACCESSORY" == notification.type) {
+            if ("ACCESSORY" == notification.type) {
                 accessories = true;
             } else if ("CAB" == notification.type) {
                 cabList.push(Number(notification.value));
@@ -60,9 +54,6 @@ export class NotificationService {
             if (notification.notificationId > this.notificationId) {
                 this.notificationId = notification.notificationId;
             }
-        }
-        if (status) {
-            this._statusUpdates.next("StatusUpdate");
         }
         if (accessories) {
             this._accessoryUpdates.next("AccessoryUpdate");
@@ -86,11 +77,7 @@ export class NotificationService {
             .map(response => response.json())
             .subscribe(data => {
             this.processNotifications(data);
-        }, error => this._statusUpdates.next("StatusUpdate"));
-    }
-
-    getStatusUpdates(): Observable<string> {
-        return this.statusUpdates;
+        });
     }
 
     getBlockUpdates(): Observable<string> {
