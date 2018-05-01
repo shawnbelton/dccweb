@@ -17,11 +17,22 @@ export class MessageService {
     private _messages: BehaviorSubject<Message[]> = new BehaviorSubject([]);
     private messages: Observable<Message[]> = this._messages.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService, private stompService: StompService) {
-        this.notificationService.getMessageUpdates().subscribe(data => this.fetchMessages());
-        this.stompService.subscribe('/logging', (data) => {
-          console.log(data);
+    constructor(private http: Http, private stompService: StompService) {
+        this.stompService.subscribe('/logging', (data: Message) => {
+          this.updateMessages(data);
         });
+    }
+
+    updateMessages(message: Message): void {
+      let currentMessages: Message[] = this._messages.value;
+      let newMessages: Message[] = [];
+      newMessages.push(message);
+      for(let itrMessage of currentMessages) {
+        if (newMessages.length < 6) {
+          newMessages.push(itrMessage);
+        }
+      }
+      this._messages.next(newMessages);
     }
 
     fetchMessages(): void {

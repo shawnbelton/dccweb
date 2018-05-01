@@ -15,9 +15,6 @@ export class NotificationService {
     private _statusUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private statusUpdates: Observable<string> = this._statusUpdates.asObservable();
 
-    private _messageUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-    private messageUpdates: Observable<string> = this._messageUpdates.asObservable();
-
     private _blockUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private blockUpdates: Observable<string> = this._blockUpdates.asObservable();
 
@@ -41,7 +38,6 @@ export class NotificationService {
 
     processNotifications(data: Notification[]): void {
         let status: boolean = false;
-        let messages: boolean = false;
         let accessories: boolean = false;
         let blocks: boolean = false;
         let relays: boolean = false;
@@ -50,8 +46,6 @@ export class NotificationService {
         for(let notification of data) {
             if ("STATUS" == notification.type) {
                 status = true;
-            } else if ("MESSAGES" == notification.type) {
-                messages = true;
             } else if ("ACCESSORY" == notification.type) {
                 accessories = true;
             } else if ("CAB" == notification.type) {
@@ -69,9 +63,6 @@ export class NotificationService {
         }
         if (status) {
             this._statusUpdates.next("StatusUpdate");
-        }
-        if (messages) {
-            this._messageUpdates.next("MessageUpdate");
         }
         if (accessories) {
             this._accessoryUpdates.next("AccessoryUpdate");
@@ -100,10 +91,6 @@ export class NotificationService {
 
     getStatusUpdates(): Observable<string> {
         return this.statusUpdates;
-    }
-
-    getMessageUpdates(): Observable<string> {
-        return this.messageUpdates;
     }
 
     getBlockUpdates(): Observable<string> {
