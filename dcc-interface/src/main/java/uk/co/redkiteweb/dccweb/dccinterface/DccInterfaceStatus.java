@@ -2,8 +2,8 @@ package uk.co.redkiteweb.dccweb.dccinterface;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 /**
  * Created by shawn on 17/06/16.
@@ -19,15 +19,15 @@ public class DccInterfaceStatus {
     }
 
     private Status status;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
 
     public DccInterfaceStatus() {
         status = Status.DISCONNECTED;
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     public Status getStatus() {
@@ -48,7 +48,7 @@ public class DccInterfaceStatus {
 
     private void setStatus(final Status newStatus) {
         if (status != newStatus) {
-            notificationService.createNotification("STATUS", "");
+            messagingTemplate.convertAndSend("/status", newStatus);
         }
         status = newStatus;
     }

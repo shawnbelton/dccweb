@@ -6,7 +6,7 @@ import {Headers, Http} from "@angular/http";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "../models/status";
-import {NotificationService} from "./notification.service";
+import {StompService} from "./stomp.service";
 
 @Injectable()
 export class StatusService {
@@ -17,8 +17,17 @@ export class StatusService {
     private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
     private status: Observable<Status> = this._status.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
-        this.notificationService.getStatusUpdates().subscribe(data => this.readStatus());
+    constructor(private http: Http, private stompService: StompService) {
+      this.stompService.subscribe("/status", (data: string) => {
+        this.setStatus(data);
+      });
+      this.readStatus();
+    }
+
+    setStatus(status: string): void {
+      let statusObj: Status = new Status();
+      statusObj.status = status;
+      this._status.next(statusObj);
     }
 
     readStatus(): void {

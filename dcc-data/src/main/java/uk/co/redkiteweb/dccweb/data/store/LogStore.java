@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.data.LogEntry;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 
 import java.util.ArrayList;
 import java.util.List;
