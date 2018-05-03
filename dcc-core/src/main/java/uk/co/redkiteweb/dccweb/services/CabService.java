@@ -7,6 +7,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
@@ -46,7 +47,7 @@ public class CabService {
             changeSpeedMessage.setSpeed(cab.getSpeed());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
             dccInterface.sendMessage(changeSpeedMessage);
-            messagingTemplate.convertAndSend("/cab", cab);
+            notifyCabChange(cab);
         }
     }
 
@@ -59,8 +60,20 @@ public class CabService {
                 updateFunctionsMessage.addFunction(cabFunction.getNumber(), cabFunction.getState());
             }
             dccInterface.sendMessage(updateFunctionsMessage);
-            messagingTemplate.convertAndSend("/cab", cab);
+            notifyCabChange(cab);
         }
+    }
+
+    private void notifyCabChange(final Cab updatedCab) {
+        final Cab cab = new Cab();
+        cab.setCabFunctions(updatedCab.getCabFunctions());
+        cab.setDirection(updatedCab.getDirection());
+        cab.setSpeed(updatedCab.getSpeed());
+        cab.setSteps(updatedCab.getSteps());
+        final Loco loco = new Loco();
+        loco.setLocoId(updatedCab.getLoco().getLocoId());
+        cab.setLoco(loco);
+        messagingTemplate.convertAndSend("/cab", cab);
     }
 
     private static boolean hasDecoder(final Cab cab) {

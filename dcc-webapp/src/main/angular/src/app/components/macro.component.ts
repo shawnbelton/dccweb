@@ -244,7 +244,11 @@ export class MacroComponent implements OnInit {
     }
 
     displayLocoInfo(loco: Loco): string {
-        return loco.number + " " + loco.name;
+      let locoInfo: string = loco.number;
+      if (loco.name != null) {
+        locoInfo += " " + loco.name;
+      }
+      return locoInfo;
     }
 
     displayFunctionName(loco: Loco, functionNumber: number): string {

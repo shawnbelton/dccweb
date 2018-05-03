@@ -28,7 +28,11 @@ export class CabService {
       let current: Cab = this._cab.getValue();
       if (null != current) {
         if (cab.loco.locoId == current.loco.locoId) {
-          this._cab.next(cab);
+          current.cabFunctions = cab.cabFunctions;
+          current.direction = cab.direction;
+          current.speed = cab.speed;
+          current.steps = cab.steps;
+          this._cab.next(current);
         }
       }
     }
