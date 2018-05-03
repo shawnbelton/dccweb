@@ -18,9 +18,6 @@ export class NotificationService {
     private _relayUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private relayUpdates: Observable<string> = this._relayUpdates.asObservable();
 
-    private _cabUpdates: BehaviorSubject<number[]> = new BehaviorSubject<number[]>(null);
-    private cabUpdates: Observable<number[]> = this._cabUpdates.asObservable();
-
     private _accessoryUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private accessoryUpdates: Observable<string> = this._accessoryUpdates.asObservable();
 
@@ -38,12 +35,9 @@ export class NotificationService {
         let blocks: boolean = false;
         let relays: boolean = false;
         let decoders: boolean = false;
-        let cabList: number[] = new Array();
         for(let notification of data) {
             if ("ACCESSORY" == notification.type) {
                 accessories = true;
-            } else if ("CAB" == notification.type) {
-                cabList.push(Number(notification.value));
             } else if ("BLOCK" == notification.type) {
                 blocks = true;
             } else if ("RELAY" == notification.type) {
@@ -64,9 +58,6 @@ export class NotificationService {
         if (relays) {
             this._relayUpdates.next("RelayUpdates");
         }
-        if (cabList.length > 0) {
-            this._cabUpdates.next(cabList);
-        }
         if (decoders) {
           this._decoderUpdates.next("DecodersUpdates");
         }
@@ -86,10 +77,6 @@ export class NotificationService {
 
     getRelayUpdates(): Observable<string> {
         return this.relayUpdates;
-    }
-
-    getCabUpdates(): Observable<number[]> {
-        return this.cabUpdates;
     }
 
     getAccessoryUpdates(): Observable<string> {

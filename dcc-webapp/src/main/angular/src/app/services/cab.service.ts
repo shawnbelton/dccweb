@@ -6,7 +6,7 @@ import {Headers, Http} from "@angular/http";
 import {Cab} from "../models/cab";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Loco} from "../models/loco";
-import {NotificationService} from "./notification.service";
+import {StompService} from "./stomp.service";
 
 @Injectable()
 export class CabService {
@@ -20,23 +20,17 @@ export class CabService {
     private cab: Observable<Cab> = this._cab.asObservable();
     private response: boolean;
 
-    constructor(private http: Http, private notificationService: NotificationService) {
-        this.notificationService.getCabUpdates().subscribe(data => this.checkUpdates(data));
+    constructor(private http: Http, private stompService: StompService) {
+      this.stompService.subscribe("/cab", (data: Cab) => {this.cabUpdate(data)});
     }
 
-    checkUpdates(cabList: number[]): void {
-        let inList: boolean = false;
-        let current: Cab = this._cab.getValue();
-        if (null != current) {
-            for(let locoId of cabList) {
-                if (locoId == current.loco.locoId) {
-                    inList = true;
-                }
-            }
-            if (inList) {
-                this.setLoco(current.loco);
-            }
+    cabUpdate(cab: Cab): void {
+      let current: Cab = this._cab.getValue();
+      if (null != current) {
+        if (cab.loco.locoId == current.loco.locoId) {
+          this._cab.next(cab);
         }
+      }
     }
 
     updateCab(cab: Cab): void {

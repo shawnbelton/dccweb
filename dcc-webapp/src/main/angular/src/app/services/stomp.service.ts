@@ -17,6 +17,7 @@ export class StompService {
   }
 
   initializeWebSocketConnection(): void {
+    console.log('Initializing WebSockets');
     let ws = new SockJS(this.serverUrl);
     this.stompClient = Stomp.over(ws);
     let that = this;
@@ -49,4 +50,5 @@ export class StompService {
       this.doSubscription(subscription);
     }
   }
+
 }
