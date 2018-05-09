@@ -2,18 +2,17 @@
  * Created by shawn on 19/11/16.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Decoder} from "../models/decoder";
 import {DecoderFunction} from "../models/decoderFunction";
 import {LinkedMacro} from "../models/linked.macro";
 import {DecoderSetting} from "../models/decoderSetting";
 import {NotificationService} from "./notification.service";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class DecoderService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private decodersUrl = '/api/decoders/all';
     private readDecoderUrl = '/api/decoders/read';
     private readFullDecoderUrl = '/api/decoders/read/full';
@@ -33,19 +32,19 @@ export class DecoderService {
     private _decoderSettings: BehaviorSubject<DecoderSetting[]> = new BehaviorSubject<DecoderSetting[]>(null);
     private decoderSettings: Observable<DecoderSetting[]> = this._decoderSettings.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private notificationService: NotificationService) {
         this.fetchDecoders();
         this.notificationService.getDecoderUpdates().subscribe(decoders => this.fetchDecoders());
     }
 
     fetchDecoders(): void {
-        this.http.get(this.decodersUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.decodersUrl).subscribe((data: Decoder[]) => {
             this._decoders.next(data);
         }, error => console.log('Could not load decoders.'));
     }
 
     fetchDecoder(decoderId: number): void {
-        this.http.get(this.fetchDecoderUrl + decoderId).map(response => response.json()).subscribe(data => {
+        this.http.get(this.fetchDecoderUrl + decoderId).subscribe((data: Decoder) => {
             this._decoder.next(data);
             this._decoderSettings.next(null);
             this.fetchDecoders();
@@ -53,7 +52,7 @@ export class DecoderService {
     }
 
     readDecoder(): void {
-        this.http.get(this.readDecoderUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.readDecoderUrl).subscribe((data: Decoder) => {
             this._decoder.next(data);
             this._decoderSettings.next(null);
             this.fetchDecoders();
@@ -61,38 +60,38 @@ export class DecoderService {
     }
 
     readFullDecoder(): void {
-      this.http.get(this.readFullDecoderUrl).map(response => response.json()).subscribe(data => {
+      this.http.get(this.readFullDecoderUrl).subscribe((data: DecoderSetting[]) => {
         this._decoderSettings.next(data);
         this._decoder.next(null);
       }, error => console.log('Could not load decoder settings.'));
     }
 
     writeCVs(decoderSettings: DecoderSetting[]) {
-      this.http.post(this.writeDecoderUrl, decoderSettings).map(response => response.json()).subscribe(data => {
+      this.http.post(this.writeDecoderUrl, decoderSettings).subscribe(data => {
         this._decoderSettings.next(null);
       });
     }
 
     addDecoderFunction(decoderFunction: DecoderFunction): void {
-        this.http.post(this.addFunctionUrl, decoderFunction).map(response => response.json()).subscribe(data => {
+        this.http.post(this.addFunctionUrl, decoderFunction).subscribe((data: Decoder) => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }
 
     deleteDecoderFunction(decoderFunction: DecoderFunction): void {
-        this.http.post(this.deleteFunctionUrl, decoderFunction).map(response => response.json()).subscribe(data => {
+        this.http.post(this.deleteFunctionUrl, decoderFunction).subscribe((data: Decoder) => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }
 
     linkMacro(linkedMacro: LinkedMacro): void {
-        this.http.post(this.linkMacroUrl, linkedMacro).map(response => response.json()).subscribe(data => {
+        this.http.post(this.linkMacroUrl, linkedMacro).subscribe((data: Decoder) => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }
 
     unlinkMacro(linkedMacro: LinkedMacro): void {
-        this.http.post(this.unlinkMacroUrl, linkedMacro).map(response => response.json()).subscribe(data => {
+        this.http.post(this.unlinkMacroUrl, linkedMacro).subscribe((data: Decoder) => {
             this._decoder.next(data);
         }, error => console.log('Could not load decoder.'));
     }

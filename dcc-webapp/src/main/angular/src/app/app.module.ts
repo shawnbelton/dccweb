@@ -3,7 +3,6 @@ import {NgModule} from "@angular/core";
 
 import {AppComponent} from "./app.component";
 import {FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
 import {AppRoutingModule} from "./app.routing.module";
 import {RelayComponent} from "./components/relay.component";
 import {BlockComponent} from "./components/block.component";
@@ -34,6 +33,7 @@ import {BlockItem} from "./components/block.item.component";
 import {PaginationComponent} from "./components/pagination.component";
 import {DecoderSettingComponent} from "./components/decoderSettings/decoderSetting.component";
 import {StompService} from "./services/stomp.service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import {StompService} from "./services/stomp.service";
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     FormsModule,
     AppRoutingModule
   ],

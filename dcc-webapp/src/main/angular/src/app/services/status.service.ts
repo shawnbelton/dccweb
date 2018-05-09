@@ -2,22 +2,21 @@
  * Created by shawn on 19/11/16.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "../models/status";
 import {StompService} from "./stomp.service";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class StatusService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private statusUrl = '/api/interface/status';
 
     private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
     private status: Observable<Status> = this._status.asObservable();
 
-    constructor(private http: Http, private stompService: StompService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
       this.stompService.subscribe("/status", (data: string) => {
         this.setStatus(data);
       });
@@ -31,8 +30,8 @@ export class StatusService {
     }
 
     readStatus(): void {
-        this.http.get(this.statusUrl).map(response => response.json())
-            .subscribe(data => {
+        this.http.get(this.statusUrl)
+            .subscribe((data: Status) => {
                 this._status.next(data);
             }, error => this.unableToReadStatus());
     }

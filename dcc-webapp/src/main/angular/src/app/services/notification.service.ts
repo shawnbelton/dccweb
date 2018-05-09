@@ -2,14 +2,13 @@
  * Created by shawn on 23/03/17.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Notification} from "../models/notification";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class NotificationService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private notificationsUrl = '/api/notifications/';
 
     private _blockUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
@@ -26,7 +25,7 @@ export class NotificationService {
 
     private notificationId: number = -1;
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         this.startFetchingNotifications();
     }
 
@@ -65,8 +64,7 @@ export class NotificationService {
 
     fetchNotifications(): void {
         this.http.get(this.notificationsUrl + this.notificationId)
-            .map(response => response.json())
-            .subscribe(data => {
+            .subscribe((data: Notification[]) => {
             this.processNotifications(data);
         });
     }
