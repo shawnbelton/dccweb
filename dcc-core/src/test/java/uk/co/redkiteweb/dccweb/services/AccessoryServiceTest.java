@@ -45,7 +45,6 @@ public class AccessoryServiceTest {
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryService.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
-        accessoryService.setNotificationService(notificationService);
         accessoryService.setMacroService(macroService);
     }
 

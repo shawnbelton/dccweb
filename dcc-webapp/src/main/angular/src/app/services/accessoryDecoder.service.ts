@@ -6,8 +6,8 @@ import {DecoderAccessoryType} from "../models/decoderAccessoryType";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {AccessoryDecoder} from "../models/accessoryDecoder";
 import {AccessoryOperation} from "../models/accessoryOperation";
-import {NotificationService} from "./notification.service";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "./stomp.service";
 
 @Injectable()
 export class AccessoryDecoderService {
@@ -26,10 +26,26 @@ export class AccessoryDecoderService {
     private _accessory: BehaviorSubject<AccessoryDecoder> = new BehaviorSubject(null);
     private accessory: Observable<AccessoryDecoder> = this._accessory.asObservable();
 
-    constructor(private http: HttpClient, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchAccessoryTypes();
         this.fetchAccessories();
-        this.notificationService.getAccessoryUpdates().subscribe(data => this.fetchAccessories());
+        this.stompService.subscribe("/accessory", (data: AccessoryDecoder) => this.updateAccessory(data));
+    }
+
+    updateAccessory(accessory: AccessoryDecoder): void {
+      let currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
+      for(let index: number = 0; index<currentAccessories.length; index++) {
+        if (currentAccessories[index].accessoryDecoderId == accessory.accessoryDecoderId) {
+          currentAccessories[index] = accessory;
+        }
+      }
+      this._accessories.next(currentAccessories);
+      let currentAccessory: AccessoryDecoder = this._accessory.getValue();
+      if (null != currentAccessory) {
+        if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+          this._accessory.next(accessory);
+        }
+      }
     }
 
     fetchAccessoryTypes(): void {

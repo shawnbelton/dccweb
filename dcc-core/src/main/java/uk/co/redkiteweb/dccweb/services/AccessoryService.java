@@ -3,6 +3,7 @@ package uk.co.redkiteweb.dccweb.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,6 @@ import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 
@@ -29,7 +29,7 @@ public class AccessoryService {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
     private MacroService macroService;
 
     @Autowired
@@ -48,8 +48,8 @@ public class AccessoryService {
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -91,11 +91,11 @@ public class AccessoryService {
         for (AccessoryDecoder accessoryDecoder : accessoryDecoders) {
             accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
             accessoryDecoderRepository.save(accessoryDecoder);
+            messagingTemplate.convertAndSend("/accessory", accessoryDecoder);
             if (accessoryDecoder.getMacro()!=null) {
                 macroService.runMacro(accessoryDecoder.getMacro());
             }
         }
-        notificationService.createNotification("ACCESSORY", accessoryOperation.getAccessoryAddress().toString());
     }
 
     private static String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {
