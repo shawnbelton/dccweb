@@ -2,10 +2,10 @@
  * Created by shawn on 03/04/17.
  */
 import {Injectable} from "@angular/core";
-import {NotificationService} from "./notification.service";
 import {Block} from "../models/block";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "./stomp.service";
 
 @Injectable()
 export class BlockService {
@@ -21,9 +21,33 @@ export class BlockService {
   private _block: BehaviorSubject<Block> = new BehaviorSubject(null);
   private block: Observable<Block> = this._block.asObservable();
 
-  constructor(private http: HttpClient, private notificationService: NotificationService) {
+  constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchBlocks();
-    this.notificationService.getBlockUpdates().subscribe(data => this.fetchBlocks());
+    this.stompService.subscribe("/blocks", (data: Block) => this.updateBlock(data));
+  }
+
+  updateBlock(block: Block): void {
+    let newBlocks: Block[] = [];
+    let currentBlocks: Block[] = this._blocks.getValue();
+    let found: boolean = false;
+    for(let currentBlock of currentBlocks) {
+      if (currentBlock.blockId == block.blockId) {
+        newBlocks.push(block);
+        found = true;
+      } else {
+        newBlocks.push(currentBlock);
+      }
+    }
+    if (!found) {
+      newBlocks.push(block);
+    }
+    this._blocks.next(newBlocks);
+    let currentBlock: Block = this._block.getValue();
+    if (null != currentBlock) {
+      if (currentBlock.blockId == block.blockId) {
+        this._block.next(block);
+      }
+    }
   }
 
   fetchBlocks(): void {
