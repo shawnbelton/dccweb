@@ -2,10 +2,10 @@
  * Created by shawn on 07/06/17.
  */
 import {Injectable} from "@angular/core";
-import {NotificationService} from "./notification.service";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {RelayController} from "../models/relayController";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "./stomp.service";
 
 @Injectable()
 export class RelayService {
@@ -17,9 +17,27 @@ export class RelayService {
     private _relayControllers: BehaviorSubject<RelayController[]> = new BehaviorSubject(null);
     private relayControllers: Observable<RelayController[]> = this._relayControllers.asObservable();
 
-    constructor(private http: HttpClient, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchRelayControllers();
-        this.notificationService.getRelayUpdates().subscribe(data => this.fetchRelayControllers());
+        this.stompService.subscribe("/relays", (data: RelayController) => this.updateRelayControllers(data));
+    }
+
+    updateRelayControllers(relayController: RelayController): void {
+      let relayControllers: RelayController[] = this._relayControllers.getValue();
+      let controllers: RelayController[] = [];
+      let notFound: boolean = true;
+      for(let currentController of relayControllers) {
+        if (currentController.controllerId == relayController.controllerId) {
+          controllers.push(relayController);
+          notFound = false;
+        } else {
+          controllers.push(currentController);
+        }
+      }
+      if (notFound) {
+        controllers.push(relayController);
+      }
+      this._relayControllers.next(controllers);
     }
 
     fetchRelayControllers(): void {

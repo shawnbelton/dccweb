@@ -11,9 +11,6 @@ export class NotificationService {
 
     private notificationsUrl = '/api/notifications/';
 
-    private _relayUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-    private relayUpdates: Observable<string> = this._relayUpdates.asObservable();
-
     private _decoderUpdates: BehaviorSubject<string> = new BehaviorSubject<string>(null);
     private decoderUpdates: Observable<string> = this._decoderUpdates.asObservable();
 
@@ -24,20 +21,14 @@ export class NotificationService {
     }
 
     processNotifications(data: Notification[]): void {
-        let relays: boolean = false;
         let decoders: boolean = false;
         for(let notification of data) {
-            if ("RELAY" == notification.type) {
-                relays = true;
-            } else if ("DECODERS" == notification.type) {
+            if ("DECODERS" == notification.type) {
               decoders = true;
             }
             if (notification.notificationId > this.notificationId) {
                 this.notificationId = notification.notificationId;
             }
-        }
-        if (relays) {
-            this._relayUpdates.next("RelayUpdates");
         }
         if (decoders) {
           this._decoderUpdates.next("DecodersUpdates");
@@ -49,10 +40,6 @@ export class NotificationService {
             .subscribe((data: Notification[]) => {
             this.processNotifications(data);
         });
-    }
-
-    getRelayUpdates(): Observable<string> {
-        return this.relayUpdates;
     }
 
     getDecoderUpdates(): Observable<string> {

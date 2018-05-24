@@ -34,12 +34,20 @@ export class AccessoryDecoderService {
 
     updateAccessory(accessory: AccessoryDecoder): void {
       let currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
-      for(let index: number = 0; index<currentAccessories.length; index++) {
-        if (currentAccessories[index].accessoryDecoderId == accessory.accessoryDecoderId) {
-          currentAccessories[index] = accessory;
+      let accessories: AccessoryDecoder[] = [];
+      let notFound: boolean = true;
+      for(let currentAccessory of currentAccessories) {
+        if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+          accessories.push(accessory);
+          notFound = false;
+        } else {
+          accessories.push(currentAccessory);
         }
       }
-      this._accessories.next(currentAccessories);
+      if (notFound) {
+        accessories.push(accessory);
+      }
+      this._accessories.next(accessories);
       let currentAccessory: AccessoryDecoder = this._accessory.getValue();
       if (null != currentAccessory) {
         if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {

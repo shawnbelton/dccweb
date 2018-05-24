@@ -29,16 +29,16 @@ export class BlockService {
   updateBlock(block: Block): void {
     let newBlocks: Block[] = [];
     let currentBlocks: Block[] = this._blocks.getValue();
-    let found: boolean = false;
+    let notFound: boolean = true;
     for(let currentBlock of currentBlocks) {
       if (currentBlock.blockId == block.blockId) {
         newBlocks.push(block);
-        found = true;
+        notFound = false;
       } else {
         newBlocks.push(currentBlock);
       }
     }
-    if (!found) {
+    if (notFound) {
       newBlocks.push(block);
     }
     this._blocks.next(newBlocks);

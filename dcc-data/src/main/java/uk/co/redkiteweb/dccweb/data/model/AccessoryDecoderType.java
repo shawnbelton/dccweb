@@ -1,5 +1,8 @@
 package uk.co.redkiteweb.dccweb.data.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -46,6 +49,7 @@ public class AccessoryDecoderType implements Serializable {
 
     @OneToMany
     @JoinColumn(name = "decoder_type_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<AccessoryDecoderTypeOperation> getDecoderTypeOperations() {
         return decoderTypeOperations;
     }

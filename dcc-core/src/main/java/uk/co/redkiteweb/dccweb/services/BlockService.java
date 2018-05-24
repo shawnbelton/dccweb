@@ -7,7 +7,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Block;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
@@ -71,16 +70,7 @@ public class BlockService {
     }
 
     private void sendMessage(final Block block) {
-        final Block simpleblock = new Block();
-        simpleblock.setBlockId(block.getBlockId());
-        simpleblock.setBlockName(block.getBlockName());
-        simpleblock.setOccupied(block.getOccupied());
-        if (block.getMacro()!=null) {
-            final Macro macro = new Macro();
-            macro.setMacroId(block.getMacro().getMacroId());
-            macro.setName(block.getMacro().getName());
-        }
-        messagingTemplate.convertAndSend("/blocks", simpleblock);
+        messagingTemplate.convertAndSend("/blocks", block);
     }
 
     public List<Block> getAllBlocks() {

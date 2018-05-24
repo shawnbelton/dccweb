@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.data.repositories.RelayControllerRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.ArrayList;
@@ -24,18 +24,18 @@ public class RelayControllerServiceTest {
 
     private RelayControllerService relayControllerService;
     private RelayControllerRepository relayControllerRepository;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Before
     public void setup() {
         final LogStore logStore = mock(LogStore.class);
-        notificationService = mock(NotificationService.class);
+        messagingTemplate = mock(SimpMessagingTemplate.class);
         AsyncWebService asyncWebService = mock(AsyncWebService.class);
         relayControllerRepository = mock(RelayControllerRepository.class);
         relayControllerService = new RelayControllerService();
         relayControllerService.setRelayControllerRepository(relayControllerRepository);
         relayControllerService.setLogStore(logStore);
-        relayControllerService.setNotificationService(notificationService);
+        relayControllerService.setMessagingTemplate(messagingTemplate);
         relayControllerService.setAsyncWebService(asyncWebService);
         when(relayControllerRepository.findAll()).thenReturn(new ArrayList<RelayController>());
     }
@@ -85,7 +85,7 @@ public class RelayControllerServiceTest {
         relayControllerService.setRelay("ABCDEFGH",3);
         verify(relayController, times(1)).setValue(eq(6));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
-        verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/relays"), any(RelayController.class));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class RelayControllerServiceTest {
         relayControllerService.unsetRelay("ABCDEFGH",4);
         verify(relayController, times(1)).setValue(eq(2));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
-        verify(notificationService, times(1)).createNotification(eq("RELAY"),eq(""));
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/relays"), any(RelayController.class));
     }
 
     @Test
@@ -111,6 +111,6 @@ public class RelayControllerServiceTest {
         when(relayControllerRepository.findOne(anyString())).thenReturn(relayController);
         relayControllerService.updateValue(mock(RelayController.class));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
-        verify(notificationService, times(1)).createNotification(anyString(),anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/relays"), any(RelayController.class));
     }
 }
