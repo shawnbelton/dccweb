@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.decoders;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.CV;
@@ -9,7 +10,6 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
@@ -44,13 +44,13 @@ public class DecoderHandler {
     private CVRepository cvRepository;
     private DccManufacturerRepository dccManufacturerRepository;
     private DefinitionReaderFactory definitionReaderFactory;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
     private LogStore logStore;
     private CVHandler cvHandler;
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -179,7 +179,7 @@ public class DecoderHandler {
         cvHandler.setDecoder(decoder);
         readBaseDecoderValues(definitionReader, decoder);
         decoderRepository.save(decoder);
-        notificationService.createNotification(DECODERS, "");
+        messagingTemplate.convertAndSend("/decoder", decoder);
     }
 
     private void writeCVToDecoder(final Map<Integer, Integer> cvMap, final CV originalCv) {
@@ -267,7 +267,7 @@ public class DecoderHandler {
             cv.setCvValue(cvValue.getValue());
             cvRepository.save(cv);
         }
-        notificationService.createNotification(DECODERS, "");
+        messagingTemplate.convertAndSend("/decoder", decoder);
         return decoderRepository.findOne(decoder.getDecoderId());
     }
 }

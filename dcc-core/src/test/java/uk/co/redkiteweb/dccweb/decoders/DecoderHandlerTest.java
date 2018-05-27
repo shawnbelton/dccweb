@@ -4,13 +4,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.CV;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
@@ -40,7 +40,7 @@ public class DecoderHandlerTest {
     private DefinitionReaderFactory definitionReaderFactory;
     private DefinitionReader definitionReader;
     private CVHandler cvHandler;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Before
     public void setUp() throws DefinitionException {
@@ -52,7 +52,7 @@ public class DecoderHandlerTest {
         definitionReaderFactory = mock(DefinitionReaderFactory.class);
         definitionReader = mock(DefinitionReader.class);
         cvHandler = mock(CVHandler.class);
-        notificationService = mock(NotificationService.class);
+        messagingTemplate = mock(SimpMessagingTemplate.class);
         decoderHandler = new DecoderHandler();
         decoderHandler.setDccInterface(dccInterface);
         decoderHandler.setDccManufacturerRepository(dccManufacturerRepository);
@@ -61,7 +61,7 @@ public class DecoderHandlerTest {
         decoderHandler.setLogStore(logStore);
         decoderHandler.setDefinitionReaderFactory(definitionReaderFactory);
         decoderHandler.setCvHandler(cvHandler);
-        decoderHandler.setNotificationService(notificationService);
+        decoderHandler.setMessagingTemplate(messagingTemplate);
         when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenReturn(definitionReader);
     }
 
@@ -94,7 +94,7 @@ public class DecoderHandlerTest {
     public void readDecoderOKTest() throws DefinitionException {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         readDecoderOK();
-        verify(notificationService, times(1)).createNotification(anyString(), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/decoder"), any(Decoder.class));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class DecoderHandlerTest {
         when(definitionReader.readValue(eq("Address Mode"))).thenReturn(1);
         when(decoderRepository.findByCurrentAddress(anyInt())).thenReturn(new Decoder());
         readDecoderOK();
-        verify(notificationService, times(1)).createNotification(anyString(), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/decoder"), any(Decoder.class));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class DecoderHandlerTest {
         decoderSettings.add(mock(DecoderSetting.class));
         when(definitionReader.readAllValues()).thenReturn(decoderSettings);
         assertFalse(decoderHandler.readFullOnProgram().isEmpty());
-        verify(notificationService, times(2)).createNotification(anyString(), anyString());
+        verify(messagingTemplate, times(2)).convertAndSend(eq("/decoder"), any(Decoder.class));
     }
 
     @Test

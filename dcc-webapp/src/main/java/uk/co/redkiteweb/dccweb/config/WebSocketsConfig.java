@@ -21,6 +21,6 @@ public class WebSocketsConfig extends AbstractWebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
         registry.setApplicationDestinationPrefixes("/app")
                 .enableSimpleBroker("/logging", "/status", "/cab",
-                        "/accessory", "/blocks", "/relays");
+                        "/accessory", "/blocks", "/relays", "/decoder");
     }
 }
