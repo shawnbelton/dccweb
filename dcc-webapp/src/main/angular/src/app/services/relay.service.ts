@@ -5,7 +5,8 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {RelayController} from "../models/relayController";
 import {HttpClient} from "@angular/common/http";
-import {StompService} from "./stomp.service";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class RelayService {
@@ -19,7 +20,11 @@ export class RelayService {
 
     constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchRelayControllers();
-        this.stompService.subscribe("/relays", (data: RelayController) => this.updateRelayControllers(data));
+      this.stompService.subscribe('/relays').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.updateRelayControllers(JSON.parse(data));
+      });
     }
 
     updateRelayControllers(relayController: RelayController): void {

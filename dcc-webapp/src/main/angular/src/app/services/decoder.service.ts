@@ -7,8 +7,9 @@ import {Decoder} from "../models/decoder";
 import {DecoderFunction} from "../models/decoderFunction";
 import {LinkedMacro} from "../models/linked.macro";
 import {DecoderSetting} from "../models/decoderSetting";
-import {NotificationService} from "./notification.service";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class DecoderService {
@@ -32,9 +33,37 @@ export class DecoderService {
     private _decoderSettings: BehaviorSubject<DecoderSetting[]> = new BehaviorSubject<DecoderSetting[]>(null);
     private decoderSettings: Observable<DecoderSetting[]> = this._decoderSettings.asObservable();
 
-    constructor(private http: HttpClient, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchDecoders();
-        this.notificationService.getDecoderUpdates().subscribe(decoders => this.fetchDecoders());
+      this.stompService.subscribe('/decoder').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.updateDecoders(JSON.parse(data));
+      });
+    }
+
+    updateDecoders(decoder: Decoder): void {
+      let decoders: Decoder[] = this._decoders.getValue();
+      let newDecoders: Decoder[] = [];
+      let notFound: boolean = true;
+      for(let currentDecoder of decoders) {
+        if (decoder.decoderId == currentDecoder.decoderId) {
+          newDecoders.push(decoder);
+          notFound = false;
+        } else {
+          newDecoders.push(currentDecoder);
+        }
+      }
+      if (notFound) {
+        newDecoders.push(decoder);
+      }
+      this._decoders.next(newDecoders);
+      let currentDecoder: Decoder = this._decoder.getValue();
+      if (null != currentDecoder) {
+        if (decoder.decoderId == currentDecoder.decoderId) {
+          this._decoder.next(decoder);
+        }
+      }
     }
 
     fetchDecoders(): void {

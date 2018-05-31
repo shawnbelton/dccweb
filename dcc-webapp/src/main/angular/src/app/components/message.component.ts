@@ -2,7 +2,7 @@
  * Created by shawn on 16/11/16.
  */
 import {Component, OnInit} from "@angular/core";
-import {Message} from "../models/message";
+import {LogMessage} from "../models/log.message";
 import {MessageService} from "../services/message.service";
 
 @Component({
@@ -12,7 +12,7 @@ import {MessageService} from "../services/message.service";
 })
 export class MessageComponent implements OnInit {
 
-    messages: Message[];
+    messages: LogMessage[];
 
     constructor(private messageService: MessageService) { }
 

@@ -7,7 +7,9 @@ import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {AccessoryDecoder} from "../models/accessoryDecoder";
 import {AccessoryOperation} from "../models/accessoryOperation";
 import {HttpClient} from "@angular/common/http";
-import {StompService} from "./stomp.service";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
+
 
 @Injectable()
 export class AccessoryDecoderService {
@@ -29,7 +31,11 @@ export class AccessoryDecoderService {
     constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchAccessoryTypes();
         this.fetchAccessories();
-        this.stompService.subscribe("/accessory", (data: AccessoryDecoder) => this.updateAccessory(data));
+      this.stompService.subscribe('/accessory').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.updateAccessory(JSON.parse(data));
+      });
     }
 
     updateAccessory(accessory: AccessoryDecoder): void {

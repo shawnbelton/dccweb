@@ -5,7 +5,9 @@ import {Injectable} from "@angular/core";
 import {Block} from "../models/block";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {HttpClient} from "@angular/common/http";
-import {StompService} from "./stomp.service";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
+
 
 @Injectable()
 export class BlockService {
@@ -23,7 +25,11 @@ export class BlockService {
 
   constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchBlocks();
-    this.stompService.subscribe("/blocks", (data: Block) => this.updateBlock(data));
+    this.stompService.subscribe('/blocks').map((message: Message) => {
+      return message.body;
+    }).subscribe((data: string) => {
+      this.updateBlock(JSON.parse(data));
+    });
   }
 
   updateBlock(block: Block): void {

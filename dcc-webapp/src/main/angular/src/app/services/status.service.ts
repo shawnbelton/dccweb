@@ -5,8 +5,9 @@ import {Injectable} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "../models/status";
-import {StompService} from "./stomp.service";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class StatusService {
@@ -17,7 +18,9 @@ export class StatusService {
     private status: Observable<Status> = this._status.asObservable();
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe("/status", (data: string) => {
+      this.stompService.subscribe("/status").map((message: Message) => {
+        return message.body;
+      }).subscribe( (data: string) => {
         this.setStatus(data);
       });
       this.readStatus();

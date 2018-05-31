@@ -5,8 +5,9 @@ import {Injectable} from "@angular/core";
 import {Cab} from "../models/cab";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Loco} from "../models/loco";
-import {StompService} from "./stomp.service";
 import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class CabService {
@@ -20,7 +21,11 @@ export class CabService {
     private response: boolean;
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe("/cab", (data: Cab) => {this.cabUpdate(data)});
+      this.stompService.subscribe('/cab').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.cabUpdate(JSON.parse(data));
+      });
     }
 
     cabUpdate(cab: Cab): void {
