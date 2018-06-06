@@ -23,7 +23,7 @@ public class NceUpdateFunctionsMessage extends AbstractNceMessage implements Nce
     private final Map<Integer, Integer> operationMap;
 
     public NceUpdateFunctionsMessage() {
-        operationMap = new HashMap<Integer, Integer>();
+        operationMap = new HashMap<>();
         operationMap.put(4,0x07);
         operationMap.put(8,0x08);
         operationMap.put(12,0x09);

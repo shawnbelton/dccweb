@@ -3,11 +3,11 @@ package uk.co.redkiteweb.dccweb.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Block;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
@@ -21,8 +21,8 @@ public class BlockService {
     private static final Logger LOGGER = LogManager.getLogger(BlockService.class);
 
     private BlockRepository blockRepository;
-    private NotificationService notificationService;
     private MacroService macroService;
+    private SimpMessagingTemplate messagingTemplate;
     private LogStore logStore;
 
     @Autowired
@@ -31,13 +31,13 @@ public class BlockService {
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMacroService(final MacroService macroService) {
+        this.macroService = macroService;
     }
 
     @Autowired
-    public void setMacroService(final MacroService macroService) {
-        this.macroService = macroService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -63,10 +63,14 @@ public class BlockService {
                 block.getBlockName(), block.getOccupied()?"Occupied":"Unoccupied");
         logStore.log("info", message);
         LOGGER.info(message);
-        notificationService.createNotification("BLOCK", "");
+        sendMessage(block);
         if (block.getMacro()!=null) {
             macroService.runMacro(block.getMacro());
         }
+    }
+
+    private void sendMessage(final Block block) {
+        messagingTemplate.convertAndSend("/blocks", block);
     }
 
     public List<Block> getAllBlocks() {

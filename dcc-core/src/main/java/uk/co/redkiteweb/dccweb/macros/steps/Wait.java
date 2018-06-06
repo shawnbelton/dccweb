@@ -23,6 +23,7 @@ public class Wait extends AbstractMacroStep implements IStep {
             TimeUnit.MILLISECONDS.sleep(Math.round(this.delay() * 1000));
         } catch (InterruptedException exception) {
             LOGGER.info("Wait has been interrupted.");
+            Thread.currentThread().interrupt();
         }
     }
 }

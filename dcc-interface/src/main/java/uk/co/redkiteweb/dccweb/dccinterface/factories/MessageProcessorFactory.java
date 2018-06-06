@@ -1,6 +1,5 @@
 package uk.co.redkiteweb.dccweb.dccinterface.factories;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -24,7 +23,7 @@ public class MessageProcessorFactory implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(final ApplicationContext context) throws BeansException {
+    public void setApplicationContext(final ApplicationContext context) {
         this.context = context;
     }
 

@@ -8,7 +8,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  * Created by shawn on 25/07/16.
  */
 @Component("DemoExitProgramMessage")
-public class DemoExitProgramMessage extends AbstractDemoMessage implements DemoMessage {
+public class DemoExitProgramMessage implements DefaultResponseDemoMessage, DemoMessage {
 
     @Override
     public MessageResponse process(final Message message) {

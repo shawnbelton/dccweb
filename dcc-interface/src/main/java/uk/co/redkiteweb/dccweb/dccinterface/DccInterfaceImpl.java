@@ -51,15 +51,19 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public void checkInterface() {
-        final MessageResponse messageResponse = sendMessage(new KeepAliveMessage(), false);
-        if (MessageResponse.MessageStatus.OK.equals(messageResponse.getStatus())) {
-            dccInterfaceStatus.setConnected();
-        } else {
-            if ("Disconnected".equals(messageResponse.get("ERROR"))) {
-                dccInterfaceStatus.setDisconnected();
+        try {
+            final MessageResponse messageResponse = sendMessage(new KeepAliveMessage(), false);
+            if (MessageResponse.MessageStatus.OK.equals(messageResponse.getStatus())) {
+                dccInterfaceStatus.setConnected();
             } else {
-                dccInterfaceStatus.setOffLine();
+                if ("Disconnected".equals(messageResponse.get("ERROR"))) {
+                    dccInterfaceStatus.setDisconnected();
+                } else {
+                    dccInterfaceStatus.setOffLine();
+                }
             }
+        } catch (final NoClassDefFoundError | UnsatisfiedLinkError error) {
+            dccInterfaceStatus.setDisconnected();
         }
     }
 
@@ -70,7 +74,7 @@ public class DccInterfaceImpl implements DccInterface {
 
     @Override
     public List<InterfaceInfo> getInterfaces() {
-        final List<InterfaceInfo> interfaces = new ArrayList<InterfaceInfo>();
+        final List<InterfaceInfo> interfaces = new ArrayList<>();
         for(MessageProcessor messageProcessor : messageProcessorFactory.getAllInterfaces()) {
             interfaces.add(InterfaceInfo.getInstance(messageProcessor));
         }

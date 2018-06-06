@@ -2,15 +2,15 @@
  * Created by shawn on 07/06/17.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
-import {NotificationService} from "./notification.service";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {RelayController} from "../models/relayController";
+import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class RelayService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private allRelayControllersUrl = '/api/relay-controller/all';
     private saveUrl = '/api/relay-controller/save';
     private updateUrl = '/api/relay-controller/update-value';
@@ -18,25 +18,47 @@ export class RelayService {
     private _relayControllers: BehaviorSubject<RelayController[]> = new BehaviorSubject(null);
     private relayControllers: Observable<RelayController[]> = this._relayControllers.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchRelayControllers();
-        this.notificationService.getRelayUpdates().subscribe(data => this.fetchRelayControllers());
+      this.stompService.subscribe('/relays').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.updateRelayControllers(JSON.parse(data));
+      });
+    }
+
+    updateRelayControllers(relayController: RelayController): void {
+      let relayControllers: RelayController[] = this._relayControllers.getValue();
+      let controllers: RelayController[] = [];
+      let notFound: boolean = true;
+      for(let currentController of relayControllers) {
+        if (currentController.controllerId == relayController.controllerId) {
+          controllers.push(relayController);
+          notFound = false;
+        } else {
+          controllers.push(currentController);
+        }
+      }
+      if (notFound) {
+        controllers.push(relayController);
+      }
+      this._relayControllers.next(controllers);
     }
 
     fetchRelayControllers(): void {
-        this.http.get(this.allRelayControllersUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.allRelayControllersUrl).subscribe((data: RelayController[]) => {
             this._relayControllers.next(data);
         }, error => console.log('Could not load relay controllers.'));
     }
 
     saveRelayController(relayController: RelayController): void {
-        this.http.post(this.saveUrl, relayController).map(response => response.json()).subscribe(data => {
+        this.http.post(this.saveUrl, relayController).subscribe((data: RelayController[]) => {
             this._relayControllers.next(data);
         }, error => console.log('Could not load relay controllers.'));
     }
 
     updateRelayValue(relayController: RelayController): void {
-        this.http.post(this.updateUrl, relayController).map(response => response.json()).subscribe(data => {
+        this.http.post(this.updateUrl, relayController).subscribe((data: RelayController[]) => {
             this._relayControllers.next(data);
         }, error => console.log('Could not load relay controllers.'));
     }

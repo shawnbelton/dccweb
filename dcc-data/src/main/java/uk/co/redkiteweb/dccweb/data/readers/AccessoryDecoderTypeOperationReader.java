@@ -1,37 +1,30 @@
 package uk.co.redkiteweb.dccweb.data.readers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by shawn on 16/02/17.
  */
 @Component
-public class AccessoryDecoderTypeOperationReader extends AbstractReader implements Reader<AccessoryDecoderTypeOperation> {
-
-    private static final Logger LOGGER = LogManager.getLogger(AccessoryDecoderTypeOperationReader.class);
+@Scope("prototype")
+public class AccessoryDecoderTypeOperationReader implements Reader<AccessoryDecoderTypeOperation> {
 
     private static final String ACCESSORY_DECODER_TYPE_OPERATION_FILE = "accessoryDecoderTypeOperations.csv";
 
-    @Override
-    public AccessoryDecoderTypeOperation read() {
-        AccessoryDecoderTypeOperation accessoryDecoderTypeOperation = null;
-        try {
-            accessoryDecoderTypeOperation = getAccessoryDecoderTypeOperation(readLine());
-        } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", ACCESSORY_DECODER_TYPE_OPERATION_FILE), ioException);
-        }
-        return accessoryDecoderTypeOperation;
+    private ResourceFileReader reader;
+
+    @Autowired
+    public void setReader(final ResourceFileReader reader) {
+        this.reader = reader;
+        this.reader.setResourceFile(ACCESSORY_DECODER_TYPE_OPERATION_FILE);
     }
 
     @Override
-    protected InputStream getInputStream() {
-        return this.getClass().getClassLoader().getResourceAsStream(ACCESSORY_DECODER_TYPE_OPERATION_FILE);
+    public AccessoryDecoderTypeOperation read() {
+        return getAccessoryDecoderTypeOperation(reader.readLine());
     }
 
     private static AccessoryDecoderTypeOperation getAccessoryDecoderTypeOperation(final String readLine) {

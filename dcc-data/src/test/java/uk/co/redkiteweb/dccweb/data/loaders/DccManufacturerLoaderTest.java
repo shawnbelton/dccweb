@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 import uk.co.redkiteweb.dccweb.data.readers.DccManufacturerReader;
+import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 
 import static org.mockito.Mockito.*;
@@ -34,5 +35,12 @@ public class DccManufacturerLoaderTest {
         when(dccManufacturerReader.read()).thenReturn(new DccManufacturer()).thenReturn(null);
         dccManufacturerLoader.load();
         verify(dccManufacturerRepository, times(1)).save(any(DccManufacturer.class));
+    }
+
+    @Test
+    public void testReadError() {
+        when(dccManufacturerReader.read()).thenThrow(new ReaderException("Error"));
+        dccManufacturerLoader.load();
+        verify(dccManufacturerRepository, never()).save(any(DccManufacturer.class));
     }
 }

@@ -1,10 +1,8 @@
 package uk.co.redkiteweb.dccweb.nce.messages;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.nce.communication.TalkToNCE;
-import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 
 /**
  * Created by shawn on 09/07/16.
@@ -27,9 +25,6 @@ public abstract class AbstractNceMessage implements NceMessage {
         messageResponse.setStatus(MessageResponse.MessageStatus.OK);
         return messageResponse;
     }
-
-    @Override
-    public abstract MessageResponse process(final Message message) throws ConnectionException;
 
     static MessageResponse.MessageStatus readStatus(final Integer data) {
         MessageResponse.MessageStatus status = MessageResponse.MessageStatus.ERROR;

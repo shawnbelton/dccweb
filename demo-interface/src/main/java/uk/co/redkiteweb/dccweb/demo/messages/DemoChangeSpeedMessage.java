@@ -11,7 +11,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
  * Created by shawn on 21/09/16.
  */
 @Component("DemoChangeSpeedMessage")
-public class DemoChangeSpeedMessage extends AbstractDemoMessage implements DemoMessage {
+public class DemoChangeSpeedMessage implements DefaultResponseDemoMessage, DemoMessage {
 
     private static final Logger LOGGER = LogManager.getLogger(DemoChangeSpeedMessage.class);
 

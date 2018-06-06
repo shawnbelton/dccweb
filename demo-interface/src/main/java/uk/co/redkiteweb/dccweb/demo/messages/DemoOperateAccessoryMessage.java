@@ -11,7 +11,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
  * Created by shawn on 06/03/17.
  */
 @Component("DemoOperateAccessoryMessage")
-public class DemoOperateAccessoryMessage extends AbstractDemoMessage implements DemoMessage {
+public class DemoOperateAccessoryMessage implements DefaultResponseDemoMessage, DemoMessage {
 
     private static final Logger LOGGER = LogManager.getLogger(DemoOperateAccessoryMessage.class);
 

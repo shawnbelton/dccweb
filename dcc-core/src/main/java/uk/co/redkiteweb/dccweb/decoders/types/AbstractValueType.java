@@ -22,16 +22,13 @@ public abstract class AbstractValueType implements ValueType {
         this.cvHandler = cvHandler;
     }
 
-    protected Node getValueNode() {
+    Node getValueNode() {
         return valueNode;
     }
 
-    protected Integer getCVValue(final Integer cvNumber) {
+    Integer getCVValue(final Integer cvNumber) {
         return cvHandler.readCV(cvNumber);
     }
-
-    @Override
-    public abstract Integer getValue();
 
     protected abstract String getType();
 
@@ -57,7 +54,7 @@ public abstract class AbstractValueType implements ValueType {
         return value;
     }
 
-    protected String getId() {
+    String getId() {
         return valueNode.getAttributes().getNamedItem("id").getTextContent();
     }
 
@@ -65,7 +62,7 @@ public abstract class AbstractValueType implements ValueType {
         return valueNode.getAttributes().getNamedItem("name").getTextContent();
     }
 
-    protected List<DecoderSettingOption> getOptions() {
+    List<DecoderSettingOption> getOptions() {
         return new ArrayList<>();
     }
 

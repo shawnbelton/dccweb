@@ -1,37 +1,30 @@
 package uk.co.redkiteweb.dccweb.data.readers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by shawn on 26/01/17.
  */
 @Component
-public class AccessoryDecoderTypeReader extends AbstractReader implements Reader<AccessoryDecoderType> {
-
-    private static final Logger LOGGER = LogManager.getLogger(AccessoryDecoderTypeReader.class);
+@Scope("prototype")
+public class AccessoryDecoderTypeReader implements Reader<AccessoryDecoderType> {
 
     private static final String ACCESSORY_DECODER_TYPE_FILE = "accessoryDecoderTypes.csv";
 
-    @Override
-    public AccessoryDecoderType read() {
-        AccessoryDecoderType accessoryDecoderType = null;
-        try {
-            accessoryDecoderType = getAccessoryDecoderType(readLine());
-        } catch (IOException ioException) {
-            LOGGER.error(String.format("Unable to read %s", ACCESSORY_DECODER_TYPE_FILE), ioException);
-        }
-        return accessoryDecoderType;
+    private ResourceFileReader reader;
+
+    @Autowired
+    public void setReader(final ResourceFileReader reader) {
+        this.reader = reader;
+        this.reader.setResourceFile(ACCESSORY_DECODER_TYPE_FILE);
     }
 
     @Override
-    protected InputStream getInputStream() {
-        return this.getClass().getClassLoader().getResourceAsStream(ACCESSORY_DECODER_TYPE_FILE);
+    public AccessoryDecoderType read() {
+        return getAccessoryDecoderType(reader.readLine());
     }
 
     private static AccessoryDecoderType getAccessoryDecoderType(final String readLine) {

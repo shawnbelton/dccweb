@@ -73,6 +73,4 @@ public abstract class AbstractMacroStep implements IStep {
         return getNextStepNumber();
     }
 
-    @Override
-    public abstract void run();
 }

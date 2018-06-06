@@ -39,32 +39,22 @@ public class NceChangeSpeedMessage extends AbstractNceMessage implements NceMess
 
     private static int getOpCode(final ChangeSpeedMessage.SpeedSteps speedSteps, ChangeSpeedMessage.Direction direction) {
         int opCode = 0;
-        switch(direction) {
-            case UP:
-                opCode = 2 + offSetSteps(speedSteps);
-                break;
-            case DOWN:
-                opCode = 1 + offSetSteps(speedSteps);
-                break;
-            case RSTOP:
-                opCode = 5;
-                break;
-            case FSTOP:
-                opCode = 6;
-                break;
+        if (ChangeSpeedMessage.Direction.UP.equals(direction)) {
+            opCode = 2 + offSetSteps(speedSteps);
+        } else if (ChangeSpeedMessage.Direction.DOWN.equals(direction)) {
+            opCode = 1 + offSetSteps(speedSteps);
+        } else if (ChangeSpeedMessage.Direction.RSTOP.equals(direction)) {
+            opCode = 5;
+        } else if (ChangeSpeedMessage.Direction.FSTOP.equals(direction)) {
+            opCode = 6;
         }
         return opCode;
     }
 
     private static int offSetSteps(final ChangeSpeedMessage.SpeedSteps speedSteps) {
-        int offSet = 0;
-        switch (speedSteps) {
-            case STEPS_128:
-                offSet = 2;
-                break;
-            case STEPS_28:
-                offSet = 0;
-                break;
+        int offSet = 2;
+        if (ChangeSpeedMessage.SpeedSteps.STEPS_28.equals(speedSteps)) {
+            offSet = 0;
         }
         return offSet;
     }

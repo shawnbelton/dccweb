@@ -1,10 +1,10 @@
 package uk.co.redkiteweb.dccweb.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.data.repositories.RelayControllerRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;
@@ -17,7 +17,7 @@ public class RelayControllerService {
 
     private RelayControllerRepository relayControllerRepository;
     private LogStore logStore;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
     private AsyncWebService asyncWebService;
 
     @Autowired
@@ -31,8 +31,8 @@ public class RelayControllerService {
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -102,7 +102,7 @@ public class RelayControllerService {
     }
 
     private void notify(final RelayController relayController) {
-        notificationService.createNotification("RELAY", "");
+        messagingTemplate.convertAndSend("/relays", relayController);
         updateRelay(relayController);
     }
 }

@@ -13,7 +13,7 @@ public class UpdateFunctionsMessage implements Message {
     private final Map<Integer, Boolean> functions;
 
     public UpdateFunctionsMessage() {
-        functions = new HashMap<Integer, Boolean>();
+        functions = new HashMap<>();
     }
 
     public int getAddress() {

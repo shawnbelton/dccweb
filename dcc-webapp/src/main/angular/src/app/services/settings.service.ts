@@ -2,15 +2,14 @@
  * Created by shawn on 26/11/16.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {Settings} from "../models/settings";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {InterfaceInfo} from "../models/interfaceInfo";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class SettingsService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private settingsUrl = '/api/application/settings';
     private interfacesUrl = '/api/interface/all';
 
@@ -20,25 +19,25 @@ export class SettingsService {
     private _interfaces: BehaviorSubject<InterfaceInfo[]> = new BehaviorSubject([]);
     private interfaces: Observable<InterfaceInfo[]> = this._interfaces.asObservable();
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         this.loadSettings();
         this.loadInterfaces();
     }
 
     loadSettings(): void {
-        this.http.get(this.settingsUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.settingsUrl).subscribe((data: Settings) => {
             this._settings.next(data);
         }, error => console.log('Could not load settings.'));
     }
 
     loadInterfaces(): void {
-        this.http.get(this.interfacesUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.interfacesUrl).subscribe((data: InterfaceInfo[]) => {
             this._interfaces.next(data);
         }, error => console.log('Could not load interfaces.'));
     }
 
     saveSettings(settings: Settings): void {
-        this.http.post(this.settingsUrl, settings).map(response => response.json()).subscribe(data => {
+        this.http.post(this.settingsUrl, settings).subscribe((data: Settings) => {
            this._settings.next(data);
         }, error => console.log('Could not load settings.'));
     }

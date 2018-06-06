@@ -21,7 +21,7 @@ public class DecoderRegister {
     public void initialise() {
         LOGGER.info("Initialising Decoder Register");
         decoder = new Decoder();
-        decoder.setCvs(new ArrayList<CV>());
+        decoder.setCvs(new ArrayList<>());
     }
 
     public void setCV(final int cvNumber, final int cvValue) {

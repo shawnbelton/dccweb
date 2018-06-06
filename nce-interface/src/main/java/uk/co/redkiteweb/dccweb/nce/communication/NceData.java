@@ -8,11 +8,11 @@ import java.util.Queue;
  */
 public class NceData {
 
-    private final Queue<Integer> nceData;
+    private final Queue<Integer> nceDataQueue;
     private int expectedValues;
 
     public NceData() {
-        nceData = new LinkedList<Integer>();
+        nceDataQueue = new LinkedList<>();
     }
 
     public int getExpectedValues() {
@@ -24,18 +24,18 @@ public class NceData {
     }
 
     public void addData(final int data) {
-        nceData.add(data);
+        nceDataQueue.add(data);
     }
 
     public Integer readData() {
-        return nceData.poll();
+        return nceDataQueue.poll();
     }
 
     public boolean isEmpty() {
-        return nceData.isEmpty();
+        return nceDataQueue.isEmpty();
     }
 
     public int size() {
-        return nceData.size();
+        return nceDataQueue.size();
     }
 }

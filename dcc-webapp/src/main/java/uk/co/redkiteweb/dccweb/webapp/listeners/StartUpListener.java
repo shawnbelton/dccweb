@@ -1,6 +1,5 @@
 package uk.co.redkiteweb.dccweb.webapp.listeners;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -27,7 +26,7 @@ public class StartUpListener implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyString;
@@ -17,20 +17,20 @@ import static org.mockito.Mockito.*;
 public class DccInterfaceStatusTest {
 
     private DccInterfaceStatus dccInterfaceStatus;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate simpMessagingTemplate;
 
     @Before
     public void setUp() {
-        notificationService = mock(NotificationService.class);
+        simpMessagingTemplate = mock(SimpMessagingTemplate.class);
         dccInterfaceStatus = new DccInterfaceStatus();
-        dccInterfaceStatus.setNotificationService(notificationService);
+        dccInterfaceStatus.setMessagingTemplate(simpMessagingTemplate);
     }
 
     @Test
     public void connectedTest() {
         dccInterfaceStatus.setConnected();
         assertEquals(DccInterfaceStatus.Status.CONNECTED, dccInterfaceStatus.getStatus());
-        verify(notificationService, times(1)).createNotification(anyString(), anyString());
+        verify(simpMessagingTemplate, times(1)).convertAndSend(eq("/status"), anyString());
     }
 
     @Test

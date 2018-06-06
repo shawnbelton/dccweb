@@ -11,7 +11,7 @@ import uk.co.redkiteweb.dccweb.demo.registers.DecoderRegister;
  * Created by shawn on 25/07/16.
  */
 @Component("DemoReadCVMessage")
-public class DemoReadCVMessage extends AbstractSingleResponseMessage implements DemoMessage {
+public class DemoReadCVMessage implements DefaultResponseSingleResponseMessage, DemoMessage {
 
     private DecoderRegister decoderRegister;
 

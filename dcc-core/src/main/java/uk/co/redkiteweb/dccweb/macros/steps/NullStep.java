@@ -13,6 +13,6 @@ public class NullStep extends AbstractMacroStep implements IStep {
 
     @Override
     public void run() {
-
+        // This step by definition does nothing.
     }
 }

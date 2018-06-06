@@ -2,17 +2,18 @@
  * Created by shawn on 24/02/17.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {DecoderAccessoryType} from "../models/decoderAccessoryType";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {AccessoryDecoder} from "../models/accessoryDecoder";
 import {AccessoryOperation} from "../models/accessoryOperation";
-import {NotificationService} from "./notification.service";
+import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
+
 
 @Injectable()
 export class AccessoryDecoderService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private fetchAccessoryTypeUrl = '/api/accessory/decoder/type/all';
     private fetchAccessoriesUrl = '/api/accessory/decoder/all';
     private saveAccessoryUrl = '/api/accessory/decoder/save';
@@ -27,33 +28,61 @@ export class AccessoryDecoderService {
     private _accessory: BehaviorSubject<AccessoryDecoder> = new BehaviorSubject(null);
     private accessory: Observable<AccessoryDecoder> = this._accessory.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
+    constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchAccessoryTypes();
         this.fetchAccessories();
-        this.notificationService.getAccessoryUpdates().subscribe(data => this.fetchAccessories());
+      this.stompService.subscribe('/accessory').map((message: Message) => {
+        return message.body;
+      }).subscribe((data: string) => {
+        this.updateAccessory(JSON.parse(data));
+      });
+    }
+
+    updateAccessory(accessory: AccessoryDecoder): void {
+      let currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
+      let accessories: AccessoryDecoder[] = [];
+      let notFound: boolean = true;
+      for(let currentAccessory of currentAccessories) {
+        if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+          accessories.push(accessory);
+          notFound = false;
+        } else {
+          accessories.push(currentAccessory);
+        }
+      }
+      if (notFound) {
+        accessories.push(accessory);
+      }
+      this._accessories.next(accessories);
+      let currentAccessory: AccessoryDecoder = this._accessory.getValue();
+      if (null != currentAccessory) {
+        if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+          this._accessory.next(accessory);
+        }
+      }
     }
 
     fetchAccessoryTypes(): void {
-        this.http.get(this.fetchAccessoryTypeUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.fetchAccessoryTypeUrl).subscribe((data: DecoderAccessoryType[]) => {
             this._accessoryTypes.next(data);
         }, error => console.log('Could not load accessory types.'));
     }
 
     fetchAccessories(): void {
-        this.http.get(this.fetchAccessoriesUrl).map(response => response.json()).subscribe(data => {
+        this.http.get(this.fetchAccessoriesUrl).subscribe((data: AccessoryDecoder[]) => {
             this._accessories.next(data);
         }, error => console.log('Could not load accessories.'));
     }
 
     saveAccessory(accessory: AccessoryDecoder): void {
-        this.http.post(this.saveAccessoryUrl, accessory).map(response => response.json()).subscribe(data => {
+        this.http.post(this.saveAccessoryUrl, accessory).subscribe((data: AccessoryDecoder[]) => {
             this._accessories.next(data);
         }, error => console.log('Could not load accessories.'));
     }
 
     operateAccessory(accessoryOperation: AccessoryOperation): void {
         let retval: boolean = false;
-        this.http.post(this.operateAccessoryUrl, accessoryOperation).map(response => response.json()).subscribe(data => {
+        this.http.post(this.operateAccessoryUrl, accessoryOperation).subscribe((data: AccessoryDecoder[]) => {
             this._accessories.next(data);
         }, error => console.log('Could not operate accessory.'));
     }

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import uk.co.redkiteweb.dccweb.data.readers.ReaderException;
 import uk.co.redkiteweb.dccweb.demo.reader.CVValue;
 import uk.co.redkiteweb.dccweb.demo.reader.DecoderDefaultReader;
 import uk.co.redkiteweb.dccweb.demo.registers.DecoderRegister;
@@ -38,5 +39,12 @@ public class DecoderLoaderTest {
         decoderLoader.load();
         verify(decoderRegister, times(1)).initialise();
         verify(decoderRegister, times(1)).setCV(anyInt(), anyInt());
+    }
+
+    @Test
+    public void testReadError() {
+        when(decoderDefaultReader.read()).thenThrow(new ReaderException("ERROR"));
+        decoderLoader.load();
+        verify(decoderRegister, never()).setCV(anyInt(), anyInt());
     }
 }
