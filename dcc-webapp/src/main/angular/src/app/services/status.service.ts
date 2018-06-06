@@ -6,7 +6,7 @@ import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "../models/status";
 import {HttpClient} from "@angular/common/http";
-import {StompService} from "@stomp/ng2-stompjs";
+import {StompService, StompState} from "@stomp/ng2-stompjs";
 import {Message} from '@stomp/stompjs';
 
 @Injectable()
@@ -21,9 +21,27 @@ export class StatusService {
       this.stompService.subscribe("/status").map((message: Message) => {
         return message.body;
       }).subscribe( (data: string) => {
-        this.setStatus(data);
+        this.setStatus(JSON.parse(data));
       });
+      this.stompService.state.subscribe((data: StompState) => this.updateStompStatus(data));
       this.readStatus();
+    }
+
+    updateStompStatus(state: StompState): void {
+      switch (state) {
+        case 0:
+          this._status.next(this.disconnected());
+          break;
+        case 2:
+          this.readStatus();
+          break;
+      }
+    }
+
+    disconnected(): Status {
+      let status: Status = new Status();
+      status.status = 'DISCONNECTED';
+      return status;
     }
 
     setStatus(status: string): void {
