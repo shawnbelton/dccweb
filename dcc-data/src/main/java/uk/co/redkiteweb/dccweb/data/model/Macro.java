@@ -1,5 +1,8 @@
 package uk.co.redkiteweb.dccweb.data.model;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -35,6 +38,7 @@ public class Macro implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "macro_id")
+    @LazyCollection(LazyCollectionOption.FALSE)
     public List<MacroStep> getSteps() {
         return steps;
     }

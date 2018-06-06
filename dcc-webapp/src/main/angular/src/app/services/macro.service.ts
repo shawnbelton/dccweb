@@ -4,7 +4,7 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import {Macro} from "../models/macro";
-import {Http} from "@angular/http";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable()
 export class MacroService {
@@ -15,37 +15,37 @@ export class MacroService {
     private _macro: BehaviorSubject<Macro> = new BehaviorSubject(new Macro());
     private macro: Observable<Macro> = this._macro.asObservable();
 
-    constructor(private http: Http) {
+    constructor(private http: HttpClient) {
         this.fetchMacros();
     }
 
     editMacro(macro: Macro): void {
-        this.http.get("/api/macros/" + macro.macroId.toString()).map(response => response.json())
-            .subscribe(data => {
+        this.http.get("/api/macros/" + macro.macroId.toString())
+            .subscribe((data: Macro) => {
                 this._macro.next(data);
             }, error => console.log("Unable to get macro."));
     }
 
     fetchMacros(): void {
-        this.http.get("/api/macros/all").map(response => response.json()).subscribe(data => {
+        this.http.get("/api/macros/all").subscribe((data: Macro[]) => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     saveMacro(macro: Macro): void {
-        this.http.post("/api/macros/save", macro).map(response => response.json()).subscribe(data => {
+        this.http.post("/api/macros/save", macro).subscribe((data: Macro[]) => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     deleteMacro(macro: Macro): void {
-        this.http.post("/api/macros/delete", macro).map(response => response.json()).subscribe(data => {
+        this.http.post("/api/macros/delete", macro).subscribe((data: Macro[]) => {
             this._macros.next(data);
         }, error => console.log("Unable to get macros."));
     }
 
     runMacro(macro: Macro): void {
-        this.http.post("/api/macros/run", macro).map(response => response.json()).subscribe(data => {},
+        this.http.post("/api/macros/run", macro).subscribe(data => {},
         error => console.log("Unable to run macro."));
     }
 

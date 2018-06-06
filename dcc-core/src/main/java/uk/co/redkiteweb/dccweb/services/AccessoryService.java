@@ -3,16 +3,15 @@ package uk.co.redkiteweb.dccweb.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 
@@ -29,7 +28,7 @@ public class AccessoryService {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
     private MacroService macroService;
 
     @Autowired
@@ -48,8 +47,8 @@ public class AccessoryService {
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -72,12 +71,10 @@ public class AccessoryService {
     }
 
     @Async
-    @Transactional
     public void operateServiceAsyc(final AccessoryOperation accessoryOperation) {
         operateService(accessoryOperation);
     }
 
-    @Transactional
     public void operateService(final AccessoryOperation accessoryOperation) {
         final List<AccessoryDecoder> accessoryDecoders =
                 accessoryDecoderRepository.findAccessoryDecodersByAddress(accessoryOperation.getAccessoryAddress());
@@ -88,17 +85,20 @@ public class AccessoryService {
         message.setLogMessage(logMessage);
         LOGGER.info(logMessage);
         dccInterface.sendMessage(message);
-        for (AccessoryDecoder accessoryDecoder : accessoryDecoders) {
-            accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
-            accessoryDecoderRepository.save(accessoryDecoder);
-            if (accessoryDecoder.getMacro()!=null) {
-                macroService.runMacro(accessoryDecoder.getMacro());
-            }
-        }
-        notificationService.createNotification("ACCESSORY", accessoryOperation.getAccessoryAddress().toString());
+        accessoryDecoders.stream().forEach(accessoryDecoder -> operateAccessory(accessoryOperation, accessoryDecoder));
     }
 
-    private static String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {
+    private void operateAccessory(final AccessoryOperation accessoryOperation, final AccessoryDecoder accessoryDecoder) {
+        accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
+        accessoryDecoderRepository.save(accessoryDecoder);
+        final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findOne(accessoryDecoder.getAccessoryDecoderId());
+        messagingTemplate.convertAndSend("/accessory", accessoryDecoder1);
+        if (accessoryDecoder.getMacro()!=null) {
+            macroService.runMacro(accessoryDecoder.getMacro());
+        }
+    }
+
+    private String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Setting accessory ");
         String seperator = "";
@@ -113,11 +113,12 @@ public class AccessoryService {
         return stringBuilder.toString();
     }
 
-    private static String getOperationName(final AccessoryDecoder accessoryDecoder,
+    private String getOperationName(final AccessoryDecoder accessoryDecoder,
                                     final Integer operation) {
         String operationValue = "";
+        final AccessoryDecoderType accessoryDecoderType = accessoryDecoder.getAccessoryDecoderType();
         for(AccessoryDecoderTypeOperation accessoryDecoderTypeOperation
-                : accessoryDecoder.getAccessoryDecoderType().getDecoderTypeOperations()) {
+                : accessoryDecoderType.getDecoderTypeOperations()) {
             if (accessoryDecoderTypeOperation.getDecoderOperationValue().equals(operation)) {
                 operationValue = accessoryDecoderTypeOperation.getDecoderTypeOperation();
             }

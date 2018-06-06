@@ -3,10 +3,11 @@ package uk.co.redkiteweb.dccweb.services;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
+import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
@@ -24,7 +25,7 @@ public class CabService {
     private static final Logger LOGGER = LogManager.getLogger(CabService.class);
 
     private DccInterface dccInterface;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -32,8 +33,8 @@ public class CabService {
     }
 
     @Autowired
-    public void setNotificationService(final NotificationService notificationService) {
-        this.notificationService = notificationService;
+    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
+        this.messagingTemplate = messagingTemplate;
     }
 
     public void updateCab(final Cab cab) {
@@ -46,7 +47,7 @@ public class CabService {
             changeSpeedMessage.setSpeed(cab.getSpeed());
             changeSpeedMessage.setDirection(toDirection(cab.getDirection()));
             dccInterface.sendMessage(changeSpeedMessage);
-            notificationService.createNotification("CAB", String.format("%d", cab.getLoco().getLocoId()));
+            notifyCabChange(cab);
         }
     }
 
@@ -59,8 +60,20 @@ public class CabService {
                 updateFunctionsMessage.addFunction(cabFunction.getNumber(), cabFunction.getState());
             }
             dccInterface.sendMessage(updateFunctionsMessage);
-            notificationService.createNotification("CAB", String.format("%d", cab.getLoco().getLocoId()));
+            notifyCabChange(cab);
         }
+    }
+
+    private void notifyCabChange(final Cab updatedCab) {
+        final Cab cab = new Cab();
+        cab.setCabFunctions(updatedCab.getCabFunctions());
+        cab.setDirection(updatedCab.getDirection());
+        cab.setSpeed(updatedCab.getSpeed());
+        cab.setSteps(updatedCab.getSteps());
+        final Loco loco = new Loco();
+        loco.setLocoId(updatedCab.getLoco().getLocoId());
+        cab.setLoco(loco);
+        messagingTemplate.convertAndSend("/cab", cab);
     }
 
     private static boolean hasDecoder(final Cab cab) {

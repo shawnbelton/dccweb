@@ -4,12 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.Loco;
-import uk.co.redkiteweb.dccweb.data.service.NotificationService;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
@@ -28,15 +28,15 @@ public class CabServiceTest {
 
     private CabService cabService;
     private DccInterface dccInterface;
-    private NotificationService notificationService;
+    private SimpMessagingTemplate messagingTemplate;
 
     @Before
     public void setup() {
         dccInterface = mock(DccInterface.class);
-        notificationService = mock(NotificationService.class);
+        messagingTemplate = mock(SimpMessagingTemplate.class);
         cabService = new CabService();
         cabService.setDccInterface(dccInterface);
-        cabService.setNotificationService(notificationService);
+        cabService.setMessagingTemplate(messagingTemplate);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class CabServiceTest {
         cab.setLoco(loco);
         cabService.updateCab(cab);
         verify(dccInterface, never()).sendMessage(any(Message.class));
-        verify(notificationService, never()).createNotification(anyString(), anyString());
+        verify(messagingTemplate, never()).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class CabServiceTest {
         cab.setDirection("UP");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -70,7 +70,7 @@ public class CabServiceTest {
         cab.setDirection("DOWN");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class CabServiceTest {
         cab.setSpeed(0);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CabServiceTest {
         cab.setSpeed(0);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
 
@@ -100,7 +100,7 @@ public class CabServiceTest {
         cab.setSteps("28");
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -109,14 +109,14 @@ public class CabServiceTest {
         cab.setSteps(null);
         cabService.updateCab(cab);
         verify(dccInterface, times(1)).sendMessage(any(ChangeSpeedMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
     public void testUpdateFunctionNullLoco() {
         cabService.updateCabFunctions(new Cab());
         verify(dccInterface, never()).sendMessage(any(Message.class));
-        verify(notificationService, never()).createNotification(anyString(), anyString());
+        verify(messagingTemplate, never()).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class CabServiceTest {
         final Cab cab = getCab();
         cabService.updateCabFunctions(cab);
         verify(dccInterface, times(1)).sendMessage(any(UpdateFunctionsMessage.class));
-        verify(notificationService, times(1)).createNotification(eq("CAB"), anyString());
+        verify(messagingTemplate, times(1)).convertAndSend(eq("/cab"), any(Cab.class));
     }
 
     private Cab getCab() {

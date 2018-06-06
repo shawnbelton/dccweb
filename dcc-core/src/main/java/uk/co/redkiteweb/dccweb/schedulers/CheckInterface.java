@@ -22,7 +22,7 @@ public class CheckInterface {
         this.dccInterface = dccInterface;
     }
 
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(fixedDelay = 500)
     public void checkInterface() {
         LOGGER.info("Checking Interface.");
         dccInterface.checkInterface();

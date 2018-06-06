@@ -2,15 +2,16 @@
  * Created by shawn on 03/04/17.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
-import {NotificationService} from "./notification.service";
 import {Block} from "../models/block";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {HttpClient} from "@angular/common/http";
+import {StompService} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
+
 
 @Injectable()
 export class BlockService {
 
-  private headers = new Headers({'Content-Type': 'application/json'});
   private blockUrl = '/api/block/all';
   private saveBlockUrl = '/api/block/save';
   private deleteBlockUrl = '/api/block/delete';
@@ -22,31 +23,59 @@ export class BlockService {
   private _block: BehaviorSubject<Block> = new BehaviorSubject(null);
   private block: Observable<Block> = this._block.asObservable();
 
-  constructor(private http: Http, private notificationService: NotificationService) {
+  constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchBlocks();
-    this.notificationService.getBlockUpdates().subscribe(data => this.fetchBlocks());
+    this.stompService.subscribe('/blocks').map((message: Message) => {
+      return message.body;
+    }).subscribe((data: string) => {
+      this.updateBlock(JSON.parse(data));
+    });
+  }
+
+  updateBlock(block: Block): void {
+    let newBlocks: Block[] = [];
+    let currentBlocks: Block[] = this._blocks.getValue();
+    let notFound: boolean = true;
+    for(let currentBlock of currentBlocks) {
+      if (currentBlock.blockId == block.blockId) {
+        newBlocks.push(block);
+        notFound = false;
+      } else {
+        newBlocks.push(currentBlock);
+      }
+    }
+    if (notFound) {
+      newBlocks.push(block);
+    }
+    this._blocks.next(newBlocks);
+    let currentBlock: Block = this._block.getValue();
+    if (null != currentBlock) {
+      if (currentBlock.blockId == block.blockId) {
+        this._block.next(block);
+      }
+    }
   }
 
   fetchBlocks(): void {
-    this.http.get(this.blockUrl).map(response => response.json()).subscribe(data => {
+    this.http.get(this.blockUrl).subscribe((data: Block[]) => {
       this._blocks.next(data);
     }, error => console.log('Could not load blocks.'));
   }
 
   saveBlock(block: Block): void {
-    this.http.post(this.saveBlockUrl, block).map(response => response.json()).subscribe(data => {
+    this.http.post(this.saveBlockUrl, block).subscribe((data: Block[]) => {
       this._blocks.next(data);
     }, error => console.log('Could not load blocks.'));
   }
 
   deleteBlock(block: Block): void {
-    this.http.post(this.deleteBlockUrl, block).map(response => response.json()).subscribe(data => {
+    this.http.post(this.deleteBlockUrl, block).subscribe((data: Block[]) => {
       this._blocks.next(data);
     }, error => console.log('Could not load blocks.'));
   }
 
   setBlockOccupancy(block: Block): void {
-    this.http.post(this.blockOccupiedUrl, block).map(response => response.json()).subscribe(data => {
+    this.http.post(this.blockOccupiedUrl, block).subscribe((data: Block[]) => {
       this._blocks.next(data);
     }, error => console.log('Could not load blocks.'));
   }

@@ -2,28 +2,57 @@
  * Created by shawn on 19/11/16.
  */
 import {Injectable} from "@angular/core";
-import {Headers, Http} from "@angular/http";
 import {BehaviorSubject, Observable} from "rxjs/Rx";
 import "rxjs/add/operator/toPromise";
 import {Status} from "../models/status";
-import {NotificationService} from "./notification.service";
+import {HttpClient} from "@angular/common/http";
+import {StompService, StompState} from "@stomp/ng2-stompjs";
+import {Message} from '@stomp/stompjs';
 
 @Injectable()
 export class StatusService {
 
-    private headers = new Headers({'Content-Type': 'application/json'});
     private statusUrl = '/api/interface/status';
 
     private _status: BehaviorSubject<Status> = new BehaviorSubject(new Status());
     private status: Observable<Status> = this._status.asObservable();
 
-    constructor(private http: Http, private notificationService: NotificationService) {
-        this.notificationService.getStatusUpdates().subscribe(data => this.readStatus());
+    constructor(private http: HttpClient, private stompService: StompService) {
+      this.stompService.subscribe("/status").map((message: Message) => {
+        return message.body;
+      }).subscribe( (data: string) => {
+        this.setStatus(JSON.parse(data));
+      });
+      this.stompService.state.subscribe((data: StompState) => this.updateStompStatus(data));
+      this.readStatus();
+    }
+
+    updateStompStatus(state: StompState): void {
+      switch (state) {
+        case 0:
+          this._status.next(this.disconnected());
+          break;
+        case 2:
+          this.readStatus();
+          break;
+      }
+    }
+
+    disconnected(): Status {
+      let status: Status = new Status();
+      status.status = 'DISCONNECTED';
+      return status;
+    }
+
+    setStatus(status: string): void {
+      let statusObj: Status = new Status();
+      statusObj.status = status;
+      this._status.next(statusObj);
     }
 
     readStatus(): void {
-        this.http.get(this.statusUrl).map(response => response.json())
-            .subscribe(data => {
+        this.http.get(this.statusUrl)
+            .subscribe((data: Status) => {
                 this._status.next(data);
             }, error => this.unableToReadStatus());
     }
