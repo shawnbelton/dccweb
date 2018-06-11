@@ -38,7 +38,6 @@ public class DecoderHandler {
     private static final String SHORT_ADDRESS = "Short Address";
     private static final String LONG_ADDRESS = "Long Address";
     private static final String MANUFACTURER = "Manufacturer";
-    private static final String DECODERS = "DECODERS";
     private DccInterface dccInterface;
     private DecoderRepository decoderRepository;
     private CVRepository cvRepository;
