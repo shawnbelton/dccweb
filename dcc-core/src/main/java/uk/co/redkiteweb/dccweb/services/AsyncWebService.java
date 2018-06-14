@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AsyncWebService {
 
+    private static final Logger LOGGER = LogManager.getLogger(AsyncWebService.class);
+
     private RestTemplate restTemplate;
 
     @Autowired
@@ -20,6 +24,7 @@ public class AsyncWebService {
 
     @Async
     public void asyncWebCall(final String url) {
+        LOGGER.info("Putting data to url: {}", url);
         restTemplate.put(url, null);
     }
 

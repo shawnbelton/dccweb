@@ -47,6 +47,7 @@
         <module>nce-interface</module>
         <module>demo-interface</module>
         <module>dcc-webapp</module>
+        <module>dummy-relay</module>
     </modules>
 
     <properties>

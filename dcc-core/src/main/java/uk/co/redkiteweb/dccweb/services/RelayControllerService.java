@@ -51,12 +51,14 @@ public class RelayControllerService {
         controller.setIpAddress(relayController.getIpAddress());
         relayControllerRepository.save(controller);
         logStore.log("info", String.format("Relay controller %s updated.", controller.getControllerName()));
+        notify(controller);
         return controller;
     }
 
     public List<RelayController> save(final RelayController relayController) {
         relayControllerRepository.save(relayController);
         logStore.log("info", String.format("Relay controller %s saved.", relayController.getControllerName()));
+        notify(relayController);
         return getAllControllers();
     }
 

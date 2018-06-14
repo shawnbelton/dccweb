@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>Dummy Relay Controller</h1>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td *ngFor="let value of getRelayValues()" [ngClass]="{'bg-red': value == 0, 'bg-green': value == 1}">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
