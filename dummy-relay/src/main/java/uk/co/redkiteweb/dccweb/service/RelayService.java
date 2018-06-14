@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;
@@ -9,12 +11,13 @@ import uk.co.redkiteweb.dccweb.model.RegisterDetails;
 import uk.co.redkiteweb.dccweb.model.RelayController;
 import uk.co.redkiteweb.dccweb.store.RelayControllerStore;
 
-import java.net.ConnectException;
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
 
 @Service
 public class RelayService implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
+
+    private static final Logger LOGGER = LogManager.getLogger(RelayService.class);
 
     private RestTemplate restTemplate;
     private Integer port;
@@ -46,7 +49,7 @@ public class RelayService implements ApplicationListener<EmbeddedServletContaine
             relayControllerStore.setRelayController(relayController);
             relayControllerStore.setValue(restTemplate.postForEntity(url, relayController, Integer.class).getBody());
         } catch (final UnknownHostException exception) {
-
+            LOGGER.warn("Unknown host: {}", exception.getMessage());
         }
     }
 
