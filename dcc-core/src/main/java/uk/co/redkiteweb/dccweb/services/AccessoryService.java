@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
+import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class AccessoryService {
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private SimpMessagingTemplate messagingTemplate;
-    private MacroService macroService;
+    private EventBus eventBus;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -52,8 +54,8 @@ public class AccessoryService {
     }
 
     @Autowired
-    public void setMacroService(final MacroService macroService) {
-        this.macroService = macroService;
+    public void setEventBus(final EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     public List<AccessoryDecoder> getAccessoryDecoders() {
@@ -93,9 +95,7 @@ public class AccessoryService {
         accessoryDecoderRepository.save(accessoryDecoder);
         final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findOne(accessoryDecoder.getAccessoryDecoderId());
         messagingTemplate.convertAndSend("/accessory", accessoryDecoder1);
-        if (accessoryDecoder.getMacro()!=null) {
-            macroService.runMacro(accessoryDecoder.getMacro());
-        }
+        eventBus.post(new AccessoryUpdateEvent(accessoryDecoder1));
     }
 
     private String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {

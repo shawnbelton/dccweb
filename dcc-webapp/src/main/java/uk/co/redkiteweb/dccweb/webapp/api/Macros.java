@@ -1,10 +1,11 @@
 package uk.co.redkiteweb.dccweb.webapp.api;
 
+import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
-import uk.co.redkiteweb.dccweb.services.MacroService;
+import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class Macros {
 
     private MacroRepository macroRepository;
-    private MacroService macroService;
+    private EventBus eventBus;
 
     @Autowired
     public void setMacroRepository(MacroRepository macroRepository) {
@@ -24,8 +25,8 @@ public class Macros {
     }
 
     @Autowired
-    public void setMacroService(final MacroService macroService) {
-        this.macroService = macroService;
+    public void setEventBus(final EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -47,7 +48,7 @@ public class Macros {
 
     @RequestMapping(value = "/run", method = RequestMethod.POST)
     public @ResponseBody Boolean runMacro(@RequestBody final Macro macro) {
-        this.macroService.runMacro(macro);
+        this.eventBus.post(new MacroRunEvent(macro));
         return Boolean.TRUE;
     }
 

@@ -1,15 +1,17 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.events.RunMacroEvent;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
 import uk.co.redkiteweb.dccweb.macros.factory.IStep;
 import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
@@ -33,6 +35,11 @@ public class MacroService {
     private MacroStepRepository macroStepRepository;
 
     @Autowired
+    public void setEventBus(final EventBus eventBus) {
+        eventBus.register(this);
+    }
+
+    @Autowired
     public void setStepFactory(final StepFactory stepFactory) {
         this.stepFactory = stepFactory;
     }
@@ -52,12 +59,7 @@ public class MacroService {
         this.logStore = logStore;
     }
 
-    public void runMacroByName(final String name) {
-        this.runMacro(macroRepository.findByName(name));
-    }
-
-    @Async
-    public void runMacro(final Macro macro) {
+    private void runMacro(final Macro macro) {
         final MacroContext macroContext = new MacroContext();
         this.logStore.log("info", String.format("Running macro %s",macro.getName()));
         final List<MacroStep> macroSteps = macroStepRepository.getByMacroId(macro.getMacroId());
@@ -67,6 +69,13 @@ public class MacroService {
         while(step!=null) {
             stepNumber = runStep(step, macroContext);
             step = steps.get(stepNumber);
+        }
+    }
+
+    @Subscribe public void runMacroListener(final RunMacroEvent event) {
+        final Macro macro = event.getMacro();
+        if (macro!=null) {
+            runMacro(macro);
         }
     }
 

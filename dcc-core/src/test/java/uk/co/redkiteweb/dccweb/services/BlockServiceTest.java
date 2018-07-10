@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,14 +31,14 @@ public class BlockServiceTest {
 
     @Before
     public void setup() {
-        LogStore logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         blockRepository = mock(BlockRepository.class);
-        MacroService macroService = mock(MacroService.class);
+        final EventBus eventBus = mock(EventBus.class);
         messagingTemplate = mock(SimpMessagingTemplate.class);
         blockService = new BlockService();
         blockService.setLogStore(logStore);
         blockService.setBlockRepository(blockRepository);
-        blockService.setMacroService(macroService);
+        blockService.setEventBus(eventBus);
         blockService.setMessagingTemplate(messagingTemplate);
     }
 

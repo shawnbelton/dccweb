@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +15,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
+import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import static org.mockito.Mockito.*;
 public class AccessoryServiceTest {
 
     private AccessoryService accessoryService;
-    private MacroService macroService;
+    private EventBus eventBus;
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
@@ -40,12 +42,12 @@ public class AccessoryServiceTest {
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
         final SimpMessagingTemplate messagingTemplate = mock(SimpMessagingTemplate.class);
-        macroService = mock(MacroService.class);
+        eventBus = mock(EventBus.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryService.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
-        accessoryService.setMacroService(macroService);
+        accessoryService.setEventBus(eventBus);
         accessoryService.setMessagingTemplate(messagingTemplate);
     }
 
@@ -75,7 +77,7 @@ public class AccessoryServiceTest {
         accessoryOperation.setOperationValue(0);
         accessoryService.operateServiceAsyc(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
-        verify(macroService, times(1)).runMacro(any(Macro.class));
+        verify(eventBus, times(1)).post(any(AccessoryUpdateEvent.class));
     }
 
     @Test

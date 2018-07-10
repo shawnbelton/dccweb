@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
 import uk.co.redkiteweb.dccweb.macros.factory.IStep;
 import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
@@ -44,7 +45,7 @@ public class MacroServiceTest {
     public void runTestNullSteps() {
         final Macro macro = createMacro();
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(null);
-        macroService.runMacro(macro);
+        macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
     }
 
@@ -53,7 +54,7 @@ public class MacroServiceTest {
         final Macro macro = createMacro();
         macro.setSteps(new ArrayList<MacroStep>());
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
-        macroService.runMacro(macro);
+        macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
     }
 
@@ -68,26 +69,7 @@ public class MacroServiceTest {
         final IStep stepImp = mock(IStep.class);
         when(stepImp.runStep()).thenReturn(2);
         when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
-        macroService.runMacro(macro);
-        verify(stepImp, times(1)).runStep();
-    }
-
-    @Test
-    public void testRunByName() {
-        final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
-        final MacroStep step = mock(MacroStep.class);
-        when(step.getNumber()).thenReturn(1);
-        macro.getSteps().add(step);
-        final MacroStep step2 = mock(MacroStep.class);
-        when(step2.getNumber()).thenReturn(2);
-        macro.getSteps().add(step2);
-        when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
-        final IStep stepImp = mock(IStep.class);
-        when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
-        when(stepImp.runStep()).thenReturn(3);
-        when(macroRepository.findByName(anyString())).thenReturn(macro);
-        macroService.runMacroByName("MacroName");
+        macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepImp, times(1)).runStep();
     }
 

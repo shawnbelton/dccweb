@@ -1,12 +1,13 @@
 package uk.co.redkiteweb.dccweb.webapp.api;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
-import uk.co.redkiteweb.dccweb.services.MacroService;
+import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
 
 import java.util.ArrayList;
 
@@ -21,15 +22,15 @@ public class MacrosTest {
 
     private Macros macros;
     private MacroRepository macroRepository;
-    private MacroService macroService;
+    private EventBus eventBus;
 
     @Before
     public void setup() {
         macroRepository = mock(MacroRepository.class);
-        macroService = mock(MacroService.class);
+        eventBus = mock(EventBus.class);
         macros = new Macros();
         macros.setMacroRepository(macroRepository);
-        macros.setMacroService(macroService);
+        macros.setEventBus(eventBus);
         when(macroRepository.findAll()).thenReturn(new ArrayList<Macro>());
     }
 
@@ -59,6 +60,6 @@ public class MacrosTest {
     @Test
     public void testRunMacro() {
         macros.runMacro(new Macro());
-        verify(macroService, times(1)).runMacro(any(Macro.class));
+        verify(eventBus, times(1)).post(any(MacroRunEvent.class));
     }
 }
