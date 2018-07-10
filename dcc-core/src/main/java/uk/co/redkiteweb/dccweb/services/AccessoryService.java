@@ -4,7 +4,6 @@ import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
@@ -30,7 +29,6 @@ public class AccessoryService {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
-    private SimpMessagingTemplate messagingTemplate;
     private EventBus eventBus;
 
     @Autowired
@@ -46,11 +44,6 @@ public class AccessoryService {
     @Autowired
     public void setAccessoryDecoderTypeRepository(AccessoryDecoderTypeRepository accessoryDecoderTypeRepository) {
         this.accessoryDecoderTypeRepository = accessoryDecoderTypeRepository;
-    }
-
-    @Autowired
-    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -94,7 +87,6 @@ public class AccessoryService {
         accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
         accessoryDecoderRepository.save(accessoryDecoder);
         final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findOne(accessoryDecoder.getAccessoryDecoderId());
-        messagingTemplate.convertAndSend("/accessory", accessoryDecoder1);
         eventBus.post(new AccessoryUpdateEvent(accessoryDecoder1));
     }
 

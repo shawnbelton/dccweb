@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.model.Block;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.events.BlockUpdateEvent;
 
 import java.util.ArrayList;
 
@@ -27,19 +27,17 @@ public class BlockServiceTest {
 
     private BlockService blockService;
     private BlockRepository blockRepository;
-    private SimpMessagingTemplate messagingTemplate;
+    private EventBus eventBus;
 
     @Before
     public void setup() {
         final LogStore logStore = mock(LogStore.class);
         blockRepository = mock(BlockRepository.class);
-        final EventBus eventBus = mock(EventBus.class);
-        messagingTemplate = mock(SimpMessagingTemplate.class);
+        eventBus = mock(EventBus.class);
         blockService = new BlockService();
         blockService.setLogStore(logStore);
         blockService.setBlockRepository(blockRepository);
         blockService.setEventBus(eventBus);
-        blockService.setMessagingTemplate(messagingTemplate);
     }
 
     @Test
@@ -47,7 +45,7 @@ public class BlockServiceTest {
         when(blockRepository.findOne(anyString())).thenReturn(null);
         blockService.updateBlock("BlockId", false);
         verify(blockRepository, times(1)).save(any(Block.class));
-        verify(messagingTemplate, times(1)).convertAndSend(eq("/blocks"), any(Block.class));
+        verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));
     }
 
     @Test
@@ -58,7 +56,7 @@ public class BlockServiceTest {
         when(blockRepository.findOne(anyString())).thenReturn(block);
         blockService.updateBlockAsync("BlockId", true);
         verify(blockRepository, times(1)).save(eq(block));
-        verify(messagingTemplate, times(1)).convertAndSend(eq("/blocks"), any(Block.class));
+        verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));
     }
 
     @Test
@@ -68,7 +66,7 @@ public class BlockServiceTest {
         when(blockRepository.findOne(anyString())).thenReturn(block);
         blockService.updateBlock("BlockId", true);
         verify(blockRepository, times(1)).save(eq(block));
-        verify(messagingTemplate, times(1)).convertAndSend(eq("/blocks"), any(Block.class));
+        verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));
     }
 
     @Test

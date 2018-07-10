@@ -3,7 +3,7 @@ package uk.co.redkiteweb.dccweb.events;
 import uk.co.redkiteweb.dccweb.data.model.Block;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
 
-public class BlockUpdateEvent implements RunMacroEvent {
+public class BlockUpdateEvent implements RunMacroEvent, SendEvent {
 
     private final Block block;
 
@@ -14,5 +14,15 @@ public class BlockUpdateEvent implements RunMacroEvent {
     @Override
     public Macro getMacro() {
         return block.getMacro();
+    }
+
+    @Override
+    public String getUrl() {
+        return "/blocks";
+    }
+
+    @Override
+    public Object sendObject() {
+        return block;
     }
 }

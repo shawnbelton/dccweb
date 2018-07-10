@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.web.client.RestTemplate;
+import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -20,7 +21,9 @@ public class AsyncWebServiceTest {
         final RestTemplate restTemplate = mock(RestTemplate.class);
         final AsyncWebService asyncWebService = new AsyncWebService();
         asyncWebService.setRestTemplate(restTemplate);
-        asyncWebService.asyncWebCall("url");
+        final RelayUpdateEvent event = mock(RelayUpdateEvent.class);
+        when(event.getUpdateUrl()).thenReturn("URL");
+        asyncWebService.relayUpdateListener(event);
         verify(restTemplate, times(1)).put(anyString(), eq(null));
     }
 

@@ -1,11 +1,12 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.data.repositories.RelayControllerRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
 
 import java.util.List;
 
@@ -17,8 +18,7 @@ public class RelayControllerService {
 
     private RelayControllerRepository relayControllerRepository;
     private LogStore logStore;
-    private SimpMessagingTemplate messagingTemplate;
-    private AsyncWebService asyncWebService;
+    private EventBus eventBus;
 
     @Autowired
     public void setRelayControllerRepository(final RelayControllerRepository relayControllerRepository) {
@@ -31,13 +31,8 @@ public class RelayControllerService {
     }
 
     @Autowired
-    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
-    }
-
-    @Autowired
-    public void setAsyncWebService(final AsyncWebService asyncWebService) {
-        this.asyncWebService = asyncWebService;
+    public void setEventBus(final EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     public RelayController updateController(final RelayController relayController) {
@@ -75,10 +70,6 @@ public class RelayControllerService {
         return getAllControllers();
     }
 
-    private void updateRelay(final RelayController relayController) {
-        asyncWebService.asyncWebCall(String.format("http://%s/setrelay/%d", relayController.getIpAddress(), relayController.getValue()));
-    }
-
     public void setRelay(final String controllerId, final int number) {
         final RelayController relayController = relayControllerRepository.findOne(controllerId);
         if (relayController!=null) {
@@ -104,7 +95,7 @@ public class RelayControllerService {
     }
 
     private void notify(final RelayController relayController) {
-        messagingTemplate.convertAndSend("/relays", relayController);
-        updateRelay(relayController);
+        eventBus.post(new RelayUpdateEvent(relayController));
     }
+
 }

@@ -4,7 +4,6 @@ import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Block;
@@ -23,7 +22,6 @@ public class BlockService {
     private static final Logger LOGGER = LogManager.getLogger(BlockService.class);
 
     private BlockRepository blockRepository;
-    private SimpMessagingTemplate messagingTemplate;
     private LogStore logStore;
     private EventBus eventBus;
 
@@ -35,11 +33,6 @@ public class BlockService {
     @Autowired
     public void setBlockRepository(final BlockRepository blockRepository) {
         this.blockRepository = blockRepository;
-    }
-
-    @Autowired
-    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
     }
 
     @Autowired
@@ -65,12 +58,7 @@ public class BlockService {
                 block.getBlockName(), block.getOccupied()?"Occupied":"Unoccupied");
         logStore.log("info", message);
         LOGGER.info(message);
-        sendMessage(block);
         eventBus.post(new BlockUpdateEvent(block));
-    }
-
-    private void sendMessage(final Block block) {
-        messagingTemplate.convertAndSend("/blocks", block);
     }
 
     public List<Block> getAllBlocks() {

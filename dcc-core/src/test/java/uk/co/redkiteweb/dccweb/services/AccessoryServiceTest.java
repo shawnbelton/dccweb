@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
@@ -41,14 +40,12 @@ public class AccessoryServiceTest {
         dccInterface = mock(DccInterface.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
-        final SimpMessagingTemplate messagingTemplate = mock(SimpMessagingTemplate.class);
         eventBus = mock(EventBus.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryService.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
         accessoryService.setEventBus(eventBus);
-        accessoryService.setMessagingTemplate(messagingTemplate);
     }
 
     @Test
