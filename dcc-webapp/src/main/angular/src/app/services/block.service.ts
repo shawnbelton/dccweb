@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Block} from "../models/block";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {StompService} from "@stomp/ng2-stompjs";
 import {Message} from '@stomp/stompjs';
@@ -25,11 +25,11 @@ export class BlockService {
 
   constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchBlocks();
-    this.stompService.subscribe('/blocks').map((message: Message) => {
-      return message.body;
-    }).subscribe((data: string) => {
-      this.updateBlock(JSON.parse(data));
-    });
+    this.stompService.subscribe('/blocks').subscribe(this.on_next);
+  }
+
+  public on_next = (message: Message) => {
+   this.updateBlock(JSON.parse(message.body));
   }
 
   updateBlock(block: Block): void {

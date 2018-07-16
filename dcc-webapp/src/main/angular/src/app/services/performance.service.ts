@@ -2,7 +2,7 @@
  * Created by shawn on 10/01/17.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, interval, Observable} from "rxjs";
 import {Metrics} from "../models/metrics";
 import {HttpClient} from "@angular/common/http";
 
@@ -33,7 +33,7 @@ export class PerformanceService {
     }
 
     startFetchingMetrics(): void {
-        Observable.interval(1000).subscribe(data => this.fetchMetrics());
+        interval(1000).subscribe(data => this.fetchMetrics());
     }
 
 }
