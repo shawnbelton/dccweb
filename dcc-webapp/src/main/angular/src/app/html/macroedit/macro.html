@@ -8,7 +8,7 @@
                   <div>
                     <input type="button" class="btn btn-xs btn-success" (click)="runMacro(item)" value="Run"/>
                     {{item.name}}
-                    <div class="pull-right">
+                    <div class="pull-right btn-toolbar">
                       <input type="button" class="btn btn-xs btn-info" (click)="editMacro(item)" value="Edit"/>
                       <input type="button" class="btn btn-xs btn-danger" (click)="deleteMacro(item)" value="X"/>
                     </div>
@@ -169,7 +169,7 @@
                         <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="glyphicon glyphicon-arrow-up"></span></a>
                         <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span class="glyphicon glyphicon-arrow-down"></span></a>
                         <strong>{{displayStep(step)}}</strong>
-                        <div class="pull-right">
+                        <div class="pull-right btn-toolbar">
                             <input type="button" class="btn btn-xs btn-info"
                                                        (click)="editStep(step)" value="Edit"/>
                             <button class="btn btn-xs btn-danger" (click)="removeStep(step)">X</button>
