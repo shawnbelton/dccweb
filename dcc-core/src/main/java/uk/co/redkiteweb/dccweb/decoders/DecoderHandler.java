@@ -19,6 +19,7 @@ import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.exceptions.ProgramModeException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -140,7 +141,7 @@ public class DecoderHandler {
         return decoderSettings;
     }
 
-    public void writeSettingsToDecoder(final List<DecoderSetting> decoderSettings) {
+    public void writeSettingsToDecoder(final Collection<DecoderSetting> decoderSettings) {
         try {
             enterProgramMode();
             writeDecoder(decoderSettings);
@@ -150,7 +151,7 @@ public class DecoderHandler {
         }
     }
 
-    private void writeDecoder(final List<DecoderSetting> decoderSettings) {
+    private void writeDecoder(final Collection<DecoderSetting> decoderSettings) {
         try {
             writeToDecoder(decoderSettings);
         } catch (DecoderNotDetectedException exception) {
@@ -160,7 +161,7 @@ public class DecoderHandler {
         }
     }
 
-    private void writeToDecoder(final List<DecoderSetting> decoderSettings) throws DefinitionException {
+    private void writeToDecoder(final Collection<DecoderSetting> decoderSettings) throws DefinitionException {
         final DefinitionReader definitionReader = definitionReaderFactory.getInstance(cvHandler);
         if (correctDecoder(definitionReader, decoderSettings)) {
             writeToDecoder(decoderSettings, definitionReader);
@@ -169,7 +170,7 @@ public class DecoderHandler {
         }
     }
 
-    private void writeToDecoder(final List<DecoderSetting> decoderSettings, final DefinitionReader definitionReader) throws DefinitionException {
+    private void writeToDecoder(final Collection<DecoderSetting> decoderSettings, final DefinitionReader definitionReader) throws DefinitionException {
         final Decoder decoder = readDecoder(definitionReader);
         final Map<Integer, Integer> cvMap = definitionReader.buildCVs(decoderSettings);
         for (CV originalCv : decoder.getCvs()) {
@@ -191,8 +192,8 @@ public class DecoderHandler {
         }
     }
 
-    private static boolean correctDecoder(final DefinitionReader definitionReader, final List<DecoderSetting> decoderSettings) throws DefinitionException {
-        boolean isMatch = true;
+    private static boolean correctDecoder(final DefinitionReader definitionReader, final Collection<DecoderSetting> decoderSettings) throws DefinitionException {
+        boolean isMatch;
         isMatch = checkValue(definitionReader, MANUFACTURER, decoderSettings);
         isMatch &= checkValue(definitionReader, REVISION, decoderSettings);
         isMatch &= checkValue(definitionReader, ADDRESS_MODE, decoderSettings);
@@ -201,7 +202,7 @@ public class DecoderHandler {
         return isMatch;
     }
 
-    private static boolean checkValue(final DefinitionReader definitionReader, final String valueName, final List<DecoderSetting> decoderSettings) throws DefinitionException {
+    private static boolean checkValue(final DefinitionReader definitionReader, final String valueName, final Collection<DecoderSetting> decoderSettings) throws DefinitionException {
         boolean isMatched = false;
         final Integer checkValue = definitionReader.readValue(valueName);
         for (DecoderSetting decoderSetting : decoderSettings) {

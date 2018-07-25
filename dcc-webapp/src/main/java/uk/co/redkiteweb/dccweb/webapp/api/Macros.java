@@ -7,7 +7,7 @@ import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by shawn on 02/12/16.
@@ -30,18 +30,18 @@ public class Macros {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody List<Macro> getMacros() {
-        return (List<Macro>)this.macroRepository.findAll();
+    public @ResponseBody Collection<Macro> getMacros() {
+        return (Collection<Macro>)this.macroRepository.findAll();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public @ResponseBody List<Macro> saveMacro(@RequestBody final Macro macro) {
+    public @ResponseBody Collection<Macro> saveMacro(@RequestBody final Macro macro) {
         this.macroRepository.save(macro);
         return getMacros();
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public @ResponseBody List<Macro> deleteMacro(@RequestBody final Macro macro) {
+    public @ResponseBody Collection<Macro> deleteMacro(@RequestBody final Macro macro) {
         this.macroRepository.delete(macro);
         return getMacros();
     }

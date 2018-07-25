@@ -12,10 +12,7 @@ import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by shawn on 15/09/16.
@@ -73,7 +70,7 @@ public class DefinitionReader {
         return decoderSettings;
     }
 
-    public Map<Integer, Integer> buildCVs(final List<DecoderSetting> decoderSettings) throws DefinitionException {
+    public Map<Integer, Integer> buildCVs(final Collection<DecoderSetting> decoderSettings) throws DefinitionException {
         final Map<Integer, Integer> cvMap = new HashMap<>();
         final NodeList allCVNodes = decoderDefinition.getCVNodes();
         for(int index = 0; index < allCVNodes.getLength(); index++) {
@@ -83,7 +80,7 @@ public class DefinitionReader {
         return cvMap;
     }
 
-    private void buildCVFromNode(final List<DecoderSetting> decoderSettings, final Map<Integer, Integer> cvMap, final Element cvNode) throws DefinitionException {
+    private void buildCVFromNode(final Collection<DecoderSetting> decoderSettings, final Map<Integer, Integer> cvMap, final Element cvNode) throws DefinitionException {
         final NodeList valueNodes = cvNode.getElementsByTagName("value");
         final String[] cvs = cvNode.getAttribute("number").split(",");
         for(String cv : cvs) {
@@ -92,7 +89,7 @@ public class DefinitionReader {
         }
     }
 
-    private Integer getCVValue(final List<DecoderSetting> decoderSettings, final NodeList valueNodes, final Integer cvNumber) throws DefinitionException {
+    private Integer getCVValue(final Collection<DecoderSetting> decoderSettings, final NodeList valueNodes, final Integer cvNumber) throws DefinitionException {
         Integer cvValue = 0;
         for(int valueIndex = 0; valueIndex < valueNodes.getLength(); valueIndex++) {
             final Node valueNode = valueNodes.item(valueIndex);

@@ -12,7 +12,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by shawn on 07/07/16.
@@ -58,19 +58,19 @@ public class Decoders {
     }
 
     @RequestMapping(value = "/read/full", method = RequestMethod.GET)
-    public @ResponseBody List<DecoderSetting> readFull() {
+    public @ResponseBody Collection<DecoderSetting> readFull() {
         return decoderHandlerFactory.createInstance().readFullOnProgram();
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
-    public @ResponseBody Boolean writeCVs(@RequestBody final List<DecoderSetting> decoderSettings) {
+    public @ResponseBody Boolean writeCVs(@RequestBody final Collection<DecoderSetting> decoderSettings) {
         decoderHandlerFactory.createInstance().writeSettingsToDecoder(decoderSettings);
         return Boolean.TRUE;
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody List<Decoder> allDecoders() {
-        return (List<Decoder>)decoderRepository.findAll();
+    public @ResponseBody Collection<Decoder> allDecoders() {
+        return (Collection<Decoder>)decoderRepository.findAll();
     }
 
     @RequestMapping(value = "/byId/{decoderId}", method = RequestMethod.GET)

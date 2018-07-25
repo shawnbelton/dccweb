@@ -6,7 +6,7 @@ import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by shawn on 24/06/16.
@@ -29,12 +29,12 @@ public class Locos {
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody List<Loco> getAllLocos() {
-        return (List<Loco>) locoRepository.findAll();
+    public @ResponseBody Collection<Loco> getAllLocos() {
+        return (Collection<Loco>) locoRepository.findAll();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public @ResponseBody List<Loco> saveLoco(@RequestBody final Loco loco) {
+    public @ResponseBody Collection<Loco> saveLoco(@RequestBody final Loco loco) {
         locoRepository.save(loco);
         logStore.log("info", String.format("Saved loco with number %s", loco.getNumber()));
         return getAllLocos();
