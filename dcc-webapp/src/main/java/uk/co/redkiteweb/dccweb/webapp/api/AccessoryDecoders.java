@@ -5,10 +5,9 @@ import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
-import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by shawn on 22/02/17.
@@ -17,13 +16,7 @@ import java.util.List;
 @RequestMapping("/api/accessory/decoder")
 public class AccessoryDecoders {
 
-    private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private AccessoryService accessoryService;
-
-    @Autowired
-    public void setAccessoryDecoderTypeRepository(final AccessoryDecoderTypeRepository accessoryDecoderTypeRepository) {
-        this.accessoryDecoderTypeRepository = accessoryDecoderTypeRepository;
-    }
 
     @Autowired
     public void setAccessoryService(final AccessoryService accessoryService) {
@@ -31,22 +24,22 @@ public class AccessoryDecoders {
     }
 
     @RequestMapping(value = "/type/all", method = RequestMethod.GET)
-    public @ResponseBody List<AccessoryDecoderType> allAccessoryDecoderTypes() {
-        return (List<AccessoryDecoderType>)accessoryDecoderTypeRepository.findAll();
+    public @ResponseBody Collection<AccessoryDecoderType> allAccessoryDecoderTypes() {
+        return accessoryService.getAccessoryDecoderTypes();
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public @ResponseBody List<AccessoryDecoder> allAccessoryDecoders() {
+    public @ResponseBody Collection<AccessoryDecoder> allAccessoryDecoders() {
         return accessoryService.getAccessoryDecoders();
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public @ResponseBody List<AccessoryDecoder> saveAccessoryDecoder(@RequestBody final AccessoryDecoder accessoryDecoder){
+    public @ResponseBody Collection<AccessoryDecoder> saveAccessoryDecoder(@RequestBody final AccessoryDecoder accessoryDecoder){
         return accessoryService.saveAccessoryDecoder(accessoryDecoder);
     }
 
     @RequestMapping(value = "/operate", method = RequestMethod.POST)
-    public @ResponseBody List<AccessoryDecoder> operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
+    public @ResponseBody Collection<AccessoryDecoder> operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
         accessoryService.operateService(accessoryOperation);
         return accessoryService.getAccessoryDecoders();
     }

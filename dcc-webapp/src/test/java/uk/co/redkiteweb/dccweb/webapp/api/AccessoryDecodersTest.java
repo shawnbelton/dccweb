@@ -6,8 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
-import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
-import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
 import java.util.ArrayList;
@@ -22,33 +20,30 @@ import static org.mockito.Mockito.*;
 public class AccessoryDecodersTest {
 
     private AccessoryDecoders accessoryDecoders;
-    private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
     private AccessoryService accessoryService;
 
     @Before
     public void setup() {
-        accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
         accessoryService = mock(AccessoryService.class);
         accessoryDecoders = new AccessoryDecoders();
-        accessoryDecoders.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
         accessoryDecoders.setAccessoryService(accessoryService);
     }
 
     @Test
     public void testAllAccessoryDecoderTypes() {
-        when(accessoryDecoderTypeRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoderType>());
+        when(accessoryService.getAccessoryDecoderTypes()).thenReturn(new ArrayList<>());
         assertNotNull(accessoryDecoders.allAccessoryDecoderTypes());
     }
 
     @Test
     public void testAllAccessoryDecoders() {
-        when(accessoryService.getAccessoryDecoders()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryService.getAccessoryDecoders()).thenReturn(new ArrayList<>());
         assertNotNull(accessoryDecoders.allAccessoryDecoders());
     }
 
     @Test
     public void testSaveAccessoryDecoder() {
-        when(accessoryService.saveAccessoryDecoder(any(AccessoryDecoder.class))).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryService.saveAccessoryDecoder(any(AccessoryDecoder.class))).thenReturn(new ArrayList<>());
         assertNotNull(accessoryDecoders.saveAccessoryDecoder(new AccessoryDecoder()));
     }
 

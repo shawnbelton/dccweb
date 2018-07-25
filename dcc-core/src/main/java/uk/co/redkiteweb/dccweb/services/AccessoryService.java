@@ -16,6 +16,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
 import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -51,11 +52,15 @@ public class AccessoryService {
         this.eventBus = eventBus;
     }
 
-    public List<AccessoryDecoder> getAccessoryDecoders() {
-        return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
+    public Collection<AccessoryDecoder> getAccessoryDecoders() {
+        return (Collection<AccessoryDecoder>) accessoryDecoderRepository.findAll();
     }
 
-    public List<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
+    public Collection<AccessoryDecoderType> getAccessoryDecoderTypes() {
+        return (Collection<AccessoryDecoderType>)accessoryDecoderTypeRepository.findAll();
+    }
+
+    public Collection<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
         final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findOne(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId());
         accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
         if (accessoryDecoder.getCurrentValue()==null) {
