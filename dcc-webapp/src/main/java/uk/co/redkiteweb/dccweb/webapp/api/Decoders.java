@@ -11,6 +11,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
+import uk.co.redkiteweb.dccweb.services.DecoderService;
 
 import java.util.Collection;
 
@@ -21,88 +22,55 @@ import java.util.Collection;
 @RequestMapping("/api/decoders")
 public class Decoders {
 
-    private DecoderHandlerFactory decoderHandlerFactory;
-    private DecoderRepository decoderRepository;
-    private DecoderFunctionRepository decoderFunctionRepository;
-    private LinkedMacroRepository linkedMacroRepository;
-    private LogStore logStore;
+    private DecoderService decoderService;
 
     @Autowired
-    public void setDecoderRepository(final DecoderRepository decoderRepository) {
-        this.decoderRepository = decoderRepository;
-    }
-
-    @Autowired
-    public void setDecoderFunctionRepository(final DecoderFunctionRepository decoderFunctionRepository) {
-        this.decoderFunctionRepository = decoderFunctionRepository;
-    }
-
-    @Autowired
-    public void setLinkedMacroRepository(final LinkedMacroRepository linkedMacroRepository) {
-        this.linkedMacroRepository = linkedMacroRepository;
-    }
-
-    @Autowired
-    public void setDecoderHandlerFactory(final DecoderHandlerFactory decoderHandlerFactory) {
-        this.decoderHandlerFactory = decoderHandlerFactory;
-    }
-
-    @Autowired
-    public void setLogStore(final LogStore logStore) {
-        this.logStore = logStore;
+    public void setDecoderService(final DecoderService decoderService) {
+        this.decoderService = decoderService;
     }
 
     @RequestMapping(value = "/read", method = RequestMethod.GET)
     public @ResponseBody Decoder readDecoder() {
-        return decoderHandlerFactory.createInstance().readDecoderOnProgram();
+        return decoderService.readDecoder();
     }
 
     @RequestMapping(value = "/read/full", method = RequestMethod.GET)
     public @ResponseBody Collection<DecoderSetting> readFull() {
-        return decoderHandlerFactory.createInstance().readFullOnProgram();
+        return decoderService.readFull();
     }
 
     @RequestMapping(value = "/write", method = RequestMethod.POST)
     public @ResponseBody Boolean writeCVs(@RequestBody final Collection<DecoderSetting> decoderSettings) {
-        decoderHandlerFactory.createInstance().writeSettingsToDecoder(decoderSettings);
-        return Boolean.TRUE;
+        return decoderService.writeCVs(decoderSettings);
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Collection<Decoder> allDecoders() {
-        return (Collection<Decoder>)decoderRepository.findAll();
+        return decoderService.allDecoders();
     }
 
     @RequestMapping(value = "/byId/{decoderId}", method = RequestMethod.GET)
     public @ResponseBody Decoder getById(@PathVariable final Integer decoderId) {
-        return decoderRepository.findOne(decoderId);
+        return decoderService.getById(decoderId);
     }
 
     @RequestMapping(value = "/function/add", method = RequestMethod.POST)
     public @ResponseBody Decoder addFunction(@RequestBody final DecoderFunction decoderFunction) {
-        decoderFunctionRepository.save(decoderFunction);
-        logStore.log("info", String.format("Decoder function %s with number %d added.", decoderFunction.getName(), decoderFunction.getNumber()));
-        return decoderRepository.findOne(decoderFunction.getDecoderId());
+        return decoderService.addFunction(decoderFunction);
     }
 
     @RequestMapping(value = "/function/delete", method = RequestMethod.POST)
     public @ResponseBody Decoder deleteFunction(@RequestBody final DecoderFunction decoderFunction) {
-        decoderFunctionRepository.delete(decoderFunction);
-        logStore.log("info", String.format("Decoder function %s with number %d removed.", decoderFunction.getName(), decoderFunction.getNumber()));
-        return decoderRepository.findOne(decoderFunction.getDecoderId());
+        return decoderService.deleteFunction(decoderFunction);
     }
 
     @RequestMapping(value = "/macro/link", method = RequestMethod.POST)
     public @ResponseBody Decoder linkMacro(@RequestBody final LinkedMacro linkedMacro) {
-        linkedMacroRepository.save(linkedMacro);
-        logStore.log("info", String.format("Macro %s linked.", linkedMacro.getMacro().getName()));
-        return decoderRepository.findOne(linkedMacro.getDecoderId());
+        return decoderService.linkMacro(linkedMacro);
     }
 
     @RequestMapping(value = "/macro/unlink", method = RequestMethod.POST)
     public @ResponseBody Decoder unlinkMacro(@RequestBody final LinkedMacro linkedMacro) {
-        linkedMacroRepository.delete(linkedMacro);
-        logStore.log("info", String.format("Macro %s unlinked.", linkedMacro.getMacro().getName()));
-        return decoderRepository.findOne(linkedMacro.getDecoderId());
+        return decoderService.unlinkMacro(linkedMacro);
     }
 }
