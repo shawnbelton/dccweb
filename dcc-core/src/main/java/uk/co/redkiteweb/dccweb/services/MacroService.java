@@ -16,6 +16,7 @@ import uk.co.redkiteweb.dccweb.macros.MacroContext;
 import uk.co.redkiteweb.dccweb.macros.factory.IStep;
 import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,6 +59,26 @@ public class MacroService {
     public void setLogStore(final LogStore logStore) {
         this.logStore = logStore;
     }
+
+    public Collection<Macro> getMacros() {
+        return (Collection<Macro>)this.macroRepository.findAll();
+    }
+
+    public Macro getMacro(final Integer macroId) {
+        return this.macroRepository.findOne(macroId);
+    }
+
+
+    public Collection<Macro> saveMacro(final Macro macro) {
+        this.macroRepository.save(macro);
+        return getMacros();
+    }
+
+    public Collection<Macro> deleteMacro(final Macro macro) {
+        this.macroRepository.delete(macro);
+        return getMacros();
+    }
+
 
     private void runMacro(final Macro macro) {
         final MacroContext macroContext = new MacroContext();

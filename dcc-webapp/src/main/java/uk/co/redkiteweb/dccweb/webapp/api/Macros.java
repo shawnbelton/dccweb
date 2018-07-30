@@ -4,8 +4,8 @@ import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
-import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
+import uk.co.redkiteweb.dccweb.services.MacroService;
 
 import java.util.Collection;
 
@@ -16,12 +16,12 @@ import java.util.Collection;
 @RequestMapping("/api/macros")
 public class Macros {
 
-    private MacroRepository macroRepository;
+    private MacroService macroService;
     private EventBus eventBus;
 
     @Autowired
-    public void setMacroRepository(MacroRepository macroRepository) {
-        this.macroRepository = macroRepository;
+    public void setMacroService(final MacroService macroService) {
+        this.macroService = macroService;
     }
 
     @Autowired
@@ -31,19 +31,22 @@ public class Macros {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public @ResponseBody Collection<Macro> getMacros() {
-        return (Collection<Macro>)this.macroRepository.findAll();
+        return macroService.getMacros();
+    }
+
+    @RequestMapping(value = "/{macroId}", method = RequestMethod.GET)
+    public @ResponseBody Macro getMacro(@PathVariable final Integer macroId) {
+        return macroService.getMacro(macroId);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public @ResponseBody Collection<Macro> saveMacro(@RequestBody final Macro macro) {
-        this.macroRepository.save(macro);
-        return getMacros();
+        return macroService.saveMacro(macro);
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public @ResponseBody Collection<Macro> deleteMacro(@RequestBody final Macro macro) {
-        this.macroRepository.delete(macro);
-        return getMacros();
+        return macroService.deleteMacro(macro);
     }
 
     @RequestMapping(value = "/run", method = RequestMethod.POST)
@@ -52,8 +55,4 @@ public class Macros {
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/{macroId}", method = RequestMethod.GET)
-    public @ResponseBody Macro getMacro(@PathVariable final Integer macroId) {
-        return this.macroRepository.findOne(macroId);
-    }
 }

@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.services.LocoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,34 +23,30 @@ public class LocosTest {
 
 
     private Locos locos;
-    private LocoRepository locoRepository;
+    private LocoService locoService;
 
     @Before
     public void setUp() {
-        locoRepository = mock(LocoRepository.class);
-        final LogStore logStore = mock(LogStore.class);
+        locoService = mock(LocoService.class);
         locos = new Locos();
-        locos.setLocoRepository(locoRepository);
-        locos.setLogStore(logStore);
+        locos.setLocoService(locoService);
     }
 
     @Test
-    public void saveLoco() {
-        locos.saveLoco(new Loco());
-        verify(locoRepository, times(1)).save(any(Loco.class));
+    public void testGetAllLocos() {
+        locos.getAllLocos();
+        verify(locoService, times(1)).getAllLocos();
     }
 
     @Test
-    public void getAllLocos() {
-        final List<Loco> locoList = new ArrayList<Loco>();
-        when(locoRepository.findAll()).thenReturn(locoList);
-        assertNotNull(locos.getAllLocos());
+    public void testGetLocoById() {
+        locos.getById(1);
+        verify(locoService, times(1)).getById(anyInt());
     }
 
     @Test
-    public void getById() {
-        when(locoRepository.findOne(anyInt())).thenReturn(new Loco());
-        assertNotNull(locos.getById(1));
+    public void testSaveLock() {
+        locos.saveLoco(mock(Loco.class));
+        verify(locoService, times(1)).saveLoco(any(Loco.class));
     }
-
 }

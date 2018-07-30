@@ -52,7 +52,7 @@ public class MacroServiceTest {
     @Test
     public void runTestEmptySteps() {
         final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
+        macro.setSteps(new ArrayList<>());
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
         macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
@@ -61,7 +61,7 @@ public class MacroServiceTest {
     @Test
     public void runTestOneStep() {
         final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
+        macro.setSteps(new ArrayList<>());
         final MacroStep step = mock(MacroStep.class);
         when(step.getNumber()).thenReturn(1);
         macro.getSteps().add(step);
@@ -72,6 +72,31 @@ public class MacroServiceTest {
         macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepImp, times(1)).runStep();
     }
+
+    @Test
+    public void testFetchMacro() {
+        macroService.getMacro(1);
+        verify(macroRepository, times(1)).findOne(anyInt());
+    }
+
+    @Test
+    public void testGetMacros() {
+        macroService.getMacros();
+        verify(macroRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void testSaveMacro() {
+        macroService.saveMacro(new Macro());
+        verify(macroRepository, times(1)).save(any(Macro.class));
+    }
+
+    @Test
+    public void testDeleteMacro() {
+        macroService.deleteMacro(new Macro());
+        verify(macroRepository, times(1)).delete(any(Macro.class));
+    }
+
 
     private Macro createMacro() {
         final Macro macro = new Macro();

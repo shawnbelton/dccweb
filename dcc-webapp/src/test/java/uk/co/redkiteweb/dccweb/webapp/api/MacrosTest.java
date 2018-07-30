@@ -6,12 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
-import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
+import uk.co.redkiteweb.dccweb.services.MacroService;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**
@@ -21,40 +18,40 @@ import static org.mockito.Mockito.*;
 public class MacrosTest {
 
     private Macros macros;
-    private MacroRepository macroRepository;
+    private MacroService macroService;
     private EventBus eventBus;
 
     @Before
     public void setup() {
-        macroRepository = mock(MacroRepository.class);
+        macroService = mock(MacroService.class);
         eventBus = mock(EventBus.class);
         macros = new Macros();
-        macros.setMacroRepository(macroRepository);
         macros.setEventBus(eventBus);
-        when(macroRepository.findAll()).thenReturn(new ArrayList<Macro>());
+        macros.setMacroService(macroService);
     }
 
     @Test
     public void testFetchMacro() {
-        when(macroRepository.findOne(anyInt())).thenReturn(new Macro());
-        assertNotNull(macros.getMacro(1));
+        macros.getMacro(1);
+        verify(macroService, times(1)).getMacro(anyInt());
     }
 
     @Test
     public void testGetMacros() {
-        assertNotNull(macros.getMacros());
+        macros.getMacros();
+        verify(macroService, times(1)).getMacros();
     }
 
     @Test
     public void testSaveMacro() {
         macros.saveMacro(new Macro());
-        verify(macroRepository, times(1)).save(any(Macro.class));
+        verify(macroService, times(1)).saveMacro(any(Macro.class));
     }
 
     @Test
     public void testDeleteMacro() {
         macros.deleteMacro(new Macro());
-        verify(macroRepository, times(1)).delete(any(Macro.class));
+        verify(macroService, times(1)).deleteMacro(any(Macro.class));
     }
 
     @Test

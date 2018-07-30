@@ -6,11 +6,6 @@ import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
-import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
-import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 import uk.co.redkiteweb.dccweb.services.DecoderService;
 
 import java.util.Collection;
