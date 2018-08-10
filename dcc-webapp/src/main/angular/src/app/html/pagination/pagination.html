@@ -1,19 +1,22 @@
 <div class="list-group-item clearfix" *ngIf="getNumberOfPages()>1">
-  <nav aria-label="Page navigation" class="pull-right">
-    <div class="pagination pagination-sm btn-group btn-group-sm">
-      <button type="button" aria-label="Previous" class="btn btn-default" [disabled]="currentPage==1"
-              (click)="decrementPage()">
-        <span aria-hidden="true">&laquo;</span>
-      </button>
-      <button type="button" class="btn" *ngFor="let index of getPages()"
-              [ngClass]="{'btn-primary': currentPage == index, 'btn-default': currentPage != index}"
-              (click)="goToPage(index)">{{index}}
-      </button>
-      <button type="button" aria-label="Next" class="btn btn-default" [disabled]="currentPage == getNumberOfPages()"
-              (click)="incrementPage()">
-        <span aria-hidden="true">&raquo;</span>
-      </button>
-    </div>
+  <nav aria-label="Page navigation" class="float-right">
+    <ul class="pagination pagination-sm">
+      <li class="page-item">
+        <button type="button" aria-label="Previous" class="page-link" [disabled]="currentPage==1"
+                (click)="decrementPage()">
+          <span aria-hidden="true">&laquo;</span>
+        </button>
+      </li>
+      <li class="page-item" *ngFor="let index of getPages()" [ngClass]="{'active': currentPage == index}">
+        <button type="button" class="page-link" (click)="goToPage(index)">{{index}}</button>
+      </li>
+      <li class="page-item">
+        <button type="button" aria-label="Next" class="page-link" [disabled]="currentPage == getNumberOfPages()"
+                (click)="incrementPage()">
+          <span aria-hidden="true">&raquo;</span>
+        </button>
+      </li>
+    </ul>
   </nav>
 </div>
 <div class="list-group-item" *ngFor="let item of pageItems()">
