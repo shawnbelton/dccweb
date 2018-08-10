@@ -1,14 +1,14 @@
 <div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-danger">
-            <div class="panel-heading">Settings</div>
-            <div class="panel-body">
-                <form id="settingsForm" name="settingsForm" class="form-horizontal"
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header bg-danger text-white">Settings</div>
+            <div class="card-body">
+                <form id="settingsForm" name="settingsForm"
                       (ngSubmit)="saveSettings()" #settingsForm="ngForm">
                     <fieldset>
                         <legend>Application Settings</legend>
                         <div class="form-group">
-                            <label for="ddlDccSystem" class="control-label col-sm-3">DCC System</label>
+                            <label for="ddlDccSystem" class="col-form-label col-sm-3">DCC System</label>
                             <div class="col-sm-9">
                                 <select id="ddlDccSystem" class="form-control" name="ddlDccSystem"
                                         [(ngModel)]="settings.dccSystem" #ddlDccSystem="ngModel">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="serialPort" class="control-label col-sm-3">Serial Port</label>
+                            <label for="serialPort" class="col-form-label col-sm-3">Serial Port</label>
                             <div class="col-sm-9">
                                 <input type="text" id="serialPort" class="form-control" name="serialPort"
                                     [(ngModel)]="settings.serialPort" #serialPort="ngModel" required="required"/>
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <div class="pull-right">
+                                <div class="float-right">
                                     <input class="btn btn-danger btn-sm" value="Save Settings"
                                            (disabled)="!settingsForm.form.valid" type="submit">
                                 </div>
@@ -36,14 +36,14 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm">
         <dcc-info></dcc-info>
     </div>
 </div>
 <div class="row">
-    <div class="col-sm-12">
-        <div class="panel panel-info">
-            <div class="panel-heading">Useful links</div>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header bg-info text-white">Useful links</div>
             <ul class="list-group">
                 <li class="list-group-item"><a routerLink="/performance">Performance</a></li>
             </ul>
