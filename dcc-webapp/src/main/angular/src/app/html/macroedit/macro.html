@@ -161,9 +161,8 @@
                    [disabled]="!editStepForm.form.valid"/>
           </form>
           <div *ngIf="!step.editing">
-            <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="glyphicon glyphicon-arrow-up"></span></a>
-            <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span
-              class="glyphicon glyphicon-arrow-down"></span></a>
+            <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="fas fa-angle-up fa-1x"></span></a>
+            <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span class="fas fa-angle-down fa-1x"></span></a>
             <strong>{{displayStep(step)}}</strong>
             <div class="float-right btn-toolbar">
               <input type="button" class="btn btn-sm btn-info"
