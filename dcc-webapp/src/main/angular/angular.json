@@ -22,6 +22,7 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "src/styles.css"
             ],
             "scripts": [
@@ -78,17 +79,13 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "styles": [
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "assets": [
               "src/assets",
-              "src/favicon.ico",
-              "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
-              "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
-              "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
-              "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
-              "node_modules/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf"
+              "src/favicon.ico"
             ]
           }
         },

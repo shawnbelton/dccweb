@@ -1,35 +1,41 @@
 <header role="banner">
-    <nav role="navigation" class="navbar navbar-static-top navbar-inverse">
-        <div class="container" active-link="active-link">
-            <div class="navbar-header">
-                <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false"
-                        data-target="#menubar-navbar-collapse"
-                        data-toggle="collapse" type="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" routerLink="/" routerLinkActive="active">DCC Web</a>
-            </div>
-            <div class="collapse navbar-collapse" id="menubar-navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a routerLink="/engine-shed" routerLinkActive="active">Engine Shed</a></li>
-                    <li><a routerLink="/decoders" routerLinkActive="active">Loco Decoders</a></li>
-                    <li><a routerLink="/accessories" routerLinkActive="active">Accessories</a></li>
-                    <li><a routerLink="/blocks" routerLinkActive="active">Blocks</a></li>
-                    <li><a routerLink="/relays" routerLinkActive="active">Relays</a></li>
-                    <li><a routerLink="/macro-edit" routerLinkActive="active">Macros</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a routerLink="/settings" routerLinkActive="active">Settings</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+  <nav role="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" routerLink="/" routerLinkActive="active">DCC Web</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/engine-shed" routerLinkActive="active">Engine Shed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/decoders" routerLinkActive="active">Loco Decoders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/accessories" routerLinkActive="active">Accessories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/blocks" routerLinkActive="active">Blocks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/relays" routerLinkActive="active">Relays</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/macro-edit" routerLinkActive="active">Macros</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav my-2 my-sm-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/settings" routerLinkActive="active">Settings</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>
 <main role="main">
-    <div class="container">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="container-fluid">
+    <router-outlet></router-outlet>
+  </div>
 </main>

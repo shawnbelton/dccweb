@@ -1,23 +1,23 @@
 <div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">Engine Shed</div>
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header bg-primary text-white">Engine Shed</div>
             <div class="list-group" *ngIf="!mode">
               <app-pagination [items]="locos" [pageSize]="5">
                 <ng-template let-item>
                   <div>
                     <div class="list-group-item-heading">
-                      <input type="button" class="btn btn-info btn-xs" value="Drive" (click)="driveLoco(item)"/>
+                      <input type="button" class="btn btn-info btn-sm" value="Drive" (click)="driveLoco(item)"/>
                       {{item.number}} {{item.name}}
-                      <div class="pull-right btn-toolbar">
-                        <input type="button" class="btn btn-success btn-xs" (click)="startEditLoco(item)" value="Edit"/>
-                        <input type="button" class="btn btn-primary btn-xs" (click)="configure(item)" value="Configure"/>
+                      <div class="float-right">
+                        <input type="button" class="btn btn-success btn-sm" (click)="startEditLoco(item)" value="Edit"/>
+                        <input type="button" class="btn btn-primary btn-sm" (click)="configure(item)" value="Configure"/>
                       </div>
                     </div>
                     <div class="list-group-item-text" *ngIf="item.showConfig">
-                      <form id="updateConfig" class="form-horizontal" name="updateConfig" (ngSubmit)="assignDecoder(item)">
-                        <div class="form-group">
-                          <label for="decoder" class="col-sm-3 control-label">Decoder:</label>
+                      <form id="updateConfig" name="updateConfig" (ngSubmit)="assignDecoder(item)">
+                        <div class="form-group row">
+                          <label for="decoder" class="col-sm-3 col-form-label">Decoder:</label>
                           <div class="col-sm-9">
                             <select name="decoder" ngControl="decoder" id="decoder" class="form-control" [(ngModel)]="item.decoder.decoderId">
                               <option *ngFor="let decoder of decoders" [value]="decoder.decoderId">Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}</option>
@@ -25,8 +25,8 @@
                           </div>
                         </div>
                         <div class="clearfix">
-                          <div class="pull-right">
-                            <input type="submit" value="Assign" class="btn btn-xs btn-success"/>
+                          <div class="float-right">
+                            <input type="submit" value="Assign" class="btn btn-sm btn-success"/>
                           </div>
                         </div>
                       </form>
@@ -35,28 +35,28 @@
                 </ng-template>
               </app-pagination>
             </div>
-            <div class="panel-footer clearfix" *ngIf="!mode">
-                <input type="button" class="btn btn-success btn-sm pull-right" value="Add Loco" (click)="newLoco()"/>
+            <div class="card-footer clearfix" *ngIf="!mode">
+                <input type="button" class="btn btn-success btn-sm float-right" value="Add Loco" (click)="newLoco()"/>
             </div>
-            <div class="panel-body" *ngIf="mode">
-                <form id="createLoco" class="form-horizontal" name="createLoco" (ngSubmit)="saveLoco()" #locoForm="ngForm">
-                    <div class="form-group">
-                        <label for="locoNumber" class="col-sm-3 control-label">Loco Number</label>
+            <div class="card-body" *ngIf="mode">
+                <form id="createLoco" name="createLoco" (ngSubmit)="saveLoco()" #locoForm="ngForm">
+                    <div class="form-group row">
+                        <label for="locoNumber" class="col-sm-3 col-form-label">Loco Number</label>
                         <div class="col-sm-9">
                             <input type="text" id="locoNumber" name="locoNumber" class="form-control" placeholder="Loco Number"
                                    [(ngModel)]="editLoco.number" required="required" #locoNumber="ngModel"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="locoName" class="col-sm-3 control-label">Loco Name</label>
+                    <div class="form-group row">
+                        <label for="locoName" class="col-sm-3 col-form-label">Loco Name</label>
                         <div class="col-sm-9">
                             <input type="text" id="locoName" name="locoName" class="form-control" placeholder="Loco Name"
                                    [(ngModel)]="editLoco.name" #locoName="ngModel"/>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <div class="col-sm-12">
-                            <div class="pull-right btn-toolbar">
+                            <div class="float-right">
                                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
                                 <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!locoForm.form.valid"/>
                             </div>
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm">
         <dcc-cab></dcc-cab>
     </div>
 </div>
