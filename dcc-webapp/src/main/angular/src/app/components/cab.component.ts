@@ -7,6 +7,7 @@ import {CabService} from "../services/cab.service";
 import {CabFunction} from "../models/cabFunction";
 import {Macro} from "../models/macro";
 import {MacroService} from "../services/macro.service";
+
 @Component({
     moduleId: module.id,
     templateUrl: './../html/cab/cab.html',
@@ -66,7 +67,12 @@ export class CabComponent implements OnInit {
     }
 
     setCab(cab: Cab): void {
-        this.cab = cab;
+      if (cab != null) {
+        let functions: CabFunction[] = cab.cabFunctions;
+        functions.sort((func1, func2): number => {return func1.number - func2.number});
+        cab.cabFunctions = functions;
+      }
+      this.cab = cab;
     }
 
     getCab(): void {
