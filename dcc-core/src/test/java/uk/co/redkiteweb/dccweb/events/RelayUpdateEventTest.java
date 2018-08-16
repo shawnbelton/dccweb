@@ -23,7 +23,7 @@ public class RelayUpdateEventTest {
 
     @Test
     public void testUrl() {
-        assertEquals("/blocks", event.getUrl());
+        assertEquals("/relays", event.getUrl());
     }
 
     @Test
