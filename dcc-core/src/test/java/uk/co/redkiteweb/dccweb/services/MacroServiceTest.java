@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,6 +40,7 @@ public class MacroServiceTest {
         macroService.setMacroStepRepository(macroStepRepository);
         macroService.setStepFactory(stepFactory);
         macroService.setLogStore(logStore);
+        macroService.setEventBus(mock(EventBus.class));
     }
 
     @Test
@@ -46,6 +48,13 @@ public class MacroServiceTest {
         final Macro macro = createMacro();
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(null);
         macroService.runMacroListener(new MacroRunEvent(macro));
+        verify(stepFactory, never()).getInstance(any(MacroStep.class));
+    }
+
+    @Test
+    public void runTestNullMacro() {
+        when(macroStepRepository.getByMacroId(anyInt())).thenReturn(null);
+        macroService.runMacroListener(new MacroRunEvent(null));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
     }
 
