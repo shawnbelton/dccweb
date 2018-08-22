@@ -19,7 +19,7 @@ public class RelayUpdateEventTest {
     @Before
     public void setup() {
         final RelayController relay = mock(RelayController.class);
-        when(relay.getIpAddress()).thenReturn("ipaddress");
+        when(relay.getIpAddress()).thenReturn("ipAddress");
         when(relay.getValue()).thenReturn(10);
         event = new RelayUpdateEvent(relay);
     }
@@ -36,6 +36,6 @@ public class RelayUpdateEventTest {
 
     @Test
     public void testUpdateUrl() {
-        assertEquals("http://ipaddres/setrelay/10", event.getUpdateUrl());
+        assertEquals("http://ipAddress/setrelay/10", event.getUpdateUrl());
     }
 }
