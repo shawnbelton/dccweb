@@ -24,11 +24,12 @@ public class DccInterfaceTest {
     private DccInterfaceImpl dccInterface;
     private DccInterfaceStatus dccInterfaceStatus;
     private MessageProcessor messageProcessor;
+    private MessageProcessorFactory messageProcessorFactory;
 
     @Before
     public void setUp() {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
-        final MessageProcessorFactory messageProcessorFactory = mock(MessageProcessorFactory.class);
+        messageProcessorFactory = mock(MessageProcessorFactory.class);
         messageProcessor = mock(MessageProcessor.class);
         final LogStore logStore = mock(LogStore.class);
         when(messageProcessor.getInterfaceCode()).thenReturn("Code");
@@ -85,6 +86,20 @@ public class DccInterfaceTest {
         when(messageProcessor.process(any(KeepAliveMessage.class))).thenReturn(messageResponse);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(messageResponse.get(eq("ERROR"))).thenReturn("Disconnected");
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
+
+    @Test
+    public void testCheckInterfaceClassNotFound() {
+        when(messageProcessorFactory.getInstance()).thenThrow(mock(NoClassDefFoundError.class));
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
+
+    @Test
+    public void testCheckInterfaceUnsatisfiedLinkError() {
+        when(messageProcessorFactory.getInstance()).thenThrow(mock(UnsatisfiedLinkError.class));
         dccInterface.checkInterface();
         verify(dccInterfaceStatus, times(1)).setDisconnected();
     }
