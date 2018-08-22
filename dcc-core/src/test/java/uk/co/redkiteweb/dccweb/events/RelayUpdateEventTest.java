@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(JUnit4.class)
 public class RelayUpdateEventTest {
@@ -18,6 +19,8 @@ public class RelayUpdateEventTest {
     @Before
     public void setup() {
         final RelayController relay = mock(RelayController.class);
+        when(relay.getIpAddress()).thenReturn("ipaddress");
+        when(relay.getValue()).thenReturn(10);
         event = new RelayUpdateEvent(relay);
     }
 
@@ -29,5 +32,10 @@ public class RelayUpdateEventTest {
     @Test
     public void testObject() {
         assertNotNull(event.sendObject());
+    }
+
+    @Test
+    public void testUpdateUrl() {
+        assertEquals("http://ipaddres/setrelay/10", event.getUpdateUrl());
     }
 }

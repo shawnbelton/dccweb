@@ -79,13 +79,19 @@ public class AccessoryServiceTest {
 
     @Test
     public void testGetAllAccessories() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         assertNotNull(accessoryService.getAccessoryDecoders());
     }
 
     @Test
+    public void testGetAccessoryDecoderTypes() {
+        when(accessoryDecoderTypeRepository.findAll()).thenReturn(new ArrayList<>());
+        assertNotNull(accessoryService.getAccessoryDecoderTypes());
+    }
+
+    @Test
     public void testSaveNoCurrent() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
         when(accessoryDecoder.getCurrentValue()).thenReturn(null);
         final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
@@ -101,7 +107,7 @@ public class AccessoryServiceTest {
 
     @Test
     public void testSaveWithCurrent() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
         final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
         when(accessoryDecoder.getAccessoryDecoderType()).thenReturn(accessoryDecoderType);
@@ -119,7 +125,7 @@ public class AccessoryServiceTest {
 
     private AccessoryDecoderType getAccessoryDecoderType() {
         final AccessoryDecoderType accessoryDecoderType = new AccessoryDecoderType();
-        final List<AccessoryDecoderTypeOperation> accessoryOperations = new ArrayList<AccessoryDecoderTypeOperation>();
+        final List<AccessoryDecoderTypeOperation> accessoryOperations = new ArrayList<>();
         accessoryOperations.add(getAccessoryDecoderTypeOperation(1, "Start"));
         accessoryOperations.add(getAccessoryDecoderTypeOperation(0,"Stop"));
         accessoryDecoderType.setDecoderTypeOperations(accessoryOperations);
