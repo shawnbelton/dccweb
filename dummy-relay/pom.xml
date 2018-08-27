@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dummy-relay</artifactId>
+    <name>Dummy Relay Controller</name>
 
     <build>
         <finalName>dummy-relay</finalName>

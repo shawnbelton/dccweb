@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dcc-interface</artifactId>
+    <name>DCC Interface to DCC Controllers</name>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

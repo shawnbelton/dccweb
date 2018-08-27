@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dcc-webapp</artifactId>
+    <name>DCC Web Application</name>
 
     <build>
         <finalName>dcc-webapp</finalName>
