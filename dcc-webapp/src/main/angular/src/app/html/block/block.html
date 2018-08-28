@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-sm-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">Blocks</div>
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-primary text-white">Blocks</div>
       <div class="list-group">
         <app-pagination [items]="blocks" [pageSize]="5">
           <ng-template let-item>
@@ -11,27 +11,27 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-6">
-    <div class="panel panel-primary">
-      <div class="panel-heading">Edit Block</div>
-      <div class="panel-body">
-        <form id="createBlock" class="form-horizontal" name="createBlock" (ngSubmit)="saveBlock()" #blockForm="ngForm">
-          <div class="form-group">
-            <label for="blockId" class="col-sm-4 control-label">Block Id</label>
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-primary text-white">Edit Block</div>
+      <div class="card-body">
+        <form id="createBlock" name="createBlock" (ngSubmit)="saveBlock()" #blockForm="ngForm">
+          <div class="form-group row">
+            <label for="blockId" class="col-sm-4 col-form-label">Block Id</label>
             <div class="col-sm-8">
               <input type="text" id="blockId" name="blockId" class="form-control" placeholder="Block Id"
                      [(ngModel)]="block.blockId" required="required" #blockId="ngModel" readonly="readonly"/>
             </div>
           </div>
-          <div class="form-group">
-            <label for="blockName" class="col-sm-4 control-label">Block Name</label>
+          <div class="form-group row">
+            <label for="blockName" class="col-sm-4 col-form-label">Block Name</label>
             <div class="col-sm-8">
               <input type="text" id="blockName" name="blockName" class="form-control" placeholder="Block Name"
                      [(ngModel)]="block.blockName" required="required" #blockName="ngModel"/>
             </div>
           </div>
-          <div class="form-group">
-            <label for="blockMacro" class="col-sm-4 control-label">Block Macro</label>
+          <div class="form-group row">
+            <label for="blockMacro" class="col-sm-4 col-form-label">Block Macro</label>
             <div class="col-sm-8">
               <select name="blockMacro" id="blockMacro" ngControl="blockMacro" class="form-control"
                       #blockMacro="ngModel" [(ngModel)]="block.macro.macroId">
@@ -42,9 +42,9 @@
               </select>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group row">
             <div class="col-sm-12">
-              <div class="pull-right">
+              <div class="float-right btn-toolbar">
                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
                 <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!blockForm.form.valid"/>
               </div>

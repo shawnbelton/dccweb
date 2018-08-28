@@ -2,7 +2,7 @@
  * Created by shawn on 16/11/16.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {LogMessage} from "../models/log.message";
 import {HttpClient} from "@angular/common/http";
 import {StompService} from "@stomp/ng2-stompjs";
@@ -17,11 +17,11 @@ export class MessageService {
     private messages: Observable<LogMessage[]> = this._messages.asObservable();
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe('/logging').map((message: Message) => {
-        return message.body;
-      }).subscribe((data: string) => {
-          this.updateMessages(JSON.parse(data));
-      });
+      this.stompService.subscribe('/logging').subscribe(this.on_next);
+    }
+
+    public on_next = (message: Message) => {
+      this.updateMessages(JSON.parse(message.body));
     }
 
     updateMessages(message: LogMessage): void {

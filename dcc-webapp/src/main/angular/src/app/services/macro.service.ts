@@ -2,7 +2,7 @@
  * Created by shawn on 02/12/16.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Macro} from "../models/macro";
 import {HttpClient} from "@angular/common/http";
 

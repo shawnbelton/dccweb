@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>decoder-definitions</artifactId>
+    <name>Decoder Definitions</name>
 
     <build>
         <finalName>decoder-definitions</finalName>

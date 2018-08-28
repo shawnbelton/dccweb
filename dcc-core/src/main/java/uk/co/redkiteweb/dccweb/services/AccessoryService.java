@@ -1,9 +1,9 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
@@ -14,7 +14,9 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
+import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,8 +30,7 @@ public class AccessoryService {
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
-    private SimpMessagingTemplate messagingTemplate;
-    private MacroService macroService;
+    private EventBus eventBus;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -47,20 +48,19 @@ public class AccessoryService {
     }
 
     @Autowired
-    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
+    public void setEventBus(final EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
-    @Autowired
-    public void setMacroService(final MacroService macroService) {
-        this.macroService = macroService;
+    public Collection<AccessoryDecoder> getAccessoryDecoders() {
+        return (Collection<AccessoryDecoder>) accessoryDecoderRepository.findAll();
     }
 
-    public List<AccessoryDecoder> getAccessoryDecoders() {
-        return (List<AccessoryDecoder>)accessoryDecoderRepository.findAll();
+    public Collection<AccessoryDecoderType> getAccessoryDecoderTypes() {
+        return (Collection<AccessoryDecoderType>)accessoryDecoderTypeRepository.findAll();
     }
 
-    public List<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
+    public Collection<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
         final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findOne(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId());
         accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
         if (accessoryDecoder.getCurrentValue()==null) {
@@ -92,10 +92,7 @@ public class AccessoryService {
         accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
         accessoryDecoderRepository.save(accessoryDecoder);
         final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findOne(accessoryDecoder.getAccessoryDecoderId());
-        messagingTemplate.convertAndSend("/accessory", accessoryDecoder1);
-        if (accessoryDecoder.getMacro()!=null) {
-            macroService.runMacro(accessoryDecoder.getMacro());
-        }
+        eventBus.post(new AccessoryUpdateEvent(accessoryDecoder1));
     }
 
     private String logUpdates(final List<AccessoryDecoder> accessoryDecoders, final AccessoryOperation accessoryOperation) {

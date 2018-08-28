@@ -8,7 +8,7 @@ import {StatusService} from "../services/status.service";
 @Component({
     moduleId: module.id,
     selector: 'dcc-status',
-    template: '<p class="navbar-text">Status: {{status.status}}</p>'
+    template: '<span class="navbar-text">Status: {{status.status}}</span>'
 })
 export class StatusComponent implements OnInit {
 

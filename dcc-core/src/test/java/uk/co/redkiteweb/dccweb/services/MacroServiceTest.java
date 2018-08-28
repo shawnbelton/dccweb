@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.MacroStepRepository;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.events.MacroRunEvent;
 import uk.co.redkiteweb.dccweb.macros.factory.IStep;
 import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 
@@ -38,29 +40,37 @@ public class MacroServiceTest {
         macroService.setMacroStepRepository(macroStepRepository);
         macroService.setStepFactory(stepFactory);
         macroService.setLogStore(logStore);
+        macroService.setEventBus(mock(EventBus.class));
     }
 
     @Test
     public void runTestNullSteps() {
         final Macro macro = createMacro();
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(null);
-        macroService.runMacro(macro);
+        macroService.runMacroListener(new MacroRunEvent(macro));
+        verify(stepFactory, never()).getInstance(any(MacroStep.class));
+    }
+
+    @Test
+    public void runTestNullMacro() {
+        when(macroStepRepository.getByMacroId(anyInt())).thenReturn(null);
+        macroService.runMacroListener(new MacroRunEvent(null));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
     }
 
     @Test
     public void runTestEmptySteps() {
         final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
+        macro.setSteps(new ArrayList<>());
         when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
-        macroService.runMacro(macro);
+        macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepFactory, never()).getInstance(any(MacroStep.class));
     }
 
     @Test
     public void runTestOneStep() {
         final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
+        macro.setSteps(new ArrayList<>());
         final MacroStep step = mock(MacroStep.class);
         when(step.getNumber()).thenReturn(1);
         macro.getSteps().add(step);
@@ -68,28 +78,34 @@ public class MacroServiceTest {
         final IStep stepImp = mock(IStep.class);
         when(stepImp.runStep()).thenReturn(2);
         when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
-        macroService.runMacro(macro);
+        macroService.runMacroListener(new MacroRunEvent(macro));
         verify(stepImp, times(1)).runStep();
     }
 
     @Test
-    public void testRunByName() {
-        final Macro macro = createMacro();
-        macro.setSteps(new ArrayList<MacroStep>());
-        final MacroStep step = mock(MacroStep.class);
-        when(step.getNumber()).thenReturn(1);
-        macro.getSteps().add(step);
-        final MacroStep step2 = mock(MacroStep.class);
-        when(step2.getNumber()).thenReturn(2);
-        macro.getSteps().add(step2);
-        when(macroStepRepository.getByMacroId(anyInt())).thenReturn(macro.getSteps());
-        final IStep stepImp = mock(IStep.class);
-        when(stepFactory.getInstance(any(MacroStep.class))).thenReturn(stepImp);
-        when(stepImp.runStep()).thenReturn(3);
-        when(macroRepository.findByName(anyString())).thenReturn(macro);
-        macroService.runMacroByName("MacroName");
-        verify(stepImp, times(1)).runStep();
+    public void testFetchMacro() {
+        macroService.getMacro(1);
+        verify(macroRepository, times(1)).findOne(anyInt());
     }
+
+    @Test
+    public void testGetMacros() {
+        macroService.getMacros();
+        verify(macroRepository, times(1)).findAll();
+    }
+
+    @Test
+    public void testSaveMacro() {
+        macroService.saveMacro(new Macro());
+        verify(macroRepository, times(1)).save(any(Macro.class));
+    }
+
+    @Test
+    public void testDeleteMacro() {
+        macroService.deleteMacro(new Macro());
+        verify(macroRepository, times(1)).delete(any(Macro.class));
+    }
+
 
     private Macro createMacro() {
         final Macro macro = new Macro();

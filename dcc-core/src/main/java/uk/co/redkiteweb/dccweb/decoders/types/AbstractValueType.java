@@ -5,6 +5,7 @@ import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.DecoderSettingOption;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public abstract class AbstractValueType implements ValueType {
@@ -44,7 +45,7 @@ public abstract class AbstractValueType implements ValueType {
     }
 
     @Override
-    public Integer getCVValue(final Integer cvNumber, final List<DecoderSetting> decoderSettings) {
+    public Integer getCVValue(final Integer cvNumber, final Collection<DecoderSetting> decoderSettings) {
         Integer value = 0;
         for(DecoderSetting decoderSetting : decoderSettings) {
             if (getName().equals(decoderSetting.getName())) {

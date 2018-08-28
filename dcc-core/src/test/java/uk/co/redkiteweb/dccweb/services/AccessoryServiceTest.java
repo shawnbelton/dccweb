@@ -1,10 +1,10 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
@@ -14,6 +14,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.OperateAccessoryMessage;
+import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,7 @@ import static org.mockito.Mockito.*;
 public class AccessoryServiceTest {
 
     private AccessoryService accessoryService;
-    private MacroService macroService;
+    private EventBus eventBus;
     private DccInterface dccInterface;
     private AccessoryDecoderRepository accessoryDecoderRepository;
     private AccessoryDecoderTypeRepository accessoryDecoderTypeRepository;
@@ -39,14 +40,12 @@ public class AccessoryServiceTest {
         dccInterface = mock(DccInterface.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
         accessoryDecoderTypeRepository = mock(AccessoryDecoderTypeRepository.class);
-        final SimpMessagingTemplate messagingTemplate = mock(SimpMessagingTemplate.class);
-        macroService = mock(MacroService.class);
+        eventBus = mock(EventBus.class);
         accessoryService = new AccessoryService();
         accessoryService.setDccInterface(dccInterface);
         accessoryService.setAccessoryDecoderRepository(accessoryDecoderRepository);
         accessoryService.setAccessoryDecoderTypeRepository(accessoryDecoderTypeRepository);
-        accessoryService.setMacroService(macroService);
-        accessoryService.setMessagingTemplate(messagingTemplate);
+        accessoryService.setEventBus(eventBus);
     }
 
     @Test
@@ -75,18 +74,24 @@ public class AccessoryServiceTest {
         accessoryOperation.setOperationValue(0);
         accessoryService.operateServiceAsyc(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
-        verify(macroService, times(1)).runMacro(any(Macro.class));
+        verify(eventBus, times(1)).post(any(AccessoryUpdateEvent.class));
     }
 
     @Test
     public void testGetAllAccessories() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         assertNotNull(accessoryService.getAccessoryDecoders());
     }
 
     @Test
+    public void testGetAccessoryDecoderTypes() {
+        when(accessoryDecoderTypeRepository.findAll()).thenReturn(new ArrayList<>());
+        assertNotNull(accessoryService.getAccessoryDecoderTypes());
+    }
+
+    @Test
     public void testSaveNoCurrent() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
         when(accessoryDecoder.getCurrentValue()).thenReturn(null);
         final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
@@ -102,7 +107,7 @@ public class AccessoryServiceTest {
 
     @Test
     public void testSaveWithCurrent() {
-        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<AccessoryDecoder>());
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
         final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
         when(accessoryDecoder.getAccessoryDecoderType()).thenReturn(accessoryDecoderType);
@@ -120,7 +125,7 @@ public class AccessoryServiceTest {
 
     private AccessoryDecoderType getAccessoryDecoderType() {
         final AccessoryDecoderType accessoryDecoderType = new AccessoryDecoderType();
-        final List<AccessoryDecoderTypeOperation> accessoryOperations = new ArrayList<AccessoryDecoderTypeOperation>();
+        final List<AccessoryDecoderTypeOperation> accessoryOperations = new ArrayList<>();
         accessoryOperations.add(getAccessoryDecoderTypeOperation(1, "Start"));
         accessoryOperations.add(getAccessoryDecoderTypeOperation(0,"Stop"));
         accessoryDecoderType.setDecoderTypeOperations(accessoryOperations);

@@ -1,17 +1,17 @@
 <div>
   {{block.blockName}}
-  <div class="pull-right">
-    <input type="button" class="btn btn-success btn-xs" (click)="startBlockEdit()" value="Edit"/>
-    <input type="button" class="btn btn-xs btn-danger" (click)="deleteBlock()" value="X"/>
+  <div class="float-right btn-toolbar">
+    <input type="button" class="btn btn-success btn-sm" (click)="startBlockEdit()" value="Edit"/>
+    <input type="button" class="btn btn-sm btn-danger" (click)="deleteBlock()" value="X"/>
   </div>
   <ul class="list-inline">
-    <li>
-      <input type="button" class="btn btn-xs" value="Occupied"
+    <li class="list-inline-item">
+      <input type="button" class="btn btn-sm" value="Occupied"
              (click)="setBlockOccupancy(true)"
              [ngClass]="{'btn-danger': block.occupied, 'btn-default': !block.occupied}"/>
     </li>
-    <li>
-      <input type="button" class="btn btn-xs" value="Unoccupied"
+    <li class="list-inline-item">
+      <input type="button" class="btn btn-sm" value="Unoccupied"
              (click)="setBlockOccupancy(false)"
              [ngClass]="{'btn-default': block.occupied, 'btn-success': !block.occupied}"/>
     </li>

@@ -2,7 +2,7 @@
  * Created by shawn on 19/11/16.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Decoder} from "../models/decoder";
 import {DecoderFunction} from "../models/decoderFunction";
 import {LinkedMacro} from "../models/linked.macro";
@@ -35,11 +35,11 @@ export class DecoderService {
 
     constructor(private http: HttpClient, private stompService: StompService) {
         this.fetchDecoders();
-      this.stompService.subscribe('/decoder').map((message: Message) => {
-        return message.body;
-      }).subscribe((data: string) => {
-        this.updateDecoders(JSON.parse(data));
-      });
+      this.stompService.subscribe('/decoder').subscribe(this.on_next);
+    }
+
+    public on_next = (message: Message) => {
+      this.updateDecoders(JSON.parse(message.body));
     }
 
     updateDecoders(decoder: Decoder): void {

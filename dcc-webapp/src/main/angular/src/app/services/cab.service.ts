@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Cab} from "../models/cab";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Loco} from "../models/loco";
 import {HttpClient} from "@angular/common/http";
 import {StompService} from "@stomp/ng2-stompjs";
@@ -21,11 +21,11 @@ export class CabService {
     private response: boolean;
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe('/cab').map((message: Message) => {
-        return message.body;
-      }).subscribe((data: string) => {
-        this.cabUpdate(JSON.parse(data));
-      });
+      this.stompService.subscribe('/cab').subscribe(this.on_next);
+    }
+
+    public on_next = (message: Message) => {
+      this.cabUpdate(JSON.parse(message.body));
     }
 
     cabUpdate(cab: Cab): void {

@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dcc-core</artifactId>
+    <name>DCC Core functionallity</name>
 
     <dependencies>
         <dependency>

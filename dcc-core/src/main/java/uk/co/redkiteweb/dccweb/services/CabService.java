@@ -1,9 +1,9 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import com.google.common.eventbus.EventBus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
@@ -11,6 +11,7 @@ import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.UpdateFunctionsMessage;
+import uk.co.redkiteweb.dccweb.events.CabChangeEvent;
 
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.*;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_128;
@@ -25,7 +26,7 @@ public class CabService {
     private static final Logger LOGGER = LogManager.getLogger(CabService.class);
 
     private DccInterface dccInterface;
-    private SimpMessagingTemplate messagingTemplate;
+    private EventBus eventBus;
 
     @Autowired
     public void setDccInterface(final DccInterface dccInterface) {
@@ -33,8 +34,8 @@ public class CabService {
     }
 
     @Autowired
-    public void setMessagingTemplate(final SimpMessagingTemplate messagingTemplate) {
-        this.messagingTemplate = messagingTemplate;
+    public void setEventBus(final EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     public void updateCab(final Cab cab) {
@@ -73,7 +74,7 @@ public class CabService {
         final Loco loco = new Loco();
         loco.setLocoId(updatedCab.getLoco().getLocoId());
         cab.setLoco(loco);
-        messagingTemplate.convertAndSend("/cab", cab);
+        eventBus.post(new CabChangeEvent(cab));
     }
 
     private static boolean hasDecoder(final Cab cab) {

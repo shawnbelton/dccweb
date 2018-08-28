@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import uk.co.redkiteweb.dccweb.model.RelayController;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
@@ -21,9 +22,11 @@ public class RelayControllerStoreTest {
 
     @Before
     public void setup() {
+        final RelayController relayConroller = new RelayController();
         messagingTemplate = mock(SimpMessagingTemplate.class);
         store = new RelayControllerStore();
         store.setMessagingTemplate(messagingTemplate);
+        store.setRelayController(relayConroller);
     }
 
     @Test
