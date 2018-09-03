@@ -3,7 +3,7 @@ package uk.co.redkiteweb.dccweb.webapp.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.service.SettingsService;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 import uk.co.redkiteweb.dccweb.webapp.data.Settings;
 
 /**

@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.service.SettingsService;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 import uk.co.redkiteweb.dccweb.webapp.data.Settings;
 
 import static org.junit.Assert.assertNotNull;
