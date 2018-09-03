@@ -11,7 +11,6 @@ import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandler;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 import uk.co.redkiteweb.dccweb.services.DecoderService;
