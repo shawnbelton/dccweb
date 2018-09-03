@@ -5,13 +5,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
+import uk.co.redkiteweb.dccweb.macros.IStep;
 
 /**
  * Created by shawn on 12/06/17.
  */
 @Component("isAccessory")
 @Scope("prototype")
-public class IsAccessoryStep extends AbstractMacroStep {
+public class IsAccessoryStep extends AbstractMacroStep implements IStep {
 
     private AccessoryDecoderRepository accessoryDecoderRepository;
 

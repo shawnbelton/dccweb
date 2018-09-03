@@ -7,8 +7,8 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
 import uk.co.redkiteweb.dccweb.data.CabFunctionComparator;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 import uk.co.redkiteweb.dccweb.services.CabService;
 
 import java.util.TreeSet;
@@ -22,14 +22,14 @@ import static org.mockito.Mockito.*;
 public class FunctionStepTest {
 
     private FunctionStep functionStep;
-    private MacroStep step;
+    private MacroStepItem step;
     private CabStore cabStore;
     private CabService cabService;
 
     @Before
     public void setup() {
         cabStore = mock(CabStore.class);
-        step = mock(MacroStep.class);
+        step = mock(MacroStepItem.class);
         when(step.getNumber()).thenReturn(1);
         cabService = mock(CabService.class);
         functionStep = new FunctionStep();

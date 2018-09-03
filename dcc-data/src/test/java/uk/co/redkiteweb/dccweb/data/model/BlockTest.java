@@ -22,7 +22,7 @@ public class BlockTest {
         block.setBlockId("12345678-1");
         block.setBlockName("Block Name");
         block.setOccupied(Boolean.TRUE);
-        block.setMacro(new Macro());
+        block.setMacroId(1);
     }
 
     @Test
@@ -42,6 +42,6 @@ public class BlockTest {
 
     @Test
     public void testMacro() {
-        assertNotNull(block.getMacro());
+        assertNotNull(block.getMacroId());
     }
 }

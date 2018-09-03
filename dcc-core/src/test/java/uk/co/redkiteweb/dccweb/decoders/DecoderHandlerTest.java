@@ -11,11 +11,11 @@ import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.HashMap;

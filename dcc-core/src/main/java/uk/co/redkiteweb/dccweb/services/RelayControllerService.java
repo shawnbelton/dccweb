@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.RelayController;
 import uk.co.redkiteweb.dccweb.data.repositories.RelayControllerRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.List;
 

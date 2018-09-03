@@ -2,7 +2,6 @@ package uk.co.redkiteweb.dccweb.data.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -16,7 +15,7 @@ public class Block implements Serializable {
     private String blockId;
     private String blockName;
     private Boolean occupied;
-    private Macro macro;
+    private Integer macroId;
 
     @Id
     public String getBlockId() {
@@ -43,12 +42,11 @@ public class Block implements Serializable {
         this.occupied = occupied;
     }
 
-    @ManyToOne
-    public Macro getMacro() {
-        return macro;
+    public Integer getMacroId() {
+        return macroId;
     }
 
-    public void setMacro(Macro macro) {
-        this.macro = macro;
+    public void setMacroId(final Integer macroId) {
+        this.macroId = macroId;
     }
 }

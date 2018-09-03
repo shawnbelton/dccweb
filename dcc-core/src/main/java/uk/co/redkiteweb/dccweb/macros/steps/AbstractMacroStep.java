@@ -2,17 +2,17 @@ package uk.co.redkiteweb.dccweb.macros.steps;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import uk.co.redkiteweb.dccweb.data.Cab;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.macros.IStep;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
-import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
 /**
  * Created by shawn on 05/12/16.
  */
 public abstract class AbstractMacroStep implements IStep {
 
-    private MacroStep macroStep;
+    private MacroStepItem macroStep;
     private CabStore cabStore;
     private MacroContext macroContext;
 
@@ -22,7 +22,7 @@ public abstract class AbstractMacroStep implements IStep {
     }
 
     @Override
-    public void setMacroStep(final MacroStep macroStep) {
+    public void setMacroStep(final MacroStepItem macroStep) {
         this.macroStep = macroStep;
     }
 
@@ -31,7 +31,7 @@ public abstract class AbstractMacroStep implements IStep {
     }
 
     @Override
-    public void setMacroContext(MacroContext macroContext) {
+    public void setMacroContext(final MacroContext macroContext) {
         this.macroContext = macroContext;
     }
 

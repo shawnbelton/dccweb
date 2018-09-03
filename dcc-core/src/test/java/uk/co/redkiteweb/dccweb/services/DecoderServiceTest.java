@@ -7,13 +7,12 @@ import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.model.DecoderFunction;
 import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandler;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 
@@ -104,9 +103,7 @@ public class DecoderServiceTest {
     @Test
     public void testLinkMacro() {
         final LinkedMacro linkedMacro = new LinkedMacro();
-        final Macro macro = new Macro();
-        macro.setName("Test Macro");
-        linkedMacro.setMacro(macro);
+        linkedMacro.setMacroId(1);
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoderService.linkMacro(linkedMacro));
         verify(linkedMacroRepository, times(1)).save(any(LinkedMacro.class));
@@ -115,9 +112,7 @@ public class DecoderServiceTest {
     @Test
     public void testUnlinkMacro() {
         final LinkedMacro linkedMacro = new LinkedMacro();
-        final Macro macro = new Macro();
-        macro.setName("Test Macro");
-        linkedMacro.setMacro(macro);
+        linkedMacro.setMacroId(1);
         when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
         assertNotNull(decoderService.unlinkMacro(linkedMacro));
         verify(linkedMacroRepository, times(1)).delete(any(LinkedMacro.class));

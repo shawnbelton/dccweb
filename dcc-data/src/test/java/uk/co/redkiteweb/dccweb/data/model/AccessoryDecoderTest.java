@@ -24,7 +24,7 @@ public class AccessoryDecoderTest {
         accessoryDecoder.setAddress(123);
         accessoryDecoder.setName("Label");
         accessoryDecoder.setCurrentValue(0);
-        accessoryDecoder.setMacro(new Macro());
+        accessoryDecoder.setMacroId(1);
     }
 
     @Test
@@ -54,6 +54,6 @@ public class AccessoryDecoderTest {
 
     @Test
     public void testMacro() {
-        assertNotNull(accessoryDecoder.getMacro());
+        assertNotNull(accessoryDecoder.getMacroId());
     }
 }

@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Block;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -21,14 +21,14 @@ public class IsBlockStepTest {
     private IsBlockStep isBlockStep;
     private Block block;
     private MacroContext macroContext;
-    private MacroStep macroStep;
+    private MacroStepItem macroStep;
 
     @Before
     public void setup() {
         BlockRepository blockRepository = mock(BlockRepository.class);
         block = mock(Block.class);
         macroContext = mock(MacroContext.class);
-        macroStep = mock(MacroStep.class);
+        macroStep = mock(MacroStepItem.class);
         when(blockRepository.findOne(anyString())).thenReturn(block);
         isBlockStep = new IsBlockStep();
         isBlockStep.setBlockRepository(blockRepository);

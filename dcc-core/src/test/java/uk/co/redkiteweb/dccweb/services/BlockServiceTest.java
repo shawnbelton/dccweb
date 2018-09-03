@@ -6,10 +6,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Block;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.events.BlockUpdateEvent;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 
@@ -52,7 +51,7 @@ public class BlockServiceTest {
     public void updateExistingBlockAsync() {
         final Block block = new Block();
         block.setOccupied(false);
-        block.setMacro(mock(Macro.class));
+        block.setMacroId(1);
         when(blockRepository.findOne(anyString())).thenReturn(block);
         blockService.updateBlockAsync("BlockId", true);
         verify(blockRepository, times(1)).save(eq(block));

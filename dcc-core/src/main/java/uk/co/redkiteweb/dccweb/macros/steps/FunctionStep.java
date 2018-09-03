@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.Cab;
 import uk.co.redkiteweb.dccweb.data.CabFunction;
-import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.IStep;
 import uk.co.redkiteweb.dccweb.services.CabService;
 
 /**

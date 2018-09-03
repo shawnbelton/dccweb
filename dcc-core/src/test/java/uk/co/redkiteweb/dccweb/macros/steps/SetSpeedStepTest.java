@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.Cab;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.store.CabStore;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 import uk.co.redkiteweb.dccweb.services.CabService;
 
 import static org.mockito.Mockito.*;
@@ -25,7 +25,7 @@ public class SetSpeedStepTest {
     public void setup() {
         cabStore = mock(CabStore.class);
         cabService = mock(CabService.class);
-        final MacroStep macroStep = mock(MacroStep.class);
+        final MacroStepItem macroStep = mock(MacroStepItem.class);
         setSpeedStep = new SetSpeedStep();
         setSpeedStep.setCabStore(cabStore);
         setSpeedStep.setCabService(cabService);

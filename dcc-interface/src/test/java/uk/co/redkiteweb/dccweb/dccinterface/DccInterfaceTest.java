@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.*;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.List;

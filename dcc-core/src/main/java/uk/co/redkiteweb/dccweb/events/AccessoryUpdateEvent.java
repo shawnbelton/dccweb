@@ -1,7 +1,6 @@
 package uk.co.redkiteweb.dccweb.events;
 
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 
 public class AccessoryUpdateEvent implements RunMacroEvent, SendEvent {
 
@@ -12,8 +11,8 @@ public class AccessoryUpdateEvent implements RunMacroEvent, SendEvent {
     }
 
     @Override
-    public Macro getMacro() {
-        return accessoryDecoder.getMacro();
+    public Integer getMacroId() {
+        return accessoryDecoder.getMacroId();
     }
 
     @Override

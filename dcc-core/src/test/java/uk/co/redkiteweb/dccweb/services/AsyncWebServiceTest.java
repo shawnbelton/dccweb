@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;

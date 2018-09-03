@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 /**
  * Created by shawn on 01/06/17.

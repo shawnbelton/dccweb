@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderType;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoderTypeOperation;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderTypeRepository;
 import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
@@ -65,7 +64,7 @@ public class AccessoryServiceTest {
     public void testOperateAccessoryWithMacro() {
         final List<AccessoryDecoder> accessories = new ArrayList<AccessoryDecoder>();
         final AccessoryDecoder accessoryDecoder = getAccessoryDecoder();
-        accessoryDecoder.setMacro(new Macro());
+        accessoryDecoder.setMacroId(1);
         accessories.add(accessoryDecoder);
         when(accessoryDecoderRepository.findAccessoryDecodersByAddress(anyInt()))
                 .thenReturn(accessories);

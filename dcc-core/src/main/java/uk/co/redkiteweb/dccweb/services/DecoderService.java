@@ -9,8 +9,8 @@ import uk.co.redkiteweb.dccweb.data.model.LinkedMacro;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderFunctionRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DecoderRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.LinkedMacroRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.Collection;
 
@@ -83,13 +83,13 @@ public class DecoderService {
 
     public Decoder linkMacro(final LinkedMacro linkedMacro) {
         linkedMacroRepository.save(linkedMacro);
-        logStore.log("info", String.format("Macro %s linked.", linkedMacro.getMacro().getName()));
+        logStore.log("info", String.format("Macro %d linked.", linkedMacro.getMacroId()));
         return decoderRepository.findOne(linkedMacro.getDecoderId());
     }
 
     public Decoder unlinkMacro(final LinkedMacro linkedMacro) {
         linkedMacroRepository.delete(linkedMacro);
-        logStore.log("info", String.format("Macro %s unlinked.", linkedMacro.getMacro().getName()));
+        logStore.log("info", String.format("Macro %d unlinked.", linkedMacro.getMacroId()));
         return decoderRepository.findOne(linkedMacro.getDecoderId());
     }
 

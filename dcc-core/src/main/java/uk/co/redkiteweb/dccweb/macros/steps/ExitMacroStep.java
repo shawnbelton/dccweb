@@ -3,14 +3,15 @@ package uk.co.redkiteweb.dccweb.macros.steps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.macros.IStep;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 /**
  * Created by shawn on 05/05/17.
  */
 @Component("exitMacro")
 @Scope("prototype")
-public class ExitMacroStep extends AbstractMacroStep {
+public class ExitMacroStep extends AbstractMacroStep implements IStep {
 
     private LogStore logStore;
 

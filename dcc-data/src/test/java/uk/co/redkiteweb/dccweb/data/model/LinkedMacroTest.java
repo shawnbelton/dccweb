@@ -21,7 +21,7 @@ public class LinkedMacroTest {
         linkedMacro = new LinkedMacro();
         linkedMacro.setDecoderId(1);
         linkedMacro.setLinkedMacroId(1);
-        linkedMacro.setMacro(new Macro());
+        linkedMacro.setMacroId(1);
     }
 
     @Test
@@ -35,7 +35,7 @@ public class LinkedMacroTest {
     }
 
     @Test
-    public void testLinkedMacro() {
-        assertNotNull(linkedMacro.getMacro());
+    public void testLinkedMacroId() {
+        assertNotNull(linkedMacro.getMacroId());
     }
 }

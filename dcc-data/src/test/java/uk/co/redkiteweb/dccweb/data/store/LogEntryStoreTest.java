@@ -15,11 +15,11 @@ import static org.mockito.Mockito.mock;
 @RunWith(JUnit4.class)
 public class LogEntryStoreTest {
 
-    private LogStore logStore;
+    private LogStoreImpl logStore;
 
     @Before
     public void setup() {
-        logStore = new LogStore();
+        logStore = new LogStoreImpl();
         logStore.setMessagingTemplate(mock(SimpMessagingTemplate.class));
     }
 

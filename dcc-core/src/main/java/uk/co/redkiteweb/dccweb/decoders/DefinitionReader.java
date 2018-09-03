@@ -7,10 +7,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.*;
 

@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Block;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.events.BlockUpdateEvent;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.List;
 

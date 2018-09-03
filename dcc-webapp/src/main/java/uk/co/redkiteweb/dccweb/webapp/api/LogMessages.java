@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.redkiteweb.dccweb.data.data.LogEntry;
+import uk.co.redkiteweb.dccweb.data.LogEntry;
 import uk.co.redkiteweb.dccweb.data.store.LogStore;
 
 import java.util.List;

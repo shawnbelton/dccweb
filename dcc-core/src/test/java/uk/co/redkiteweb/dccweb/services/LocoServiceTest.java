@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Loco;
 import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.List;

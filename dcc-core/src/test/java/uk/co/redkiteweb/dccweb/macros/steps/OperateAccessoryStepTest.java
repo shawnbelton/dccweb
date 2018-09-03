@@ -6,8 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
 import static org.mockito.Matchers.anyInt;
@@ -22,13 +22,13 @@ public class OperateAccessoryStepTest {
     private OperateAccessoryStep operateAccessoryStep;
     private AccessoryService accessoryService;
     private AccessoryDecoderRepository accessoryDecoderRepository;
-    private MacroStep macroStep;
+    private MacroStepItem macroStep;
 
     @Before
     public void setup() {
         accessoryService = mock(AccessoryService.class);
         accessoryDecoderRepository = mock(AccessoryDecoderRepository.class);
-        macroStep = mock(MacroStep.class);
+        macroStep = mock(MacroStepItem.class);
         operateAccessoryStep = new OperateAccessoryStep();
         operateAccessoryStep.setAccessoryService(accessoryService);
         operateAccessoryStep.setAccessoryDecoderRepository(accessoryDecoderRepository);

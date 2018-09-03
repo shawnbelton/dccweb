@@ -12,7 +12,7 @@ public class LinkedMacro implements Serializable {
 
     private Integer linkedMacroId;
     private Integer decoderId;
-    private Macro macro;
+    private Integer macroId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,12 +33,11 @@ public class LinkedMacro implements Serializable {
         this.decoderId = decoderId;
     }
 
-    @ManyToOne
-    public Macro getMacro() {
-        return macro;
+    public Integer getMacroId() {
+        return macroId;
     }
 
-    public void setMacro(Macro macro) {
-        this.macro = macro;
+    public void setMacroId(final Integer macroId) {
+        this.macroId = macroId;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.AccessoryOperation;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
 import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
-import uk.co.redkiteweb.dccweb.macros.factory.IStep;
+import uk.co.redkiteweb.dccweb.macros.IStep;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
 /**

@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.AccessoryDecoder;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +19,7 @@ public class AccessoryUpdateEventTest {
     @Before
     public void setup() {
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
-        when(accessoryDecoder.getMacro()).thenReturn(mock(Macro.class));
+        when(accessoryDecoder.getMacroId()).thenReturn(1);
         event = new AccessoryUpdateEvent(accessoryDecoder);
     }
 
@@ -31,7 +30,7 @@ public class AccessoryUpdateEventTest {
 
     @Test
     public void testMacro() {
-        assertNotNull(event.getMacro());
+        assertNotNull(event.getMacroId());
     }
 
     @Test

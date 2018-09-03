@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -18,13 +18,13 @@ import static org.mockito.Mockito.when;
 public class ThenGoToStepTest {
 
     private ThenGoToStep thenGoToStep;
-    private MacroStep macroStep;
+    private MacroStepItem macroStep;
     private MacroContext macroContext;
 
     @Before
     public void setup() {
-        macroContext = new MacroContext();
-        macroStep = mock(MacroStep.class);
+        macroContext = mock(MacroContext.class);
+        macroStep = mock(MacroStepItem.class);
         thenGoToStep = new ThenGoToStep();
         thenGoToStep.setMacroStep(macroStep);
         thenGoToStep.setMacroContext(macroContext);
@@ -34,7 +34,7 @@ public class ThenGoToStepTest {
     public void testTrueGoto() {
         when(macroStep.getNumber()).thenReturn(1);
         when(macroStep.getValue()).thenReturn(10);
-        macroContext.setState(true);
+        when(macroContext.isState()).thenReturn(true);
         assertEquals(new Integer(10), thenGoToStep.runStep());
     }
 
@@ -42,7 +42,7 @@ public class ThenGoToStepTest {
     public void testFalseDoNotGoto() {
         when(macroStep.getNumber()).thenReturn(1);
         when(macroStep.getValue()).thenReturn(10);
-        macroContext.setState(false);
+        when(macroContext.isState()).thenReturn(false);
         assertEquals(new Integer(2), thenGoToStep.runStep());
     }
 

@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 import uk.co.redkiteweb.dccweb.macros.steps.SetRelayStep;
 
 import static org.mockito.Matchers.anyInt;
@@ -18,13 +18,13 @@ import static org.mockito.Mockito.*;
 public class SetRelayStepTest {
 
     private SetRelayStep setRelayStep;
-    private MacroStep macroStep;
+    private MacroStepItem macroStep;
     private RelayControllerService relayControllerService;
 
     @Before
     public void setup() {
         relayControllerService = mock(RelayControllerService.class);
-        macroStep = mock(MacroStep.class);
+        macroStep = mock(MacroStepItem.class);
         setRelayStep = new SetRelayStep();
         setRelayStep.setMacroStep(macroStep);
         setRelayStep.setRelayControllerService(relayControllerService);

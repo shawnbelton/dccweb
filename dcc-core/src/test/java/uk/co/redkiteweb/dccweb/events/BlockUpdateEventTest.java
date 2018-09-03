@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Block;
-import uk.co.redkiteweb.dccweb.data.model.Macro;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +19,7 @@ public class BlockUpdateEventTest {
     @Before
     public void setup() {
         final Block block = mock(Block.class);
-        when(block.getMacro()).thenReturn(mock(Macro.class));
+        when(block.getMacroId()).thenReturn(1);
         event = new BlockUpdateEvent(block);
     }
 
@@ -31,7 +30,7 @@ public class BlockUpdateEventTest {
 
     @Test
     public void testMacro() {
-        assertNotNull(event.getMacro());
+        assertNotNull(event.getMacroId());
     }
 
     @Test

@@ -15,7 +15,7 @@ public class AccessoryDecoder implements Serializable {
     private Integer address;
     private String name;
     private Integer currentValue;
-    private Macro macro;
+    private Integer macroId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -60,13 +60,11 @@ public class AccessoryDecoder implements Serializable {
         this.currentValue = currentValue;
     }
 
-    @ManyToOne
-    public Macro getMacro() {
-        return macro;
+    public Integer getMacroId() {
+        return macroId;
     }
 
-    public void setMacro(Macro macro) {
-        this.macro = macro;
+    public void setMacroId(final Integer macroId) {
+        this.macroId = macroId;
     }
-
 }

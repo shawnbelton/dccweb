@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.model.MacroStep;
+import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -16,11 +16,11 @@ import static org.mockito.Mockito.when;
 public class WaitTest {
 
     private Wait wait;
-    private MacroStep step;
+    private MacroStepItem step;
 
     @Before
     public void setup() {
-        step = mock(MacroStep.class);
+        step = mock(MacroStepItem.class);
         wait = new Wait();
         wait.setMacroStep(step);
     }
