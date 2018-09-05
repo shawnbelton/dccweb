@@ -95,7 +95,7 @@
       <div class="list-group" *ngIf="isMacrosTab()">
         <div class="list-group-item" *ngFor="let linkedMacro of currentDecoder.linkedMacros">
           <div>
-            <span>{{linkedMacro.macro.name}}</span>
+            <span>{{getMacroName(linkedMacro.macroId)}}</span>
             <div class="float-right">
               <input type="button" class="btn btn-danger btn-sm"
                      (click)="unlinkMacro(linkedMacro)" value="Unlink"/>

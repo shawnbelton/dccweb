@@ -4,7 +4,6 @@
 import {Component, Input} from "@angular/core";
 import {Block} from "../models/block";
 import {BlockService} from "../services/block.service";
-import {Macro} from "../models/macro";
 
 @Component({
   moduleId: module.id,
@@ -24,9 +23,6 @@ export class BlockItem {
   }
 
   startBlockEdit(): void {
-    if (this.block.macro == null) {
-      this.block.macro = new Macro();
-    }
     this.blockService.setBlock(this.block);
   }
 

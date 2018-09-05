@@ -35,7 +35,7 @@
                 <div class="mr-auto">
                     <ul class="list-inline">
                         <li *ngFor="let linkedMacro of cab.loco.decoder.linkedMacros" class="list-inline-item">
-                            <input type="button" (click)="runMacro(linkedMacro.macro)" class="btn btn-sm btn-default" value="{{linkedMacro.macro.name}}"/>
+                            <input type="button" (click)="runMacro(linkedMacro.macroId)" class="btn btn-sm btn-default" value="{{getMacroName(linkedMacro.macroId)}}"/>
                         </li>
                     </ul>
                 </div>

@@ -34,7 +34,7 @@
             <label for="blockMacro" class="col-sm-4 col-form-label">Block Macro</label>
             <div class="col-sm-8">
               <select name="blockMacro" id="blockMacro" ngControl="blockMacro" class="form-control"
-                      #blockMacro="ngModel" [(ngModel)]="block.macro.macroId">
+                      #blockMacro="ngModel" [(ngModel)]="block.macroId">
                 <option [value]=""></option>
                 <option *ngFor="let macro of macros"
                         [value]="macro.macroId">{{macro.name}}

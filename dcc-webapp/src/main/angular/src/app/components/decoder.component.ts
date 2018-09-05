@@ -107,11 +107,6 @@ export class DecoderComponent implements OnInit {
 
   linkMacro(): void {
     this.linkedMacro.decoderId = this.currentDecoder.decoderId;
-    for (let macro of this.macros) {
-      if (macro.macroId == this.linkedMacro.macroId) {
-        this.linkedMacro.macro = macro;
-      }
-    }
     this.decoderService.linkMacro(this.linkedMacro);
   }
 
@@ -121,6 +116,10 @@ export class DecoderComponent implements OnInit {
 
   unlinkMacro(linkedMacro: LinkedMacro): void {
     this.decoderService.unlinkMacro(linkedMacro);
+  }
+
+  getMacroName(macroId: number): string {
+    return this.macroService.getMacroName(macroId);
   }
 
   private setCurrentDecoder(decoder: Decoder): void {
