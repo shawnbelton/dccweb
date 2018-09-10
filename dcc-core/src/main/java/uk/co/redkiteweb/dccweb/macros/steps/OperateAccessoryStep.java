@@ -31,10 +31,10 @@ public class OperateAccessoryStep extends AbstractMacroStep implements IStep {
 
     @Override
     public void run() {
-        final AccessoryDecoder accessoryDecoder = accessoryDecoderRepository.findOne(getTargetId());
+        final AccessoryDecoder accessoryDecoder = accessoryDecoderRepository.findOne(getMacroStep().getTargetId());
         final AccessoryOperation accessoryOperation = new AccessoryOperation();
         accessoryOperation.setAccessoryAddress(accessoryDecoder.getAddress());
-        accessoryOperation.setOperationValue(getValue());
+        accessoryOperation.setOperationValue(getMacroStep().getValue());
         accessoryService.operateServiceAsyc(accessoryOperation);
     }
 

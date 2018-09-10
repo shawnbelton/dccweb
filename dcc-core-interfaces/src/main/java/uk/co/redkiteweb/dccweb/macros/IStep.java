@@ -6,6 +6,7 @@ package uk.co.redkiteweb.dccweb.macros;
  */
 public interface IStep {
     void setMacroContext(final MacroContext macroContext);
+    MacroContext getMacroContext();
     void setMacroStep(final MacroStepItem macroStep);
     Integer runStep();
     void run();

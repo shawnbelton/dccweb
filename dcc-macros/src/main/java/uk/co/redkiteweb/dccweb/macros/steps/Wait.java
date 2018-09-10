@@ -20,7 +20,7 @@ public class Wait extends AbstractMacroStep implements IStep {
     @Override
     public void run() {
         try {
-            TimeUnit.MILLISECONDS.sleep(Math.round(this.delay() * 1000));
+            TimeUnit.MILLISECONDS.sleep(Math.round(this.getMacroStep().getDelay() * 1000));
         } catch (InterruptedException exception) {
             LOGGER.info("Wait has been interrupted.");
             Thread.currentThread().interrupt();

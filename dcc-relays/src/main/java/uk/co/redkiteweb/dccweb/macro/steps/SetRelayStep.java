@@ -22,10 +22,10 @@ public class SetRelayStep extends AbstractMacroStep implements IStep {
 
     @Override
     public void run() {
-        if (getValue() == 0) {
-            relayControllerService.unsetRelay(getBlockId(), getFunctionNumber());
+        if (getMacroStep().getValue() == 0) {
+            relayControllerService.unsetRelay(getMacroStep().getBlockId(), getMacroStep().getFunctionNumber());
         } else {
-            relayControllerService.setRelay(getBlockId(), getFunctionNumber());
+            relayControllerService.setRelay(getMacroStep().getBlockId(), getMacroStep().getFunctionNumber());
         }
     }
 }

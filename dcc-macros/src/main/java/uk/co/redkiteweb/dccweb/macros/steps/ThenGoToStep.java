@@ -21,7 +21,7 @@ public class ThenGoToStep extends AbstractMacroStep implements IStep {
     final Integer getNextStepNumber() {
         Integer nextStep;
         if (getMacroContext().isState()) {
-            nextStep = getValue();
+            nextStep = getMacroStep().getValue();
         } else {
             nextStep = super.getNextStepNumber();
         }

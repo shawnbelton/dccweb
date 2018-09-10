@@ -26,6 +26,10 @@
             <artifactId>decoder-definitions</artifactId>
         </dependency>
         <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-core-interfaces</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
@@ -58,10 +62,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>uk.co.redkiteweb.dccweb</groupId>
-            <artifactId>dcc-core-interfaces</artifactId>
-        </dependency>
+
     </dependencies>
 
 </project>
