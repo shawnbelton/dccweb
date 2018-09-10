@@ -31,7 +31,7 @@ public class LogEntryMessagesTest {
 
     @Test
     public void testGetMessages() {
-        when(logStore.getLastSix()).thenReturn(new ArrayList<LogEntry>());
+        when(logStore.getLastSix()).thenReturn(new ArrayList<>());
         assertNotNull(logMessages.getMessages());
     }
 }

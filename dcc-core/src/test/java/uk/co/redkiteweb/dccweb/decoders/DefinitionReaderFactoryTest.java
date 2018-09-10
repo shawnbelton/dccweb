@@ -16,12 +16,11 @@ import static org.mockito.Mockito.*;
 public class DefinitionReaderFactoryTest {
 
     private DefinitionReaderFactory definitionReaderFactory;
-    private ApplicationContext context;
     private DefinitionReader definitionReader;
 
     @Before
     public void setup() {
-        context = mock(ApplicationContext.class);
+        final ApplicationContext context = mock(ApplicationContext.class);
         definitionReaderFactory = new DefinitionReaderFactory();
         definitionReaderFactory.setApplicationContext(context);
         definitionReader = mock(DefinitionReader.class);

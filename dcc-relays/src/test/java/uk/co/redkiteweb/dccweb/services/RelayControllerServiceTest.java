@@ -13,8 +13,6 @@ import uk.co.redkiteweb.dccweb.store.LogStore;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -36,7 +34,7 @@ public class RelayControllerServiceTest {
         relayControllerService.setRelayControllerRepository(relayControllerRepository);
         relayControllerService.setLogStore(logStore);
         relayControllerService.setEventBus(eventBus);
-        when(relayControllerRepository.findAll()).thenReturn(new ArrayList<RelayController>());
+        when(relayControllerRepository.findAll()).thenReturn(new ArrayList<>());
     }
 
     @Test

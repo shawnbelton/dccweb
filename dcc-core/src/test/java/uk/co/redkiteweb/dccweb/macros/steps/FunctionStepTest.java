@@ -43,7 +43,7 @@ public class FunctionStepTest {
         when(step.getFunctionNumber()).thenReturn(1);
         when(step.getFunctionStatus()).thenReturn("true");
         final Cab cab = new Cab();
-        cab.setCabFunctions(new TreeSet<CabFunction>(new CabFunctionComparator()));
+        cab.setCabFunctions(new TreeSet<>(new CabFunctionComparator()));
         final CabFunction cabFunction = new CabFunction();
         cabFunction.setNumber(1);
         cab.getCabFunctions().add(cabFunction);

@@ -152,7 +152,7 @@ public class DecoderHandlerTest {
     }
 
     private void readDecoderOK() throws DefinitionException {
-        final Map<Integer, Integer> cachedCvs = new HashMap<Integer, Integer>();
+        final Map<Integer, Integer> cachedCvs = new HashMap<>();
         cachedCvs.put(1,2);
         final MessageResponse messageResponse = mockMessageResponse();
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);

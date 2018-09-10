@@ -8,7 +8,6 @@ import org.junit.runners.JUnit4;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.events.SendEvent;
 
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)

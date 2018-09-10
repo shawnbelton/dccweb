@@ -13,9 +13,6 @@ import uk.co.redkiteweb.dccweb.store.LogStore;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
@@ -70,7 +67,7 @@ public class BlockServiceTest {
 
     @Test
     public void getAllBlocks() {
-        when(blockRepository.findAll()).thenReturn(new ArrayList<Block>());
+        when(blockRepository.findAll()).thenReturn(new ArrayList<>());
         assertNotNull(blockService.getAllBlocks());
     }
 
@@ -78,7 +75,7 @@ public class BlockServiceTest {
     public void saveBlock() {
         final Block block = new Block();
         block.setBlockId("ident");
-        when(blockRepository.findAll()).thenReturn(new ArrayList<Block>());
+        when(blockRepository.findAll()).thenReturn(new ArrayList<>());
         blockService.saveBlock(block);
         verify(blockRepository, times(1)).save(any(Block.class));
     }
@@ -87,7 +84,7 @@ public class BlockServiceTest {
     public void deleteBlock() {
         final Block block = new Block();
         block.setBlockId("ident");
-        when(blockRepository.findAll()).thenReturn(new ArrayList<Block>());
+        when(blockRepository.findAll()).thenReturn(new ArrayList<>());
         blockService.deleteBlock(block);
         verify(blockRepository, times(1)).delete(any(Block.class));
     }

@@ -27,7 +27,7 @@ public class CabTest {
         cab.setDirection("UP");
         cab.setSteps("128");
         cab.setLoco(loco);
-        cab.setCabFunctions(new TreeSet<CabFunction>());
+        cab.setCabFunctions(new TreeSet<>());
     }
 
     @Test

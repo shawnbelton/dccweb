@@ -38,7 +38,7 @@ public class DccInterfaceTest {
         dccInterface.setDccInterfaceStatus(dccInterfaceStatus);
         dccInterface.setMessageProcessorFactory(messageProcessorFactory);
         dccInterface.setLogStore(logStore);
-        final List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>();
+        final List<MessageProcessor> messageProcessors = new ArrayList<>();
         messageProcessors.add(messageProcessor);
         when(messageProcessorFactory.getAllInterfaces()).thenReturn(messageProcessors);
         when(messageProcessorFactory.getInstance()).thenReturn(messageProcessor);

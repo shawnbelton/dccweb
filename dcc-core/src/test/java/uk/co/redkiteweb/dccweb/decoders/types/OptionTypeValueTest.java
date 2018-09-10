@@ -20,11 +20,10 @@ import static org.mockito.Mockito.when;
 public class OptionTypeValueTest {
 
     private OptionValueType optionValueType;
-    private CVHandler cvHandler;
 
     @Before
     public void setup() {
-        cvHandler = mock(CVHandler.class);
+        final CVHandler cvHandler = mock(CVHandler.class);
         when(cvHandler.readCV(anyInt())).thenReturn(1);
         final Node valueNode = createValueNode();
         optionValueType = new OptionValueType();

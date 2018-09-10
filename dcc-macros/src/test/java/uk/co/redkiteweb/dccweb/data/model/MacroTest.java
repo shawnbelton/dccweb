@@ -23,7 +23,7 @@ public class MacroTest {
         macro = new Macro();
         macro.setMacroId(1);
         macro.setName("Test");
-        macro.setSteps(new ArrayList<MacroStep>());
+        macro.setSteps(new ArrayList<>());
     }
 
     @Test

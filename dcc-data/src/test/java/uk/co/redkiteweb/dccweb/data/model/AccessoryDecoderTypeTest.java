@@ -24,7 +24,7 @@ public class AccessoryDecoderTypeTest {
         accessoryDecoderType.setDecoderTypeId(1);
         accessoryDecoderType.setDecoderType("Signal");
         accessoryDecoderType.setDecoderTypeCode("SIGNAL");
-        accessoryDecoderType.setDecoderTypeOperations(new ArrayList<AccessoryDecoderTypeOperation>());
+        accessoryDecoderType.setDecoderTypeOperations(new ArrayList<>());
     }
 
     @Test

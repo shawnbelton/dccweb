@@ -9,7 +9,6 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
-import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.*;
 
 /**

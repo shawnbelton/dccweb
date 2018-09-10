@@ -63,19 +63,19 @@ public class DecoderTest {
 
     @Test
     public void cvTest() {
-        decoder.setCvs(new ArrayList<CV>());
+        decoder.setCvs(new ArrayList<>());
         assertNotNull(decoder.getCvs());
     }
 
     @Test
     public void decoderFunctionTest() {
-        decoder.setDecoderFunctions(new ArrayList<DecoderFunction>());
+        decoder.setDecoderFunctions(new ArrayList<>());
         assertNotNull(decoder.getDecoderFunctions());
     }
 
     @Test
     public void linkedMacrosTest() {
-        decoder.setLinkedMacros(new ArrayList<LinkedMacro>());
+        decoder.setLinkedMacros(new ArrayList<>());
         assertNotNull(decoder.getLinkedMacros());
     }
 

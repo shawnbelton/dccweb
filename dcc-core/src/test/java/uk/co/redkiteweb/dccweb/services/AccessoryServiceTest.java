@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
@@ -49,7 +48,7 @@ public class AccessoryServiceTest {
 
     @Test
     public void testOperateAccessory() {
-        final List<AccessoryDecoder> accessories = new ArrayList<AccessoryDecoder>();
+        final List<AccessoryDecoder> accessories = new ArrayList<>();
         accessories.add(getAccessoryDecoder());
         when(accessoryDecoderRepository.findAccessoryDecodersByAddress(anyInt()))
                 .thenReturn(accessories);
@@ -62,7 +61,7 @@ public class AccessoryServiceTest {
 
     @Test
     public void testOperateAccessoryWithMacro() {
-        final List<AccessoryDecoder> accessories = new ArrayList<AccessoryDecoder>();
+        final List<AccessoryDecoder> accessories = new ArrayList<>();
         final AccessoryDecoder accessoryDecoder = getAccessoryDecoder();
         accessoryDecoder.setMacroId(1);
         accessories.add(accessoryDecoder);
@@ -96,7 +95,7 @@ public class AccessoryServiceTest {
         final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
         when(accessoryDecoder.getAccessoryDecoderType()).thenReturn(accessoryDecoderType);
         final AccessoryDecoderTypeOperation accessoryDecoderTypeOperation = mock(AccessoryDecoderTypeOperation.class);
-        final List<AccessoryDecoderTypeOperation> operations = new ArrayList<AccessoryDecoderTypeOperation>();
+        final List<AccessoryDecoderTypeOperation> operations = new ArrayList<>();
         operations.add(accessoryDecoderTypeOperation);
         when(accessoryDecoderType.getDecoderTypeOperations()).thenReturn(operations);
         when(accessoryDecoderType.getDecoderTypeId()).thenReturn(1);

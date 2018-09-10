@@ -19,12 +19,11 @@ public class LocoServiceTest {
 
     private LocoService locoService;
     private LocoRepository locoRepository;
-    private LogStore logStore;
 
     @Before
     public void setup() {
         locoRepository = mock(LocoRepository.class);
-        logStore = mock(LogStore.class);
+        final LogStore logStore = mock(LogStore.class);
         locoService = new LocoService();
         locoService.setLocoRepository(locoRepository);
         locoService.setLogStore(logStore);
@@ -38,7 +37,7 @@ public class LocoServiceTest {
 
     @Test
     public void getAllLocos() {
-        final List<Loco> locoList = new ArrayList<Loco>();
+        final List<Loco> locoList = new ArrayList<>();
         when(locoRepository.findAll()).thenReturn(locoList);
         assertNotNull(locoService.getAllLocos());
     }

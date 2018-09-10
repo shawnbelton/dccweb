@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by shawn on 08/11/16.
@@ -30,7 +31,7 @@ public class UpdateFunctionsMessageTest {
 
     @Test
     public void testAddressMode() {
-        assertEquals(false, updateFunctionsMessage.isAddressMode());
+        assertFalse(updateFunctionsMessage.isAddressMode());
     }
 
     @Test

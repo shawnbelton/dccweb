@@ -138,7 +138,7 @@ public class CabServiceTest {
         cab.setSpeed(127);
         cab.setSteps("128");
         cab.setLoco(loco);
-        final Set<CabFunction> cabFunctions = new TreeSet<CabFunction>(new CabFunctionComparator());
+        final Set<CabFunction> cabFunctions = new TreeSet<>(new CabFunctionComparator());
         final CabFunction cabFunction = new CabFunction();
         cabFunction.setNumber(1);
         cabFunction.setState(true);

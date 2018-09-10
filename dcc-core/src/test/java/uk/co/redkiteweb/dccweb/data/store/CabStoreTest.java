@@ -65,7 +65,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderNoFunctions() {
         final Decoder decoder = new Decoder();
-        when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(new ArrayList<DecoderFunction>());
+        when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(new ArrayList<>());
         loco.setDecoder(decoder);
         assertEquals(0, cabStore.getCab(loco).getCabFunctions().size());
     }
@@ -73,7 +73,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderOneFunction() {
         final Decoder decoder = new Decoder();
-        final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
+        final List<DecoderFunction> decoderFunctions = new ArrayList<>();
         decoderFunctions.add(getDecoderFunction(1, "Name"));
         when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);
         loco.setDecoder(decoder);
@@ -83,7 +83,7 @@ public class CabStoreTest {
     @Test
     public void testDecoderFunctionAdded() {
         final Decoder decoder = new Decoder();
-        final List<DecoderFunction> decoderFunctions = new ArrayList<DecoderFunction>();
+        final List<DecoderFunction> decoderFunctions = new ArrayList<>();
         decoderFunctions.add(getDecoderFunction(1, "Name"));
         when(decoderFunctionRepository.findAllByDecoderId(anyInt())).thenReturn(decoderFunctions);
         loco.setDecoder(decoder);
