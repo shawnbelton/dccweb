@@ -59,6 +59,7 @@ demo-interface/demo-interface.iml
 random-mac/random-mac.iml
 dummy-relay/dummy-relay.iml
 **/target
+**/*.iml
 
 # Gradle:
 .idea/gradle.xml

@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uk.co.redkiteweb.dccweb.events.RelayUpdateEvent;
@@ -46,7 +47,7 @@ public class AsyncWebServiceTest {
     public void testWebCallFail() {
         final RelayUpdateEvent event = mock(RelayUpdateEvent.class);
         when(event.getUpdateUrl()).thenReturn("URL");
-        doThrow(mock(HttpClientErrorException.class)).when(restTemplate).put(anyString(), eq(null));
+        Mockito.doThrow(mock(HttpClientErrorException.class)).when(restTemplate).put(anyString(), eq(null));
         asyncWebService.relayUpdateListener(event);
         verify(logStore, times(1)).log(eq("ERROR"), anyString());
     }
