@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.macros.steps;
+package uk.co.redkiteweb.dccweb.macro.steps;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;

@@ -192,6 +192,10 @@
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-relays</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
             <artifactId>demo-interface</artifactId>
             <scope>runtime</scope>
         </dependency>

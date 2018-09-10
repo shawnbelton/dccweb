@@ -1,11 +1,10 @@
-package uk.co.redkiteweb.dccweb.services;
+package uk.co.redkiteweb.dccweb.macro.steps;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
-import uk.co.redkiteweb.dccweb.macros.steps.SetRelayStep;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;

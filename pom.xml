@@ -47,6 +47,7 @@
         <module>dcc-interface</module>
         <module>nce-interface</module>
         <module>demo-interface</module>
+        <module>dcc-relays</module>
         <module>dcc-macros</module>
         <module>dcc-webapp</module>
         <module>dummy-relay</module>
@@ -200,6 +201,11 @@
             <dependency>
                 <groupId>uk.co.redkiteweb.dccweb</groupId>
                 <artifactId>dcc-macros</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>uk.co.redkiteweb.dccweb</groupId>
+                <artifactId>dcc-relays</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
