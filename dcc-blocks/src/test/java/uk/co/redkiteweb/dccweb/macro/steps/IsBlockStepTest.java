@@ -9,6 +9,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -28,7 +30,7 @@ public class IsBlockStepTest {
         block = mock(Block.class);
         macroContext = mock(MacroContext.class);
         macroStep = mock(MacroStepItem.class);
-        when(blockRepository.findOne(anyString())).thenReturn(block);
+        when(blockRepository.findById(anyString())).thenReturn(Optional.of(block));
         isBlockStep = new IsBlockStep();
         isBlockStep.setBlockRepository(blockRepository);
         isBlockStep.setMacroContext(macroContext);

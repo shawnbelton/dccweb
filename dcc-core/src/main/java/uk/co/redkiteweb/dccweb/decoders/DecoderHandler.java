@@ -225,7 +225,7 @@ public class DecoderHandler {
 
     private Decoder readDecoderNoSave(final DefinitionReader definitionReader) throws DefinitionException {
         final Decoder decoder = new Decoder();
-        decoder.setDccManufacturer(dccManufacturerRepository.findOne(definitionReader.readValue(MANUFACTURER)));
+        decoder.setDccManufacturer(dccManufacturerRepository.findById(definitionReader.readValue(MANUFACTURER)).orElse(null));
         decoder.setVersion(definitionReader.readValue(REVISION));
         readBaseDecoderValues(definitionReader, decoder);
         copyExistingDecoder(decoder);
@@ -268,6 +268,6 @@ public class DecoderHandler {
             cvRepository.save(cv);
         }
         messagingTemplate.convertAndSend("/decoder", decoder);
-        return decoderRepository.findOne(decoder.getDecoderId());
+        return decoderRepository.findById(decoder.getDecoderId()).orElse(null);
     }
 }

@@ -46,7 +46,7 @@ public class BlockService {
     }
 
     public void updateBlock(final String blockId, final Boolean occupied) {
-        Block block = blockRepository.findOne(blockId);
+        Block block = blockRepository.findById(blockId).orElse(null);
         if (null == block) {
             block = new Block();
             block.setBlockId(blockId);

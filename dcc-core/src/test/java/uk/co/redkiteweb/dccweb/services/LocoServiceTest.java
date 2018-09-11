@@ -10,6 +10,7 @@ import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -44,7 +45,7 @@ public class LocoServiceTest {
 
     @Test
     public void getById() {
-        when(locoRepository.findOne(anyInt())).thenReturn(new Loco());
+        when(locoRepository.findById(anyInt())).thenReturn(Optional.of(new Loco()));
         assertNotNull(locoService.getById(1));
     }
 

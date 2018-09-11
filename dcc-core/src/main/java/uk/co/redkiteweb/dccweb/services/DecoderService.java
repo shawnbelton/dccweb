@@ -66,31 +66,31 @@ public class DecoderService {
     }
 
     public Decoder getById(final Integer decoderId) {
-        return decoderRepository.findOne(decoderId);
+        return decoderRepository.findById(decoderId).orElse(null);
     }
 
     public Decoder addFunction(final DecoderFunction decoderFunction) {
         decoderFunctionRepository.save(decoderFunction);
         logStore.log("info", String.format("Decoder function %s with number %d added.", decoderFunction.getName(), decoderFunction.getNumber()));
-        return decoderRepository.findOne(decoderFunction.getDecoderId());
+        return getById(decoderFunction.getDecoderId());
     }
 
     public Decoder deleteFunction(final DecoderFunction decoderFunction) {
         decoderFunctionRepository.delete(decoderFunction);
         logStore.log("info", String.format("Decoder function %s with number %d removed.", decoderFunction.getName(), decoderFunction.getNumber()));
-        return decoderRepository.findOne(decoderFunction.getDecoderId());
+        return getById(decoderFunction.getDecoderId());
     }
 
     public Decoder linkMacro(final LinkedMacro linkedMacro) {
         linkedMacroRepository.save(linkedMacro);
         logStore.log("info", String.format("Macro %d linked.", linkedMacro.getMacroId()));
-        return decoderRepository.findOne(linkedMacro.getDecoderId());
+        return getById(linkedMacro.getDecoderId());
     }
 
     public Decoder unlinkMacro(final LinkedMacro linkedMacro) {
         linkedMacroRepository.delete(linkedMacro);
         logStore.log("info", String.format("Macro %d unlinked.", linkedMacro.getMacroId()));
-        return decoderRepository.findOne(linkedMacro.getDecoderId());
+        return getById(linkedMacro.getDecoderId());
     }
 
 }

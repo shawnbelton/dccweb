@@ -188,15 +188,19 @@
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-accessory</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-blocks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
             <artifactId>dcc-macros</artifactId>
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>
             <artifactId>dcc-relays</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>uk.co.redkiteweb.dccweb</groupId>
-            <artifactId>dcc-blocks</artifactId>
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>

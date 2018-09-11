@@ -42,11 +42,11 @@ public class CabStore {
     }
 
     public Cab getCab(final Integer locoId) {
-        return getCab(locoRepository.findOne(locoId));
+        return getCab(locoRepository.findById(locoId).orElse(null));
     }
 
     public Cab getCab(final Loco loco) {
-        final Loco reloadLoco = locoRepository.findOne(loco.getLocoId());
+        final Loco reloadLoco = locoRepository.findById(loco.getLocoId()).orElse(null);
         Cab cab = new Cab();
         if (cabStoreMap.containsKey(loco.getLocoId())) {
             cab = cabStoreMap.get(loco.getLocoId());

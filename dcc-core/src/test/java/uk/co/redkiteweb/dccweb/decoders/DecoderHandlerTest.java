@@ -7,6 +7,7 @@ import org.junit.runners.JUnit4;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.model.CV;
+import uk.co.redkiteweb.dccweb.data.model.DccManufacturer;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
 import uk.co.redkiteweb.dccweb.data.repositories.CVRepository;
 import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
@@ -17,10 +18,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
 import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.store.LogStore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertFalse;
@@ -63,6 +61,7 @@ public class DecoderHandlerTest {
         decoderHandler.setCvHandler(cvHandler);
         decoderHandler.setMessagingTemplate(messagingTemplate);
         when(definitionReaderFactory.getInstance(any(CVHandler.class))).thenReturn(definitionReader);
+        when(dccManufacturerRepository.findById(anyInt())).thenReturn(Optional.of(mock(DccManufacturer.class)));
     }
 
     @Test
@@ -109,7 +108,7 @@ public class DecoderHandlerTest {
     public void readFullOKTest() throws DefinitionException {
         final MessageResponse messageResponse = mockMessageResponse();
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponse);
-        when(decoderRepository.findOne(anyInt())).thenReturn(mock(Decoder.class));
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(mock(Decoder.class)));
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(mock(DecoderSetting.class));
         when(definitionReader.readAllValues()).thenReturn(decoderSettings);
@@ -160,7 +159,7 @@ public class DecoderHandlerTest {
         when(definitionReader.readValue(eq("Short Address"))).thenReturn(1);
         when(definitionReader.readValue(eq("Long Address"))).thenReturn(192);
         when(cvHandler.getCVCache()).thenReturn(cachedCvs);
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
@@ -170,7 +169,7 @@ public class DecoderHandlerTest {
         final MessageResponse messageResponseError = mock(MessageResponse.class);
         when(messageResponseError.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(dccInterface.sendMessage(any(Message.class))).thenReturn(messageResponseOK).thenReturn(messageResponseError);
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderHandler.readDecoderOnProgram());
     }
 
@@ -219,7 +218,7 @@ public class DecoderHandlerTest {
         cvMap.put(10,1);
         cvMap.put(11,2);
         cvMap.put(12,4);
-        when(decoderRepository.findOne(anyInt())).thenReturn(createDecoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(createDecoder()));
         when(definitionReader.buildCVs(anyList())).thenReturn(cvMap);
         decoderHandler.writeSettingsToDecoder(decoderSettings);
         verify(cvHandler, times(1)).writeCV(any(CV.class));

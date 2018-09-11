@@ -15,6 +15,7 @@ import uk.co.redkiteweb.dccweb.decoders.DecoderHandlerFactory;
 import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -74,7 +75,7 @@ public class DecoderServiceTest {
 
     @Test
     public void getById() {
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderService.getById(1));
     }
 
@@ -84,7 +85,7 @@ public class DecoderServiceTest {
         decoderFunction.setDecoderId(1);
         decoderFunction.setNumber(1);
         decoderFunction.setName("Sound");
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderService.addFunction(decoderFunction));
         verify(decoderFunctionRepository, times(1)).save(any(DecoderFunction.class));
     }
@@ -95,7 +96,7 @@ public class DecoderServiceTest {
         decoderFunction.setDecoderId(1);
         decoderFunction.setNumber(1);
         decoderFunction.setName("Sound");
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderService.deleteFunction(decoderFunction));
         verify(decoderFunctionRepository, times(1)).delete(any(DecoderFunction.class));
     }
@@ -104,7 +105,7 @@ public class DecoderServiceTest {
     public void testLinkMacro() {
         final LinkedMacro linkedMacro = new LinkedMacro();
         linkedMacro.setMacroId(1);
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderService.linkMacro(linkedMacro));
         verify(linkedMacroRepository, times(1)).save(any(LinkedMacro.class));
     }
@@ -113,7 +114,7 @@ public class DecoderServiceTest {
     public void testUnlinkMacro() {
         final LinkedMacro linkedMacro = new LinkedMacro();
         linkedMacro.setMacroId(1);
-        when(decoderRepository.findOne(anyInt())).thenReturn(new Decoder());
+        when(decoderRepository.findById(anyInt())).thenReturn(Optional.of(new Decoder()));
         assertNotNull(decoderService.unlinkMacro(linkedMacro));
         verify(linkedMacroRepository, times(1)).delete(any(LinkedMacro.class));
     }

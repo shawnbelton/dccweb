@@ -17,6 +17,7 @@ import uk.co.redkiteweb.dccweb.events.AccessoryUpdateEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -55,6 +56,7 @@ public class AccessoryServiceTest {
         final AccessoryOperation accessoryOperation = new AccessoryOperation();
         accessoryOperation.setAccessoryAddress(123);
         accessoryOperation.setOperationValue(0);
+        when(accessoryDecoderRepository.findById(anyInt())).thenReturn(Optional.of(getAccessoryDecoder()));
         accessoryService.operateService(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
     }
@@ -70,6 +72,7 @@ public class AccessoryServiceTest {
         final AccessoryOperation accessoryOperation = new AccessoryOperation();
         accessoryOperation.setAccessoryAddress(123);
         accessoryOperation.setOperationValue(0);
+        when(accessoryDecoderRepository.findById(anyInt())).thenReturn(Optional.of(accessoryDecoder));
         accessoryService.operateServiceAsyc(accessoryOperation);
         verify(dccInterface, times(1)).sendMessage(any(OperateAccessoryMessage.class));
         verify(eventBus, times(1)).post(any(AccessoryUpdateEvent.class));
@@ -99,7 +102,7 @@ public class AccessoryServiceTest {
         operations.add(accessoryDecoderTypeOperation);
         when(accessoryDecoderType.getDecoderTypeOperations()).thenReturn(operations);
         when(accessoryDecoderType.getDecoderTypeId()).thenReturn(1);
-        when(accessoryDecoderTypeRepository.findOne(anyInt())).thenReturn(accessoryDecoderType);
+        when(accessoryDecoderTypeRepository.findById(anyInt())).thenReturn(Optional.of(accessoryDecoderType));
         assertNotNull(accessoryService.saveAccessoryDecoder(accessoryDecoder));
     }
 
@@ -111,7 +114,7 @@ public class AccessoryServiceTest {
         when(accessoryDecoder.getAccessoryDecoderType()).thenReturn(accessoryDecoderType);
         when(accessoryDecoderType.getDecoderTypeId()).thenReturn(1);
         when(accessoryDecoder.getCurrentValue()).thenReturn(2);
-        when(accessoryDecoderTypeRepository.findOne(anyInt())).thenReturn(accessoryDecoderType);
+        when(accessoryDecoderTypeRepository.findById(anyInt())).thenReturn(Optional.of(accessoryDecoderType));
         assertNotNull(accessoryService.saveAccessoryDecoder(accessoryDecoder));
     }
 

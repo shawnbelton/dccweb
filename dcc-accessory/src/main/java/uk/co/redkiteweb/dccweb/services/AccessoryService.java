@@ -61,7 +61,7 @@ public class AccessoryService {
     }
 
     public Collection<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
-        final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findOne(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId());
+        final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findById(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId()).orElse(null);
         accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
         if (accessoryDecoder.getCurrentValue()==null) {
             accessoryDecoder.setCurrentValue(accessoryDecoderType.getDecoderTypeOperations().get(0).getDecoderOperationValue());
@@ -91,7 +91,7 @@ public class AccessoryService {
     private void operateAccessory(final AccessoryOperation accessoryOperation, final AccessoryDecoder accessoryDecoder) {
         accessoryDecoder.setCurrentValue(accessoryOperation.getOperationValue());
         accessoryDecoderRepository.save(accessoryDecoder);
-        final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findOne(accessoryDecoder.getAccessoryDecoderId());
+        final AccessoryDecoder accessoryDecoder1 = accessoryDecoderRepository.findById(accessoryDecoder.getAccessoryDecoderId()).orElse(null);
         eventBus.post(new AccessoryUpdateEvent(accessoryDecoder1));
     }
 

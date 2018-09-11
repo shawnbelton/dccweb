@@ -9,6 +9,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.macros.MacroContext;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -32,7 +34,7 @@ public class IsAccessoryStepTest {
         isAccessoryStep.setMacroStep(macroStep);
         isAccessoryStep.setAccessoryDecoderRepository(accessoryDecoderRepository);
         isAccessoryStep.setMacroContext(macroContext);
-        when(accessoryDecoderRepository.findOne(anyInt())).thenReturn(accessoryDecoder);
+        when(accessoryDecoderRepository.findById(anyInt())).thenReturn(Optional.of(accessoryDecoder));
     }
 
     @Test

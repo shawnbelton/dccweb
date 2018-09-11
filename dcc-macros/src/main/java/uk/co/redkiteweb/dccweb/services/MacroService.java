@@ -65,7 +65,7 @@ public class MacroService {
     }
 
     public Macro getMacro(final Integer macroId) {
-        return this.macroRepository.findOne(macroId);
+        return this.macroRepository.findById(macroId).orElse(null);
     }
 
 

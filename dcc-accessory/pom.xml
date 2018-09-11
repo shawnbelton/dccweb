@@ -9,13 +9,30 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dcc-core-interfaces</artifactId>
-    <name>DCC Core Interfaces</name>
+    <artifactId>dcc-accessory</artifactId>
+    <name>DCC Accessory</name>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-core-interfaces</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-interface</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -30,5 +47,6 @@
             <artifactId>mockito-core</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

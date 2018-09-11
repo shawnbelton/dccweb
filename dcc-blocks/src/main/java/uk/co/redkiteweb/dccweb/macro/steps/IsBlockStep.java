@@ -24,7 +24,7 @@ public class IsBlockStep extends AbstractMacroStep implements IStep {
 
     @Override
     public void run() {
-        final Block block = blockRepository.findOne(getMacroStep().getBlockId());
+        final Block block = blockRepository.findById(getMacroStep().getBlockId()).orElse(null);
         getMacroContext().setState(block.getOccupied() == (1 == getMacroStep().getValue()));
     }
 }

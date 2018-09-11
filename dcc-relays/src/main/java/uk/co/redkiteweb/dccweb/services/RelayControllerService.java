@@ -36,7 +36,7 @@ public class RelayControllerService {
     }
 
     public RelayController updateController(final RelayController relayController) {
-        RelayController controller = relayControllerRepository.findOne(relayController.getControllerId());
+        RelayController controller = relayControllerRepository.findById(relayController.getControllerId()).orElse(null);
         if (controller == null) {
             controller = new RelayController();
             controller.setControllerId(relayController.getControllerId());
@@ -62,7 +62,7 @@ public class RelayControllerService {
     }
 
     public List<RelayController> updateValue(final RelayController relayController) {
-        final RelayController updateValue = relayControllerRepository.findOne(relayController.getControllerId());
+        final RelayController updateValue = relayControllerRepository.findById(relayController.getControllerId()).orElse(null);
         updateValue.setValue(relayController.getValue());
         relayControllerRepository.save(updateValue);
         logStore.log("info", String.format("Relay Controller %s relays updated.", updateValue.getControllerName()));
@@ -71,7 +71,7 @@ public class RelayControllerService {
     }
 
     public void setRelay(final String controllerId, final int number) {
-        final RelayController relayController = relayControllerRepository.findOne(controllerId);
+        final RelayController relayController = relayControllerRepository.findById(controllerId).orElse(null);
         if (relayController!=null) {
             Integer relayValue = relayController.getValue();
             relayValue |= (int)Math.pow(2f,(double)(number - 1));
@@ -83,7 +83,7 @@ public class RelayControllerService {
     }
 
     public void unsetRelay(final String controllerId, final int number) {
-        final RelayController relayController = relayControllerRepository.findOne(controllerId);
+        final RelayController relayController = relayControllerRepository.findById(controllerId).orElse(null);
         if (relayController!=null) {
             Integer relayValue = relayController.getValue();
             relayValue &= (0xff ^ (int)Math.pow(2f,(double)(number - 1)));

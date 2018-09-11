@@ -13,6 +13,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.anyInt;
@@ -39,7 +40,7 @@ public class CabStoreTest {
         loco = new Loco();
         loco.setLocoId(1);
         loco.setNumber("12345");
-        when(locoRepository.findOne(anyInt())).thenReturn(loco);
+        when(locoRepository.findById(anyInt())).thenReturn(Optional.of(loco));
     }
 
     @Test

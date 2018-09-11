@@ -29,7 +29,7 @@ public class LocoService {
     }
 
     public Loco getById(final Integer locoId) {
-        return locoRepository.findOne(locoId);
+        return locoRepository.findById(locoId).orElse(null);
     }
 
     public Collection<Loco> saveLoco(final Loco loco) {

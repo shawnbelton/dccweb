@@ -23,7 +23,7 @@ public class IsAccessoryStep extends AbstractMacroStep implements IStep {
 
     @Override
     public void run() {
-        final AccessoryDecoder accessoryDecoder = accessoryDecoderRepository.findOne(getMacroStep().getTargetId());
+        final AccessoryDecoder accessoryDecoder = accessoryDecoderRepository.findById(getMacroStep().getTargetId()).orElse(null);
         getMacroContext().setState(accessoryDecoder.getCurrentValue().equals(getMacroStep().getValue()));
     }
 }

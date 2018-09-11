@@ -10,6 +10,8 @@ import uk.co.redkiteweb.dccweb.data.repositories.AccessoryDecoderRepository;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 import uk.co.redkiteweb.dccweb.services.AccessoryService;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -40,7 +42,7 @@ public class OperateAccessoryStepTest {
         when(macroStep.getValue()).thenReturn(10);
         final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
         when(accessoryDecoder.getAddress()).thenReturn(120);
-        when(accessoryDecoderRepository.findOne(anyInt())).thenReturn(accessoryDecoder);
+        when(accessoryDecoderRepository.findById(anyInt())).thenReturn(Optional.of(accessoryDecoder));
         operateAccessoryStep.run();
         verify(accessoryService, times(1)).operateServiceAsyc(any(AccessoryOperation.class));
     }

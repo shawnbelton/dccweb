@@ -11,6 +11,7 @@ import uk.co.redkiteweb.dccweb.events.BlockUpdateEvent;
 import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -38,7 +39,7 @@ public class BlockServiceTest {
 
     @Test
     public void updateNonExisting() {
-        when(blockRepository.findOne(anyString())).thenReturn(null);
+        when(blockRepository.findById(anyString())).thenReturn(Optional.empty());
         blockService.updateBlock("BlockId", false);
         verify(blockRepository, times(1)).save(any(Block.class));
         verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));
@@ -49,7 +50,7 @@ public class BlockServiceTest {
         final Block block = new Block();
         block.setOccupied(false);
         block.setMacroId(1);
-        when(blockRepository.findOne(anyString())).thenReturn(block);
+        when(blockRepository.findById(anyString())).thenReturn(Optional.of(block));
         blockService.updateBlockAsync("BlockId", true);
         verify(blockRepository, times(1)).save(eq(block));
         verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));
@@ -59,7 +60,7 @@ public class BlockServiceTest {
     public void updateExistingBlock() {
         final Block block = new Block();
         block.setOccupied(false);
-        when(blockRepository.findOne(anyString())).thenReturn(block);
+        when(blockRepository.findById(anyString())).thenReturn(Optional.of(block));
         blockService.updateBlock("BlockId", true);
         verify(blockRepository, times(1)).save(eq(block));
         verify(eventBus, times(1)).post(any(BlockUpdateEvent.class));

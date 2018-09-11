@@ -15,6 +15,7 @@ import uk.co.redkiteweb.dccweb.macros.factory.StepFactory;
 import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -83,8 +84,9 @@ public class MacroServiceTest {
 
     @Test
     public void testFetchMacro() {
+        when(macroRepository.findById(anyInt())).thenReturn(Optional.of(mock(Macro.class)));
         macroService.getMacro(1);
-        verify(macroRepository, times(1)).findOne(anyInt());
+        verify(macroRepository, times(1)).findById(anyInt());
     }
 
     @Test
@@ -108,7 +110,7 @@ public class MacroServiceTest {
 
     private Macro createMacro() {
         final Macro macro = new Macro();
-        when(macroRepository.findOne(anyInt())).thenReturn(macro);
+        when(macroRepository.findById(anyInt())).thenReturn(Optional.of(macro));
         return macro;
     }
 }
