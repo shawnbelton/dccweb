@@ -4,8 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.boot.context.embedded.EmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import uk.co.redkiteweb.dccweb.model.RegisterDetails;
@@ -14,9 +12,7 @@ import uk.co.redkiteweb.dccweb.store.RelayControllerStore;
 
 import java.net.UnknownHostException;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -56,12 +52,4 @@ public class RelayServiceTest {
         relayService.registerWithServer(details);
     }
 
-    @Test
-    public void testGetPort() {
-        final EmbeddedServletContainerInitializedEvent event = mock(EmbeddedServletContainerInitializedEvent.class);
-        final EmbeddedServletContainer container = mock(EmbeddedServletContainer.class);
-        when(event.getEmbeddedServletContainer()).thenReturn(container);
-        when(container.getPort()).thenReturn(8090);
-        relayService.onApplicationEvent(event);
-    }
 }
