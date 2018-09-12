@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.services;
 
+import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,7 +41,7 @@ public class LocoServiceTest {
     public void getAllLocos() {
         final List<Loco> locoList = new ArrayList<>();
         when(locoRepository.findAll()).thenReturn(locoList);
-        assertNotNull(locoService.getAllLocos());
+        TestCase.assertNotNull(locoService.getAllLocos());
     }
 
     @Test

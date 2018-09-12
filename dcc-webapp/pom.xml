@@ -183,6 +183,10 @@
         </dependency>
         <dependency>
             <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-locos</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
             <artifactId>dcc-accessory</artifactId>
         </dependency>
         <dependency>

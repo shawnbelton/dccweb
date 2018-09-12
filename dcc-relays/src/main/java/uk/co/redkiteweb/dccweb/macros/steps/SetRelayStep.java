@@ -1,10 +1,9 @@
-package uk.co.redkiteweb.dccweb.macro.steps;
+package uk.co.redkiteweb.dccweb.macros.steps;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.macros.IStep;
-import uk.co.redkiteweb.dccweb.macros.steps.AbstractMacroStep;
 import uk.co.redkiteweb.dccweb.services.RelayControllerService;
 
 /**

@@ -1,4 +1,4 @@
-package uk.co.redkiteweb.dccweb.macro.steps;
+package uk.co.redkiteweb.dccweb.macros.steps;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.Block;
 import uk.co.redkiteweb.dccweb.data.repositories.BlockRepository;
 import uk.co.redkiteweb.dccweb.macros.IStep;
-import uk.co.redkiteweb.dccweb.macros.steps.AbstractMacroStep;
 
 /**
  * Created by shawn on 08/05/17.

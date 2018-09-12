@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import uk.co.redkiteweb.dccweb.model.RegisterDetails;
@@ -24,11 +25,14 @@ public class RelayServiceTest {
 
     @Before
     public void setup() {
+        final Environment environment = mock(Environment.class);
         final RelayControllerStore relayControllerStore = mock(RelayControllerStore.class);
         restTemplate = mock(RestTemplate.class);
         relayService = new RelayService();
         relayService.setRestTemplate(restTemplate);
         relayService.setRelayControllerStore(relayControllerStore);
+        relayService.setEnvironment(environment);
+        when(environment.getProperty(eq("local.server.port"))).thenReturn("8090");
         when(relayControllerStore.getRelayController()).thenReturn(mock(RelayController.class));
     }
 

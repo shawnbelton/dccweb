@@ -47,6 +47,7 @@
         <module>dcc-interface</module>
         <module>nce-interface</module>
         <module>demo-interface</module>
+        <module>dcc-locos</module>
         <module>dcc-accessory</module>
         <module>dcc-blocks</module>
         <module>dcc-macros</module>
@@ -218,6 +219,11 @@
             <dependency>
                 <groupId>uk.co.redkiteweb.dccweb</groupId>
                 <artifactId>dcc-accessory</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>uk.co.redkiteweb.dccweb</groupId>
+                <artifactId>dcc-locos</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
