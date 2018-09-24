@@ -4,10 +4,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessor;
 import uk.co.redkiteweb.dccweb.dccinterface.factories.MessageProcessorFactory;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.*;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +24,12 @@ public class DccInterfaceTest {
     private DccInterfaceImpl dccInterface;
     private DccInterfaceStatus dccInterfaceStatus;
     private MessageProcessor messageProcessor;
+    private MessageProcessorFactory messageProcessorFactory;
 
     @Before
     public void setUp() {
         dccInterfaceStatus = mock(DccInterfaceStatus.class);
-        final MessageProcessorFactory messageProcessorFactory = mock(MessageProcessorFactory.class);
+        messageProcessorFactory = mock(MessageProcessorFactory.class);
         messageProcessor = mock(MessageProcessor.class);
         final LogStore logStore = mock(LogStore.class);
         when(messageProcessor.getInterfaceCode()).thenReturn("Code");
@@ -37,7 +38,7 @@ public class DccInterfaceTest {
         dccInterface.setDccInterfaceStatus(dccInterfaceStatus);
         dccInterface.setMessageProcessorFactory(messageProcessorFactory);
         dccInterface.setLogStore(logStore);
-        final List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>();
+        final List<MessageProcessor> messageProcessors = new ArrayList<>();
         messageProcessors.add(messageProcessor);
         when(messageProcessorFactory.getAllInterfaces()).thenReturn(messageProcessors);
         when(messageProcessorFactory.getInstance()).thenReturn(messageProcessor);
@@ -85,6 +86,20 @@ public class DccInterfaceTest {
         when(messageProcessor.process(any(KeepAliveMessage.class))).thenReturn(messageResponse);
         when(messageResponse.getStatus()).thenReturn(MessageResponse.MessageStatus.ERROR);
         when(messageResponse.get(eq("ERROR"))).thenReturn("Disconnected");
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
+
+    @Test
+    public void testCheckInterfaceClassNotFound() {
+        when(messageProcessorFactory.getInstance()).thenThrow(mock(NoClassDefFoundError.class));
+        dccInterface.checkInterface();
+        verify(dccInterfaceStatus, times(1)).setDisconnected();
+    }
+
+    @Test
+    public void testCheckInterfaceUnsatisfiedLinkError() {
+        when(messageProcessorFactory.getInstance()).thenThrow(mock(UnsatisfiedLinkError.class));
         dccInterface.checkInterface();
         verify(dccInterfaceStatus, times(1)).setDisconnected();
     }

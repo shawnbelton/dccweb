@@ -2,8 +2,7 @@
  * Created by shawn on 19/11/16.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
-import "rxjs/add/operator/toPromise";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Status} from "../models/status";
 import {HttpClient} from "@angular/common/http";
 import {StompService, StompState} from "@stomp/ng2-stompjs";
@@ -18,13 +17,13 @@ export class StatusService {
     private status: Observable<Status> = this._status.asObservable();
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe("/status").map((message: Message) => {
-        return message.body;
-      }).subscribe( (data: string) => {
-        this.setStatus(JSON.parse(data));
-      });
+      this.stompService.subscribe("/status").subscribe(this.on_next);
       this.stompService.state.subscribe((data: StompState) => this.updateStompStatus(data));
       this.readStatus();
+    }
+
+    public on_next = (message: Message) => {
+      this.setStatus(JSON.parse(message.body));
     }
 
     updateStompStatus(state: StompState): void {

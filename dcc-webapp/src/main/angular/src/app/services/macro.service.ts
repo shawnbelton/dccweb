@@ -2,7 +2,7 @@
  * Created by shawn on 02/12/16.
  */
 import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Macro} from "../models/macro";
 import {HttpClient} from "@angular/common/http";
 
@@ -44,9 +44,27 @@ export class MacroService {
         }, error => console.log("Unable to get macros."));
     }
 
+    runMacroById(macroId: number): void {
+      this.runMacro(this.findMacro(macroId));
+    }
+
     runMacro(macro: Macro): void {
-        this.http.post("/api/macros/run", macro).subscribe(data => {},
+      this.http.post("/api/macros/run", macro).subscribe(data => {},
         error => console.log("Unable to run macro."));
+    }
+
+    findMacro(macroId: number): Macro {
+      let macro: Macro = new Macro();
+      for(let iMacro of this._macros.getValue()) {
+        if (iMacro.macroId == macroId) {
+          macro = iMacro;
+        }
+      }
+      return macro;
+    }
+
+    getMacroName(macroId: number): string {
+      return this.findMacro(macroId).name;
     }
 
     getMacro(): Observable<Macro> {

@@ -5,50 +5,43 @@
   <meta charset="UTF-8"/>
   <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge, chrome=1"/>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <link href="/assets/css/slider.css" rel="stylesheet" media="screen"/>
   <link href="/assets/css/dcc-web.css" rel="stylesheet" media="screen"/>
   <title>DCC Web</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+  <script>
+    var global = window;
+  </script>
 </head>
 <body>
 <dcc-app>
   <header role="banner">
-    <nav role="navigation" class="navbar navbar-static-top navbar-inverse">
-      <div class="container" active-link="active-link">
-        <div class="navbar-header">
-          <button class="navbar-toggle collapsed" aria-controls="navbar" aria-expanded="false"
-                  data-target="#menubar-navbar-collapse"
-                  data-toggle="collapse" type="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">DCC Web</a>
-        </div>
-      </div>
+    <nav role="navigation" class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand" routerLink="/" routerLinkActive="active">DCC Web</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
     </nav>
   </header>
 </dcc-app>
 <footer role="contentinfo">
-  <div class="container">
+  <div class="container-fluid">
     <dcc-messages>
-      <div class="panel panel-info">
-        <div class="panel-heading small">Messages</div>
+      <div class="card">
+        <div class="card-header small bg-info text-white">Messages</div>
         <ul class="list-group">
         </ul>
       </div>
     </dcc-messages>
   </div>
-  <div class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container">
-      <div class="navbar-header">
-        <p class="navbar-text">DCC Web &copy; 2016</p>
-      </div>
-      <div class="nav navbar-nav navbar-right">
-        <dcc-status><p class="navbar-text">Status: Loading...</p></dcc-status>
-      </div>
+  <div class="navbar navbar-expand-sm fixed-bottom navbar-dark bg-dark">
+    <div class="navbar-nav mr-auto">
+      <span class="navbar-text">DCC Web &copy; 2016</span>
+    </div>
+    <div class="navbar-nav my-2 my-sm-0">
+      <dcc-status><span class="navbar-text">Status: Loading...</span></dcc-status>
     </div>
   </div>
 </footer>

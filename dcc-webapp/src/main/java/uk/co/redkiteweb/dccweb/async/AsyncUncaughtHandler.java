@@ -3,7 +3,7 @@ package uk.co.redkiteweb.dccweb.async;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
+import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.lang.reflect.Method;
 

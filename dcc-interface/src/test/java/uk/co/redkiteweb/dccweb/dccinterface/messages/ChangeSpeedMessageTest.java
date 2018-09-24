@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.Direction.UP;
 import static uk.co.redkiteweb.dccweb.dccinterface.messages.ChangeSpeedMessage.SpeedSteps.STEPS_128;
 
@@ -49,7 +50,7 @@ public class ChangeSpeedMessageTest {
 
     @Test
     public void testAddressMode() {
-        assertEquals(true, changeSpeedMessage.isAddressMode());
+        assertTrue(changeSpeedMessage.isAddressMode());
     }
 
     @Test

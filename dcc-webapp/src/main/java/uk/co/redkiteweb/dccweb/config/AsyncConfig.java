@@ -34,6 +34,7 @@ public class AsyncConfig implements AsyncConfigurer, SchedulingConfigurer {
         return Executors.newScheduledThreadPool(10);
     }
 
+    @Bean("executor")
     @Override
     public Executor getAsyncExecutor() {
         return Executors.newFixedThreadPool(10);

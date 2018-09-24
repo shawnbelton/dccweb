@@ -56,7 +56,7 @@ public class SettingsServiceTest {
 
     @Test
     public void testGetAllSettings() {
-        final List<SystemParameter> settingsList = new ArrayList<SystemParameter>();
+        final List<SystemParameter> settingsList = new ArrayList<>();
         when(systemParameterRepository.findAll()).thenReturn(settingsList);
         assertNotNull(settingsService.getAllSettings());
     }

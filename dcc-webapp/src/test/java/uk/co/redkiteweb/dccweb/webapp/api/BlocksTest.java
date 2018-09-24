@@ -60,19 +60,19 @@ public class BlocksTest {
 
     @Test
     public void getAllBlocks() {
-        when(blockService.getAllBlocks()).thenReturn(new ArrayList<Block>());
+        when(blockService.getAllBlocks()).thenReturn(new ArrayList<>());
         assertNotNull(blocks.getAllBlocks());
     }
 
     @Test
     public void saveTest() {
-        when(blockService.saveBlock(any(Block.class))).thenReturn(new ArrayList<Block>());
+        when(blockService.saveBlock(any(Block.class))).thenReturn(new ArrayList<>());
         assertNotNull(blocks.saveBlock(new Block()));
     }
 
     @Test
     public void deleteTest() {
-        when(blockService.deleteBlock(any(Block.class))).thenReturn(new ArrayList<Block>());
+        when(blockService.deleteBlock(any(Block.class))).thenReturn(new ArrayList<>());
         assertNotNull(blocks.deleteBlock(new Block()));
     }
 }

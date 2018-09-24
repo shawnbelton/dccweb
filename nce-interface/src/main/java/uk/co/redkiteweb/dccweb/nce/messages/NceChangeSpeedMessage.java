@@ -15,7 +15,7 @@ public class NceChangeSpeedMessage extends AbstractNceMessage implements NceMess
 
     @Override
     public MessageResponse process(final Message message) throws ConnectionException {
-        final ChangeSpeedMessage changeSpeedMessage = (ChangeSpeedMessage)message;
+        final ChangeSpeedMessage changeSpeedMessage = (ChangeSpeedMessage) message;
         final MessageResponse messageResponse = getMessageResponse();
         final NceData nceData = new NceData();
         nceData.addData(0xa2);
@@ -38,15 +38,23 @@ public class NceChangeSpeedMessage extends AbstractNceMessage implements NceMess
     }
 
     private static int getOpCode(final ChangeSpeedMessage.SpeedSteps speedSteps, ChangeSpeedMessage.Direction direction) {
-        int opCode = 0;
-        if (ChangeSpeedMessage.Direction.UP.equals(direction)) {
-            opCode = 2 + offSetSteps(speedSteps);
-        } else if (ChangeSpeedMessage.Direction.DOWN.equals(direction)) {
-            opCode = 1 + offSetSteps(speedSteps);
-        } else if (ChangeSpeedMessage.Direction.RSTOP.equals(direction)) {
-            opCode = 5;
-        } else if (ChangeSpeedMessage.Direction.FSTOP.equals(direction)) {
-            opCode = 6;
+        int opCode;
+        switch (direction) {
+            case UP:
+                opCode = 2 + offSetSteps(speedSteps);
+                break;
+            case DOWN:
+                opCode = 1 + offSetSteps(speedSteps);
+                break;
+            case RSTOP:
+                opCode = 5;
+                break;
+            case FSTOP:
+                opCode = 6;
+                break;
+            default:
+                opCode = 0;
+                break;
         }
         return opCode;
     }

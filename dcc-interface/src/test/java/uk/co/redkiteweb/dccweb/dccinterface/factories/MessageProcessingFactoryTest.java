@@ -39,7 +39,7 @@ public class MessageProcessingFactoryTest {
 
     @Test
     public void testAllInterfaces() {
-        when(context.getBeansOfType(eq(MessageProcessor.class))).thenReturn(new HashMap<String, MessageProcessor>());
+        when(context.getBeansOfType(eq(MessageProcessor.class))).thenReturn(new HashMap<>());
         assertTrue(messageProcessorFactory.getAllInterfaces().isEmpty());
     }
 }

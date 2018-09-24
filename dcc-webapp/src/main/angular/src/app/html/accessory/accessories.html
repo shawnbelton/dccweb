@@ -1,7 +1,7 @@
 <div class="row">
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
                 <span>Accessories</span>
             </div>
             <div class="list-group">
@@ -9,14 +9,14 @@
                 <ng-template let-item>
                   <div>
                     <span>{{item.name}}</span>
-                    <div class="pull-right">
-                      <input type="button" class="btn btn-success btn-xs" (click)="startEditAccessory(item)" value="Edit"/>
+                    <div class="float-right">
+                      <input type="button" class="btn btn-success btn-sm" (click)="startEditAccessory(item)" value="Edit"/>
                     </div>
                     <ul class="list-inline">
-                      <li *ngFor="let operation of item.accessoryDecoderType.decoderTypeOperations">
+                      <li class="list-inline-item" *ngFor="let operation of item.accessoryDecoderType.decoderTypeOperations">
                         <input type="button" (click)="operateAccessory(item, operation.decoderOperationValue)"
                                [ngClass]="{'btn-primary': isState(item, operation), 'btn-default': !isState(item, operation)}"
-                               class="btn btn-xs" value="{{operation.decoderTypeOperation}}"/>
+                               class="btn btn-sm" value="{{operation.decoderTypeOperation}}"/>
                       </li>
                     </ul>
                   </div>
@@ -25,29 +25,29 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+    <div class="col-sm">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
                 <span>Accessory Edit</span>
             </div>
-            <div class="panel-body">
-                <form id="createAccessory" class="form-horizontal" name="createAccessory" (ngSubmit)="saveAccessory()" #accessoryForm="ngForm">
-                    <div class="form-group">
-                        <label for="accessoryNumber" class="col-sm-4 control-label">Accessory Address</label>
+            <div class="card-body">
+                <form id="createAccessory" name="createAccessory" (ngSubmit)="saveAccessory()" #accessoryForm="ngForm">
+                    <div class="form-group row">
+                        <label for="accessoryNumber" class="col-sm-4 col-form-label">Accessory Address</label>
                         <div class="col-sm-8">
                             <input type="text" id="accessoryNumber" name="accessoryNumber" class="form-control" placeholder="Accessory Address"
                                    [(ngModel)]="editAccessory.address" required="required" #accessoryNumber="ngModel"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="accessoryName" class="col-sm-4 control-label">Accessory Name</label>
+                    <div class="form-group row">
+                        <label for="accessoryName" class="col-sm-4 col-form-label">Accessory Name</label>
                         <div class="col-sm-8">
                             <input type="text" id="accessoryName" name="accessoryName" class="form-control" placeholder="Accessory Name"
                                    [(ngModel)]="editAccessory.name" required="required" #accessoryName="ngModel"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="accessoryType" class="col-sm-4 control-label">Accessory Type</label>
+                    <div class="form-group row">
+                        <label for="accessoryType" class="col-sm-4 col-form-label">Accessory Type</label>
                         <div class="col-sm-8">
                             <select name="accessoryType" ngControl="accessoryType" id="accessoryType"
                                     class="form-control" required="required"
@@ -58,11 +58,11 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="accessoryMacro" class="col-sm-4 control-label">Accessory Macro</label>
+                    <div class="form-group row">
+                        <label for="accessoryMacro" class="col-sm-4 col-form-label">Accessory Macro</label>
                         <div class="col-sm-8">
                             <select name="accessoryMacro" id="accessoryMacro" ngControl="accessoryMacro" class="form-control"
-                                    #accessoryMacro="ngModel" [(ngModel)]="editAccessory.macro.macroId">
+                                    #accessoryMacro="ngModel" [(ngModel)]="editAccessory.macroId">
                                 <option [value]=""></option>
                                 <option *ngFor="let macro of macros"
                                         [value]="macro.macroId">{{macro.name}}
@@ -70,9 +70,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group row">
                         <div class="col-sm-12">
-                            <div class="pull-right">
+                            <div class="float-right btn-toolbar">
                                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
                                 <input type="submit" value="Save" class="btn btn-sm btn-success" [disabled]="!accessoryForm.form.valid"/>
                             </div>

@@ -5,8 +5,8 @@ import {Component, OnInit} from "@angular/core";
 import {Cab} from "../models/cab";
 import {CabService} from "../services/cab.service";
 import {CabFunction} from "../models/cabFunction";
-import {Macro} from "../models/macro";
 import {MacroService} from "../services/macro.service";
+
 @Component({
     moduleId: module.id,
     templateUrl: './../html/cab/cab.html',
@@ -56,8 +56,12 @@ export class CabComponent implements OnInit {
         this.cabService.updateCabFunction(this.cab);
     }
 
-    runMacro(macro: Macro): void {
-        this.macroService.runMacro(macro);
+    runMacro(macroId: number): void {
+        this.macroService.runMacroById(macroId);
+    }
+
+    getMacroName(macroId: number): string {
+      return this.macroService.getMacroName(macroId);
     }
 
     toggleFunction(cabFunction: CabFunction): void {
@@ -66,7 +70,12 @@ export class CabComponent implements OnInit {
     }
 
     setCab(cab: Cab): void {
-        this.cab = cab;
+      if (cab != null) {
+        let functions: CabFunction[] = cab.cabFunctions;
+        functions.sort((func1, func2): number => {return func1.number - func2.number});
+        cab.cabFunctions = functions;
+      }
+      this.cab = cab;
     }
 
     getCab(): void {

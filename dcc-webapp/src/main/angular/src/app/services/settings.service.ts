@@ -3,7 +3,7 @@
  */
 import {Injectable} from "@angular/core";
 import {Settings} from "../models/settings";
-import {BehaviorSubject, Observable} from "rxjs/Rx";
+import {BehaviorSubject, Observable} from "rxjs";
 import {InterfaceInfo} from "../models/interfaceInfo";
 import {HttpClient} from "@angular/common/http";
 
