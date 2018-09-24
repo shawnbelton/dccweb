@@ -38,19 +38,19 @@ public class RelayControllersTest {
 
     @Test
     public void testGetAllControllers() {
-        when(relayControllerService.getAllControllers()).thenReturn(new ArrayList<RelayController>());
+        when(relayControllerService.getAllControllers()).thenReturn(new ArrayList<>());
         assertNotNull(relayControllers.getAllControllers());
     }
 
     @Test
     public void testSave() {
-        when(relayControllerService.save(any(RelayController.class))).thenReturn(new ArrayList<RelayController>());
+        when(relayControllerService.save(any(RelayController.class))).thenReturn(new ArrayList<>());
         assertNotNull(relayControllers.save(mock(RelayController.class)));
     }
 
     @Test
     public void testUpdateValue() {
-        when(relayControllerService.updateValue(any(RelayController.class))).thenReturn(new ArrayList<RelayController>());
+        when(relayControllerService.updateValue(any(RelayController.class))).thenReturn(new ArrayList<>());
         assertNotNull(relayControllers.updateValue(mock(RelayController.class)));
     }
 }

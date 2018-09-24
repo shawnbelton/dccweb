@@ -48,15 +48,18 @@ buildNumber.properties
 
 dcc-web.iml
 dcc-core/dcc-core.iml
+dcc-core-interfaces/dcc-core-interfaces.iml
 dcc-data/dcc-data.iml
 dcc-webapp/dcc-webapp.iml
 dcc-interface/dcc-interface.iml
+dcc-macros/dcc-macros.iml
 decoder-definitions/decoder-definitions.iml
 nce-interface/nce-interface.iml
 demo-interface/demo-interface.iml
 random-mac/random-mac.iml
 dummy-relay/dummy-relay.iml
 **/target
+**/*.iml
 
 # Gradle:
 .idea/gradle.xml

@@ -44,9 +44,27 @@ export class MacroService {
         }, error => console.log("Unable to get macros."));
     }
 
+    runMacroById(macroId: number): void {
+      this.runMacro(this.findMacro(macroId));
+    }
+
     runMacro(macro: Macro): void {
-        this.http.post("/api/macros/run", macro).subscribe(data => {},
+      this.http.post("/api/macros/run", macro).subscribe(data => {},
         error => console.log("Unable to run macro."));
+    }
+
+    findMacro(macroId: number): Macro {
+      let macro: Macro = new Macro();
+      for(let iMacro of this._macros.getValue()) {
+        if (iMacro.macroId == macroId) {
+          macro = iMacro;
+        }
+      }
+      return macro;
+    }
+
+    getMacroName(macroId: number): string {
+      return this.findMacro(macroId).name;
     }
 
     getMacro(): Observable<Macro> {

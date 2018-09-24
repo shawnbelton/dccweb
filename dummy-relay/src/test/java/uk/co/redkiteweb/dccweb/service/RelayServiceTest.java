@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.boot.context.embedded.EmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import uk.co.redkiteweb.dccweb.model.RegisterDetails;
@@ -14,9 +13,7 @@ import uk.co.redkiteweb.dccweb.store.RelayControllerStore;
 
 import java.net.UnknownHostException;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,11 +25,14 @@ public class RelayServiceTest {
 
     @Before
     public void setup() {
+        final Environment environment = mock(Environment.class);
         final RelayControllerStore relayControllerStore = mock(RelayControllerStore.class);
         restTemplate = mock(RestTemplate.class);
         relayService = new RelayService();
         relayService.setRestTemplate(restTemplate);
         relayService.setRelayControllerStore(relayControllerStore);
+        relayService.setEnvironment(environment);
+        when(environment.getProperty(eq("local.server.port"))).thenReturn("8090");
         when(relayControllerStore.getRelayController()).thenReturn(mock(RelayController.class));
     }
 
@@ -56,12 +56,4 @@ public class RelayServiceTest {
         relayService.registerWithServer(details);
     }
 
-    @Test
-    public void testGetPort() {
-        final EmbeddedServletContainerInitializedEvent event = mock(EmbeddedServletContainerInitializedEvent.class);
-        final EmbeddedServletContainer container = mock(EmbeddedServletContainer.class);
-        when(event.getEmbeddedServletContainer()).thenReturn(container);
-        when(container.getPort()).thenReturn(8090);
-        relayService.onApplicationEvent(event);
-    }
 }

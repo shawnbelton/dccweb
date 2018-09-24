@@ -31,7 +31,7 @@ public class StartUpListenerTest {
         startUpListener = new StartUpListener();
         startUpListener.setDccInterface(dccInterface);
         startUpListener.setApplicationContext(context);
-        final Map<String, Loader> loaders = new HashMap<String, Loader>();
+        final Map<String, Loader> loaders = new HashMap<>();
         loaders.put("testLoader", loader);
         when(context.getBeansOfType(eq(Loader.class))).thenReturn(loaders);
     }

@@ -51,7 +51,7 @@ public class Macros {
 
     @RequestMapping(value = "/run", method = RequestMethod.POST)
     public @ResponseBody Boolean runMacro(@RequestBody final Macro macro) {
-        this.eventBus.post(new MacroRunEvent(macro));
+        this.eventBus.post(new MacroRunEvent(macro.getMacroId()));
         return Boolean.TRUE;
     }
 

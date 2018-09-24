@@ -5,14 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.data.model.Loco;
-import uk.co.redkiteweb.dccweb.data.repositories.LocoRepository;
-import uk.co.redkiteweb.dccweb.data.store.LogStore;
 import uk.co.redkiteweb.dccweb.services.LocoService;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static junit.framework.TestCase.assertNotNull;
 import static org.mockito.Mockito.*;
 
 /**

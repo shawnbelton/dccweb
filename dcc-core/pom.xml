@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dcc-core</artifactId>
-    <name>DCC Core functionallity</name>
+    <name>DCC Core functionality</name>
 
     <dependencies>
         <dependency>
@@ -26,16 +26,16 @@
             <artifactId>decoder-definitions</artifactId>
         </dependency>
         <dependency>
+            <groupId>uk.co.redkiteweb.dccweb</groupId>
+            <artifactId>dcc-core-interfaces</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -58,6 +58,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

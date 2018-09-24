@@ -37,9 +37,6 @@ export class BlockComponent implements OnInit {
   }
 
   saveBlock(): void {
-    if (this.block.macro.macroId == null || this.block.macro.macroId.toString() == "") {
-      this.block.macro = null;
-    }
     this.blockService.saveBlock(this.block);
     this.resetBlock();
   }
@@ -51,14 +48,10 @@ export class BlockComponent implements OnInit {
 
   resetBlock(): void {
     let block: Block = new Block();
-    block.macro = new Macro();
     this.blockService.setBlock(block);
   }
 
   startBlockEdit(block: Block): void {
-    if (block.macro == null) {
-      block.macro = new Macro();
-    }
     this.blockService.setBlock(block);
   }
 

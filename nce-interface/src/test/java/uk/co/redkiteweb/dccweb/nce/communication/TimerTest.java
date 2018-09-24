@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Created by shawn on 18/01/17.
@@ -16,13 +16,13 @@ public class TimerTest {
     public void testTimedOut() {
         final Timer timer = new Timer(-1000);
         timer.start();
-        assertEquals(true, timer.hasTimedOut());
+        assertTrue(timer.hasTimedOut());
     }
 
     @Test
     public void testNotTimedOut() {
         final Timer timer = new Timer(1000);
         timer.start();
-        assertEquals(false, timer.hasTimedOut());
+        assertFalse(timer.hasTimedOut());
     }
 }

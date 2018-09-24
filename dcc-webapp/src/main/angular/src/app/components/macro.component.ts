@@ -77,8 +77,8 @@ export class MacroComponent implements OnInit {
         this.macro = new Macro();
     }
 
-    runMacro(macro: Macro): void {
-        this.macroService.runMacro(macro);
+    runMacro(macroId: number): void {
+        this.macroService.runMacroById(macroId);
     }
 
     macroValid(): boolean {
@@ -239,7 +239,7 @@ export class MacroComponent implements OnInit {
     displayIsAccessory(step: MacroStep): string {
         let accessory: AccessoryDecoder = this.fetchAccessory(step);
         let display: string = "Is Accessory " + accessory.name;
-        display = display + " to " + this.displayAccessoryOperation(step, accessory);
+        display = display + " set to " + this.displayAccessoryOperation(step, accessory);
         return display;
     }
 

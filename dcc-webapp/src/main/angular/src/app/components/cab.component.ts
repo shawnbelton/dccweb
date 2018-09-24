@@ -5,7 +5,6 @@ import {Component, OnInit} from "@angular/core";
 import {Cab} from "../models/cab";
 import {CabService} from "../services/cab.service";
 import {CabFunction} from "../models/cabFunction";
-import {Macro} from "../models/macro";
 import {MacroService} from "../services/macro.service";
 
 @Component({
@@ -57,8 +56,12 @@ export class CabComponent implements OnInit {
         this.cabService.updateCabFunction(this.cab);
     }
 
-    runMacro(macro: Macro): void {
-        this.macroService.runMacro(macro);
+    runMacro(macroId: number): void {
+        this.macroService.runMacroById(macroId);
+    }
+
+    getMacroName(macroId: number): string {
+      return this.macroService.getMacroName(macroId);
     }
 
     toggleFunction(cabFunction: CabFunction): void {

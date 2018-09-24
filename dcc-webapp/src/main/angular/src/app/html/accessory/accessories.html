@@ -62,7 +62,7 @@
                         <label for="accessoryMacro" class="col-sm-4 col-form-label">Accessory Macro</label>
                         <div class="col-sm-8">
                             <select name="accessoryMacro" id="accessoryMacro" ngControl="accessoryMacro" class="form-control"
-                                    #accessoryMacro="ngModel" [(ngModel)]="editAccessory.macro.macroId">
+                                    #accessoryMacro="ngModel" [(ngModel)]="editAccessory.macroId">
                                 <option [value]=""></option>
                                 <option *ngFor="let macro of macros"
                                         [value]="macro.macroId">{{macro.name}}
