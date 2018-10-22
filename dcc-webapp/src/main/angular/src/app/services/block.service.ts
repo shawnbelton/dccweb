@@ -36,12 +36,12 @@ export class BlockService {
     const newBlocks: Block[] = [];
     const currentBlocks: Block[] = this._blocks.getValue();
     let notFound = true;
-    for (const currentBlock of currentBlocks) {
-      if (currentBlock.blockId === block.blockId) {
+    for (const curBlock of currentBlocks) {
+      if (curBlock.blockId === block.blockId) {
         newBlocks.push(block);
         notFound = false;
       } else {
-        newBlocks.push(currentBlock);
+        newBlocks.push(curBlock);
       }
     }
     if (notFound) {

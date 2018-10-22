@@ -8,10 +8,9 @@ import {BlockService} from '../services/block.service';
 @Component({
   moduleId: module.id,
   selector: 'app-block-item',
-  inputs: ['block'],
   templateUrl: './../html/block/blockItem.html'
 })
-export class BlockItem {
+export class BlockItemComponent {
 
   @Input() block: Block;
 

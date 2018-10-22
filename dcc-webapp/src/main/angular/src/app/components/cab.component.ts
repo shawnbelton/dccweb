@@ -10,7 +10,7 @@ import {MacroService} from '../services/macro.service';
 @Component({
     moduleId: module.id,
     templateUrl: './../html/cab/cab.html',
-    selector: 'dcc-cab'
+    selector: 'app-dcc-cab'
 })
 export class CabComponent implements OnInit {
 
@@ -38,10 +38,10 @@ export class CabComponent implements OnInit {
     }
 
     stop(): void {
-        if (this.cab.direction == 'UP') {
+        if (this.cab.direction === 'UP') {
             this.cab.speed = 0;
             this.cab.direction = 'FSTOP';
-        } else if (this.cab.direction == 'DOWN') {
+        } else if (this.cab.direction === 'DOWN') {
             this.cab.speed = 0;
             this.cab.direction = 'RSTOP';
         }
@@ -71,8 +71,8 @@ export class CabComponent implements OnInit {
 
     setCab(cab: Cab): void {
       if (cab != null) {
-        let functions: CabFunction[] = cab.cabFunctions;
-        functions.sort((func1, func2): number => {return func1.number - func2.number});
+        const functions: CabFunction[] = cab.cabFunctions;
+        functions.sort((func1, func2): number => func1.number - func2.number);
         cab.cabFunctions = functions;
       }
       this.cab = cab;

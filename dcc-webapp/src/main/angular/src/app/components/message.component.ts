@@ -7,7 +7,7 @@ import {MessageService} from '../services/message.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'dcc-messages',
+    selector: 'app-dcc-messages',
     templateUrl: './../html/messages/messages.html'
 })
 export class MessageComponent implements OnInit {

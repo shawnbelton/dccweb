@@ -7,62 +7,62 @@ import {RelayController} from '../models/relayController';
 import {RelayService} from '../services/relay.service';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: './../html/relay/relay.html',
+  moduleId: module.id,
+  templateUrl: './../html/relay/relay.html',
 })
 export class RelayComponent implements OnInit {
 
-    relayControllers: RelayController[];
-    relayController: RelayController;
+  relayControllers: RelayController[];
+  relayController: RelayController;
 
-    constructor(private relayService: RelayService) {}
+  constructor(private relayService: RelayService) {
+  }
 
+  getRelayControllers(): void {
+    this.relayService.getRelayControllers().subscribe(data => this.relayControllers = data);
+  }
 
-    getRelayControllers(): void {
-        this.relayService.getRelayControllers().subscribe(data => this.relayControllers = data);
-    }
+  saveRelayController(): void {
+    this.relayService.saveRelayController(this.relayController);
+    this.resetRelayController();
+  }
 
-    saveRelayController(): void {
-        this.relayService.saveRelayController(this.relayController);
-        this.resetRelayController();
-    }
+  deleteRelayController(): void {
+    this.resetRelayController();
+  }
 
-    deleteRelayController(): void {
-        this.resetRelayController();
-    }
+  resetRelayController(): void {
+    const relayController: RelayController = new RelayController();
+    this.setRelayController(relayController);
+  }
 
-    resetRelayController(): void {
-        let relayController: RelayController = new RelayController();
-        this.setRelayController(relayController);
-    }
+  setRelayController(relayController: RelayController): void {
+    this.relayController = relayController;
+  }
 
-    setRelayController(relayController: RelayController): void {
-        this.relayController = relayController;
-    }
+  startRelayControllerEdit(relayController: RelayController): void {
+    this.setRelayController(relayController);
+  }
 
-    startRelayControllerEdit(relayController: RelayController): void {
-        this.setRelayController(relayController);
-    }
+  cancelEdit(): void {
+    this.resetRelayController();
+  }
 
-    cancelEdit(): void {
-        this.resetRelayController();
-    }
+  showName(relay: RelayController, index: number): string {
+    return '' + (index + 1);
+  }
 
-    showName(relay: RelayController, index: number): string {
-        return '' + (index + 1);
-    }
+  switchStatus(relay: RelayController, index: number): boolean {
+    return (relay.value & Math.pow(2, index)) > 0;
+  }
 
-    switchStatus(relay: RelayController, index: number): boolean {
-        return (relay.value & Math.pow(2, index)) > 0;
-    }
+  switchChange(relay: RelayController, index: number): void {
+    relay.value = relay.value ^ Math.pow(2, index);
+    this.relayService.updateRelayValue(relay);
+  }
 
-    switchChange(relay: RelayController, index: number): void {
-        relay.value ^= Math.pow(2, index);
-        this.relayService.updateRelayValue(relay);
-    }
-
-    ngOnInit(): void {
-        this.resetRelayController();
-        this.getRelayControllers();
-    }
+  ngOnInit(): void {
+    this.resetRelayController();
+    this.getRelayControllers();
+  }
 }

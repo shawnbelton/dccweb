@@ -6,7 +6,7 @@ import {DecoderSetting} from '../../models/decoderSetting';
 
 @Component({
   moduleId: module.id,
-  selector: 'decoderSetting',
+  selector: 'app-decoder-setting',
   templateUrl: './../../html/decoder/decoderSetting.html'
 })
 export class DecoderSettingComponent {
@@ -16,7 +16,7 @@ export class DecoderSettingComponent {
   decoderSettingChanged(event: any): void {
     let newValue: number;
     const targetType: string = event.target.type;
-    switch(targetType) {
+    switch (targetType) {
       case 'number':
         newValue = event.target.value;
         break;
@@ -24,7 +24,7 @@ export class DecoderSettingComponent {
         newValue = event.target.value;
         break;
       case 'checkbox':
-        newValue = event.target.checked?1:0;
+        newValue = event.target.checked ? 1 : 0;
         break;
     }
     this.decoderSetting.newValue = newValue;

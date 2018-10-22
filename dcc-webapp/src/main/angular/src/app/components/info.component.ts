@@ -7,30 +7,31 @@ import {Info} from '../models/info';
 import * as moment from 'moment/moment';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: './../html/info/info.html',
-    selector: 'dcc-info'
+  moduleId: module.id,
+  templateUrl: './../html/info/info.html',
+  selector: 'app-dcc-info'
 })
 export class InfoComponent implements OnInit {
 
-    info: Info;
+  info: Info;
 
-    constructor(private infoService: InfoService) {}
+  constructor(private infoService: InfoService) {
+  }
 
-    getInfo(): void {
-        this.infoService.getInfo().subscribe(info => this.setInfo(info));
-    }
+  getInfo(): void {
+    this.infoService.getInfo().subscribe(info => this.setInfo(info));
+  }
 
-    setInfo(info: Info): void {
-        this.info = info;
-    }
+  setInfo(info: Info): void {
+    this.info = info;
+  }
 
-    toDateString(time: number): string {
-        let date: Date = new Date(time);
-        return moment(date).format('h:mm:ssa Do MMMM YYYY');
-    }
+  toDateString(time: number): string {
+    const date: Date = new Date(time);
+    return moment(date).format('h:mm:ssa Do MMMM YYYY');
+  }
 
-    ngOnInit(): void {
-        this.getInfo();
-    }
+  ngOnInit(): void {
+    this.getInfo();
+  }
 }

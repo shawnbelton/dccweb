@@ -42,12 +42,12 @@ export class AccessoryDecoderService {
     const currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
     const accessories: AccessoryDecoder[] = [];
     let notFound = true;
-    for (const currentAccessory of currentAccessories) {
-      if (currentAccessory.accessoryDecoderId === accessory.accessoryDecoderId) {
+    for (const curAccessory of currentAccessories) {
+      if (curAccessory.accessoryDecoderId === accessory.accessoryDecoderId) {
         accessories.push(accessory);
         notFound = false;
       } else {
-        accessories.push(currentAccessory);
+        accessories.push(curAccessory);
       }
     }
     if (notFound) {

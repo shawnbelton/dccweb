@@ -28,7 +28,7 @@ import {MessageService} from './services/message.service';
 import {PerformanceService} from './services/performance.service';
 import {InfoService} from './services/info.service';
 import {AccessoryDecoderService} from './services/accessoryDecoder.service';
-import {BlockItem} from './components/block.item.component';
+import {BlockItemComponent} from './components/block.item.component';
 import {PaginationComponent} from './components/pagination.component';
 import {DecoderSettingComponent} from './components/decoderSettings/decoderSetting.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -78,7 +78,7 @@ const stompConfig: StompConfig = {
     AccessoryComponent,
     BlockComponent,
     RelayComponent,
-    BlockItem,
+    BlockItemComponent,
     DecoderSettingComponent
   ],
   imports: [

@@ -46,12 +46,12 @@ export class DecoderService {
     const decoders: Decoder[] = this._decoders.getValue();
     const newDecoders: Decoder[] = [];
     let notFound = true;
-    for (const currentDecoder of decoders) {
-      if (decoder.decoderId === currentDecoder.decoderId) {
+    for (const curDecoder of decoders) {
+      if (decoder.decoderId === curDecoder.decoderId) {
         newDecoders.push(decoder);
         notFound = false;
       } else {
-        newDecoders.push(currentDecoder);
+        newDecoders.push(curDecoder);
       }
     }
     if (notFound) {

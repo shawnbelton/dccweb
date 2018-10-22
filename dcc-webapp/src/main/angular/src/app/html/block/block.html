@@ -5,7 +5,7 @@
       <div class="list-group">
         <app-pagination [items]="blocks" [pageSize]="5">
           <ng-template let-item>
-            <block-item [block]="item"></block-item>
+            <app-block-item [block]="item"></app-block-item>
           </ng-template>
         </app-pagination>
       </div>

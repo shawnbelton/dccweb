@@ -41,7 +41,7 @@ export class DecoderComponent implements OnInit {
   }
 
   isNotEmptySettings(): boolean {
-    let isNotEmpty: boolean = false;
+    let isNotEmpty = false;
     if (this.decoderSettings != null) {
       isNotEmpty = this.decoderSettings.length > 0;
     }
@@ -53,11 +53,11 @@ export class DecoderComponent implements OnInit {
   }
 
   isFunctionsTab(): boolean {
-    return this.isNotEmptyDecoder() && this.decoderTabState == 'FUNCTIONS';
+    return this.isNotEmptyDecoder() && this.decoderTabState === 'FUNCTIONS';
   }
 
   isMacrosTab(): boolean {
-    return this.isNotEmptyDecoder() && this.decoderTabState == 'MACROS';
+    return this.isNotEmptyDecoder() && this.decoderTabState === 'MACROS';
   }
 
   readDecoder(): void {
@@ -140,8 +140,8 @@ export class DecoderComponent implements OnInit {
   private hasFunction(index: number): boolean {
     let found = false;
     if (this.currentDecoder != null && this.currentDecoder.decoderFunctions != null) {
-      for (let decoderFunction of this.currentDecoder.decoderFunctions) {
-        if (decoderFunction.number == index) {
+      for (const decoderFunction of this.currentDecoder.decoderFunctions) {
+        if (decoderFunction.number === index) {
           found = true;
         }
       }
