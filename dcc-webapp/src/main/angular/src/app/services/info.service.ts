@@ -1,10 +1,10 @@
 /**
  * Created by shawn on 12/01/17.
  */
-import {BehaviorSubject, Observable} from "rxjs";
-import {Info} from "../models/info";
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Info} from '../models/info';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class InfoService {

@@ -1,9 +1,9 @@
 /**
  * Created by shawn on 10/01/17.
  */
-import {Component, OnInit} from "@angular/core";
-import {PerformanceService} from "../services/performance.service";
-import {Metrics} from "../models/metrics";
+import {Component, OnInit} from '@angular/core';
+import {PerformanceService} from '../services/performance.service';
+import {Metrics} from '../models/metrics';
 
 @Component({
     moduleId: module.id,

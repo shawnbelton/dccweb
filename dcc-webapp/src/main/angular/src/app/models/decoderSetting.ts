@@ -1,7 +1,7 @@
 /**
  * Created by shawn on 26/01/18.
  */
-import {DecoderSettingOption} from "./decoderSettingOption";
+import {DecoderSettingOption} from './decoderSettingOption';
 
 export class DecoderSetting {
   id: string;

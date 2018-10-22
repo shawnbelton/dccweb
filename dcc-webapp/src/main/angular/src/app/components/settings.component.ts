@@ -1,10 +1,11 @@
 /**
  * Created by shawn on 25/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {Settings} from "../models/settings";
-import {SettingsService} from "../services/settings.service";
-import {InterfaceInfo} from "../models/interfaceInfo";
+import {Component, OnInit} from '@angular/core';
+import {Settings} from '../models/settings';
+import {SettingsService} from '../services/settings.service';
+import {InterfaceInfo} from '../models/interfaceInfo';
+
 @Component({
     moduleId: module.id,
     selector: 'dcc-settings',

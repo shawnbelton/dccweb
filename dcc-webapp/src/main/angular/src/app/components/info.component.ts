@@ -1,10 +1,10 @@
 /**
  * Created by shawn on 12/01/17.
  */
-import {Component, OnInit} from "@angular/core";
-import {InfoService} from "../services/info.service";
-import {Info} from "../models/info";
-import * as moment from "moment/moment";
+import {Component, OnInit} from '@angular/core';
+import {InfoService} from '../services/info.service';
+import {Info} from '../models/info';
+import * as moment from 'moment/moment';
 
 @Component({
     moduleId: module.id,

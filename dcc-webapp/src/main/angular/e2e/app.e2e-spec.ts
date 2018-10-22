@@ -1,4 +1,4 @@
-import {AngularPage} from "./app.po";
+import {AngularPage} from './app.po';
 
 describe('angular App', () => {
   let page: AngularPage;

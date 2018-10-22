@@ -1,14 +1,14 @@
 /**
  * Created by shawn on 28/02/17.
  */
-import {Component, OnInit} from "@angular/core";
-import {AccessoryDecoder} from "../models/accessoryDecoder";
-import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
-import {DecoderAccessoryType} from "../models/decoderAccessoryType";
-import {AccessoryOperation} from "../models/accessoryOperation";
-import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
-import {Macro} from "../models/macro";
-import {MacroService} from "../services/macro.service";
+import {Component, OnInit} from '@angular/core';
+import {AccessoryDecoder} from '../models/accessoryDecoder';
+import {AccessoryDecoderService} from '../services/accessoryDecoder.service';
+import {DecoderAccessoryType} from '../models/decoderAccessoryType';
+import {AccessoryOperation} from '../models/accessoryOperation';
+import {DecoderAccessoryTypeOperation} from '../models/decoderAccessoryTypeOpertation';
+import {Macro} from '../models/macro';
+import {MacroService} from '../services/macro.service';
 
 @Component({
     moduleId: module.id,
@@ -38,7 +38,7 @@ export class AccessoryComponent implements OnInit {
     }
 
     startEditAccessory(accessory: AccessoryDecoder): void {
-        let newAccessory: AccessoryDecoder = new AccessoryDecoder();
+        const newAccessory: AccessoryDecoder = new AccessoryDecoder();
         newAccessory.accessoryDecoderId = accessory.accessoryDecoderId;
         newAccessory.accessoryDecoderType = accessory.accessoryDecoderType;
         newAccessory.address = accessory.address;
@@ -58,7 +58,7 @@ export class AccessoryComponent implements OnInit {
     }
 
     operateAccessory(accessory: AccessoryDecoder, operationValue: number): void {
-        let accessoryOperation: AccessoryOperation = new AccessoryOperation();
+        const accessoryOperation: AccessoryOperation = new AccessoryOperation();
         accessoryOperation.accessoryAddress = accessory.address;
         accessoryOperation.operationValue = operationValue;
         accessory.currentValue = operationValue;
@@ -66,7 +66,7 @@ export class AccessoryComponent implements OnInit {
     }
 
     isState(accessory: AccessoryDecoder, accessoryOperation: DecoderAccessoryTypeOperation): boolean {
-        return accessory.currentValue == accessoryOperation.decoderOperationValue;
+        return accessory.currentValue === accessoryOperation.decoderOperationValue;
     }
 
     getAccessories(): void {

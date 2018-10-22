@@ -1,7 +1,8 @@
 /**
  * Created by shawn on 24/02/17.
  */
-import {DecoderAccessoryTypeOperation} from "./decoderAccessoryTypeOpertation";
+import {DecoderAccessoryTypeOperation} from './decoderAccessoryTypeOpertation';
+
 export class DecoderAccessoryType {
     decoderTypeId: number;
     decoderType: string;

@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {Title} from "@angular/platform-browser";
+import {Component} from '@angular/core';
+import {Title} from '@angular/platform-browser';
 
 @Component({
-  selector: 'dcc-app',
+  selector: 'app-dcc-app',
   templateUrl: './html/design/header.html',
   styleUrls: ['./css/app.component.css']
 })

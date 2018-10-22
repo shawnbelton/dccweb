@@ -1,5 +1,5 @@
 export class Subscription {
-  destination:string;
-  callback:any;
-  headers:Object;
+  destination: string;
+  callback: any;
+  headers: Object;
 }

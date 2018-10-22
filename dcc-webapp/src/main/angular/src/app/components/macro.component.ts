@@ -1,21 +1,21 @@
 /**
  * Created by shawn on 28/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {Macro} from "../models/macro";
-import {MacroStep} from "../models/macro.step";
-import {Loco} from "../models/loco";
-import {LocoService} from "../services/loco.service";
-import {Decoder} from "../models/decoder";
-import {DecoderFunction} from "../models/decoderFunction";
-import {MacroService} from "../services/macro.service";
-import {AccessoryDecoder} from "../models/accessoryDecoder";
-import {AccessoryDecoderService} from "../services/accessoryDecoder.service";
-import {DecoderAccessoryTypeOperation} from "../models/decoderAccessoryTypeOpertation";
-import {BlockService} from "../services/block.service";
-import {Block} from "../models/block";
-import {RelayController} from "../models/relayController";
-import {RelayService} from "../services/relay.service";
+import {Component, OnInit} from '@angular/core';
+import {Macro} from '../models/macro';
+import {MacroStep} from '../models/macro.step';
+import {Loco} from '../models/loco';
+import {LocoService} from '../services/loco.service';
+import {Decoder} from '../models/decoder';
+import {DecoderFunction} from '../models/decoderFunction';
+import {MacroService} from '../services/macro.service';
+import {AccessoryDecoder} from '../models/accessoryDecoder';
+import {AccessoryDecoderService} from '../services/accessoryDecoder.service';
+import {DecoderAccessoryTypeOperation} from '../models/decoderAccessoryTypeOpertation';
+import {BlockService} from '../services/block.service';
+import {Block} from '../models/block';
+import {RelayController} from '../models/relayController';
+import {RelayService} from '../services/relay.service';
 
 @Component({
     moduleId: module.id,
@@ -181,33 +181,33 @@ export class MacroComponent implements OnInit {
     }
 
     displayStep(step: MacroStep): string {
-        let display: string = step.number.toString() + " ";
+        let display: string = step.number.toString() + ' ';
         switch(step.type) {
-            case "delay":
-                display = display + "Wait " + step.delay.toString() + " Seconds";
+            case 'delay':
+                display = display + 'Wait ' + step.delay.toString() + ' Seconds';
                 break;
-            case "decoderFunction":
+            case 'decoderFunction':
                 display = display + this.displayFunction(step);
                 break;
-            case "setSpeed":
+            case 'setSpeed':
                 display = display + this.displaySetSpeed(step);
                 break;
-            case "setAccessory":
+            case 'setAccessory':
                 display = display + this.displaySetAccessory(step);
                 break;
-            case "exitMacro":
-                display = display + "Exit Macro";
+            case 'exitMacro':
+                display = display + 'Exit Macro';
                 break;
-            case "thenGoTo":
-                display = display + "Then goto step " + step.value.toString();
+            case 'thenGoTo':
+                display = display + 'Then goto step ' + step.value.toString();
                 break;
-            case "isBlock":
+            case 'isBlock':
                 display = display + this.displayIsBlock(step);
                 break;
-            case "isAccessory":
+            case 'isAccessory':
                 display = display + this.displayIsAccessory(step);
                 break;
-            case "setRelay":
+            case 'setRelay':
                 display = display + this.displaySetRelay(step);
                 break;
         }
@@ -216,37 +216,37 @@ export class MacroComponent implements OnInit {
 
     displayFunction(step: MacroStep): string {
         let loco: Loco = this.fetchLoco(step);
-        let display: string = "Turn " + this.getState(step.functionStatus);
-        display = display + " " + this.displayFunctionName(loco, step.functionNumber);
-        display = display + " on " + this.displayLocoInfo(loco);
+        let display: string = 'Turn ' + this.getState(step.functionStatus);
+        display = display + ' ' + this.displayFunctionName(loco, step.functionNumber);
+        display = display + ' on ' + this.displayLocoInfo(loco);
         return display;
     }
 
     displaySetSpeed(step: MacroStep): string {
         let loco: Loco = this.fetchLoco(step);
-        let display: string = "Set speed to " + step.value;
-        display = display + " on " + this.displayLocoInfo(loco);
+        let display: string = 'Set speed to ' + step.value;
+        display = display + ' on ' + this.displayLocoInfo(loco);
         return display;
     }
 
     displaySetAccessory(step: MacroStep): string {
         let accessory: AccessoryDecoder = this.fetchAccessory(step);
-        let display: string = "Set Accessory " + accessory.name;
-        display = display + " to " + this.displayAccessoryOperation(step, accessory);
+        let display: string = 'Set Accessory ' + accessory.name;
+        display = display + ' to ' + this.displayAccessoryOperation(step, accessory);
         return display;
     }
 
     displayIsAccessory(step: MacroStep): string {
         let accessory: AccessoryDecoder = this.fetchAccessory(step);
-        let display: string = "Is Accessory " + accessory.name;
-        display = display + " set to " + this.displayAccessoryOperation(step, accessory);
+        let display: string = 'Is Accessory ' + accessory.name;
+        display = display + ' set to ' + this.displayAccessoryOperation(step, accessory);
         return display;
     }
 
     displayLocoInfo(loco: Loco): string {
       let locoInfo: string = loco.number;
       if (loco.name != null) {
-        locoInfo += " " + loco.name;
+        locoInfo += ' ' + loco.name;
       }
       return locoInfo;
     }
@@ -263,16 +263,16 @@ export class MacroComponent implements OnInit {
 
     getState(functionStatus: string): String {
         let value: string;
-        if (functionStatus == "true") {
-            value = "On";
+        if (functionStatus == 'true') {
+            value = 'On';
         } else {
-            value = "Off";
+            value = 'Off';
         }
         return value;
     }
 
     displayAccessoryOperation(step: MacroStep, accessory: AccessoryDecoder): string {
-        let accessoryOperation: string = "";
+        let accessoryOperation: string = '';
         for(let operation of accessory.accessoryDecoderType.decoderTypeOperations) {
             if (operation.decoderOperationValue == step.value) {
                 accessoryOperation = operation.decoderTypeOperation;
@@ -288,25 +288,25 @@ export class MacroComponent implements OnInit {
 
     displayIsBlock(step: MacroStep): string {
         let state: string;
-        let display: string = "Is Block " + this.getBlock(step);
+        let display: string = 'Is Block ' + this.getBlock(step);
         switch(step.value) {
             case 0:
-                state = "unoccupied.";
+                state = 'unoccupied.';
                 break;
             case 1:
-                state = "occupued.";
+                state = 'occupued.';
                 break;
         }
-        display = display + " " + state;
+        display = display + ' ' + state;
         return display;
     }
 
     displaySetRelay(step: MacroStep): string {
-        let display: string = "Set Relay " + step.functionNumber + " of " + this.getRelay(step) + " to ";
+        let display: string = 'Set Relay ' + step.functionNumber + ' of ' + this.getRelay(step) + ' to ';
         if (0 == step.value) {
-            display = display + "off";
+            display = display + 'off';
         } else {
-            display = display + "on";
+            display = display + 'on';
         }
         return display;
     }

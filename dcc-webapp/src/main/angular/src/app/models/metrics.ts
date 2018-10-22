@@ -3,30 +3,30 @@
  */
 export class Metrics {
 
-    static metricsArr: Metrics[] = [];
-    static resetArray: boolean = true;
+  static metricsArr: Metrics[] = [];
+  static resetArray = true;
 
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 
-    static reviver(key: string, value: any): any {
-        return key === "" ? Metrics.entries() : Metrics.createMetrics(key, value);
+  static reviver(key: string, value: any): any {
+    return key === '' ? Metrics.entries() : Metrics.createMetrics(key, value);
+  }
+
+  static entries(): Metrics[] {
+    Metrics.resetArray = true;
+    return Metrics.metricsArr;
+  }
+
+  static createMetrics(key: string, value: any): Metrics {
+    if (Metrics.resetArray) {
+      Metrics.metricsArr = [];
+      Metrics.resetArray = false;
     }
-
-    static entries(): Metrics[] {
-        Metrics.resetArray = true;
-        return Metrics.metricsArr;
-    }
-
-    static createMetrics(key: string, value: any): Metrics {
-        if (Metrics.resetArray) {
-            Metrics.metricsArr = [];
-            Metrics.resetArray = false;
-        }
-        let metrics = new Metrics();
-        metrics.name = key;
-        metrics.value = value;
-        Metrics.metricsArr.push(metrics);
-        return metrics;
-    }
+    const metrics = new Metrics();
+    metrics.name = key;
+    metrics.value = value;
+    Metrics.metricsArr.push(metrics);
+    return metrics;
+  }
 }

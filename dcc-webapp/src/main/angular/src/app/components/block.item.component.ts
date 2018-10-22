@@ -1,13 +1,13 @@
 /**
  * Created by shawn on 07/07/17.
  */
-import {Component, Input} from "@angular/core";
-import {Block} from "../models/block";
-import {BlockService} from "../services/block.service";
+import {Component, Input} from '@angular/core';
+import {Block} from '../models/block';
+import {BlockService} from '../services/block.service';
 
 @Component({
   moduleId: module.id,
-  selector: 'block-item',
+  selector: 'app-block-item',
   inputs: ['block'],
   templateUrl: './../html/block/blockItem.html'
 })

@@ -1,12 +1,12 @@
 /**
  * Created by shawn on 23/11/16.
  */
-import {Injectable} from "@angular/core";
-import {Cab} from "../models/cab";
-import {BehaviorSubject, Observable} from "rxjs";
-import {Loco} from "../models/loco";
-import {HttpClient} from "@angular/common/http";
-import {StompService} from "@stomp/ng2-stompjs";
+import {Injectable} from '@angular/core';
+import {Cab} from '../models/cab';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Loco} from '../models/loco';
+import {HttpClient} from '@angular/common/http';
+import {StompService} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 
 @Injectable()
@@ -29,9 +29,9 @@ export class CabService {
     }
 
     cabUpdate(cab: Cab): void {
-      let current: Cab = this._cab.getValue();
+      const current: Cab = this._cab.getValue();
       if (null != current) {
-        if (cab.loco.locoId == current.loco.locoId) {
+        if (cab.loco.locoId === current.loco.locoId) {
           current.cabFunctions = cab.cabFunctions;
           current.direction = cab.direction;
           current.speed = cab.speed;

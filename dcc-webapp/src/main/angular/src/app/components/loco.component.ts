@@ -1,12 +1,12 @@
 /**
  * Created by shawn on 16/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {Loco} from "../models/loco";
-import {LocoService} from "../services/loco.service";
-import {DecoderService} from "../services/decoder.service";
-import {Decoder} from "../models/decoder";
-import {CabService} from "../services/cab.service";
+import {Component, OnInit} from '@angular/core';
+import {Loco} from '../models/loco';
+import {LocoService} from '../services/loco.service';
+import {DecoderService} from '../services/decoder.service';
+import {Decoder} from '../models/decoder';
+import {CabService} from '../services/cab.service';
 
 @Component({
     moduleId: module.id,

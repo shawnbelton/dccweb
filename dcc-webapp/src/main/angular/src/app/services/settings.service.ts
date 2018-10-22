@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 26/11/16.
  */
-import {Injectable} from "@angular/core";
-import {Settings} from "../models/settings";
-import {BehaviorSubject, Observable} from "rxjs";
-import {InterfaceInfo} from "../models/interfaceInfo";
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {Settings} from '../models/settings';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {InterfaceInfo} from '../models/interfaceInfo';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class SettingsService {

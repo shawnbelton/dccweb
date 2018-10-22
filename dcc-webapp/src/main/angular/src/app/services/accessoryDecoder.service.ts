@@ -1,13 +1,13 @@
 /**
  * Created by shawn on 24/02/17.
  */
-import {Injectable} from "@angular/core";
-import {DecoderAccessoryType} from "../models/decoderAccessoryType";
-import {BehaviorSubject, Observable} from "rxjs";
-import {AccessoryDecoder} from "../models/accessoryDecoder";
-import {AccessoryOperation} from "../models/accessoryOperation";
-import {HttpClient} from "@angular/common/http";
-import {StompService} from "@stomp/ng2-stompjs";
+import {Injectable} from '@angular/core';
+import {DecoderAccessoryType} from '../models/decoderAccessoryType';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {AccessoryDecoder} from '../models/accessoryDecoder';
+import {AccessoryOperation} from '../models/accessoryOperation';
+import {HttpClient} from '@angular/common/http';
+import {StompService} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 
 
@@ -39,11 +39,11 @@ export class AccessoryDecoderService {
   }
 
   updateAccessory(accessory: AccessoryDecoder): void {
-    let currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
-    let accessories: AccessoryDecoder[] = [];
-    let notFound: boolean = true;
-    for (let currentAccessory of currentAccessories) {
-      if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+    const currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
+    const accessories: AccessoryDecoder[] = [];
+    let notFound = true;
+    for (const currentAccessory of currentAccessories) {
+      if (currentAccessory.accessoryDecoderId === accessory.accessoryDecoderId) {
         accessories.push(accessory);
         notFound = false;
       } else {
@@ -54,9 +54,9 @@ export class AccessoryDecoderService {
       accessories.push(accessory);
     }
     this._accessories.next(accessories);
-    let currentAccessory: AccessoryDecoder = this._accessory.getValue();
+    const currentAccessory: AccessoryDecoder = this._accessory.getValue();
     if (null != currentAccessory) {
-      if (currentAccessory.accessoryDecoderId == accessory.accessoryDecoderId) {
+      if (currentAccessory.accessoryDecoderId === accessory.accessoryDecoderId) {
         this._accessory.next(accessory);
       }
     }
@@ -81,7 +81,6 @@ export class AccessoryDecoderService {
   }
 
   operateAccessory(accessoryOperation: AccessoryOperation): void {
-    let retval: boolean = false;
     this.http.post(this.operateAccessoryUrl, accessoryOperation).subscribe((data: AccessoryDecoder[]) => {
       this._accessories.next(data);
     }, error => console.log('Could not operate accessory.'));

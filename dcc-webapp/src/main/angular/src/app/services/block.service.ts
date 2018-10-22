@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 03/04/17.
  */
-import {Injectable} from "@angular/core";
-import {Block} from "../models/block";
-import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {StompService} from "@stomp/ng2-stompjs";
+import {Injectable} from '@angular/core';
+import {Block} from '../models/block';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {StompService} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 
 
@@ -29,15 +29,15 @@ export class BlockService {
   }
 
   public on_next = (message: Message) => {
-   this.updateBlock(JSON.parse(message.body));
+    this.updateBlock(JSON.parse(message.body));
   }
 
   updateBlock(block: Block): void {
-    let newBlocks: Block[] = [];
-    let currentBlocks: Block[] = this._blocks.getValue();
-    let notFound: boolean = true;
-    for(let currentBlock of currentBlocks) {
-      if (currentBlock.blockId == block.blockId) {
+    const newBlocks: Block[] = [];
+    const currentBlocks: Block[] = this._blocks.getValue();
+    let notFound = true;
+    for (const currentBlock of currentBlocks) {
+      if (currentBlock.blockId === block.blockId) {
         newBlocks.push(block);
         notFound = false;
       } else {
@@ -48,9 +48,9 @@ export class BlockService {
       newBlocks.push(block);
     }
     this._blocks.next(newBlocks);
-    let currentBlock: Block = this._block.getValue();
+    const currentBlock: Block = this._block.getValue();
     if (null != currentBlock) {
-      if (currentBlock.blockId == block.blockId) {
+      if (currentBlock.blockId === block.blockId) {
         this._block.next(block);
       }
     }

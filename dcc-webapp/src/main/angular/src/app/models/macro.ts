@@ -1,7 +1,7 @@
 /**
  * Created by shawn on 30/11/16.
  */
-import {MacroStep} from "./macro.step";
+import {MacroStep} from './macro.step';
 
 export class Macro {
     macroId: number;

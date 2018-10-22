@@ -2,9 +2,10 @@
  * Created by shawn on 07/06/17.
  */
 
-import {Component, OnInit} from "@angular/core";
-import {RelayController} from "../models/relayController";
-import {RelayService} from "../services/relay.service";
+import {Component, OnInit} from '@angular/core';
+import {RelayController} from '../models/relayController';
+import {RelayService} from '../services/relay.service';
+
 @Component({
     moduleId: module.id,
     templateUrl: './../html/relay/relay.html',
@@ -48,7 +49,7 @@ export class RelayComponent implements OnInit {
     }
 
     showName(relay: RelayController, index: number): string {
-        return "" + (index + 1);
+        return '' + (index + 1);
     }
 
     switchStatus(relay: RelayController, index: number): boolean {

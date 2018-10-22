@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 22/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {Cab} from "../models/cab";
-import {CabService} from "../services/cab.service";
-import {CabFunction} from "../models/cabFunction";
-import {MacroService} from "../services/macro.service";
+import {Component, OnInit} from '@angular/core';
+import {Cab} from '../models/cab';
+import {CabService} from '../services/cab.service';
+import {CabFunction} from '../models/cabFunction';
+import {MacroService} from '../services/macro.service';
 
 @Component({
     moduleId: module.id,

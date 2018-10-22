@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 03/04/17.
  */
-import {Component, OnInit} from "@angular/core";
-import {BlockService} from "../services/block.service";
-import {Block} from "../models/block";
-import {Macro} from "../models/macro";
-import {MacroService} from "../services/macro.service";
+import {Component, OnInit} from '@angular/core';
+import {BlockService} from '../services/block.service';
+import {Block} from '../models/block';
+import {Macro} from '../models/macro';
+import {MacroService} from '../services/macro.service';
 
 @Component({
   moduleId: module.id,
@@ -47,7 +47,7 @@ export class BlockComponent implements OnInit {
   }
 
   resetBlock(): void {
-    let block: Block = new Block();
+    const block: Block = new Block();
     this.blockService.setBlock(block);
   }
 

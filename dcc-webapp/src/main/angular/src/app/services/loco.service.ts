@@ -1,10 +1,10 @@
 /**
  * Created by shawn on 19/11/16.
  */
-import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
-import {Loco} from "../models/loco";
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Loco} from '../models/loco';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class LocoService {

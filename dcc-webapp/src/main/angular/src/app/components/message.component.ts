@@ -1,9 +1,9 @@
 /**
  * Created by shawn on 16/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {LogMessage} from "../models/log.message";
-import {MessageService} from "../services/message.service";
+import {Component, OnInit} from '@angular/core';
+import {LogMessage} from '../models/log.message';
+import {MessageService} from '../services/message.service';
 
 @Component({
     moduleId: module.id,

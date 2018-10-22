@@ -1,14 +1,14 @@
 /**
  * Created by shawn on 16/11/16.
  */
-import {Component, OnInit} from "@angular/core";
-import {Decoder} from "../models/decoder";
-import {DecoderService} from "../services/decoder.service";
-import {MacroService} from "../services/macro.service";
-import {DecoderFunction} from "../models/decoderFunction";
-import {Macro} from "../models/macro";
-import {LinkedMacro} from "../models/linked.macro";
-import {DecoderSetting} from "../models/decoderSetting";
+import {Component, OnInit} from '@angular/core';
+import {Decoder} from '../models/decoder';
+import {DecoderService} from '../services/decoder.service';
+import {MacroService} from '../services/macro.service';
+import {DecoderFunction} from '../models/decoderFunction';
+import {Macro} from '../models/macro';
+import {LinkedMacro} from '../models/linked.macro';
+import {DecoderSetting} from '../models/decoderSetting';
 
 @Component({
   moduleId: module.id,
@@ -27,16 +27,16 @@ export class DecoderComponent implements OnInit {
 
   constructor(private decoderService: DecoderService,
               private macroService: MacroService) {
-    this.decoderTabState = "FUNCTIONS";
+    this.decoderTabState = 'FUNCTIONS';
   }
 
   setFunctionsTab(): boolean {
-    this.decoderTabState = "FUNCTIONS";
+    this.decoderTabState = 'FUNCTIONS';
     return false;
   }
 
   setMacrosTab(): boolean {
-    this.decoderTabState = "MACROS";
+    this.decoderTabState = 'MACROS';
     return false;
   }
 
@@ -53,11 +53,11 @@ export class DecoderComponent implements OnInit {
   }
 
   isFunctionsTab(): boolean {
-    return this.isNotEmptyDecoder() && this.decoderTabState == "FUNCTIONS";
+    return this.isNotEmptyDecoder() && this.decoderTabState == 'FUNCTIONS';
   }
 
   isMacrosTab(): boolean {
-    return this.isNotEmptyDecoder() && this.decoderTabState == "MACROS";
+    return this.isNotEmptyDecoder() && this.decoderTabState == 'MACROS';
   }
 
   readDecoder(): void {
