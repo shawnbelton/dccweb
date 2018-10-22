@@ -1,11 +1,11 @@
 /**
  * Created by shawn on 19/11/16.
  */
-import {Injectable} from "@angular/core";
-import {BehaviorSubject, Observable} from "rxjs";
-import {Status} from "../models/status";
-import {HttpClient} from "@angular/common/http";
-import {StompService, StompState} from "@stomp/ng2-stompjs";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {Status} from '../models/status';
+import {HttpClient} from '@angular/common/http';
+import {StompService, StompState} from '@stomp/ng2-stompjs';
 import {Message} from '@stomp/stompjs';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class StatusService {
     private status: Observable<Status> = this._status.asObservable();
 
     constructor(private http: HttpClient, private stompService: StompService) {
-      this.stompService.subscribe("/status").subscribe(this.on_next);
+      this.stompService.subscribe('/status').subscribe(this.on_next);
       this.stompService.state.subscribe((data: StompState) => this.updateStompStatus(data));
       this.readStatus();
     }
@@ -38,13 +38,13 @@ export class StatusService {
     }
 
     disconnected(): Status {
-      let status: Status = new Status();
+      const status: Status = new Status();
       status.status = 'DISCONNECTED';
       return status;
     }
 
     setStatus(status: string): void {
-      let statusObj: Status = new Status();
+      const statusObj: Status = new Status();
       statusObj.status = status;
       this._status.next(statusObj);
     }
@@ -57,8 +57,8 @@ export class StatusService {
     }
 
     unableToReadStatus(): void {
-        let status: Status = new Status();
-        status.status = "Service Down";
+        const status: Status = new Status();
+        status.status = 'Service Down';
         this._status.next(status);
     }
 

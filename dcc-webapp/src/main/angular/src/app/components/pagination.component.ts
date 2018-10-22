@@ -1,14 +1,14 @@
 /**
  * Created by shawn on 07/07/17.
  */
-import {Component, ContentChild, ElementRef, Input, TemplateRef} from "@angular/core";
+import {AfterContentInit, Component, ContentChild, ElementRef, Input, TemplateRef} from '@angular/core';
 
 @Component({
   moduleId: module.id,
   selector: 'app-pagination',
   templateUrl: './../html/pagination/pagination.html'
 })
-export class PaginationComponent {
+export class PaginationComponent implements AfterContentInit {
   @Input() items: any[];
   @Input() pageSize: number;
   @ContentChild(TemplateRef) itemTemplate: TemplateRef<ElementRef>;
