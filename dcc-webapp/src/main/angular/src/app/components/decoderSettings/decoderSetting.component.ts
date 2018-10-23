@@ -11,7 +11,7 @@ import {DecoderSetting} from '../../models/decoderSetting';
 })
 export class DecoderSettingComponent {
 
-  @Input('setting') decoderSetting: DecoderSetting;
+  @Input() decoderSetting: DecoderSetting;
 
   decoderSettingChanged(event: any): void {
     let newValue: number;
