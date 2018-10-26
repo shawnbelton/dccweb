@@ -3,7 +3,8 @@
  */
 import {Component, OnInit} from '@angular/core';
 import {Status} from '../models/status';
-import {StatusService} from '../services/status.service';
+import {StatusService} from '../status.service';
+
 
 @Component({
     moduleId: module.id,

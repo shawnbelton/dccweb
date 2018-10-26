@@ -23,7 +23,6 @@ import {SettingsService} from './services/settings.service';
 import {CabService} from './services/cab.service';
 import {LocoService} from './services/loco.service';
 import {DecoderService} from './services/decoder.service';
-import {StatusService} from './services/status.service';
 import {MessageService} from './services/message.service';
 import {PerformanceService} from './services/performance.service';
 import {InfoService} from './services/info.service';
@@ -35,6 +34,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {StompConfig, StompService} from '@stomp/ng2-stompjs';
 
 import * as SockJS from 'sockjs-client';
+import {StatusService} from './status.service';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -89,7 +89,6 @@ const stompConfig: StompConfig = {
   ],
   providers: [
     MessageService,
-    StatusService,
     DecoderService,
     LocoService,
     CabService,
@@ -104,7 +103,8 @@ const stompConfig: StompConfig = {
     {
       provide: StompConfig,
       useValue: stompConfig
-    }
+    },
+    StatusService
   ],
   bootstrap: [
     AppComponent,
