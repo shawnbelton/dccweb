@@ -129,7 +129,7 @@
       <form id="fullSetting" name="fullSetting" #fullSetting="ngForm">
         <app-pagination [items]="decoderSettings" [pageSize]="5">
           <ng-template let-item>
-            <app-decoder-setting class="row justify-content-end" [setting]="item"></app-decoder-setting>
+            <app-decoder-setting class="row justify-content-end" [decoderSetting]="item"></app-decoder-setting>
           </ng-template>
         </app-pagination>
         <div class="list-group-item">

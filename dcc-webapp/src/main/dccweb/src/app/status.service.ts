@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Status} from './models/status';
 import {HttpClient} from '@angular/common/http';
@@ -64,5 +64,4 @@ export class StatusService {
   getStatus(): Observable<Status> {
     return this.status;
   }
-
 }

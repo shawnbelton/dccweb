@@ -8,7 +8,7 @@ import {DecoderSetting} from '../models/decoder-setting';
 })
 export class DecoderSettingsComponent implements OnInit {
 
-  @Input('setting') decoderSetting: DecoderSetting;
+  @Input() decoderSetting: DecoderSetting;
 
   decoderSettingChanged(event: any): void {
     let newValue: number;
