@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-primary text-white"><span>Decoders</span></div>
+      <div class="list-group">
+        <app-pagination [items]="decoders" [pageSize]="5">
+          <ng-template let-item>
+            <div>
+              <div>
+                Long Address: {{item.longAddress}} Short Address: {{item.shortAddress}}
+                <div class="float-right">
+                  <input type="button" class="btn btn-success btn-sm" (click)="editDecoder(item)"
+                         value="Edit"/>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </app-pagination>
+      </div>
+      <div class="card-footer clearfix">
+        <span class="float-right btn-toolbar">
+          <input id="readDecoder" type="button" class="btn btn-info btn-sm"
+                 (click)="readDecoder()" value="Read Basic Values"/>
+          <input id="readFullDecoder" type="button" class="btn btn-info btn-sm"
+                 (click)="readFullDecoder()" value="Read Full Values"/>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm">
+    <div class="card" *ngIf="isNotEmptyDecoder()">
+      <div class="card-header bg-primary text-white">
+        <span>Decoder Settings</span>
+      </div>
+      <div class="card-body">
+        <p class="row">
+          <label class="col-sm-5">Manufacturer:</label>
+          <span class="col-sm-7">{{currentDecoder.dccManufacturer.manufacturer}}</span>
+        </p>
+        <p class="row">
+          <label class="col-sm-5">Version:</label>
+          <span class="col-sm-7">{{currentDecoder.version}}</span>
+        </p>
+        <p class="row">
+          <label class="col-sm-5">Short Address:</label>
+          <span class="col-sm-7">{{currentDecoder.shortAddress}}</span>
+        </p>
+        <p class="row">
+          <label class="col-sm-5">Long Address:</label>
+          <span class="col-sm-7">{{currentDecoder.longAddress}}</span>
+        </p>
+      </div>
+      <ul class="decoders nav nav-tabs">
+        <li role="presentation" class="nav-item">
+          <a href="/decoders" class="nav-link" [ngClass]="{'active': isFunctionsTab()}" (click)="setFunctionsTab()">Decoder Functions</a></li>
+        <li role="presentation" class="nav-item">
+          <a href="/decoders" class="nav-link" [ngClass]="{'active': isMacrosTab()}" (click)="setMacrosTab()">Macros</a>
+        </li>
+      </ul>
+      <div class="list-group" *ngIf="isFunctionsTab()">
+        <div class="list-group-item" *ngFor="let decoderFunction of currentDecoder.decoderFunctions">
+          <div>
+            <span>{{decoderFunction.number}} {{decoderFunction.name}}</span>
+            <div class="float-right">
+              <input type="button" class="btn btn-danger btn-sm"
+                     (click)="deleteDecoderFunction(decoderFunction)" value="Remove"/>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <form id="addFunction" class="form-inline" name="addFunction" (ngSubmit)="addDecoderFunction()"
+                #addFunction="ngForm">
+            <div class="form-group form-group-sm">
+              <label for="functionNumber">Number</label>
+              <select class="form-control" id="functionNumber" name="functionNumber" required="required"
+                      [(ngModel)]="newDecoderFunction.number" #functionNumber="ngModel">
+                <option *ngFor="let availableFunction of availableFunctions"
+                        [value]="availableFunction">{{availableFunction}}
+                </option>
+              </select>
+            </div>
+            <div class="form-group form-group-sm">
+              <label for="functionName">Name</label>
+              <input type="text" required="required" class="form-control" id="functionName"
+                     name="functionName"
+                     [(ngModel)]="newDecoderFunction.name" #functionName="ngModel"/>
+            </div>
+            <div class="float-right">
+              <input type="submit" id="saveFunction" class="btn btn-sm btn-success" value="Add Function"
+                     [disabled]="!addFunction.form.valid"/>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="list-group" *ngIf="isMacrosTab()">
+        <div class="list-group-item" *ngFor="let linkedMacro of currentDecoder.linkedMacros">
+          <div>
+            <span>{{getMacroName(linkedMacro.macroId)}}</span>
+            <div class="float-right">
+              <input type="button" class="btn btn-danger btn-sm"
+                     (click)="unlinkMacro(linkedMacro)" value="Unlink"/>
+            </div>
+          </div>
+        </div>
+        <div class="list-group-item">
+          <form id="linkMacroForm" class="form-inline" name="linkMacroForm" (ngSubmit)="linkMacro()"
+                #linkMacroForm="ngForm">
+            <div class="form-group form-group-sm">
+              <label for="linkMacro">Macro</label>
+              <select class="form-control" id="linkMacro" name="linkMacro" required="required"
+                      [(ngModel)]="linkedMacro.macroId" #functionNumber="ngModel">
+                <option *ngFor="let macro of macros"
+                        [value]="macro.macroId">{{macro.name}}
+                </option>
+              </select>
+            </div>
+            <div class="float-right">
+              <input type="submit" id="doLinkMacro" class="btn btn-sm btn-success" value="Link Macro"
+                     [disabled]="!linkMacroForm.form.valid"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="card" *ngIf="isNotEmptySettings()">
+      <div class="card-header bg-primary text-white">
+        <span>Full Decoder Settings</span>
+      </div>
+      <form id="fullSetting" name="fullSetting" #fullSetting="ngForm">
+        <app-pagination [items]="decoderSettings" [pageSize]="5">
+          <ng-template let-item>
+            <app-decoder-setting class="row justify-content-end" [setting]="item"></app-decoder-setting>
+          </ng-template>
+        </app-pagination>
+        <div class="list-group-item">
+          <input type="button" class="btn btn-danger" (click)="writeCVs()" value="Write CVs"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

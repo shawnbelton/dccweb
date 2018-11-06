@@ -1,0 +1,19 @@
+<div>
+  {{block.blockName}}
+  <div class="float-right btn-toolbar">
+    <input type="button" class="btn btn-success btn-sm" (click)="startBlockEdit()" value="Edit"/>
+    <input type="button" class="btn btn-sm btn-danger" (click)="deleteBlock()" value="X"/>
+  </div>
+  <ul class="list-inline">
+    <li class="list-inline-item">
+      <input type="button" class="btn btn-sm" value="Occupied"
+             (click)="setBlockOccupancy(true)"
+             [ngClass]="{'btn-danger': block.occupied, 'btn-default': !block.occupied}"/>
+    </li>
+    <li class="list-inline-item">
+      <input type="button" class="btn btn-sm" value="Unoccupied"
+             (click)="setBlockOccupancy(false)"
+             [ngClass]="{'btn-default': block.occupied, 'btn-success': !block.occupied}"/>
+    </li>
+  </ul>
+</div>
