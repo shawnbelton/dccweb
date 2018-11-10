@@ -37,6 +37,4 @@ public abstract class AbstractMacroStep implements IStep {
         run();
         return getNextStepNumber();
     }
-
-    public abstract void run();
 }

@@ -29,27 +29,27 @@ public class Macros {
         this.eventBus = eventBus;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody Collection<Macro> getMacros() {
         return macroService.getMacros();
     }
 
-    @RequestMapping(value = "/{macroId}", method = RequestMethod.GET)
+    @GetMapping(value = "/{macroId}")
     public @ResponseBody Macro getMacro(@PathVariable final Integer macroId) {
         return macroService.getMacro(macroId);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public @ResponseBody Collection<Macro> saveMacro(@RequestBody final Macro macro) {
         return macroService.saveMacro(macro);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @PostMapping(value = "/delete")
     public @ResponseBody Collection<Macro> deleteMacro(@RequestBody final Macro macro) {
         return macroService.deleteMacro(macro);
     }
 
-    @RequestMapping(value = "/run", method = RequestMethod.POST)
+    @PostMapping(value = "/run")
     public @ResponseBody Boolean runMacro(@RequestBody final Macro macro) {
         this.eventBus.post(new MacroRunEvent(macro.getMacroId()));
         return Boolean.TRUE;

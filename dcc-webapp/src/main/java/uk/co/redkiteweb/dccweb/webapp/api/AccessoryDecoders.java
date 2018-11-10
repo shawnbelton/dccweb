@@ -23,22 +23,22 @@ public class AccessoryDecoders {
         this.accessoryService = accessoryService;
     }
 
-    @RequestMapping(value = "/type/all", method = RequestMethod.GET)
+    @GetMapping(value = "/type/all")
     public @ResponseBody Collection<AccessoryDecoderType> allAccessoryDecoderTypes() {
         return accessoryService.getAccessoryDecoderTypes();
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody Collection<AccessoryDecoder> allAccessoryDecoders() {
         return accessoryService.getAccessoryDecoders();
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public @ResponseBody Collection<AccessoryDecoder> saveAccessoryDecoder(@RequestBody final AccessoryDecoder accessoryDecoder){
         return accessoryService.saveAccessoryDecoder(accessoryDecoder);
     }
 
-    @RequestMapping(value = "/operate", method = RequestMethod.POST)
+    @PostMapping(value = "/operate")
     public @ResponseBody Collection<AccessoryDecoder> operateAccessory(@RequestBody final AccessoryOperation accessoryOperation) {
         accessoryService.operateService(accessoryOperation);
         return accessoryService.getAccessoryDecoders();

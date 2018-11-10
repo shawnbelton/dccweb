@@ -21,22 +21,22 @@ public class RelayControllers {
         this.relayControllerService = relayControllerService;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     public @ResponseBody Integer updateController(@RequestBody final RelayController relayController) {
         return relayControllerService.updateController(relayController).getValue();
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody List<RelayController> getAllControllers() {
         return relayControllerService.getAllControllers();
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public @ResponseBody List<RelayController> save(@RequestBody final RelayController relayController) {
         return relayControllerService.save(relayController);
     }
 
-    @RequestMapping(value = "/update-value", method = RequestMethod.POST)
+    @PostMapping(value = "/update-value")
     public @ResponseBody List<RelayController> updateValue(@RequestBody final RelayController relayController) {
         return relayControllerService.updateValue(relayController);
     }
