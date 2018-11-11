@@ -62,11 +62,13 @@ public class AccessoryService {
 
     public Collection<AccessoryDecoder> saveAccessoryDecoder(final AccessoryDecoder accessoryDecoder) {
         final AccessoryDecoderType accessoryDecoderType = accessoryDecoderTypeRepository.findById(accessoryDecoder.getAccessoryDecoderType().getDecoderTypeId()).orElse(null);
-        accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
-        if (accessoryDecoder.getCurrentValue()==null) {
-            accessoryDecoder.setCurrentValue(accessoryDecoderType.getDecoderTypeOperations().get(0).getDecoderOperationValue());
+        if (accessoryDecoderType!=null) {
+            accessoryDecoder.setAccessoryDecoderType(accessoryDecoderType);
+            if (accessoryDecoder.getCurrentValue() == null) {
+                accessoryDecoder.setCurrentValue(accessoryDecoderType.getDecoderTypeOperations().get(0).getDecoderOperationValue());
+            }
+            accessoryDecoderRepository.save(accessoryDecoder);
         }
-        accessoryDecoderRepository.save(accessoryDecoder);
         return getAccessoryDecoders();
     }
 
