@@ -17,7 +17,7 @@ public class DecoderDefinitionTest {
     private static final String DECODER_DEF_FILE = "/151-255.xml";
     private static final String SHORT_ADDRESS = "Short Address";
     private static final String TEST_FILE_XML = "123-456.xml";
-    private static final String DEFINITIONS_PATH = "./src/test/resources/local";
+    private static final String DEFINITIONS_PATH = "./decoder-definitions/src/test/resources/local";
     private static final String MISSING_VALUE = "Missing Value";
     private static final String MISSING_XML = "/missing.xml";
     private DecoderDefinition decoderDefinition;
