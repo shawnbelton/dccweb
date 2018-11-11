@@ -2,13 +2,13 @@ package uk.co.redkiteweb.dccweb.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 @Configuration
 @EnableWebSocketMessageBroker
-public class WebSocketsConfig extends AbstractWebSocketMessageBrokerConfigurer {
+public class WebSocketsConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry stompEndpointRegistry) {

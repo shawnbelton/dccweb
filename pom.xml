@@ -74,7 +74,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.0</version>
+                <!--<version>0.8.0</version>-->
                 <executions>
                     <execution>
                         <id>pre-unit-test</id>
@@ -89,6 +89,15 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <forkCount>0</forkCount>
+                    <reuseForks>false</reuseForks>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

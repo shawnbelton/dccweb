@@ -63,10 +63,12 @@ public class RelayControllerService {
 
     public List<RelayController> updateValue(final RelayController relayController) {
         final RelayController updateValue = relayControllerRepository.findById(relayController.getControllerId()).orElse(null);
-        updateValue.setValue(relayController.getValue());
-        relayControllerRepository.save(updateValue);
-        logStore.log("info", String.format("Relay Controller %s relays updated.", updateValue.getControllerName()));
-        notify(relayController);
+        if (updateValue!=null) {
+            updateValue.setValue(relayController.getValue());
+            relayControllerRepository.save(updateValue);
+            logStore.log("info", String.format("Relay Controller %s relays updated.", updateValue.getControllerName()));
+            notify(relayController);
+        }
         return getAllControllers();
     }
 
