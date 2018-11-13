@@ -43,7 +43,7 @@ public class RelayControllerServiceTest {
         final RelayController relayController = new RelayController();
         relayController.setIpAddress("192.168.1.1");
         relayController.setControllerId("ControllerId");
-        when(relayControllerRepository.findById(anyString())).thenReturn(Optional.of(relayController));
+        when(relayControllerRepository.findById(anyString())).thenReturn(Optional.empty());
         assertNotNull(relayControllerService.updateController(relayController));
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
     }

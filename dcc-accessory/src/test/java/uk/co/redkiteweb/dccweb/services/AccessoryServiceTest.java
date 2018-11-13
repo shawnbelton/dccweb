@@ -118,6 +118,18 @@ public class AccessoryServiceTest {
         assertNotNull(accessoryService.saveAccessoryDecoder(accessoryDecoder));
     }
 
+    @Test
+    public void testSaveAccessoryNullType() {
+        when(accessoryDecoderRepository.findAll()).thenReturn(new ArrayList<>());
+        when(accessoryDecoderTypeRepository.findById(anyInt())).thenReturn(Optional.empty());
+        final AccessoryDecoder accessoryDecoder = mock(AccessoryDecoder.class);
+        final AccessoryDecoderType accessoryDecoderType = mock(AccessoryDecoderType.class);
+        when(accessoryDecoder.getAccessoryDecoderType()).thenReturn(accessoryDecoderType);
+        when(accessoryDecoderType.getDecoderTypeId()).thenReturn(1);
+        assertNotNull(accessoryService.saveAccessoryDecoder(accessoryDecoder));
+        verify(accessoryDecoderRepository, never()).save(any(AccessoryDecoder.class));
+    }
+
     private AccessoryDecoder getAccessoryDecoder() {
         final AccessoryDecoder accessoryDecoder = new AccessoryDecoder();
         accessoryDecoder.setAccessoryDecoderType(getAccessoryDecoderType());
