@@ -106,7 +106,7 @@
                 <version>3.0.0-M1</version>
                 <configuration>
                     <forkCount>0</forkCount>
-                    <reuseForks>fale</reuseForks>
+                    <reuseForks>false</reuseForks>
                     <forkMode>never</forkMode>
                 </configuration>
                 <executions>
