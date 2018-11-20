@@ -84,8 +84,6 @@
                         </goals>
                         <configuration>
                             <useSystemClassLoader>false</useSystemClassLoader>
-                            <!--<forkCount>0</forkCount>-->
-                            <!--<reuseForks>false</reuseForks>-->
                         </configuration>
                     </execution>
                 </executions>
