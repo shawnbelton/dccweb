@@ -24,47 +24,47 @@ public class Decoders {
         this.decoderService = decoderService;
     }
 
-    @RequestMapping(value = "/read", method = RequestMethod.GET)
+    @GetMapping(value = "/read")
     public @ResponseBody Decoder readDecoder() {
         return decoderService.readDecoder();
     }
 
-    @RequestMapping(value = "/read/full", method = RequestMethod.GET)
+    @GetMapping(value = "/read/full")
     public @ResponseBody Collection<DecoderSetting> readFull() {
         return decoderService.readFull();
     }
 
-    @RequestMapping(value = "/write", method = RequestMethod.POST)
+    @PostMapping(value = "/write")
     public @ResponseBody Boolean writeCVs(@RequestBody final Collection<DecoderSetting> decoderSettings) {
         return decoderService.writeCVs(decoderSettings);
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody Collection<Decoder> allDecoders() {
         return decoderService.allDecoders();
     }
 
-    @RequestMapping(value = "/byId/{decoderId}", method = RequestMethod.GET)
+    @GetMapping(value = "/byId/{decoderId}")
     public @ResponseBody Decoder getById(@PathVariable final Integer decoderId) {
         return decoderService.getById(decoderId);
     }
 
-    @RequestMapping(value = "/function/add", method = RequestMethod.POST)
+    @PostMapping(value = "/function/add")
     public @ResponseBody Decoder addFunction(@RequestBody final DecoderFunction decoderFunction) {
         return decoderService.addFunction(decoderFunction);
     }
 
-    @RequestMapping(value = "/function/delete", method = RequestMethod.POST)
+    @PostMapping(value = "/function/delete")
     public @ResponseBody Decoder deleteFunction(@RequestBody final DecoderFunction decoderFunction) {
         return decoderService.deleteFunction(decoderFunction);
     }
 
-    @RequestMapping(value = "/macro/link", method = RequestMethod.POST)
+    @PostMapping(value = "/macro/link")
     public @ResponseBody Decoder linkMacro(@RequestBody final LinkedMacro linkedMacro) {
         return decoderService.linkMacro(linkedMacro);
     }
 
-    @RequestMapping(value = "/macro/unlink", method = RequestMethod.POST)
+    @PostMapping(value = "/macro/unlink")
     public @ResponseBody Decoder unlinkMacro(@RequestBody final LinkedMacro linkedMacro) {
         return decoderService.unlinkMacro(linkedMacro);
     }

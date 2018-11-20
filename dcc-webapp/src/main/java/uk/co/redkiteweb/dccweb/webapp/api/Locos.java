@@ -21,17 +21,17 @@ public class Locos {
         this.locoService = locoService;
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody Collection<Loco> getAllLocos() {
         return locoService.getAllLocos();
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public @ResponseBody Collection<Loco> saveLoco(@RequestBody final Loco loco) {
         return locoService.saveLoco(loco);
     }
 
-    @RequestMapping(value = "/byId", method = RequestMethod.POST)
+    @PostMapping(value = "/byId")
     public @ResponseBody Loco getById(@RequestBody final Integer locoId) {
         return locoService.getById(locoId);
     }

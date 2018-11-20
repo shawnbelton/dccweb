@@ -1,5 +1,7 @@
 package uk.co.redkiteweb.dccweb.decoders;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ import java.io.*;
 @Component
 @Scope("prototype")
 public class DecoderDefinition {
+
+    private static final Logger LOGGER = LogManager.getLogger(DecoderDefinition.class);
 
     private Document decoderDefDocument;
     private String definitionsPath;
@@ -49,6 +53,7 @@ public class DecoderDefinition {
     private InputStream getInput(final String decoderDefFile) throws FileNotFoundException {
         InputStream xmlStream;
         final String fullFileName = String.format("%s/%s", definitionsPath, decoderDefFile);
+        LOGGER.info("Loading definitions file from: {}", fullFileName);
         final File definitionsFile = new File(fullFileName);
         if (definitionsFile.exists()) {
             xmlStream = new FileInputStream(definitionsFile);

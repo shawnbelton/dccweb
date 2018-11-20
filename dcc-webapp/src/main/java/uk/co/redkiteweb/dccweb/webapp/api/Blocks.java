@@ -21,7 +21,7 @@ public class Blocks {
         this.blockService = blockService;
     }
 
-    @RequestMapping(value = "/{identifier}/{blockNumber}/occupied/{occupied}", method = RequestMethod.GET)
+    @GetMapping(value = "/{identifier}/{blockNumber}/occupied/{occupied}")
     public @ResponseBody Boolean blockOccupancy(@PathVariable final String identifier,
                                                 @PathVariable final Integer blockNumber,
                                                 @PathVariable final Boolean occupied) {
@@ -29,23 +29,23 @@ public class Blocks {
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/occupied", method = RequestMethod.POST)
+    @PostMapping(value = "/occupied")
     public @ResponseBody List<Block> blockOccupancy(@RequestBody final Block block) {
         blockService.updateBlock(block.getBlockId(), block.getOccupied());
         return getAllBlocks();
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public @ResponseBody List<Block> getAllBlocks() {
         return blockService.getAllBlocks();
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @PostMapping(value = "/save")
     public @ResponseBody List<Block> saveBlock(@RequestBody final Block block) {
         return blockService.saveBlock(block);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @PostMapping(value = "/delete")
     public @ResponseBody List<Block> deleteBlock(@RequestBody final Block block) {
         return blockService.deleteBlock(block);
     }

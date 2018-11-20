@@ -26,7 +26,7 @@ public class AppSettings {
         this.logStore = logStore;
     }
 
-    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+    @GetMapping(value = "/settings")
     public @ResponseBody Settings getAppSettings() {
         final Settings settings = new Settings();
         settings.setDccSystem(settingsService.getSettingValue("InterfaceType", "Demo"));
@@ -34,7 +34,7 @@ public class AppSettings {
         return settings;
     }
 
-    @RequestMapping(value = "/settings", method = RequestMethod.POST)
+    @PostMapping(value = "/settings")
     public @ResponseBody Settings saveAppSettins(@RequestBody final Settings settings) {
         settingsService.setSettingValue("InterfaceType", settings.getDccSystem());
         settingsService.setSettingValue("SerialPort", settings.getSerialPort());

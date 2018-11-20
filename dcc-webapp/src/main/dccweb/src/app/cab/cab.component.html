@@ -1,0 +1,45 @@
+<div class="card" *ngIf="cab!=null && cab.loco.decoder != null">
+  <div class="card-header bg-success text-white">{{cab.loco.number}} {{cab.loco.name}}</div>
+  <div class="card-body">
+    <form id="locoCab" name="locoCab" #locoCab="ngForm">
+      <div class="input-group-lg row">
+        <input id="slider1" name="slider1" class="form-control" type="range" [(ngModel)]="cab.speed" (change)="speedChange()"
+               min="0" max="127" step="1" #slider1="ngModel" [disabled]="cab.direction == 'FSTOP' || cab.direction == 'RSTOP'" />
+      </div>
+      <div class="btn-toolbar row" role="toolbar">
+        <div class="btn-group mr-2" role="group">
+          <button type="button" (click)="down()" class="btn btn-sm"
+                  [ngClass]="{'btn-info': cab.direction != 'DOWN', 'btn-success': cab.direction == 'DOWN'}">&lt;&lt;</button>
+          <button type="button" (click)="up()" class="btn btn-sm"
+                  [ngClass]="{'btn-info': cab.direction != 'UP', 'btn-success': cab.direction == 'UP'}">&gt;&gt;</button>
+        </div>
+        <div class="btn-group mr-auto" role="group">
+          <button type="button" (click)="halt()" class="btn btn-sm btn-warning">Halt</button>
+        </div>
+        <div class="btn-group" role="group">
+          <button type="button" (click)="stop()" class="btn btn-sm"
+                  [ngClass]="{'btn-info': cab.direction !='RSTOP' && cab.direction != 'FSTOP','btn-danger': cab.direction == 'RSTOP' || cab.direction == 'FSTOP'}">Stop</button>
+        </div>
+      </div>
+      <div class="row top10">
+        <div class="mr-auto">
+          <ul class="list-inline">
+            <li *ngFor="let cabFunction of cab.cabFunctions" class="list-inline-item">
+              <input type="button" (click)="toggleFunction(cabFunction)" class="btn btn-sm"
+                     [ngClass]="{'btn-primary': cabFunction.state, 'btn-default': !cabFunction.state}" value="{{cabFunction.name}}"/>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="mr-auto">
+          <ul class="list-inline">
+            <li *ngFor="let linkedMacro of cab.loco.decoder.linkedMacros" class="list-inline-item">
+              <input type="button" (click)="runMacro(linkedMacro.macroId)" class="btn btn-sm btn-default" value="{{getMacroName(linkedMacro.macroId)}}"/>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

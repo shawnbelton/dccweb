@@ -31,12 +31,12 @@ public class CabInterface {
         this.cabService = cabService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping()
     public @ResponseBody Cab getCab(@RequestBody final Loco loco) {
         return cabStore.getCab(loco);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     public @ResponseBody Boolean updateCab(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating %s to %d speed %s direction.", cab.getLoco().getNumber(), cab.getSpeed(), cab.getDirection()));
         cabService.updateCab(cab);
@@ -44,7 +44,7 @@ public class CabInterface {
         return Boolean.TRUE;
     }
 
-    @RequestMapping(value = "/updateFunction", method = RequestMethod.POST)
+    @PostMapping(value = "/updateFunction")
     public @ResponseBody Boolean updateCabFunction(@RequestBody final Cab cab) {
         LOGGER.info(String.format("Updating functions on %s", cab.getLoco().getNumber()));
         cabService.updateCabFunctions(cab);

@@ -1,0 +1,41 @@
+<div class="card">
+  <div class="card-header bg-info text-white">Application information</div>
+  <div class="card-body">
+    <div *ngIf="info!=null && info.build!=null">
+      <p class="row">
+        <strong class="col-sm-4 text-right">Name:</strong>
+        <span class="col-sm-8 text-left">{{info.build.name}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">Group:</strong>
+        <span class="col-sm-8 text-left">{{info.build.group}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">Artifact:</strong>
+        <span class="col-sm-8 text-left">{{info.build.artifact}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">Version:</strong>
+        <span class="col-sm-8 text-left">{{info.build.version}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">Time:</strong>
+        <span class="col-sm-8 text-left">{{toDateString(info.build.time)}}</span>
+      </p>
+    </div>
+    <div *ngIf="info!=null && info.git!=null">
+      <p class="row">
+        <strong class="col-sm-4 text-right">git branch:</strong>
+        <span class="col-sm-8 text-left">{{info.git.branch}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">git commit id:</strong>
+        <span class="col-sm-8 text-left">{{info.git.commit.id}}</span>
+      </p>
+      <p class="row">
+        <strong class="col-sm-4 text-right">git commit time:</strong>
+        <span class="col-sm-8 text-left">{{toDateString(info.git.commit.time)}}</span>
+      </p>
+    </div>
+  </div>
+</div>
