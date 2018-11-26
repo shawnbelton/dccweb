@@ -6,6 +6,7 @@ import {BlockComponent} from './block/block.component';
 import {DecoderComponent} from './decoder/decoder.component';
 import {AccessoryComponent} from './accessory/accessory.component';
 import {SettingsComponent} from './settings/settings.component';
+import {NewMacroComponent} from './new-macro/new-macro.component';
 import {MacroEditComponent} from './macro-edit/macro-edit.component';
 
 
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'decoders', component: DecoderComponent, pathMatch: 'full'},
   {path: 'accessories', component: AccessoryComponent, pathMatch: 'full'},
   {path: 'settings', component: SettingsComponent, pathMatch: 'full'},
-  {path: 'macro-edit', component: MacroEditComponent, pathMatch: 'full'},
+  {path: 'macro-edit', component: NewMacroComponent, pathMatch: 'full'},
+  {path: 'macro-edit/:id', component: MacroEditComponent},
   {path: 'blocks', component: BlockComponent, pathMatch: 'full'},
   {path: 'relays', component: RelayComponent, pathMatch: 'full'}
 

@@ -24,6 +24,9 @@ import {SettingsComponent} from './settings/settings.component';
 import {DecoderComponent} from './decoder/decoder.component';
 import {DecoderSettingsComponent} from './decoder-settings/decoder-settings.component';
 import {BlockItemComponent} from './block-item/block-item.component';
+import {MacroListComponent} from './macro-list/macro-list.component';
+import {NewMacroComponent} from './new-macro/new-macro.component';
+import {EditMacroItemComponent} from './edit-macro-item/edit-macro-item.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -70,7 +73,10 @@ const stompConfig: StompConfig = {
     SettingsComponent,
     DecoderComponent,
     DecoderSettingsComponent,
-    BlockItemComponent
+    BlockItemComponent,
+    MacroListComponent,
+    NewMacroComponent,
+    EditMacroItemComponent
   ],
   imports: [
     BrowserModule,

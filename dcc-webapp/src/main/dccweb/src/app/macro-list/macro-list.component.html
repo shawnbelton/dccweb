@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">Macros</div>
+  <div class="list-group">
+    <app-pagination [items]="macros" [pageSize]="5">
+      <ng-template let-item>
+        <div>
+          <input type="button" class="btn btn-sm btn-success" (click)="runMacro(item.macroId)" value="Run"/>
+          {{item.name}}
+          <div class="float-right btn-toolbar">
+            <input type="button" class="btn btn-sm btn-info" [routerLink]="['/macro-edit', item.macroId]" value="Edit"/>
+            <input type="button" class="btn btn-sm btn-danger" (click)="deleteMacro(item)" value="X"/>
+          </div>
+        </div>
+      </ng-template>
+    </app-pagination>
+  </div>
+</div>
