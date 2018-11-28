@@ -29,6 +29,8 @@ import {NewMacroComponent} from './new-macro/new-macro.component';
 import {EditMacroItemComponent} from './edit-macro-item/edit-macro-item.component';
 import {RelayListComponent} from './relay-list/relay-list.component';
 import {RelayEditComponent} from './relay-edit/relay-edit.component';
+import {BlockListComponent} from './block-list/block-list.component';
+import {BlockEditComponent} from './block-edit/block-edit.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -80,7 +82,9 @@ const stompConfig: StompConfig = {
     NewMacroComponent,
     EditMacroItemComponent,
     RelayListComponent,
-    RelayEditComponent
+    RelayEditComponent,
+    BlockListComponent,
+    BlockEditComponent
   ],
   imports: [
     BrowserModule,

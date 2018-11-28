@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Block} from '../models/block';
 import {BlockService} from '../block.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-block-item',
@@ -11,7 +12,8 @@ export class BlockItemComponent {
 
   @Input() block: Block;
 
-  constructor(private blockService: BlockService) {
+  constructor(private blockService: BlockService,
+              private router: Router) {
   }
 
   setBlockOccupancy(state: boolean): void {
@@ -19,12 +21,9 @@ export class BlockItemComponent {
     this.blockService.setBlockOccupancy(this.block);
   }
 
-  startBlockEdit(): void {
-    this.blockService.setBlock(this.block);
-  }
-
   deleteBlock(): void {
     this.blockService.deleteBlock(this.block);
+    this.router.navigate(['/blocks']);
   }
 
 }

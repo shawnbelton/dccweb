@@ -9,6 +9,7 @@ import {SettingsComponent} from './settings/settings.component';
 import {NewMacroComponent} from './new-macro/new-macro.component';
 import {MacroEditComponent} from './macro-edit/macro-edit.component';
 import {RelayEditComponent} from './relay-edit/relay-edit.component';
+import {BlockEditComponent} from './block-edit/block-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'engine-shed', pathMatch: 'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'macro-edit', component: NewMacroComponent, pathMatch: 'full'},
   {path: 'macro-edit/:id', component: MacroEditComponent},
   {path: 'blocks', component: BlockComponent, pathMatch: 'full'},
+  {path: 'blocks/:id', component: BlockEditComponent},
   {path: 'relays', component: RelayComponent, pathMatch: 'full'},
   {path: 'relays/:id', component: RelayEditComponent}
 
