@@ -31,6 +31,9 @@ import {RelayListComponent} from './relay-list/relay-list.component';
 import {RelayEditComponent} from './relay-edit/relay-edit.component';
 import {BlockListComponent} from './block-list/block-list.component';
 import {BlockEditComponent} from './block-edit/block-edit.component';
+import {AccessoryListComponent} from './accessory-list/accessory-list.component';
+import {AccessoryEditComponent} from './accessory-edit/accessory-edit.component';
+import {NewAccessoryComponent} from './new-accessory/new-accessory.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -84,7 +87,10 @@ const stompConfig: StompConfig = {
     RelayListComponent,
     RelayEditComponent,
     BlockListComponent,
-    BlockEditComponent
+    BlockEditComponent,
+    AccessoryListComponent,
+    AccessoryEditComponent,
+    NewAccessoryComponent
   ],
   imports: [
     BrowserModule,

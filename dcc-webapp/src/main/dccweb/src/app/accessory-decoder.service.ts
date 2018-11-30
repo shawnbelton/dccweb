@@ -22,9 +22,6 @@ export class AccessoryDecoderService {
   private _accessories: BehaviorSubject<AccessoryDecoder[]> = new BehaviorSubject(null);
   private accessories: Observable<AccessoryDecoder[]> = this._accessories.asObservable();
 
-  private _accessory: BehaviorSubject<AccessoryDecoder> = new BehaviorSubject(null);
-  private accessory: Observable<AccessoryDecoder> = this._accessory.asObservable();
-
   constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchAccessoryTypes();
     this.fetchAccessories();
@@ -51,12 +48,6 @@ export class AccessoryDecoderService {
       accessories.push(accessory);
     }
     this._accessories.next(accessories);
-    const currentAccessory: AccessoryDecoder = this._accessory.getValue();
-    if (null != currentAccessory) {
-      if (currentAccessory.accessoryDecoderId === accessory.accessoryDecoderId) {
-        this._accessory.next(accessory);
-      }
-    }
   }
 
   fetchAccessoryTypes(): void {
@@ -69,6 +60,18 @@ export class AccessoryDecoderService {
     this.http.get(this.fetchAccessoriesUrl).subscribe((data: AccessoryDecoder[]) => {
       this._accessories.next(data);
     }, error => console.log('Could not load accessories.'));
+  }
+
+  getAccessory(id: number): AccessoryDecoder {
+    let accessory: AccessoryDecoder = new AccessoryDecoder();
+    accessory.accessoryDecoderType = new DecoderAccessoryType();
+    const currentAccessories: AccessoryDecoder[] = this._accessories.getValue();
+    for (const curAccessory of currentAccessories) {
+      if (curAccessory.accessoryDecoderId === id) {
+        accessory = curAccessory;
+      }
+    }
+    return accessory;
   }
 
   saveAccessory(accessory: AccessoryDecoder): void {
@@ -89,10 +92,6 @@ export class AccessoryDecoderService {
 
   getAccessoryTypes(): Observable<DecoderAccessoryType[]> {
     return this.accessoryTypes;
-  }
-
-  getAccessory(): Observable<AccessoryDecoder> {
-    return this.accessory;
   }
 
 }

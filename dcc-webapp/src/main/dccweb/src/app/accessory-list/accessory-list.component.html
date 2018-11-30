@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">
+    <span>Accessories</span>
+  </div>
+  <div class="list-group">
+    <app-pagination [items]="accessoryDecoders" [pageSize]="5">
+      <ng-template let-item>
+        <div>
+          <span>{{item.name}}</span>
+          <div class="float-right">
+            <input type="button" class="btn btn-success btn-sm" [routerLink]="['/accessories', item.accessoryDecoderId]" value="Edit"/>
+          </div>
+          <ul class="list-inline">
+            <li class="list-inline-item" *ngFor="let operation of item.accessoryDecoderType.decoderTypeOperations">
+              <input type="button" (click)="operateAccessory(item, operation.decoderOperationValue)"
+                     [ngClass]="{'btn-primary': isState(item, operation), 'btn-default': !isState(item, operation)}"
+                     class="btn btn-sm" value="{{operation.decoderTypeOperation}}"/>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </app-pagination>
+  </div>
+</div>
