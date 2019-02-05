@@ -10,6 +10,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -40,6 +41,7 @@ public class DecoderDefinition {
             final InputStream xmlStream = getInput(decoderDefFile);
             if (xmlStream != null) {
                 final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+                documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
                 final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 this.decoderDefDocument = documentBuilder.parse(xmlStream);
             } else {

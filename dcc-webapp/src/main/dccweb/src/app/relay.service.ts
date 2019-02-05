@@ -62,6 +62,16 @@ export class RelayService {
     }, error => console.log('Could not load relay controllers.'));
   }
 
+  getRelayController(controllerId: string): RelayController {
+    let relayController: RelayController = new RelayController();
+    for (const iRelayController of this._relayControllers.getValue()) {
+      if (iRelayController.controllerId === controllerId) {
+        relayController = iRelayController;
+      }
+    }
+    return relayController;
+  }
+
   getRelayControllers(): Observable<RelayController[]> {
     return this.relayControllers;
   }

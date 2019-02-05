@@ -27,6 +27,13 @@ import {BlockItemComponent} from './block-item/block-item.component';
 import {MacroListComponent} from './macro-list/macro-list.component';
 import {NewMacroComponent} from './new-macro/new-macro.component';
 import {EditMacroItemComponent} from './edit-macro-item/edit-macro-item.component';
+import {RelayListComponent} from './relay-list/relay-list.component';
+import {RelayEditComponent} from './relay-edit/relay-edit.component';
+import {BlockListComponent} from './block-list/block-list.component';
+import {BlockEditComponent} from './block-edit/block-edit.component';
+import {AccessoryListComponent} from './accessory-list/accessory-list.component';
+import {AccessoryEditComponent} from './accessory-edit/accessory-edit.component';
+import {NewAccessoryComponent} from './new-accessory/new-accessory.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -76,7 +83,14 @@ const stompConfig: StompConfig = {
     BlockItemComponent,
     MacroListComponent,
     NewMacroComponent,
-    EditMacroItemComponent
+    EditMacroItemComponent,
+    RelayListComponent,
+    RelayEditComponent,
+    BlockListComponent,
+    BlockEditComponent,
+    AccessoryListComponent,
+    AccessoryEditComponent,
+    NewAccessoryComponent
   ],
   imports: [
     BrowserModule,

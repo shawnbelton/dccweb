@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">Relay Controllers</div>
+  <div class="list-group">
+    <app-pagination [items]="relayControllers" [pageSize]="5">
+      <ng-template let-item>
+        <div>
+          {{item.controllerName}}
+          <div class="float-right btn-toolbar">
+            <input type="button" class="btn btn-success btn-sm"
+                   [routerLink]="['/relays', item.controllerId]" value="Edit"/>
+            <input type="button" class="btn btn-sm btn-danger"
+                   (click)="deleteRelayController(item)" value="X"/>
+          </div>
+          <ul class="list-inline">
+            <li class="list-inline-item" *ngFor="let index of [0,1,2,3,4,5,6,7]">
+              <small>{{showName(item, index)}}</small>
+              <label class="switch">
+                <input type="checkbox" (change)="switchChange(item, index)" [checked]="switchStatus(item, index)"/>
+                <div class="slider round"></div>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </app-pagination>
+  </div>
+</div>

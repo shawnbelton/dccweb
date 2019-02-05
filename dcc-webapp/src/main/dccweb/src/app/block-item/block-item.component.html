@@ -1,7 +1,7 @@
 <div>
   {{block.blockName}}
   <div class="float-right btn-toolbar">
-    <input type="button" class="btn btn-success btn-sm" (click)="startBlockEdit()" value="Edit"/>
+    <input type="button" class="btn btn-success btn-sm" [routerLink]="['/blocks', block.blockId]" value="Edit"/>
     <input type="button" class="btn btn-sm btn-danger" (click)="deleteBlock()" value="X"/>
   </div>
   <ul class="list-inline">

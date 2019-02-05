@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">Blocks</div>
+  <div class="list-group">
+    <app-pagination [items]="blocks" [pageSize]="5">
+      <ng-template let-item>
+        <app-block-item [block]="item"></app-block-item>
+      </ng-template>
+    </app-pagination>
+  </div>
+</div>
