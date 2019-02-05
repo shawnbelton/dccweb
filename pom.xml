@@ -58,6 +58,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <build>
@@ -103,7 +104,7 @@
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>3.4.0.905</version>
+                <version>3.6.0.1398</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
