@@ -8,7 +8,7 @@
           {{item.name}}
           <div class="float-right btn-toolbar">
             <input type="button" class="btn btn-sm btn-info" [routerLink]="['/macro-edit', item.macroId]" value="Edit"/>
-            <input type="button" class="btn btn-sm btn-danger" (click)="deleteMacro(item)" value="X"/>
+            <input type="button" class="leftGap btn btn-sm btn-danger" (click)="deleteMacro(item)" value="X"/>
           </div>
         </div>
       </ng-template>
