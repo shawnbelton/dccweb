@@ -113,6 +113,10 @@ export class EditMacroItemComponent implements OnInit {
     return step.number === this.macro.steps.length;
   }
 
+  isOnlyStep(step: MacroStep): boolean {
+    return this.isFirst(step) && this.isLast(step);
+  }
+
   moveUp(step: MacroStep): boolean {
     const stepNumber: number = step.number - 1;
     const prev: MacroStep = this.macro.steps[stepNumber - 1];
