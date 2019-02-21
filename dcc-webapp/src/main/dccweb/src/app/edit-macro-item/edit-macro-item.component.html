@@ -142,7 +142,7 @@
       <div *ngIf="!step.editing">
         <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="fas fa-angle-up fa-1x"></span></a>
         <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span class="fas fa-angle-down fa-1x"></span></a>
-        <strong [ngClass]="{'leftGap': isOnlyStep(step)}">{{displayStep(step)}}</strong>
+        <strong [ngClass]="{'leftGap': !isOnlyStep(step)}">{{displayStep(step)}}</strong>
         <div class="float-right btn-toolbar">
           <input type="button" class="btn btn-sm btn-info"
                  (click)="editStep(step)" value="Edit"/>
