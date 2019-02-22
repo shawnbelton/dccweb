@@ -21,7 +21,7 @@
         <span class="float-right btn-toolbar">
           <input id="readDecoder" type="button" class="btn btn-info btn-sm"
                  (click)="readDecoder()" value="Read Basic Values"/>
-          <input id="readFullDecoder" type="button" class="btn btn-info btn-sm"
+          <input id="readFullDecoder" type="button" class="leftGap btn btn-info btn-sm"
                  (click)="readFullDecoder()" value="Read Full Values"/>
         </span>
       </div>
@@ -72,20 +72,20 @@
                 #addFunction="ngForm">
             <div class="form-group form-group-sm">
               <label for="functionNumber">Number</label>
-              <select class="form-control" id="functionNumber" name="functionNumber" required="required"
+              <select class="leftGap form-control" id="functionNumber" name="functionNumber" required="required"
                       [(ngModel)]="newDecoderFunction.number" #functionNumber="ngModel">
                 <option *ngFor="let availableFunction of availableFunctions"
                         [value]="availableFunction">{{availableFunction}}
                 </option>
               </select>
             </div>
-            <div class="form-group form-group-sm">
+            <div class="leftGap form-group form-group-sm">
               <label for="functionName">Name</label>
-              <input type="text" required="required" class="form-control" id="functionName"
+              <input type="text" required="required" class="leftGap form-control" id="functionName"
                      name="functionName"
                      [(ngModel)]="newDecoderFunction.name" #functionName="ngModel"/>
             </div>
-            <div class="float-right">
+            <div class="leftGap">
               <input type="submit" id="saveFunction" class="btn btn-sm btn-success" value="Add Function"
                      [disabled]="!addFunction.form.valid"/>
             </div>
@@ -107,14 +107,14 @@
                 #linkMacroForm="ngForm">
             <div class="form-group form-group-sm">
               <label for="linkMacro">Macro</label>
-              <select class="form-control" id="linkMacro" name="linkMacro" required="required"
+              <select class="leftGap form-control" id="linkMacro" name="linkMacro" required="required"
                       [(ngModel)]="linkedMacro.macroId" #functionNumber="ngModel">
                 <option *ngFor="let macro of macros"
                         [value]="macro.macroId">{{macro.name}}
                 </option>
               </select>
             </div>
-            <div class="float-right">
+            <div class="leftGap">
               <input type="submit" id="doLinkMacro" class="btn btn-sm btn-success" value="Link Macro"
                      [disabled]="!linkMacroForm.form.valid"/>
             </div>
