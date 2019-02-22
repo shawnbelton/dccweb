@@ -5,12 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.omg.CORBA.portable.OutputStream;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 import uk.co.redkiteweb.dccweb.nce.factories.PortFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
