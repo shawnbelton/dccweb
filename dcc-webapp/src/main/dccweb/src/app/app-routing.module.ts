@@ -11,11 +11,13 @@ import {RelayEditComponent} from './relay-edit/relay-edit.component';
 import {BlockEditComponent} from './block-edit/block-edit.component';
 import {AccessoryEditComponent} from './accessory-edit/accessory-edit.component';
 import {NewAccessoryComponent} from './new-accessory/new-accessory.component';
+import {DecoderEditComponent} from "./decoder-edit/decoder-edit.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'engine-shed', pathMatch: 'full'},
   {path: 'engine-shed', component: EngineShedComponent, pathMatch: 'full'},
   {path: 'decoders', component: DecoderComponent, pathMatch: 'full'},
+  {path: 'decoders/:id', component: DecoderEditComponent},
   {path: 'accessories', component: NewAccessoryComponent, pathMatch: 'full'},
   {path: 'accessories/:id', component: AccessoryEditComponent},
   {path: 'settings', component: SettingsComponent, pathMatch: 'full'},
