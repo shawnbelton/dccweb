@@ -67,7 +67,7 @@ export class DecoderService {
 
   getDecoderById(id: number): Decoder {
     let decoder: Decoder = null;
-    for(const curDecoder of this._decoders.getValue()) {
+    for (const curDecoder of this._decoders.getValue()) {
       if (curDecoder.decoderId === id) {
         decoder = curDecoder;
       }

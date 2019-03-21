@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {DecoderService} from "../decoder.service";
-import {Decoder} from "../models/decoder";
+import {Component, OnInit} from '@angular/core';
+import {DecoderService} from '../decoder.service';
+import {Decoder} from '../models/decoder';
 
 @Component({
   selector: 'app-decoder-list',
@@ -16,6 +16,14 @@ export class DecoderListComponent implements OnInit {
   getDecoders(): void {
     this.decoderService
       .getDecoders().subscribe(decoders => this.decoders = decoders);
+  }
+
+  readDecoder(): void {
+    this.decoderService.readDecoder();
+  }
+
+  readFullDecoder(): void {
+    this.decoderService.readFullDecoder();
   }
 
   ngOnInit() {
