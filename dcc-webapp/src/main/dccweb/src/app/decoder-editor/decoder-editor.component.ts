@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Decoder} from "../models/decoder";
-import {DecoderFunction} from "../models/decoder-function";
-import {DecoderService} from "../decoder.service";
-import {MacroService} from "../macro.service";
-import {LinkedMacro} from "../models/linked-macro";
-import {Macro} from "../models/macro";
+import {Decoder} from '../models/decoder';
+import {DecoderFunction} from '../models/decoder-function';
+import {DecoderService} from '../decoder.service';
+import {MacroService} from '../macro.service';
+import {LinkedMacro} from '../models/linked-macro';
+import {Macro} from '../models/macro';
 
 @Component({
   selector: 'app-decoder-editor',
@@ -50,8 +50,8 @@ export class DecoderEditorComponent implements OnInit {
   }
 
   getAvailableFunctions(): number[] {
-    let availableFunctions: number[] = [];
-    for(let index = 0; index < 29; index++) {
+    const availableFunctions: number[] = [];
+    for (let index = 0; index < 29; index++) {
       if (!this.hasFunction(index)) {
         availableFunctions.push(index);
       }

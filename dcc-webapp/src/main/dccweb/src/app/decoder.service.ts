@@ -104,6 +104,11 @@ export class DecoderService {
     }, error => console.log('Could not load decoder settings.'));
   }
 
+  clearDecoder(): void {
+    this._decoderSettings.next(null);
+    this._decoder.next(null);
+  }
+
   writeCVs(decoderSettings: DecoderSetting[]) {
     this.http.post(this.writeDecoderUrl, decoderSettings).subscribe(data => {
       this._decoderSettings.next(null);

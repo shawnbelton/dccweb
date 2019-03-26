@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {DecoderService} from "../decoder.service";
-import {AccessoryDecoderService} from "../accessory-decoder.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Decoder} from "../models/decoder";
+import {DecoderService} from '../decoder.service';
+import {ActivatedRoute} from '@angular/router';
+import {Decoder} from '../models/decoder';
 
 @Component({
   selector: 'app-decoder-edit',
@@ -15,8 +14,7 @@ export class DecoderEditComponent implements OnInit, OnDestroy {
   sub: any;
 
   constructor(private decoderService: DecoderService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+              private route: ActivatedRoute) { }
 
   getDecoder(id: number): void {
     this.decoder = this.decoderService.getDecoderById(id);
