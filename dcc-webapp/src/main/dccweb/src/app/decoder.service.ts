@@ -65,6 +65,16 @@ export class DecoderService {
     }
   }
 
+  getDecoderById(id: number): Decoder {
+    let decoder: Decoder = null;
+    for (const curDecoder of this._decoders.getValue()) {
+      if (curDecoder.decoderId === id) {
+        decoder = curDecoder;
+      }
+    }
+    return decoder;
+  }
+
   fetchDecoders(): void {
     this.http.get(this.decodersUrl).subscribe((data: Decoder[]) => {
       this._decoders.next(data);
@@ -92,6 +102,11 @@ export class DecoderService {
       this._decoderSettings.next(data);
       this._decoder.next(null);
     }, error => console.log('Could not load decoder settings.'));
+  }
+
+  clearDecoder(): void {
+    this._decoderSettings.next(null);
+    this._decoder.next(null);
   }
 
   writeCVs(decoderSettings: DecoderSetting[]) {

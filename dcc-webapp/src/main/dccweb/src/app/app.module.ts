@@ -34,6 +34,11 @@ import {BlockEditComponent} from './block-edit/block-edit.component';
 import {AccessoryListComponent} from './accessory-list/accessory-list.component';
 import {AccessoryEditComponent} from './accessory-edit/accessory-edit.component';
 import {NewAccessoryComponent} from './new-accessory/new-accessory.component';
+import {DecoderListComponent} from './decoder-list/decoder-list.component';
+import {DecoderEditComponent} from './decoder-edit/decoder-edit.component';
+import {DecoderEditorComponent} from './decoder-editor/decoder-editor.component';
+import {DecoderReadComponent} from './decoder-read/decoder-read.component';
+import {DecoderSettingEditorComponent} from './decoder-setting-editor/decoder-setting-editor.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -90,7 +95,12 @@ const stompConfig: StompConfig = {
     BlockEditComponent,
     AccessoryListComponent,
     AccessoryEditComponent,
-    NewAccessoryComponent
+    NewAccessoryComponent,
+    DecoderListComponent,
+    DecoderEditComponent,
+    DecoderEditorComponent,
+    DecoderReadComponent,
+    DecoderSettingEditorComponent
   ],
   imports: [
     BrowserModule,

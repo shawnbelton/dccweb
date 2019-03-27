@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header bg-primary text-white"><span>Decoders</span></div>
+  <div class="list-group">
+    <app-pagination [items]="decoders" [pageSize]="5">
+      <ng-template let-item>
+        <div>
+          <div>
+            Long Address: {{item.longAddress}} Short Address: {{item.shortAddress}}
+            <div class="float-right">
+              <input type="button" class="btn btn-success btn-sm" [routerLink]="['/decoders', item.decoderId]"
+                     value="Edit"/>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </app-pagination>
+  </div>
+  <div class="card-footer clearfix">
+        <span class="float-right btn-toolbar">
+          <a id="readDecoder" type="link" class="btn btn-info btn-sm"
+             routerLink="/decoders/read" routerLinkActive="active">Read Basic Values</a>
+          <a id="readFullDecoder" type="link" class="leftGap btn btn-info btn-sm"
+             routerLink="/decoders/settings" routerLinkActive="active">Read Full Values</a>
+        </span>
+  </div>
+</div>
