@@ -3,10 +3,9 @@ package uk.co.redkiteweb.dccweb.decoders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.model.CVDefinition;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
@@ -50,8 +49,8 @@ public class DefinitionReader {
     }
 
     private ValueType getValueType(final String valueName) throws DefinitionException {
-        final Node valueNode = decoderDefinition.getValueNode(valueName);
-        return valueTypeFactory.getInstance(valueNode, cvHandler);
+        final CVValue cvValue = decoderDefinition.getCVValue(valueName);
+        return valueTypeFactory.getInstance(cvValue, cvHandler);
     }
 
     public Integer readValue(final String valueName) throws DefinitionException {
@@ -61,10 +60,8 @@ public class DefinitionReader {
 
     public List<DecoderSetting> readAllValues() throws DefinitionException {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
-        final NodeList allValueNodes = decoderDefinition.getValueNodes();
-        for(int index = 0; index < allValueNodes.getLength(); index++) {
-            final Node valueNode = allValueNodes.item(index);
-            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler);
+        for(final CVValue cvValue : decoderDefinition.getCVValues()) {
+            final ValueType valueType = valueTypeFactory.getInstance(cvValue, cvHandler);
             decoderSettings.add(valueType.getSetting());
         }
         return decoderSettings;
@@ -72,28 +69,24 @@ public class DefinitionReader {
 
     public Map<Integer, Integer> buildCVs(final Collection<DecoderSetting> decoderSettings) throws DefinitionException {
         final Map<Integer, Integer> cvMap = new HashMap<>();
-        final NodeList allCVNodes = decoderDefinition.getCVNodes();
-        for(int index = 0; index < allCVNodes.getLength(); index++) {
-            final Element cvNode = (Element) allCVNodes.item(index);
-            buildCVFromNode(decoderSettings, cvMap, cvNode);
+        for(final CVDefinition cvDefinition : decoderDefinition.getCvDefinitions()) {
+            buildCVFromNode(decoderSettings, cvMap, cvDefinition);
         }
         return cvMap;
     }
 
-    private void buildCVFromNode(final Collection<DecoderSetting> decoderSettings, final Map<Integer, Integer> cvMap, final Element cvNode) throws DefinitionException {
-        final NodeList valueNodes = cvNode.getElementsByTagName("value");
-        final String[] cvs = cvNode.getAttribute("number").split(",");
+    private void buildCVFromNode(final Collection<DecoderSetting> decoderSettings, final Map<Integer, Integer> cvMap, final CVDefinition cvDefinition) throws DefinitionException {
+        final String[] cvs = cvDefinition.getNumber().split(",");
         for(String cv : cvs) {
             final Integer cvNumber = Integer.parseInt(cv);
-            cvMap.put(cvNumber, getCVValue(decoderSettings, valueNodes, cvNumber));
+            cvMap.put(cvNumber, getCVValue(decoderSettings, cvDefinition.getValues(), cvNumber));
         }
     }
 
-    private Integer getCVValue(final Collection<DecoderSetting> decoderSettings, final NodeList valueNodes, final Integer cvNumber) throws DefinitionException {
+    private Integer getCVValue(final Collection<DecoderSetting> decoderSettings, final Collection<CVValue> cvValues, final Integer cvNumber) throws DefinitionException {
         Integer cvValue = 0;
-        for(int valueIndex = 0; valueIndex < valueNodes.getLength(); valueIndex++) {
-            final Node valueNode = valueNodes.item(valueIndex);
-            final ValueType valueType = valueTypeFactory.getInstance(valueNode, cvHandler);
+        for(final CVValue value : cvValues) {
+            final ValueType valueType = valueTypeFactory.getInstance(value, cvHandler);
             cvValue |= valueType.getCVValue(cvNumber, decoderSettings);
         }
         return cvValue;

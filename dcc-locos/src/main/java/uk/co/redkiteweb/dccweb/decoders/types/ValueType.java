@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.decoders.types;
 
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import java.util.Collection;
 
@@ -9,7 +9,7 @@ import java.util.Collection;
  * Created by shawn on 16/09/16.
  */
 public interface ValueType {
-    void setValueNode(final Node valueNode);
+    void setCVValue(final CVValue value);
     void setCVReader(final CVHandler cvHandler);
     Integer getValue();
     DecoderSetting getSetting();

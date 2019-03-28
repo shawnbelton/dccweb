@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import uk.co.redkiteweb.dccweb.decoders.model.CVDefinition;
@@ -22,6 +21,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
 import java.io.*;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.TreeSet;
 
 /**
@@ -87,21 +87,22 @@ public class DecoderDefinition {
     private void addCV(final Element cvElement) {
         final CVDefinition cv = new CVDefinition();
         cv.setNumber(cvElement.getAttribute("number"));
-        cv.setValues(fetchValues(cvElement.getElementsByTagName("value")));
+        cv.setValues(fetchValues(cvElement.getElementsByTagName("value"), cv.getNumber()));
         cvDefinitions.add(cv);
     }
 
-    private Collection<CVValue> fetchValues(final NodeList valueList) {
+    private Collection<CVValue> fetchValues(final NodeList valueList, final String cvNumber) {
         final Collection<CVValue> values = new TreeSet<>();
         for(int index = 0; index < valueList.getLength(); index++) {
-            addCVValue(values, (Element) valueList.item(index));
+            addCVValue(values, (Element) valueList.item(index), cvNumber);
         }
         return values;
     }
 
-    private void addCVValue(final Collection<CVValue> values, final Element valueElement) {
+    private void addCVValue(final Collection<CVValue> values, final Element valueElement, final String cvNumber) {
         final CVValue value = new CVValue();
         value.setId(valueElement.getAttribute("id"));
+        value.setCvNumber(cvNumber);
         value.setName(valueElement.getAttribute("name"));
         value.setType(CVValue.Type.valueOf(valueElement.getAttribute("type").toUpperCase()));
         value.setBit(valueToInteger(valueElement.getAttribute("bit")));
@@ -137,15 +138,26 @@ public class DecoderDefinition {
         options.add(option);
     }
 
-    public Node getValueNode(final String valueName) throws DefinitionException {
-        return (Node) getXPathValue(String.format("//value[@name='%s']", valueName), XPathConstants.NODE);
+    public CVValue getCVValue(final String valueName) throws DefinitionException {
+        final Optional<CVValue> value = getCVValues().stream().filter(cvValue -> cvValue.getName().equals(valueName)).findFirst();
+        if (value.isPresent()) {
+            return value.get();
+        } else {
+            throw new DefinitionException(String.format("CV Value %s is not found.", valueName));
+        }
     }
 
-    public NodeList getValueNodes() throws DefinitionException {
-        return (NodeList) getXPathValue("//value", XPathConstants.NODESET);
+    public Collection<CVValue> getCVValues() {
+        final Collection<CVValue> cvValues = new TreeSet<>();
+        cvDefinitions.forEach(cvDefinition -> cvValues.addAll(cvDefinition.getValues()));
+        return cvValues;
     }
 
-    public NodeList getCVNodes() throws DefinitionException {
+    public Collection<CVDefinition> getCvDefinitions() {
+        return cvDefinitions;
+    }
+
+    private NodeList getCVNodes() throws DefinitionException {
         return (NodeList) getXPathValue("//cv", XPathConstants.NODESET);
     }
 

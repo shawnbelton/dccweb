@@ -11,6 +11,7 @@ public class CVValue implements Comparable<CVValue> {
     }
 
     private String id;
+    private String cvNumber;
     private String name;
     private Type type;
     private Integer bit;
@@ -25,6 +26,14 @@ public class CVValue implements Comparable<CVValue> {
 
     public void setId(final String id) {
         this.id = id;
+    }
+
+    public String getCvNumber() {
+        return cvNumber;
+    }
+
+    public void setCvNumber(final String cvNumber) {
+        this.cvNumber = cvNumber;
     }
 
     public String getName() {
