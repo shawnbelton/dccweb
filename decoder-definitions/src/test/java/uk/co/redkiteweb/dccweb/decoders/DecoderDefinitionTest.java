@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Created by shawn on 18/09/16.
@@ -35,31 +34,31 @@ public class DecoderDefinitionTest {
     @Test
     public void testGetNode() throws DefinitionException {
         decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        assertNotNull(decoderDefinition.getValueNode(SHORT_ADDRESS));
+        assertNotNull(decoderDefinition.getCVValue(SHORT_ADDRESS));
     }
 
     @Test
     public void testGetNodes() throws DefinitionException {
         decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        assertNotNull(decoderDefinition.getValueNodes());
+        assertNotNull(decoderDefinition.getCVValues());
     }
 
-    @Test
+    @Test(expected = DefinitionException.class)
     public void testGetNodeMissing() throws DefinitionException {
         decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        assertNull(decoderDefinition.getValueNode(MISSING_VALUE));
+        decoderDefinition.getCVValue(MISSING_VALUE);
     }
 
     @Test
     public void testGetCVNodes() throws DefinitionException {
         decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        assertNotNull(decoderDefinition.getCVNodes());
+        assertNotNull(decoderDefinition.getCvDefinitions());
     }
 
     @Test
     public void testFromFile() throws DefinitionException {
         decoderDefinition.setDefinitionsPath(DEFINITIONS_PATH);
         decoderDefinition.setDecoderDefFile(TEST_FILE_XML);
-        assertNotNull(decoderDefinition.getValueNode(SHORT_ADDRESS));
+        assertNotNull(decoderDefinition.getCVValue(SHORT_ADDRESS));
     }
 }

@@ -11,6 +11,8 @@ import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 @Component
 public class DefinitionReaderFactory implements ApplicationContextAware {
 
+    private static final int MANUFACTURER = 8;
+    private static final int VERSION = 7;
     private ApplicationContext context;
 
     @Override
@@ -19,11 +21,11 @@ public class DefinitionReaderFactory implements ApplicationContextAware {
     }
 
     public DefinitionReader getInstance(final CVHandler cvHandler) throws DefinitionException {
-        final Integer manufacturerId = cvHandler.readCV(8);
+        final Integer manufacturerId = cvHandler.readCV(MANUFACTURER);
         if (manufacturerId == null) {
             throw new DecoderNotDetectedException("No Decoder Detected");
         }
-        final Integer version = cvHandler.readCV(7);
+        final Integer version = cvHandler.readCV(VERSION);
         final DefinitionReader definitionReader = getDefinitionReader(manufacturerId, version);
         definitionReader.setCvHandler(cvHandler);
         return definitionReader;

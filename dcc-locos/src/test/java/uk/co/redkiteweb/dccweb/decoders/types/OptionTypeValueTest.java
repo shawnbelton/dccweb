@@ -4,15 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValueOption;
+
+import java.util.Collection;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,9 +25,9 @@ public class OptionTypeValueTest {
     public void setup() {
         final CVHandler cvHandler = mock(CVHandler.class);
         when(cvHandler.readCV(anyInt())).thenReturn(1);
-        final Node valueNode = createValueNode();
+        final CVValue cvValue = createCVValue();
         optionValueType = new OptionValueType();
-        optionValueType.setValueNode(valueNode);
+        optionValueType.setCVValue(cvValue);
         optionValueType.setCVReader(cvHandler);
     }
 
@@ -41,45 +41,27 @@ public class OptionTypeValueTest {
         assertFalse(optionValueType.getSetting().getDecoderSettingOptions().isEmpty());
     }
 
-    private Node createValueNode() {
-        final Node valueNode = mock(Node.class);
-        final Node cvNode = mock(Node.class);
-        final Node idNode = mock(Node.class);
-        final NamedNodeMap valueNodeAttributes = mock(NamedNodeMap.class);
-        final NamedNodeMap cvNodeAttributes = mock(NamedNodeMap.class);
-        when(valueNode.getAttributes()).thenReturn(valueNodeAttributes);
-        when(valueNode.getParentNode()).thenReturn(cvNode);
-        when(cvNode.getAttributes()).thenReturn(cvNodeAttributes);
-        final Node numberNode = mock(Node.class);
-        final Node bitNode = mock(Node.class);
-        final Node nameAttribute = mock(Node.class);
-        when(valueNodeAttributes.getNamedItem(eq("id"))).thenReturn(idNode);
-        when(valueNodeAttributes.getNamedItem(eq("name"))).thenReturn(nameAttribute);
-        when(cvNodeAttributes.getNamedItem(eq("number"))).thenReturn(numberNode);
-        when(valueNodeAttributes.getNamedItem(eq("bit"))).thenReturn(bitNode);
-        when(idNode.getTextContent()).thenReturn("id1");
-        when(nameAttribute.getTextContent()).thenReturn("name");
-        when(numberNode.getTextContent()).thenReturn("1");
-        when(bitNode.getTextContent()).thenReturn("0");
-        final NodeList optionNodes = createOptionNodes();
-        when(valueNode.getChildNodes()).thenReturn(optionNodes);
-        return valueNode;
+    private CVValue createCVValue() {
+        final CVValue cvValue = new CVValue();
+        cvValue.setId("id1");
+        cvValue.setName("name");
+        cvValue.setCvNumber("1");
+        cvValue.setBit(0);
+        cvValue.setOptions(createOptions());
+        return cvValue;
     }
 
-    private NodeList createOptionNodes() {
-        final NodeList optionNodes = mock(NodeList.class);
-        when(optionNodes.getLength()).thenReturn(2);
-        when(optionNodes.item(eq(0))).thenReturn(mock(Node.class));
-        final Element optionNode = mock(Element.class);
-        when(optionNodes.item(eq(1))).thenReturn(optionNode);
-        final NamedNodeMap optionAttributes = mock(NamedNodeMap.class);
-        when(optionNode.getAttributes()).thenReturn(optionAttributes);
-        final Node valueNode = mock(Node.class);
-        final Node optionTextNode = mock(Node.class);
-        when(optionAttributes.getNamedItem("value")).thenReturn(valueNode);
-        when(optionAttributes.getNamedItem("option")).thenReturn(optionTextNode);
-        when(valueNode.getTextContent()).thenReturn("1");
-        when(optionTextNode.getTextContent()).thenReturn("option");
-        return optionNodes;
+    private Collection<CVValueOption> createOptions() {
+        final Collection<CVValueOption> options = new HashSet<>();
+        options.add(createOption(0,"Off"));
+        options.add(createOption(1, "On"));
+        return options;
+    }
+
+    private CVValueOption createOption(final Integer value, final String name) {
+        final CVValueOption option = new CVValueOption();
+        option.setValue(value);
+        option.setName(name);
+        return option;
     }
 }

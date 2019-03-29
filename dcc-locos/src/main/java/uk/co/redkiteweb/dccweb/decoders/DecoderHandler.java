@@ -261,13 +261,17 @@ public class DecoderHandler {
     private Decoder saveDecoder(final Map<Integer, Integer> cachedCvs, final Decoder decoder) {
         decoderRepository.save(decoder);
         for (Map.Entry<Integer, Integer> cvValue : cachedCvs.entrySet()) {
-            final CV cv = new CV();
-            cv.setDecoderId(decoder.getDecoderId());
-            cv.setCvNumber(cvValue.getKey());
-            cv.setCvValue(cvValue.getValue());
-            cvRepository.save(cv);
+            cvRepository.save(createCV(decoder, cvValue));
         }
         messagingTemplate.convertAndSend("/decoder", decoder);
         return decoderRepository.findById(decoder.getDecoderId()).orElse(null);
+    }
+
+    private CV createCV(final Decoder decoder, final Map.Entry<Integer, Integer> cvValue) {
+        final CV cv = new CV();
+        cv.setDecoderId(decoder.getDecoderId());
+        cv.setCvNumber(cvValue.getKey());
+        cv.setCvValue(cvValue.getValue());
+        return cv;
     }
 }

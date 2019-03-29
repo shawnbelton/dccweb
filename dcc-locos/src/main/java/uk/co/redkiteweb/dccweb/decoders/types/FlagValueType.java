@@ -13,10 +13,9 @@ public class FlagValueType extends AbstractValueType implements ValueType {
 
     @Override
     public Integer getValue() {
-        final String cv = getValueNode().getParentNode().getAttributes().getNamedItem("number").getTextContent();
+        final String cv = getCVValue().getCvNumber();
         final long value = getCVValue(Integer.parseInt(cv));
-        final int bit = Integer.parseInt(getValueNode().getAttributes().getNamedItem("bit").getTextContent());
-        final long bitMask = Math.round(Math.pow(2,bit));
+        final long bitMask = Math.round(Math.pow(2,getCVValue().getBit()));
         final long flagValue = (value & bitMask);
         return (flagValue>0)?1:0;
     }
@@ -28,8 +27,7 @@ public class FlagValueType extends AbstractValueType implements ValueType {
 
     @Override
     protected Integer getCVValue(final Integer cvNumber, final DecoderSetting decoderSetting) {
-        final int bit = Integer.parseInt(getValueNode().getAttributes().getNamedItem("bit").getTextContent());
-        final Integer bitMask = (int)Math.round(Math.pow(2, bit));
+        final int bitMask = (int)Math.round(Math.pow(2, getCVValue().getBit()));
         return (decoderSetting.getNewValue()>0)?bitMask:0;
     }
 }

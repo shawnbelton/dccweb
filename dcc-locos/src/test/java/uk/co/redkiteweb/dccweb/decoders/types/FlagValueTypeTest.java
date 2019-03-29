@@ -4,9 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -31,23 +29,13 @@ public class FlagValueTypeTest {
     public void setup() {
         cvHandler = mock(CVHandler.class);
         when(cvHandler.readCV(anyInt())).thenReturn(1);
-        final Node node = mock(Node.class);
-        final Node nameNode = mock(Node.class);
-        final Node idNode = mock(Node.class);
-        final NamedNodeMap namedNodeMap = mock(NamedNodeMap.class);
-        when(node.getParentNode()).thenReturn(node);
-        when(node.getAttributes()).thenReturn(namedNodeMap);
-        when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);
-        when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
-        when(namedNodeMap.getNamedItem(eq("id"))).thenReturn(idNode);
-        when(nameNode.getTextContent()).thenReturn("Name");
-        when(node.getTextContent()).thenReturn("1");
-        when(idNode.getTextContent()).thenReturn("id1");
-        final Node bitNode = mock(Node.class);
-        when(namedNodeMap.getNamedItem(eq("bit"))).thenReturn(bitNode);
-        when(bitNode.getTextContent()).thenReturn("3");
+        final CVValue cvValue = mock(CVValue.class);
+        when(cvValue.getType()).thenReturn(CVValue.Type.FLAG);
+        when(cvValue.getBit()).thenReturn(3);
+        when(cvValue.getCvNumber()).thenReturn("12");
+        when(cvValue.getName()).thenReturn("Name");
         flag = new FlagValueType();
-        flag.setValueNode(node);
+        flag.setCVValue(cvValue);
         flag.setCVReader(cvHandler);
     }
 
