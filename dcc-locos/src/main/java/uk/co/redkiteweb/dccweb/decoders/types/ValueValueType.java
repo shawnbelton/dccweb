@@ -18,12 +18,12 @@ public class ValueValueType extends AbstractValueType implements ValueType {
     @Override
     public Integer getValue() {
         int value = 0;
-        for(String cv : getCVs()) {
+        for (String cv : getCVs()) {
             value *= 256;
             value += getCVValue(Integer.parseInt(cv));
         }
         final Integer mask = getMask();
-        if (mask!=null) {
+        if (mask != null && mask != 0) {
             value &= mask;
         }
         return value;
@@ -39,8 +39,8 @@ public class ValueValueType extends AbstractValueType implements ValueType {
         int retValue = 0;
         int value = decoderSetting.getNewValue();
         final Integer mask = getMask();
-        if (mask!=null) {
-            value |= (mask^0xffff);
+        if (mask != null && mask != 0) {
+            value |= (mask ^ 0xffff);
         }
         for (String cv : Lists.reverse(getCVs())) {
             if (cvNumber.equals(Integer.parseInt(cv))) {
