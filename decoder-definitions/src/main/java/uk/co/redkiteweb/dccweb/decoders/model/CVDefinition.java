@@ -2,6 +2,8 @@ package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
 
+import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
+
 public class CVDefinition implements Comparable<CVDefinition> {
 
     private String number;
@@ -25,6 +27,7 @@ public class CVDefinition implements Comparable<CVDefinition> {
 
     @Override
     public int compareTo(final CVDefinition cvDefinition) {
-        return this.number.compareTo(cvDefinition.getNumber());
+        return getOrderValue(number).compareTo(getOrderValue(cvDefinition.getNumber()));
     }
+
 }

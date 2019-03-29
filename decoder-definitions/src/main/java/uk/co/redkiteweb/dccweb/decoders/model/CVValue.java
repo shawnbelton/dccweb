@@ -2,6 +2,8 @@ package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
 
+import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
+
 public class CVValue implements Comparable<CVValue> {
 
     public enum Type {
@@ -94,6 +96,13 @@ public class CVValue implements Comparable<CVValue> {
 
     @Override
     public int compareTo(final CVValue cvValue) {
-        return this.id.compareTo(cvValue.getId());
+        final int firstCompare = getOrderValue(cvNumber).compareTo(getOrderValue(cvValue.getCvNumber()));
+        final int finalCompare;
+        if (firstCompare == 0) {
+            finalCompare = this.id.compareTo(cvValue.getId());
+        } else {
+            finalCompare = firstCompare;
+        }
+        return finalCompare;
     }
 }

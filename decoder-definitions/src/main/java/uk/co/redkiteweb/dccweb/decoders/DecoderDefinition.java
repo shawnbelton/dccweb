@@ -174,4 +174,10 @@ public class DecoderDefinition {
         final XPath xPath = xPathFactory.newXPath();
         return xPath.compile(xPathString);
     }
+
+    public static Integer getOrderValue(final String value) {
+        final String[] values = value.split(",");
+        return Integer.parseInt(values[0]);
+    }
+
 }
