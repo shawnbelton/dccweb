@@ -9,6 +9,7 @@ import uk.co.redkiteweb.dccweb.nce.communication.NceData;
 import uk.co.redkiteweb.dccweb.nce.communication.TalkToNCE;
 import uk.co.redkiteweb.dccweb.nce.exception.ConnectionException;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
