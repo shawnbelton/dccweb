@@ -21,11 +21,6 @@ public class DccWebApplicationTest {
     }
 
     @Test
-    public void startApplication() {
-        // Nothing we can do here.
-    }
-
-    @Test
     public void testDataSource() {
         assertNotNull(dccWebApplication.dataSource());
     }

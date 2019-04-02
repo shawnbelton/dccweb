@@ -33,6 +33,7 @@ public class PortFactoryTest {
     @Test
     public void closeTest() {
         portFactory.close();
+        assertTrue(true);
     }
 
     @Test

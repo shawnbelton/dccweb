@@ -14,19 +14,19 @@ import uk.co.redkiteweb.dccweb.store.RelayControllerStore;
 import java.net.UnknownHostException;
 
 import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
 public class RelayServiceTest {
 
     private RelayService relayService;
     private RestTemplate restTemplate;
+    private RelayControllerStore relayControllerStore;
 
     @Before
     public void setup() {
         final Environment environment = mock(Environment.class);
-        final RelayControllerStore relayControllerStore = mock(RelayControllerStore.class);
+        relayControllerStore = mock(RelayControllerStore.class);
         restTemplate = mock(RestTemplate.class);
         relayService = new RelayService();
         relayService.setRestTemplate(restTemplate);
@@ -45,6 +45,7 @@ public class RelayServiceTest {
         when(restTemplate.postForEntity(anyString(), any(RelayController.class), eq(Integer.class))).thenReturn(responseEntity);
         when(responseEntity.getBody()).thenReturn(10);
         relayService.registerWithServer(details);
+        verify(relayControllerStore, times(1)).setValue(anyInt());
     }
 
     @Test
@@ -54,6 +55,7 @@ public class RelayServiceTest {
         details.setPort(8080);
         when(restTemplate.postForEntity(anyString(), any(RelayController.class), eq(Integer.class))).thenThrow(UnknownHostException.class);
         relayService.registerWithServer(details);
+        verify(relayControllerStore, never()).setValue(anyInt());
     }
 
 }
