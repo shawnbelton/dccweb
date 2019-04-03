@@ -1,6 +1,7 @@
 package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
 
@@ -104,5 +105,32 @@ public class CVValue implements Comparable<CVValue> {
             finalCompare = firstCompare;
         }
         return finalCompare;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cvNumber, name, type, bit, low, high, mask, options);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        boolean isEquals = false;
+        if (obj instanceof CVValue) {
+            final CVValue that = (CVValue) obj;
+            isEquals = Objects.equals(this.id, that.getId())
+                    && Objects.equals(this.cvNumber, that.getCvNumber())
+                    && Objects.equals(this.name, that.getName())
+                    && Objects.equals(this.type, that.getType())
+                    && Objects.equals(this.bit, that.getBit())
+                    && Objects.equals(this.low, that.getLow())
+                    && Objects.equals(this.high, that.getHigh())
+                    && Objects.equals(this.mask, that.getMask())
+                    && areCollectionsEqual(this.options, that.getOptions());
+        }
+        return isEquals;
+    }
+
+    private static boolean areCollectionsEqual(final Collection<CVValueOption> options1, final Collection<CVValueOption> options2) {
+        return options1.size() == options2.size() && options1.containsAll(options2);
     }
 }
