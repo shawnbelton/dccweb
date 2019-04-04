@@ -115,7 +115,7 @@ public class DecoderDefinition {
 
     private Integer valueToInteger(final String value) {
         final Integer integer;
-        if (value == null || value.isEmpty()) {
+        if (value.isEmpty()) {
             integer = null;
         } else {
             integer = Integer.parseInt(value);

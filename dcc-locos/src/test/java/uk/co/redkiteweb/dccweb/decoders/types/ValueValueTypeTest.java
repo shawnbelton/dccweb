@@ -39,7 +39,14 @@ public class ValueValueTypeTest {
     }
 
     @Test
-    public void testGetValue() {
+    public void testGetValueNoMask() {
+        when(cvValue.getMask()).thenReturn(0);
+        assertEquals(new Integer(257), value.getValue());
+    }
+
+    @Test
+    public void testGetValueNullMask() {
+        when(cvValue.getMask()).thenReturn(null);
         assertEquals(new Integer(257), value.getValue());
     }
 
@@ -56,6 +63,16 @@ public class ValueValueTypeTest {
 
     @Test
     public void testCVValueNoMask() {
+        when(cvValue.getMask()).thenReturn(0);
+        final List<DecoderSetting> decoderSettings = new ArrayList<>();
+        decoderSettings.add(createDecoderSetting("Flag", 1));
+        decoderSettings.add(createDecoderSetting("Name", 1));
+        assertEquals(new Integer(0), value.getCVValue(1, decoderSettings));
+    }
+
+    @Test
+    public void testCVValueNullMask() {
+        when(cvValue.getMask()).thenReturn(null);
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
