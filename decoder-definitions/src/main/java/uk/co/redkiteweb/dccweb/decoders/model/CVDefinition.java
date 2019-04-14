@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.TreeSet;
 
 import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
 
@@ -9,6 +10,10 @@ public class CVDefinition implements Comparable<CVDefinition> {
 
     private String number;
     private Collection<CVValue> values;
+
+    public CVDefinition() {
+        values = new TreeSet<>();
+    }
 
     public String getNumber() {
         return number;

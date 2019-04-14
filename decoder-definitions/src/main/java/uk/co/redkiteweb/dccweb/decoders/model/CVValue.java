@@ -2,6 +2,7 @@ package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.TreeSet;
 
 import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
 
@@ -22,6 +23,10 @@ public class CVValue implements Comparable<CVValue> {
     private Integer high;
     private Integer mask;
     private Collection<CVValueOption> options;
+
+    public CVValue() {
+        this.options = new TreeSet<>();
+    }
 
     public String getId() {
         return id;
