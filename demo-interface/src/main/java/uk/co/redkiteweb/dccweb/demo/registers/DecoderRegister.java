@@ -25,7 +25,7 @@ public class DecoderRegister {
     }
 
     public void setCV(final int cvNumber, final int cvValue) {
-        LOGGER.info(String.format("Setting CV %d to %d", cvNumber, cvValue));
+        LOGGER.info("Setting CV {} to {}", cvNumber, cvValue);
         final CV cv = new CV();
         cv.setCvNumber(cvNumber);
         cv.setCvValue(cvValue);
@@ -39,7 +39,7 @@ public class DecoderRegister {
                 value = cv.getCvValue();
             }
         }
-        LOGGER.info(String.format("Reading CV %d has value %d", cvNumber, value));
+        LOGGER.info("Reading CV {} has value {}", cvNumber, value);
         return value;
     }
 

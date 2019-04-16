@@ -47,7 +47,7 @@ public class TalkToNCE {
             throw new ConnectionException("Send Data failed", exception);
         }
         final long endTicker = new Date().getTime();
-        LOGGER.info(String.format("NCE Communication time: %d data items read: %d", endTicker-startTicker, outData.size()));
+        LOGGER.info("NCE Communication time: {} data items read: {}", endTicker-startTicker, outData.size());
         return outData;
     }
 
@@ -55,7 +55,7 @@ public class TalkToNCE {
         final OutputStream outputStream = serialPort.getOutputStream();
         Integer outputData = inData.readData();
         while (outputData != null) {
-            LOGGER.debug(String.format("Sending: %d",outputData));
+            LOGGER.debug("Sending: {}",outputData);
             outputStream.write(outputData);
             outputData = inData.readData();
         }
@@ -71,12 +71,12 @@ public class TalkToNCE {
         int inputData = inputStream.read();
         do {
             if (inputData >= 0) {
-                LOGGER.debug(String.format("Receiving: %d", inputData));
+                LOGGER.debug("Receiving: {}", inputData);
                 outData.addData(inputData);
             }
             inputData = inputStream.read();
         } while (inData.getExpectedValues()!=outData.size() && !timer.hasTimedOut());
-        LOGGER.info(String.format("Read time: %d", timer.getRunningTime()));
+        LOGGER.info("Read time: {}", timer.getRunningTime());
         inputStream.close();
         return outData;
     }
