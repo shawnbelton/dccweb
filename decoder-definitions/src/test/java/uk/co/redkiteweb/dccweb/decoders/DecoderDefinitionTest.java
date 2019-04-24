@@ -6,6 +6,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by shawn on 18/09/16.
@@ -14,27 +17,16 @@ import static org.junit.Assert.assertNotNull;
 public class DecoderDefinitionTest {
 
     private static final String DECODER_DEF_FILE = "/151-255.xml";
-    private static final String SHORT_ADDRESS = "Short Address";
-    private static final String TEST_FILE_XML = "123-456.xml";
-    private static final String DEFINITIONS_PATH = "./src/test/resources/local";
-    private static final String MISSING_VALUE = "Missing Value";
-    private static final String MISSING_XML = "/missing.xml";
     private DecoderDefinition decoderDefinition;
+    private DecoderDefinitionReader reader;
 
     @Before
-    public void setup() {
+    public void setup() throws DefinitionException {
         decoderDefinition = new DecoderDefinition();
-    }
-
-    @Test(expected = DefinitionException.class)
-    public void testSetDecoderFile() throws DefinitionException {
-        decoderDefinition.setDecoderDefFile(MISSING_XML);
-    }
-
-    @Test
-    public void testGetNode() throws DefinitionException {
-        decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        assertNotNull(decoderDefinition.getCVValue(SHORT_ADDRESS));
+        reader = mock(DecoderDefinitionReader.class);
+        final DecoderDefinitionReaderFactory readerFactory = mock(DecoderDefinitionReaderFactory.class);
+        when(readerFactory.newInstance(anyString())).thenReturn(reader);
+        decoderDefinition.setDecoderDefinitionReaderFactory(readerFactory);
     }
 
     @Test
@@ -43,22 +35,10 @@ public class DecoderDefinitionTest {
         assertNotNull(decoderDefinition.getCVValues());
     }
 
-    @Test(expected = DefinitionException.class)
-    public void testGetNodeMissing() throws DefinitionException {
-        decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
-        decoderDefinition.getCVValue(MISSING_VALUE);
-    }
-
     @Test
     public void testGetCVNodes() throws DefinitionException {
         decoderDefinition.setDecoderDefFile(DECODER_DEF_FILE);
         assertNotNull(decoderDefinition.getCvDefinitions());
     }
 
-    @Test
-    public void testFromFile() throws DefinitionException {
-        decoderDefinition.setDefinitionsPath(DEFINITIONS_PATH);
-        decoderDefinition.setDecoderDefFile(TEST_FILE_XML);
-        assertNotNull(decoderDefinition.getCVValue(SHORT_ADDRESS));
-    }
 }
