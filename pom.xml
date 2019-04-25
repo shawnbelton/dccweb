@@ -59,6 +59,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.language>java</sonar.language>
+        <jacoco.skip.instrument>false</jacoco.skip.instrument>
+        <jacoco-agent.destFile>${project.build.directory}/jacoco.exec</jacoco-agent.destFile>
     </properties>
 
     <build>
@@ -76,18 +78,38 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.2</version>
+                <configuration>
+                    <dataFile>${jacoco-agent.destFile}</dataFile>
+                    <destFile>${jacoco-agent.destFile}</destFile>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>pre-unit-test</id>
+                        <id>default-instrument</id>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>instrument</goal>
                         </goals>
+                        <configuration>
+                            <skip>${jacoco.skip.instrument}</skip>
+                        </configuration>
                     </execution>
                     <execution>
-                        <id>default-report</id>
+                        <id>default-restore-instrumented-classes</id>
+                        <goals>
+                            <goal>restore-instrumented-classes</goal>
+                        </goals>
+                        <configuration>
+                            <skip>${jacoco.skip.instrument}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <skip>${jacoco.skip.instrument}</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -96,6 +118,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M1</version>
                 <configuration>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>${jacoco-agent.destFile}</jacoco-agent.destfile>
+                    </systemPropertyVariables>
                     <excludes>
                         <exclude>**/IT*.java</exclude>
                     </excludes>
@@ -148,18 +173,6 @@
                     <additionalparam>-views -all</additionalparam>
                     <useStandardDocletOptions>true</useStandardDocletOptions>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <!-- select non-aggregate reports -->
-                            <report>report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
             </plugin>
         </plugins>
     </reporting>
@@ -253,6 +266,13 @@
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-core</artifactId>
                 <version>1.10.19</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>org.jacoco.agent</artifactId>
+                <version>0.8.2</version>
+                <classifier>runtime</classifier>
                 <scope>test</scope>
             </dependency>
         </dependencies>
