@@ -30,7 +30,7 @@ public class DecoderDefinitionReaderFactory implements ApplicationContextAware {
     }
 
     @Override
-    public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(final ApplicationContext applicationContext) {
         this.context = applicationContext;
     }
 
