@@ -32,7 +32,7 @@ public class DefinitionReaderFactory implements ApplicationContextAware {
     }
 
     private DefinitionReader getDefinitionReader(final Integer manufacturedId, final Integer version) throws DefinitionException {
-        final String decoderFile = String.format("/%d-%d.xml", manufacturedId, version);
+        final String decoderFile = String.format("%d-%d", manufacturedId, version);
         final DefinitionReader definitionReader =  context.getBean(DefinitionReader.class);
         definitionReader.setDecoderFile(decoderFile);
         return definitionReader;

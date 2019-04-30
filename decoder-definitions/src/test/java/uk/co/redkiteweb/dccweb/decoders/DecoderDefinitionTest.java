@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 @RunWith(JUnit4.class)
 public class DecoderDefinitionTest {
 
-    private static final String DECODER_DEF_FILE = "/151-255.xml";
+    private static final String DECODER_DEF_FILE = "151-255";
     private DecoderDefinition decoderDefinition;
     private DecoderDefinitionReader reader;
 

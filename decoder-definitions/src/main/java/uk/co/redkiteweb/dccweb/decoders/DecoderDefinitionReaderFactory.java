@@ -60,13 +60,13 @@ public class DecoderDefinitionReaderFactory implements ApplicationContextAware {
         try {
             definitionStream = new FileInputStream(definitionFile);
         } catch (final FileNotFoundException exception) {
-            definitionStream = DecoderDefinitionReaderFactory.class.getResourceAsStream(decoderDefinitionFile);
+            definitionStream = DecoderDefinitionReaderFactory.class.getResourceAsStream(String.format("/%s.xml", decoderDefinitionFile));
         }
         return definitionStream;
     }
 
     private File getFile(final String decoderDefinitionFile) {
-        final String fullFileName = String.format("%s/%s", definitionsPath, decoderDefinitionFile);
+        final String fullFileName = String.format("%s/%s.xml", definitionsPath, decoderDefinitionFile);
         LOGGER.info("Loading definitions file from: {}", fullFileName);
         return new File(fullFileName);
     }

@@ -27,24 +27,24 @@ public class DecoderDefinitionReaderFactoryTest {
     @Test
     public void testGetInstanceFromFile() throws DefinitionException {
         when(context.getBean(DecoderDefinitionReader.class)).thenReturn(mock(DecoderDefinitionReader.class));
-        assertNotNull(readerFactory.newInstance("123-456.xml"));
+        assertNotNull(readerFactory.newInstance("123-456"));
     }
 
     @Test
     public void testGetInstanceFromResource() throws DefinitionException {
         when(context.getBean(DecoderDefinitionReader.class)).thenReturn(mock(DecoderDefinitionReader.class));
-        assertNotNull(readerFactory.newInstance("/local/123-456.xml"));
+        assertNotNull(readerFactory.newInstance("local/123-456"));
     }
 
     @Test(expected = DefinitionException.class)
     public void testGetInstanceFail() throws DefinitionException {
         when(context.getBean(DecoderDefinitionReader.class)).thenReturn(mock(DecoderDefinitionReader.class));
-        assertNotNull(readerFactory.newInstance("/missing.xml"));
+        assertNotNull(readerFactory.newInstance("missing"));
     }
 
     @Test(expected = DefinitionException.class)
     public void testGetWrongFileType() throws DefinitionException {
         when(context.getBean(DecoderDefinitionReader.class)).thenReturn(mock(DecoderDefinitionReader.class));
-        assertNotNull(readerFactory.newInstance("/notXml.xml"));
+        assertNotNull(readerFactory.newInstance("notXml"));
     }
 }

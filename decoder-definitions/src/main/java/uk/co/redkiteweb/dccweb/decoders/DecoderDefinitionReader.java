@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.decoders;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
@@ -19,10 +20,16 @@ import java.util.TreeSet;
 public class DecoderDefinitionReader {
 
     private Document definitionDocument;
+    private DecoderDefinitionReaderFactory readerFactory;
     private final Collection<CVDefinition> cvDefinitions;
 
     public DecoderDefinitionReader() {
         cvDefinitions = new TreeSet<>();
+    }
+
+    @Autowired
+    public void setReaderFactory(DecoderDefinitionReaderFactory readerFactory) {
+        this.readerFactory = readerFactory;
     }
 
     public void setDefinitionDocument(Document definitionDocument) {
@@ -31,6 +38,7 @@ public class DecoderDefinitionReader {
 
     public Collection<CVDefinition> readDefinitions() throws DefinitionException {
         buildLocalCvDefinitions();
+        buildIncludedDefinitions();
         return cvDefinitions;
     }
 
@@ -41,11 +49,22 @@ public class DecoderDefinitionReader {
         }
     }
 
+    private void buildIncludedDefinitions() throws DefinitionException {
+        final NodeList includeNodes = getIncludeNodes();
+        for (int index = 0; index < includeNodes.getLength(); index++) {
+            addIncludedCVs((Element) includeNodes.item(index));
+        }
+    }
+
     private void addCV(final Element cvElement) {
         final CVDefinition cv = new CVDefinition();
         cv.setNumber(cvElement.getAttribute("number"));
         cv.setValues(fetchValues(cvElement.getElementsByTagName("value"), cv.getNumber()));
         cvDefinitions.add(cv);
+    }
+
+    private void addIncludedCVs(final Element includeElement) throws DefinitionException {
+        cvDefinitions.addAll(readerFactory.newInstance(includeElement.getAttribute("definition")).readDefinitions());
     }
 
     private Collection<CVValue> fetchValues(final NodeList valueList, final String cvNumber) {
@@ -97,6 +116,10 @@ public class DecoderDefinitionReader {
 
     private NodeList getCVNodes() throws DefinitionException {
         return (NodeList) getXPathValue("//cv", XPathConstants.NODESET);
+    }
+
+    private NodeList getIncludeNodes() throws DefinitionException {
+        return (NodeList) getXPathValue("//include", XPathConstants.NODESET);
     }
 
     private Object getXPathValue(final String xPathString, final QName returnType) throws DefinitionException {
