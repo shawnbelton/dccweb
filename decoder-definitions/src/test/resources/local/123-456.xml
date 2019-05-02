@@ -4,8 +4,8 @@
         <value id="cv1" name="Short Address" type="value" low="1" high="127"/>
     </cv>
     <cv number="2">
-        <value id="cv2" name="Options" type="option" bit="0">
-            <option value="0">Option 1</option>
+        <value id="cv2bit0" name="Options" type="option" bit="0">
+            <option value="1">Option 1</option>
         </value>
     </cv>
 </decoder>

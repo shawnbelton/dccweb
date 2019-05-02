@@ -13,6 +13,7 @@ import uk.co.redkiteweb.dccweb.decoders.model.CVValueOption;
 import javax.xml.namespace.QName;
 import javax.xml.xpath.*;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.TreeSet;
 
 @Component
@@ -64,7 +65,39 @@ public class DecoderDefinitionReader {
     }
 
     private void addIncludedCVs(final Element includeElement) throws DefinitionException {
-        cvDefinitions.addAll(readerFactory.newInstance(includeElement.getAttribute("definition")).readDefinitions());
+        final Collection<CVDefinition> includedDefinitions = readerFactory.newInstance(includeElement.getAttribute("definition")).readDefinitions();
+        mergeDefinitions(includedDefinitions);
+    }
+
+    private void mergeDefinitions(final Collection<CVDefinition> toBeMerged) {
+        for(final CVDefinition merged : toBeMerged) {
+            final Optional<CVDefinition> existing = cvDefinitions.stream().filter(definition -> definition.getNumber().equals(merged.getNumber())).findFirst();
+            if (existing.isPresent()) {
+                mergeValues(existing.get(), merged);
+            } else {
+                cvDefinitions.add(merged);
+            }
+        }
+    }
+
+    private void mergeValues(final CVDefinition existing, final CVDefinition merge) {
+        for(final CVValue cvValue : merge.getValues()) {
+            final Optional<CVValue> existingValue = existing.getValues().stream().filter(value -> value.getId().equals(cvValue.getId())).findFirst();
+            if (existingValue.isPresent()) {
+                mergeOptions(existingValue.get(), cvValue);
+            } else {
+                existing.getValues().add(cvValue);
+            }
+        }
+    }
+
+    private void mergeOptions(final CVValue existing, final CVValue merge) {
+        for(final CVValueOption cvOption : merge.getOptions()) {
+            final Optional<CVValueOption> existingOption = existing.getOptions().stream().filter(option -> option.getValue().equals(cvOption.getValue())).findFirst();
+            if (!existingOption.isPresent()) {
+                existing.getOptions().add(cvOption);
+            }
+        }
     }
 
     private Collection<CVValue> fetchValues(final NodeList valueList, final String cvNumber) {

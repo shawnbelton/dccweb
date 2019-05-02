@@ -48,10 +48,10 @@ public class DecoderDefinitionReaderTest {
         assertEquals(3, definitions.size());
         final Collection<CVValue> values = new TreeSet<>();
         definitions.forEach(cvDefinition -> values.addAll(cvDefinition.getValues()));
-        assertEquals(3, values.size());
+        assertEquals(5, values.size());
         final Collection<CVValueOption> options = new TreeSet<>();
         values.forEach(cvValue -> options.addAll(cvValue.getOptions()));
-        assertEquals(1, options.size());
+        assertEquals(2, options.size());
     }
 
     private Document getDefinitionsDocument() {
@@ -68,23 +68,35 @@ public class DecoderDefinitionReaderTest {
 
     private Collection<CVDefinition> createIncludeDefinitions() {
         final Collection<CVDefinition> cvDefinitions = new TreeSet<>();
-        cvDefinitions.add(createCVDefinition());
+        cvDefinitions.add(createCVDefinition("2"));
+        cvDefinitions.add(createCVDefinition("3"));
         return cvDefinitions;
     }
 
-    private CVDefinition createCVDefinition() {
+    private CVDefinition createCVDefinition(final String number) {
         final CVDefinition cvDefinition = new CVDefinition();
-        cvDefinition.setNumber("12");
-        cvDefinition.getValues().add(createCVValue());
+        cvDefinition.setNumber(number);
+        cvDefinition.getValues().add(createCVValue(number, 0));
+        cvDefinition.getValues().add(createCVValue(number, 1));
         return cvDefinition;
     }
 
-    private CVValue createCVValue() {
+    private CVValue createCVValue(final String number, final int bit) {
         final CVValue cvValue = new CVValue();
-        cvValue.setId("incId");
+        cvValue.setId(String.format("cv%sbit%d", number, bit));
         cvValue.setName("Inc Value");
-        cvValue.setCvNumber("12");
-        cvValue.setType(CVValue.Type.VALUE);
+        cvValue.setCvNumber(number);
+        cvValue.setType(CVValue.Type.OPTION);
+        cvValue.setBit(bit);
+        cvValue.getOptions().add(createCVOption(1));
+        cvValue.getOptions().add(createCVOption(2));
         return cvValue;
+    }
+
+    private CVValueOption createCVOption(final int number) {
+        final CVValueOption cvValueOption = new CVValueOption();
+        cvValueOption.setName(String.format("Option%d", number));
+        cvValueOption.setValue(number);
+        return cvValueOption;
     }
 }
