@@ -143,7 +143,7 @@ public class DecoderDefinitionReader {
     private void addCVOption(final Collection<CVValueOption> options, final Element optionElement) {
         final CVValueOption option = new CVValueOption();
         option.setValue(Integer.parseInt(optionElement.getAttribute("value")));
-        option.setName(optionElement.getAttribute("name"));
+        option.setName(optionElement.getTextContent());
         options.add(option);
     }
 
