@@ -7,22 +7,24 @@
     </div>
   </ng-container>
   <div *ngSwitchCase="'flag'" class="col-sm-7">
-    <div class="checkbox">
-      <label [for]="decoderSetting.id">
-        <input [id]="decoderSetting.id" type="checkbox" (change)="decoderSettingChanged($event)"
-               [value]="decoderSetting.value"/>
+    <div class="custom-control custom-checkbox">
+      <input (change)="decoderSettingChanged($event)" [id]="decoderSetting.id" [value]="decoderSetting.value"
+             class="custom-control-input" type="checkbox"/>
+      <label [for]="decoderSetting.id" class="custom-control-label">
         {{decoderSetting.name}}
       </label>
     </div>
   </div>
   <ng-container *ngSwitchCase="'option'">
-    <label class="col-sm-5 col-form-label">{{decoderSetting.name}}</label>
+    <label class="col-sm-5">{{decoderSetting.name}}</label>
     <div class="col-sm-7">
-      <div class="radio" *ngFor="let decoderSettingOption of decoderSetting.decoderSettingOptions">
-        <label>
-          <input type="radio" [name]="decoderSetting.id" [id]="decoderSettingOption.id"
-                 (change)="decoderSettingChanged($event)"
-                 [value]="decoderSettingOption.value" [checked]="decoderSetting.value == decoderSettingOption.value"/>
+      <div *ngFor="let decoderSettingOption of decoderSetting.decoderSettingOptions"
+           class="custom-control custom-radio">
+        <input (change)="decoderSettingChanged($event)" [checked]="decoderSetting.value == decoderSettingOption.value"
+               [id]="decoderSettingOption.id"
+               [name]="decoderSetting.id" [value]="decoderSettingOption.value"
+               class="custom-control-input" type="radio"/>
+        <label [for]="decoderSettingOption.id" class="custom-control-label">
           {{decoderSettingOption.option}}
         </label>
       </div>
