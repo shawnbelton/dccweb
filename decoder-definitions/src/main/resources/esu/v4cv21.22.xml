@@ -1,0 +1,22 @@
+<decoder>
+    <cv number="21">
+        <value id="cv21bit0" name="Consist F1" type="flag" bit="0"/>
+        <value id="cv21bit1" name="Consist F2" type="flag" bit="1"/>
+        <value id="cv21bit2" name="Consist F3" type="flag" bit="2"/>
+        <value id="cv21bit3" name="Consist F4" type="flag" bit="3"/>
+        <value id="cv21bit4" name="Consist F5" type="flag" bit="4"/>
+        <value id="cv21bit5" name="Consist F6" type="flag" bit="5"/>
+        <value id="cv21bit6" name="Consist F7" type="flag" bit="6"/>
+        <value id="cv21bit7" name="Consist F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="22">
+        <value id="cv22bit0" name="Consist F0" type="flag" bit="0"/>
+        <value id="cv22bit1" name="Consist F9" type="flag" bit="1"/>
+        <value id="cv22bit2" name="Consist F10" type="flag" bit="2"/>
+        <value id="cv22bit3" name="Consist F11" type="flag" bit="3"/>
+        <value id="cv22bit4" name="Consist F12" type="flag" bit="4"/>
+        <value id="cv22bit5" name="Consist F13" type="flag" bit="5"/>
+        <value id="cv22bit6" name="Consist F14" type="flag" bit="6"/>
+        <value id="cv22bit7" name="Consist F15" type="flag" bit="7"/>
+    </cv>
+</decoder>

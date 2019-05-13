@@ -2,7 +2,7 @@
     <cv number="3">
         <value id="cv3" name="Acceleration Rate" type="value" high="31"/>
     </cv>
-    <cv number="3">
+    <cv number="4">
         <value id="cv4" name="Deceleration Rate" type="value" high="31"/>
     </cv>
 </decoder>

@@ -48,4 +48,6 @@
         <value id="cv16" name="Preset Lock ID number" type="value" low="0" high="255"/>
     </cv>
     <include definition="nmra/consistAddrDirection"/>
+    <include definition="esu/v4cv21.22"/>
+
 </decoder>

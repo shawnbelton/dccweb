@@ -1,6 +1,9 @@
 <decoder>
     <cv number="19">
         <value id="cv19" name="Consist Address" type="value" low="0" high="127" readMask="127"/>
-        <value id="cv19bit7" name="Locomotive Direction In Consist" type="flag" bit="7"/>
+        <value id="cv19bit7" name="Locomotive Direction In Consist" type="option" bit="7">
+            <option value="0">Normal</option>
+            <option value="1">Reversed</option>
+        </value>
     </cv>
 </decoder>
