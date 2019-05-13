@@ -22,7 +22,7 @@ public class ValueValueType extends AbstractValueType implements ValueType {
             value *= 256;
             value += getCVValue(Integer.parseInt(cv));
         }
-        final Integer mask = getMask();
+        final Integer mask = getReadMask();
         if (mask != null && mask != 0) {
             value &= mask;
         }
@@ -49,6 +49,14 @@ public class ValueValueType extends AbstractValueType implements ValueType {
             value /= 256;
         }
         return retValue;
+    }
+
+    private Integer getReadMask() {
+        Integer mask = getMask();
+        if (getCVValue().getReadMask() != null) {
+            mask = getCVValue().getReadMask();
+        }
+        return mask;
     }
 
     private List<String> getCVs() {

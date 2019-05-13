@@ -22,6 +22,7 @@ public class CVValue implements Comparable<CVValue> {
     private Integer low;
     private Integer high;
     private Integer mask;
+    private Integer readMask;
     private Collection<CVValueOption> options;
 
     public CVValue() {
@@ -92,6 +93,14 @@ public class CVValue implements Comparable<CVValue> {
         this.mask = mask;
     }
 
+    public Integer getReadMask() {
+        return readMask;
+    }
+
+    public void setReadMask(Integer readMask) {
+        this.readMask = readMask;
+    }
+
     public Collection<CVValueOption> getOptions() {
         return options;
     }
@@ -114,7 +123,7 @@ public class CVValue implements Comparable<CVValue> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cvNumber, name, type, bit, low, high, mask, options);
+        return Objects.hash(id, cvNumber, name, type, bit, low, high, mask, readMask, options);
     }
 
     @Override
@@ -130,6 +139,7 @@ public class CVValue implements Comparable<CVValue> {
                     && Objects.equals(this.low, that.getLow())
                     && Objects.equals(this.high, that.getHigh())
                     && Objects.equals(this.mask, that.getMask())
+                    && Objects.equals(this.readMask, that.getReadMask())
                     && areCollectionsEqual(this.options, that.getOptions());
         }
         return isEquals;

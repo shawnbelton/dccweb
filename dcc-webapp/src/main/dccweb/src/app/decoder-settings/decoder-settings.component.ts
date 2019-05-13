@@ -27,6 +27,10 @@ export class DecoderSettingsComponent implements OnInit {
     this.decoderSetting.newValue = newValue;
   }
 
+  isSet(): boolean {
+    return this.decoderSetting.value > 0;
+  }
+
   ngOnInit(): void {
   }
 

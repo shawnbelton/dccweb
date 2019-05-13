@@ -15,10 +15,29 @@ public class CVValueTest {
 
     private CVValue cvValue;
 
-    @Before
-    public void setup() {
-        cvValue = newCVValue("ID", "Number", "Name",
-                1,2,3,4, CVValue.Type.VALUE);
+    private static CVValue newCVValue(final String id,
+                                      final String cvNumber,
+                                      final String name,
+                                      final Integer bit,
+                                      final Integer high,
+                                      final Integer low,
+                                      final Integer mask,
+                                      final Integer readMask,
+                                      final CVValue.Type type) {
+        final CVValue newValue = new CVValue();
+        newValue.setId(id);
+        newValue.setCvNumber(cvNumber);
+        newValue.setName(name);
+        newValue.setBit(bit);
+        newValue.setHigh(high);
+        newValue.setLow(low);
+        newValue.setMask(mask);
+        newValue.setReadMask(readMask);
+        newValue.setType(type);
+        final Collection<CVValueOption> options = new HashSet<>();
+        options.add(newCVOption("Name", 1));
+        newValue.setOptions(options);
+        return newValue;
     }
 
     @Test
@@ -56,6 +75,12 @@ public class CVValueTest {
         assertEquals(Integer.valueOf(4), cvValue.getMask());
     }
 
+    @Before
+    public void setup() {
+        cvValue = newCVValue("ID", "Number", "Name",
+                1, 2, 3, 4, 3, CVValue.Type.VALUE);
+    }
+
     @Test
     public void testType() {
         assertEquals(CVValue.Type.VALUE, cvValue.getType());
@@ -67,62 +92,44 @@ public class CVValueTest {
     }
 
     @Test
+    public void testReadMask() {
+        assertEquals(Integer.valueOf(3), cvValue.getReadMask());
+    }
+
+    @Test
     public void testEquality() {
         assertFalse(cvValue.equals(null));
         assertTrue(cvValue.equals(cvValue));
         assertFalse(cvValue.equals(newCVValue("Id", "Number", "Name",
-                1,2,3,4, CVValue.Type.VALUE)));
+                1, 2, 3, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "number", "Name",
-                1,2,3,4, CVValue.Type.VALUE)));
+                1, 2, 3, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "name",
-                1,2,3,4, CVValue.Type.VALUE)));
+                1, 2, 3, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "Name",
-                9,2,3,4, CVValue.Type.VALUE)));
+                9, 2, 3, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "Name",
-                1,9,3,4, CVValue.Type.VALUE)));
+                1, 9, 3, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "Name",
-                1,2,9,4, CVValue.Type.VALUE)));
+                1, 2, 9, 4, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "Name",
-                1,2,3,9, CVValue.Type.VALUE)));
+                1, 2, 3, 9, null, CVValue.Type.VALUE)));
         assertFalse(cvValue.equals(newCVValue("ID", "Number", "Name",
-                1,2,3,4, CVValue.Type.OPTION)));
+                1, 2, 3, 4, null, CVValue.Type.OPTION)));
         final CVValue listDifferent1 = newCVValue("ID", "Number", "Name",
-                1,2,3,4, CVValue.Type.VALUE);
+                1, 2, 3, 4, null, CVValue.Type.VALUE);
         final Collection<CVValueOption> diffList1 = new HashSet<>();
         diffList1.add(newCVOption("Name", 2));
         listDifferent1.setOptions(diffList1);
         assertFalse(cvValue.equals(listDifferent1));
         final CVValue listDifferent2 = newCVValue("ID", "Number", "Name",
-                1,2,3,4, CVValue.Type.VALUE);
+                1, 2, 3, 4, null, CVValue.Type.VALUE);
         final Collection<CVValueOption> diffList2 = new HashSet<>();
         diffList2.add(newCVOption("Name", 1));
         diffList2.add(newCVOption("Name", 2));
         listDifferent2.setOptions(diffList2);
         assertFalse(cvValue.equals(listDifferent2));
 
-    }
-
-    private static CVValue newCVValue(final String id,
-                           final String cvNumber,
-                           final String name,
-                           final Integer bit,
-                           final Integer high,
-                           final Integer low,
-                           final Integer mask,
-                           final CVValue.Type type) {
-        final CVValue newValue = new CVValue();
-        newValue.setId(id);
-        newValue.setCvNumber(cvNumber);
-        newValue.setName(name);
-        newValue.setBit(bit);
-        newValue.setHigh(high);
-        newValue.setLow(low);
-        newValue.setMask(mask);
-        newValue.setType(type);
-        final Collection<CVValueOption> options = new HashSet<>();
-        options.add(newCVOption("Name", 1));
-        newValue.setOptions(options);
-        return newValue;
     }
 
     private static CVValueOption newCVOption(final String name, final Integer value) {

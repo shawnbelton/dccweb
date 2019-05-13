@@ -1,54 +1,5 @@
 <decoder manufacturer="151" revision="255">
-    <cv number="1">
-        <value id="cv1" name="Short Address" type="value" low="1" high="127"/>
-    </cv>
-    <cv number="2">
-        <value id="cv2" name="Start Voltage" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="3">
-        <value id="cv3" name="Acceleration" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="4">
-        <value id="cv4" name="Deceleration" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="5">
-        <value id="cv5" name="Maximum Speed" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="6">
-        <value id="cv6" name="Medium Speed" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="7">
-        <value id="cv7" name="Revision" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="8">
-        <value id="cv8" name="Manufacturer" type="value" low="0" high="255"/>
-    </cv>
-    <cv number="13">
-        <value id="cv13bit0" name="Analog F1" type="flag" bit="0"/>
-        <value id="cv13bit1" name="Analog F2" type="flag" bit="1"/>
-        <value id="cv13bit2" name="Analog F3" type="flag" bit="2"/>
-        <value id="cv13bit3" name="Analog F4" type="flag" bit="3"/>
-        <value id="cv13bit4" name="Analog F5" type="flag" bit="4"/>
-        <value id="cv13bit5" name="Analog F6" type="flag" bit="5"/>
-        <value id="cv13bit6" name="Analog F7" type="flag" bit="6"/>
-        <value id="cv13bit7" name="Analog F8" type="flag" bit="7"/>
-    </cv>
-    <cv number="14">
-        <value id="cv14bit0" name="Analog F0" type="flag" bit="0"/>
-        <value id="cv14bit1" name="Analog F9" type="flag" bit="1"/>
-        <value id="cv14bit2" name="Analog F10" type="flag" bit="2"/>
-        <value id="cv14bit3" name="Analog F11" type="flag" bit="3"/>
-        <value id="cv14bit4" name="Analog F12" type="flag" bit="4"/>
-        <value id="cv14bit5" name="Analog F13" type="flag" bit="5"/>
-        <value id="cv14bit6" name="Analog F14" type="flag" bit="6"/>
-        <value id="cv14bit7" name="Analog F15" type="flag" bit="7"/>
-    </cv>
-    <cv number="17,18">
-        <value id="cv1718" name="Long Address" type="value" low="128" high="10239" mask="16383"/>
-    </cv>
-    <cv number="19">
-        <value id="cv19" name="Consist Address" type="value" low="0" high="255"/>
-    </cv>
+    <include definition="esu/v4standardCVs"/>
     <cv number="21">
         <value id="cv21bit0" name="Consist F1" type="flag" bit="0"/>
         <value id="cv21bit1" name="Consist F2" type="flag" bit="1"/>
@@ -89,10 +40,6 @@
         <value id="cv29bit4" name="Speed Curve" type="option" bit="4">
             <option value="0">CV 2,5 and 6</option>
             <option value="1">CV 67-94</option>
-        </value>
-        <value id="cv29bit5" name="Address Mode" type="option" bit="5">
-            <option value="0">Short Address</option>
-            <option value="1">Long Address</option>
         </value>
     </cv>
 </decoder>

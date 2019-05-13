@@ -118,6 +118,7 @@ public class DecoderDefinitionReader {
         value.setLow(valueToInteger(valueElement.getAttribute("low")));
         value.setHigh(valueToInteger(valueElement.getAttribute("high")));
         value.setMask(valueToInteger(valueElement.getAttribute("mask")));
+        value.setReadMask(valueToInteger(valueElement.getAttribute("readMask")));
         value.setOptions(fetchOptions(valueElement.getElementsByTagName("option")));
         values.add(value);
     }
