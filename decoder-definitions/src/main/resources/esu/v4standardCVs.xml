@@ -49,5 +49,12 @@
     </cv>
     <include definition="nmra/consistAddrDirection"/>
     <include definition="esu/v4cv21.22"/>
-
+    <cv number="27">
+        <value id="cv27bit0" name="ABC brake on Asymmetrical DCC - higher voltage on right rail" type="flag" bit="0"/>
+        <value id="cv27bit1" name="ABC brake on Asymmetrical DCC - higher voltage on left rail" type="flag" bit="1"/>
+        <value id="cv27bit2" name="Brake on Zimo HLU commands" type="flag" bit="2"/>
+        <value id="cv27bit3" name="Brake on DC, polarity against direction" type="flag" bit="3"/>
+        <value id="cv27bit4" name="Brake on DC, polarity same direction" type="flag" bit="4"/>
+        <value id="cv27bit7" name="Constant Brake Distance on speed step 0" type="flag" bit="7"/>
+    </cv>
 </decoder>
