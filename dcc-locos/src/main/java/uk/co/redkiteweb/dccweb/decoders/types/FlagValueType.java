@@ -44,13 +44,13 @@ public class FlagValueType extends AbstractValueType implements ValueType {
         int newValue = decoderSetting.getNewValue();
         int value = 0;
         for (Integer bit : getCVValue().getBit()) {
-            value += getBitMask(bit, newValue % 2, decoderSetting);
+            value += getBitMask(bit, newValue % 2);
             newValue /= 2;
         }
         return value;
     }
 
-    private Integer getBitMask(final Integer bit, final int newValue, final DecoderSetting decoderSetting) {
+    private Integer getBitMask(final Integer bit, final int newValue) {
         final int bitMask = (int) Math.round(Math.pow(2, bit));
         return (newValue > 0) ? bitMask : 0;
     }
