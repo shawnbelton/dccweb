@@ -57,4 +57,48 @@
         <value id="cv27bit4" name="Brake on DC, polarity same direction" type="flag" bit="4"/>
         <value id="cv27bit7" name="Constant Brake Distance on speed step 0" type="flag" bit="7"/>
     </cv>
+    <cv number="28">
+        <value id="cv28bit0" name="RailCom® Channel 1 Address Broadcast" type="flag" bit="0"/>
+        <value id="cv28bit1" name="RailCom® Channel 2 Data Transmission" type="flag" bit="1"/>
+        <value id="cv28bit7" name="RailCom® Plus Auto Loco Recognition" type="flag" bit="7"/>
+    </cv>
+    <include definition="nmra/cv29direction"/>
+    <include definition="nmra/cv29speedSteps"/>
+    <include definition="nmra/cv29analog"/>
+    <cv number="29">
+        <value id="cv29bit3" name="RailCom" type="option" bit="3">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </value>
+        <value id="cv29bit4" name="Speed Curve" type="option" bit="4">
+            <option value="0">Use VStart, VMid, VHigh</option>
+            <option value="1">Use Table</option>
+        </value>
+    </cv>
+    <cv number="31">
+        <value id="cv31" name="Index register H" type="value" high="16"/>
+    </cv>
+    <cv number="32">
+        <value id="cv32" name="Index register L" type="value" high="4"/>
+    </cv>
+    <cv number="47">
+        <value id="cv47bit0" name="DCC Protocol" type="flag" bit="0"/>
+        <value id="cv47bit1" name="M4 Protocol" type="flag" bit="1"/>
+        <value id="cv47bit2" name="Marklin Motorola® Protocol" type="flag" bit="2"/>
+        <value id="cv47bit3" name="Selectrix® Protocol" type="flag" bit="3"/>
+    </cv>
+    <cv number="49">
+        <value id="cv49bit0" name="BEMF" type="flag" bit="0"/>
+        <value id="cv49bit1" name="Motor PWM Frequency" bit="1" type="option">
+            <option value="0">20 kHz</option>
+            <option value="1">40 kHz</option>
+        </value>
+        <value id="cv49bit2" name="Marklin® Delta Mode" type="flag" bit="2"/>
+        <value id="cv49bit37" name="Marklin Additional Addresses" type="option" bit="3,7">
+            <option value="0">No additional addresses</option>
+            <option value="1">Use 2 addresses</option>
+            <option value="2">Use 3 addresses</option>
+            <option value="3">Use 4 addresses</option>
+        </value>
+    </cv>
 </decoder>

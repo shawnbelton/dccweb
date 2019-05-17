@@ -1,0 +1,8 @@
+<decoder>
+    <cv number="29">
+        <value id="cv29bit0" name="Direction" type="option" bit="0">
+            <option value="0">Normal</option>
+            <option value="1">Reversed</option>
+        </value>
+    </cv>
+</decoder>

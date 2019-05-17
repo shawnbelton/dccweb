@@ -87,7 +87,7 @@ public class DecoderDefinitionReaderTest {
         cvValue.setName("Inc Value");
         cvValue.setCvNumber(number);
         cvValue.setType(CVValue.Type.OPTION);
-        cvValue.setBit(bit);
+        cvValue.getBit().add(bit);
         cvValue.getOptions().add(createCVOption(1));
         cvValue.getOptions().add(createCVOption(2));
         return cvValue;

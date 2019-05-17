@@ -28,7 +28,7 @@ public class CVValueTest {
         newValue.setId(id);
         newValue.setCvNumber(cvNumber);
         newValue.setName(name);
-        newValue.setBit(bit);
+        newValue.getBit().add(bit);
         newValue.setHigh(high);
         newValue.setLow(low);
         newValue.setMask(mask);
@@ -57,7 +57,7 @@ public class CVValueTest {
 
     @Test
     public void testBit() {
-        assertEquals(Integer.valueOf(1), cvValue.getBit());
+        assertEquals(Integer.valueOf(1), cvValue.getBit().iterator().next());
     }
 
     @Test

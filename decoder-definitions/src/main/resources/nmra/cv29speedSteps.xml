@@ -1,0 +1,8 @@
+<decoder>
+    <cv number="29">
+        <value id="cv29bit1" name="Speed Steps" type="option" bit="1">
+            <option value="0">14 Speed Steps</option>
+            <option value="1">28 or 128 Speed Steps</option>
+        </value>
+    </cv>
+</decoder>

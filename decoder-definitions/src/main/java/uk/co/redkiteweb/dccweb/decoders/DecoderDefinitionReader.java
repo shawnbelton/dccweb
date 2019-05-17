@@ -114,13 +114,19 @@ public class DecoderDefinitionReader {
         value.setCvNumber(cvNumber);
         value.setName(valueElement.getAttribute("name"));
         value.setType(CVValue.Type.valueOf(valueElement.getAttribute("type").toUpperCase()));
-        value.setBit(valueToInteger(valueElement.getAttribute("bit")));
+        addBits(value, valueElement.getAttribute("bit"));
         value.setLow(valueToInteger(valueElement.getAttribute("low")));
         value.setHigh(valueToInteger(valueElement.getAttribute("high")));
         value.setMask(valueToInteger(valueElement.getAttribute("mask")));
         value.setReadMask(valueToInteger(valueElement.getAttribute("readMask")));
         value.setOptions(fetchOptions(valueElement.getElementsByTagName("option")));
         values.add(value);
+    }
+
+    private void addBits(final CVValue value, final String bits) {
+        for (final String bit : bits.split(",")) {
+            value.getBit().add(valueToInteger(bit));
+        }
     }
 
     private Integer valueToInteger(final String value) {

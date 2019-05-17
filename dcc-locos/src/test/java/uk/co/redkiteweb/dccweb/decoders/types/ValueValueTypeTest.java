@@ -33,6 +33,7 @@ public class ValueValueTypeTest {
         when(cvValue.getName()).thenReturn("Name");
         when(cvValue.getCvNumber()).thenReturn("1,2");
         when(cvValue.getId()).thenReturn("id1");
+        when(cvValue.getReadMask()).thenReturn(null);
         value = new ValueValueType();
         value.setCVValue(cvValue);
         value.setCVReader(cvHandler);
@@ -41,19 +42,19 @@ public class ValueValueTypeTest {
     @Test
     public void testGetValueNoMask() {
         when(cvValue.getMask()).thenReturn(0);
-        assertEquals(new Integer(257), value.getValue());
+        assertEquals(Integer.valueOf(257), value.getValue());
     }
 
     @Test
     public void testGetValueNullMask() {
         when(cvValue.getMask()).thenReturn(null);
-        assertEquals(new Integer(257), value.getValue());
+        assertEquals(Integer.valueOf(257), value.getValue());
     }
 
     @Test
     public void testGetWithMask() {
         when(cvValue.getMask()).thenReturn(255);
-        assertEquals(new Integer(1), value.getValue());
+        assertEquals(Integer.valueOf(1), value.getValue());
     }
 
     @Test
@@ -67,7 +68,7 @@ public class ValueValueTypeTest {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
-        assertEquals(new Integer(0), value.getCVValue(1, decoderSettings));
+        assertEquals(Integer.valueOf(0), value.getCVValue(1, decoderSettings));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class ValueValueTypeTest {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
-        assertEquals(new Integer(0), value.getCVValue(1, decoderSettings));
+        assertEquals(Integer.valueOf(0), value.getCVValue(1, decoderSettings));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class ValueValueTypeTest {
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
-        assertEquals(new Integer(129), value.getCVValue(2, decoderSettings));
+        assertEquals(Integer.valueOf(129), value.getCVValue(2, decoderSettings));
     }
 
     private DecoderSetting createDecoderSetting(final String name, final Integer value) {
