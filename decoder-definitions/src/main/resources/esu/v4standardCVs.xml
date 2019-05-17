@@ -100,5 +100,12 @@
             <option value="2">Use 3 addresses</option>
             <option value="3">Use 4 addresses</option>
         </value>
+        <value id="cv49bit4" name="Automatic Speed Step Detection" type="flag" bit="4"/>
+        <value id="cv49bit5" name="LGB® Function Button Mode" type="flag" bit="5"/>
+        <value id="cv49bit6" name="ZIMO® Manual Function Mode" type="flag" bit="6"/>
+    </cv>
+    <cv number="50">
+        <value id="cv50bit0" name="AC Analog Mode" type="flag" bit="0"/>
+        <value id="cv50bit1" name="DC Analog Mode" type="flag" bit="1"/>
     </cv>
 </decoder>
