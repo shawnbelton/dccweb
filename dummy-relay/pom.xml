@@ -20,7 +20,7 @@
                 <filtering>true</filtering>
             </resource>
             <resource>
-                <directory>src/main/angular/target</directory>
+                <directory>src/main/dummy-relay/target</directory>
                 <filtering>true</filtering>
             </resource>
         </resources>
@@ -33,7 +33,7 @@
                         <id>exec-npm-install</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/main/dummy-relay</workingDirectory>
                             <executable>${npm.executable}</executable>
                             <arguments>
                                 <argument>install</argument>
@@ -47,7 +47,7 @@
                         <id>exec-npm-run-build</id>
                         <phase>generate-sources</phase>
                         <configuration>
-                            <workingDirectory>${project.basedir}/src/main/angular</workingDirectory>
+                            <workingDirectory>${project.basedir}/src/main/dummy-relay</workingDirectory>
                             <executable>${npm.executable}</executable>
                             <arguments>
                                 <argument>run</argument>
