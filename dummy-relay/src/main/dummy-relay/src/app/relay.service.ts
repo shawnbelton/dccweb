@@ -18,7 +18,7 @@ export class RelayService {
   };
 
   updateValue(value: string): void {
-    this._values.next(Number(value.trim()));
+    this._values.next(Number(value));
   }
 
   getValues(): Observable<number> {
