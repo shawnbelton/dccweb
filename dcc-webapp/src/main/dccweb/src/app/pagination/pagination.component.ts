@@ -9,7 +9,7 @@ export class PaginationComponent implements OnInit, AfterContentInit {
 
   @Input() items: any[];
   @Input() pageSize: number;
-  @ContentChild(TemplateRef,{ read: true, static: false }) itemTemplate: TemplateRef<ElementRef>;
+  @ContentChild(TemplateRef, {read: false, static: true}) itemTemplate: TemplateRef<ElementRef>;
 
   currentPage: number;
 
@@ -39,7 +39,7 @@ export class PaginationComponent implements OnInit, AfterContentInit {
     return pages;
   }
 
-  incrementPage():  void {
+  incrementPage(): void {
     if (this.currentPage !== this.getNumberOfPages()) {
       this.currentPage++;
     }
