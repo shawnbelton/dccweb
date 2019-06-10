@@ -19,6 +19,6 @@
     </ul>
   </nav>
 </div>
-<div class="list-group-item" *ngFor="let item of pageItems()">
+<div *ngFor="let item of pageItems()" class="list-group-item clearfix">
   <ng-container *ngTemplateOutlet="itemTemplate; context: {$implicit:item}"></ng-container>
 </div>
