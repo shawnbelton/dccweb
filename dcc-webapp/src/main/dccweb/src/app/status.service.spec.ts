@@ -25,7 +25,7 @@ describe('StatusService', () => {
     http.get.and.returnValue(subscription);
     http.post.and.returnValue(subscription);
     stomp.subscribe.and.returnValue(subscription);
-    stomp.state.and.returnValue(behaviour);
+    //stomp.state.and.returnValue(behaviour);
     const service: StatusService = TestBed.get(StatusService);
     expect(service).toBeTruthy();
   });
