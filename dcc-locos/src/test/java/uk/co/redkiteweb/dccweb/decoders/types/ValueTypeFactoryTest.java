@@ -6,9 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ApplicationContext;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyString;
@@ -35,24 +34,21 @@ public class ValueTypeFactoryTest {
     @Test
     public void testGetValueInstance() throws DefinitionException {
         when(context.getBean(anyString(), eq(ValueType.class))).thenReturn(mock(ValueType.class));
-        final Node node = getValueType("value");
-        assertNotNull(valueTypeFactory.getInstance(node, mock(CVHandler.class)));
+        final CVValue cvValue = getValueType("VALUE");
+        assertNotNull(valueTypeFactory.getInstance(cvValue, mock(CVHandler.class)));
     }
 
     @Test(expected = DefinitionException.class)
     public void testGetValueInstanceException() throws DefinitionException {
         when(context.getBean(anyString(), eq(ValueType.class))).thenThrow(mock(NoSuchBeanDefinitionException.class));
-        final Node node = getValueType("value");
-        valueTypeFactory.getInstance(node, mock(CVHandler.class));
+        final CVValue cvValue = getValueType("VALUE");
+        valueTypeFactory.getInstance(cvValue, mock(CVHandler.class));
     }
 
-    private Node getValueType(String flag) {
-        final Node node = mock(Node.class);
-        final NamedNodeMap namedNodeMap = mock(NamedNodeMap.class);
-        when(node.getAttributes()).thenReturn(namedNodeMap);
-        when(namedNodeMap.getNamedItem(anyString())).thenReturn(node);
-        when(node.getTextContent()).thenReturn(flag);
-        return node;
+    private CVValue getValueType(final String flag) {
+        final CVValue cvValue = mock(CVValue.class);
+        when(cvValue.getType()).thenReturn(CVValue.Type.valueOf(flag));
+        return cvValue;
     }
 
 }

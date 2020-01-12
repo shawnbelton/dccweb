@@ -1,0 +1,14 @@
+<decoder>
+    <cv number="1">
+        <value id="cv1" name="Short Address" type="value" low="1" high="127"/>
+    </cv>
+    <cv number="17,18">
+        <value id="cv1718" name="Long Address" type="value" low="128" high="10239" mask="16383"/>
+    </cv>
+    <cv number="29">
+        <value id="cv29bit5" name="Address Mode" type="option" bit="5">
+            <option value="0">Short Address</option>
+            <option value="1">Long Address</option>
+        </value>
+    </cv>
+</decoder>

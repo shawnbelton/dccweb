@@ -2,10 +2,8 @@ package uk.co.redkiteweb.dccweb.decoders.types;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.DecoderSettingOption;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValueOption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,20 +20,16 @@ public class OptionValueType extends FlagValueType {
     @Override
     protected List<DecoderSettingOption> getOptions() {
         final List<DecoderSettingOption> decoderSettingOptions = new ArrayList<>();
-        final NodeList optionNodes = getValueNode().getChildNodes();
-        for(int index = 0; index < optionNodes.getLength(); index++) {
-            final Node optionNode = optionNodes.item(index);
-            if (optionNode instanceof Element){
-                decoderSettingOptions.add(createDecoderSettingOption(optionNode, getId()));
-            }
+        for (final CVValueOption cvOption : getCVValue().getOptions()) {
+            decoderSettingOptions.add(createDecoderSettingOption(cvOption, getId()));
         }
         return decoderSettingOptions;
     }
 
-    private static DecoderSettingOption createDecoderSettingOption(final Node optionNode, final String id) {
+    private static DecoderSettingOption createDecoderSettingOption(final CVValueOption option, final String id) {
         final DecoderSettingOption decoderSettingOption = new DecoderSettingOption();
-        decoderSettingOption.setValue(Integer.parseInt(optionNode.getAttributes().getNamedItem("value").getTextContent()));
-        decoderSettingOption.setOption(optionNode.getTextContent());
+        decoderSettingOption.setValue(option.getValue());
+        decoderSettingOption.setOption(option.getName());
         decoderSettingOption.setId(String.format("%s%d", id, decoderSettingOption.getValue()));
         return decoderSettingOption;
     }

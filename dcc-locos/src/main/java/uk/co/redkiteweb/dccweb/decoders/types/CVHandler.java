@@ -56,7 +56,7 @@ public class CVHandler {
 
     public Integer readCV(final int cvNumber) {
         final Integer cvValue = readCVUseCache(cvNumber);
-        LOGGER.info(String.format("CV %d read as %d", cvNumber, cvValue));
+        LOGGER.info("CV {} read as {}", cvNumber, cvValue);
         return cvValue;
     }
 
@@ -76,7 +76,7 @@ public class CVHandler {
     }
 
     private Integer readFromProgramTrack(int cvNumber) {
-        LOGGER.info(String.format("Reading CV %d from track.", cvNumber));
+        LOGGER.info("Reading CV {} from track.", cvNumber);
         final ReadCVMessage readCVMessage = new ReadCVMessage();
         readCVMessage.setCvReg(cvNumber);
         return getCvValue(dccInterface.sendMessage(readCVMessage));

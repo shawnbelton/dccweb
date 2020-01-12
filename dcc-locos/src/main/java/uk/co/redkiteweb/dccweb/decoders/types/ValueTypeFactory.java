@@ -5,8 +5,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.decoders.DefinitionException;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import java.util.Locale;
 
@@ -24,17 +24,16 @@ public class ValueTypeFactory implements ApplicationContextAware {
         this.context = applicationContext;
     }
 
-    public ValueType getInstance(final Node valueNode, final CVHandler cvHandler) throws DefinitionException {
-        ValueType valueType;
-        final String type = valueNode.getAttributes().getNamedItem("type").getTextContent();
+    public ValueType getInstance(final CVValue value, final CVHandler cvHandler) throws DefinitionException {
+        final String type = value.getType().name();
         try {
-            valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
-            valueType.setValueNode(valueNode);
+            final ValueType valueType = context.getBean(String.format("%sValueType", type.toLowerCase(Locale.UK)), ValueType.class);
+            valueType.setCVValue(value);
             valueType.setCVReader(cvHandler);
+            return valueType;
         } catch (NoSuchBeanDefinitionException exception) {
             throw new DefinitionException(String.format("Unable to find value type for %s", type), exception);
         }
-        return valueType;
     }
 
 }

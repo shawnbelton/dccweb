@@ -1,0 +1,5 @@
+<decoder>
+    <cv number="16">
+        <value id="cv16" name="Decoder Lock ID number" type="value" mask="7"/>
+    </cv>
+</decoder>

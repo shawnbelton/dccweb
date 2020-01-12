@@ -3,7 +3,6 @@ package uk.co.redkiteweb.dccweb.decoders.types;
 import com.google.common.collect.Lists;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 
 import java.util.Arrays;
@@ -19,13 +18,13 @@ public class ValueValueType extends AbstractValueType implements ValueType {
     @Override
     public Integer getValue() {
         int value = 0;
-        for(String cv : getCVs()) {
+        for (String cv : getCVs()) {
             value *= 256;
             value += getCVValue(Integer.parseInt(cv));
         }
-        final Node maskNode = getMask();
-        if (maskNode!=null) {
-            value &= Integer.parseInt(maskNode.getTextContent());
+        final Integer mask = getReadMask();
+        if (mask != null && mask != 0) {
+            value &= mask;
         }
         return value;
     }
@@ -39,9 +38,9 @@ public class ValueValueType extends AbstractValueType implements ValueType {
     protected Integer getCVValue(final Integer cvNumber, final DecoderSetting decoderSetting) {
         int retValue = 0;
         int value = decoderSetting.getNewValue();
-        final Node maskNode = getMask();
-        if (maskNode!=null) {
-            value |= (Integer.parseInt(maskNode.getTextContent())^0xffff);
+        final Integer mask = getMask();
+        if (mask != null && mask != 0) {
+            value |= (mask ^ 0xffff);
         }
         for (String cv : Lists.reverse(getCVs())) {
             if (cvNumber.equals(Integer.parseInt(cv))) {
@@ -52,11 +51,19 @@ public class ValueValueType extends AbstractValueType implements ValueType {
         return retValue;
     }
 
-    private List<String> getCVs() {
-        return Arrays.asList(getValueNode().getParentNode().getAttributes().getNamedItem("number").getTextContent().split(","));
+    private Integer getReadMask() {
+        Integer mask = getMask();
+        if (getCVValue().getReadMask() != null) {
+            mask = getCVValue().getReadMask();
+        }
+        return mask;
     }
 
-    private Node getMask() {
-        return getValueNode().getAttributes().getNamedItem("mask");
+    private List<String> getCVs() {
+        return Arrays.asList(getCVValue().getCvNumber().split(","));
+    }
+
+    private Integer getMask() {
+        return getCVValue().getMask();
     }
 }

@@ -24,6 +24,21 @@ import {SettingsComponent} from './settings/settings.component';
 import {DecoderComponent} from './decoder/decoder.component';
 import {DecoderSettingsComponent} from './decoder-settings/decoder-settings.component';
 import {BlockItemComponent} from './block-item/block-item.component';
+import {MacroListComponent} from './macro-list/macro-list.component';
+import {NewMacroComponent} from './new-macro/new-macro.component';
+import {EditMacroItemComponent} from './edit-macro-item/edit-macro-item.component';
+import {RelayListComponent} from './relay-list/relay-list.component';
+import {RelayEditComponent} from './relay-edit/relay-edit.component';
+import {BlockListComponent} from './block-list/block-list.component';
+import {BlockEditComponent} from './block-edit/block-edit.component';
+import {AccessoryListComponent} from './accessory-list/accessory-list.component';
+import {AccessoryEditComponent} from './accessory-edit/accessory-edit.component';
+import {NewAccessoryComponent} from './new-accessory/new-accessory.component';
+import {DecoderListComponent} from './decoder-list/decoder-list.component';
+import {DecoderEditComponent} from './decoder-edit/decoder-edit.component';
+import {DecoderEditorComponent} from './decoder-editor/decoder-editor.component';
+import {DecoderReadComponent} from './decoder-read/decoder-read.component';
+import {DecoderSettingEditorComponent} from './decoder-setting-editor/decoder-setting-editor.component';
 
 export function socketProvider() {
   return new SockJS('/socket');
@@ -70,7 +85,22 @@ const stompConfig: StompConfig = {
     SettingsComponent,
     DecoderComponent,
     DecoderSettingsComponent,
-    BlockItemComponent
+    BlockItemComponent,
+    MacroListComponent,
+    NewMacroComponent,
+    EditMacroItemComponent,
+    RelayListComponent,
+    RelayEditComponent,
+    BlockListComponent,
+    BlockEditComponent,
+    AccessoryListComponent,
+    AccessoryEditComponent,
+    NewAccessoryComponent,
+    DecoderListComponent,
+    DecoderEditComponent,
+    DecoderEditorComponent,
+    DecoderReadComponent,
+    DecoderSettingEditorComponent
   ],
   imports: [
     BrowserModule,

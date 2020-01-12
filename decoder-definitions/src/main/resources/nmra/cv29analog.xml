@@ -1,0 +1,8 @@
+<decoder>
+    <cv number="29">
+        <value id="cv29bit2" name="Analog Mode" type="option" bit="2">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </value>
+    </cv>
+</decoder>

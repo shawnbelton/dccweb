@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-sm">
+    <app-accessory-list></app-accessory-list>
+  </div>
+  <div class="col-sm">
+    <app-accessory [editAccessory]="accessory" (saved)="saved($event)"></app-accessory>
+  </div>
+</div>

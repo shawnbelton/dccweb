@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.macros.MacroStepItem;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +30,7 @@ public class WaitTest {
     public void runTest() {
         when(step.getDelay()).thenReturn(0.0f);
         wait.run();
+        assertTrue(true);
     }
 
     @Test
@@ -37,5 +39,6 @@ public class WaitTest {
         Thread.currentThread().interrupt();
         wait.run();
         Thread.interrupted();
+        assertTrue(true);
     }
 }

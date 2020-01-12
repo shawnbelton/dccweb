@@ -1,0 +1,169 @@
+<div class="card">
+  <div class="card-header bg-primary text-white">Macro Edit</div>
+  <div class="card-body">
+    <form id="editMacroForm" name="editMacroForm" class="form-inline"
+          (ngSubmit)="saveMacroName()" #editMacroForm="ngForm" *ngIf="macro.editing">
+      <div class="form-group">
+        <label for="macroName" class="control-label">Macro Name</label>
+        <input type="text" id="macroName" name="macroName" class="leftGap form-control input-sm"
+               placeholder="Macro Name" [(ngModel)]="macro.name" #macroName="ngModel"
+               required="required"/>
+      </div>
+      <input type="submit" value="Update" class="leftGap btn btn-sm btn-info"
+             [disabled]="!editMacroForm.form.valid"/>
+    </form>
+    <div *ngIf="!macro.editing">
+      <strong>{{macro.name}}</strong>
+      <div class="float-right">
+        <input type="button" class="btn btn-sm btn-info" (click)="editMacroName()" value="Edit"/>
+      </div>
+    </div>
+  </div>
+  <ul class="list-group">
+    <li *ngFor="let step of macro.steps" class="list-group-item">
+      <form id="editStepForm" name="editStepForm" class="form-inline"
+            (ngSubmit)="saveStep(step)" #editStepForm="ngForm" *ngIf="step.editing">
+        {{step.number}}
+        <label for="stepType" class="form-label">Type</label>
+        <select id="stepType" name="stepType" class="leftGap form-control input-sm" [(ngModel)]="step.type"
+                #stepType="ngModel" required="required">
+          <option value="setAccessory">Set Accessory</option>
+          <option value="setRelay">Set Relay</option>
+          <option value="decoderFunction">Loco function</option>
+          <option value="setSpeed">Set Speed</option>
+          <option value="delay">Wait Seconds</option>
+          <option value="exitMacro">Exit Macro</option>
+          <option value="isBlock">Is Block</option>
+          <option value="isAccessory">Is Accessory</option>
+          <option value="thenGoTo">Then goto</option>
+        </select>
+        <ng-container *ngIf="step.type=='delay'">
+          <label for="seconds" class="leftGap form-label">Seconds</label>
+          <input type="number" id="seconds" name="seconds" class="leftGap form-control input-sm" [(ngModel)]="step.delay"
+                 #seconds="ngModel" required="required"/>
+        </ng-container>
+        <ng-container *ngIf="step.type=='thenGoTo'">
+          <label for="stepNumber" class="leftGap form-label">Step</label>
+          <input type="number" id="stepNumber" name="stepNumber" class="leftGap form-control input-sm"
+                 [(ngModel)]="step.value"
+                 #stepNumber="ngModel" required="required"/>
+        </ng-container>
+        <ng-container *ngIf="step.type=='isBlock'">
+          <label for="blockId" class="leftGap form-label">Block Id</label>
+          <select id="blockId" name="blockId" class="leftGap form-control input-sm" [(ngModel)]="step.blockId"
+                  #blockId="ngModel" required="required">
+            <option *ngFor="let block of blocks" [value]="block.blockId">{{block.blockName}}</option>
+          </select>
+          <ng-container *ngIf="step.blockId!=null">
+            <label for="blockState" class="leftGap form-label">Block State</label>
+            <select id="blockState" name="blockState" class="leftGap form-control input-sm" [(ngModel)]="step.value"
+                    #blockState="ngModel" required="required">
+              <option value="0">Unoccupied</option>
+              <option value="1">Occupied</option>
+            </select>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="step.type=='setRelay'">
+          <label for="relayId" class="leftGap form-label">Relay Controller</label>
+          <select id="relayId" name="relayId" class="leftGap form-control input-sm" [(ngModel)]="step.blockId"
+                  #relayId="ngModel" required="required">
+            <option *ngFor="let relayController of relayControllers" [value]="relayController.controllerId">
+              {{relayController.controllerName}}
+            </option>
+          </select>
+          <label for="relayNumber" class="leftGap form-label">Relay No.</label>
+          <select id="relayNumber" name="relayNumber" class="leftGap form-control input-sm"
+                  [(ngModel)]="step.functionNumber"
+                  #relayNumber="ngModel" required="required">
+            <option *ngFor="let relayNumber of [1,2,3,4,5,6,7,8]" [value]="relayNumber">{{relayNumber}}</option>
+          </select>
+          <label for="relayValue" class="leftGap form-label">Relay No.</label>
+          <select id="relayValue" name="relayValue" class="leftGap form-control input-sm" [(ngModel)]="step.value"
+                  #relayValue="ngModel" required="required">
+            <option [value]="0">Off</option>
+            <option [value]="1">On</option>
+          </select>
+        </ng-container>
+        <ng-container *ngIf="isAccessoryFunction(step)">
+          <label for="stepAccessory" class="leftGap form-label">Accessory</label>
+          <select id="stepAccessory" name="stepAccessory" class="leftGap form-control input-sm" [(ngModel)]="step.targetId"
+                  #stepAccessory="ngModel" required="required">
+            <option *ngFor="let accessory of accessories" [value]="accessory.accessoryDecoderId">
+              {{accessory.name}}
+            </option>
+          </select>
+          <ng-container *ngIf="step.targetId!=null">
+            <label for="stepOperation" class="leftGap form-label">Operation</label>
+            <select id="stepOperation" name="stepOperation" class="leftGap form-control input-sm" [(ngModel)]="step.value"
+                    #stepOperation="ngModel" required="required">
+              <option *ngFor="let accessoryOperation of accessoryOperations(step)"
+                      [value]="accessoryOperation.decoderOperationValue">{{accessoryOperation.decoderTypeOperation}}
+              </option>
+            </select>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="isLocoFunction(step)">
+          <label for="stepLoco" class="leftGap form-label">Loco</label>
+          <select id="stepLoco" name="stepLoco" class="leftGap form-control input-sm" [(ngModel)]="step.targetId"
+                  #stepLoco="ngModel" required="required">
+            <option *ngFor="let loco of locos" [value]="loco.locoId">{{loco.number}} {{loco.name}}</option>
+          </select>
+          <ng-container *ngIf="step.targetId!=null">
+            <ng-container *ngIf="step.type=='decoderFunction'">
+              <label for="stepFunction" class="leftGap form-label">Function</label>
+              <select id="stepFunction" name="stepFunction" class="leftGap form-control input-sm"
+                      [(ngModel)]="step.functionNumber"
+                      #stepFunction="ngModel" required="required">
+                <option *ngFor="let decoderFunction of fetchDecoder(step).decoderFunctions"
+                        [value]="decoderFunction.number">
+                  {{decoderFunction.name}}
+                </option>
+              </select>
+            </ng-container>
+            <ng-container *ngIf="step.type=='decoderFunction'">
+              <label for="stepFunctionState" class="leftGap form-label">State</label>
+              <select id="stepFunctionState" name="stepFunctionState" class="leftGap form-control input-sm"
+                      [(ngModel)]="step.functionStatus"
+                      #stepFunctionState="ngModel" required="required">
+                <option value="true">On</option>
+                <option value="false">Off</option>
+              </select>
+            </ng-container>
+            <ng-container *ngIf="step.type=='setSpeed'">
+              <label for="speed" class="leftGap form-label">Speed</label>
+              <input type="number" id="speed" name="speed" class="leftGap form-control input-sm" [(ngModel)]="step.value"
+                     #speed="ngModel" required="required"/>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <input type="submit" value="Update" class="leftGap btn btn-sm btn-info"
+               [disabled]="!editStepForm.form.valid"/>
+      </form>
+      <div *ngIf="!step.editing">
+        <a href="#" *ngIf="!isFirst(step)" (click)="moveUp(step)"><span class="fas fa-angle-up fa-1x"></span></a>
+        <a href="#" *ngIf="!isLast(step)" (click)="moveDown(step)"><span class="fas fa-angle-down fa-1x"></span></a>
+        <strong [ngClass]="{'leftGap': !isOnlyStep(step)}">{{displayStep(step)}}</strong>
+        <div class="float-right btn-toolbar">
+          <input type="button" class="btn btn-sm btn-info"
+                 (click)="editStep(step)" value="Edit"/>
+          <button class="leftGap btn btn-sm btn-danger" (click)="removeStep(step)">X</button>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <div class="clearfix">
+        <div class="float-right">
+          <input type="button" class="btn btn-sm btn-info" (click)="addStep()" value="Add Step"/>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="card-footer">
+    <div class="clearfix">
+      <div class="float-right">
+        <input type="button" class="btn btn-sm btn-info" (click)="saveMacro()" [disabled]="!macroValid()"
+               value="Save Macro"/>
+      </div>
+    </div>
+  </div>
+</div>

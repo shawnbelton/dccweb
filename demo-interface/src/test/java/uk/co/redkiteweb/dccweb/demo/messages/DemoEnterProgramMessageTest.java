@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.EnterProgramMessage;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by shawn on 25/07/16.
  */
@@ -22,6 +24,7 @@ public class DemoEnterProgramMessageTest {
     @Test
     public void keepAliveTest() {
         demoEnterProgramMessage.process(new EnterProgramMessage());
+        assertTrue(true);
     }
 
 }

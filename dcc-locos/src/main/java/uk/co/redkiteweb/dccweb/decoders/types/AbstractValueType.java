@@ -1,8 +1,8 @@
 package uk.co.redkiteweb.dccweb.decoders.types;
 
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
 import uk.co.redkiteweb.dccweb.data.DecoderSettingOption;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,12 +10,12 @@ import java.util.List;
 
 public abstract class AbstractValueType implements ValueType {
 
-    private Node valueNode;
+    private CVValue cvValue;
     private CVHandler cvHandler;
 
     @Override
-    public void setValueNode(final Node valueNode) {
-        this.valueNode = valueNode;
+    public void setCVValue(final CVValue cvValue) {
+        this.cvValue = cvValue;
     }
 
     @Override
@@ -23,8 +23,8 @@ public abstract class AbstractValueType implements ValueType {
         this.cvHandler = cvHandler;
     }
 
-    Node getValueNode() {
-        return valueNode;
+    CVValue getCVValue() {
+        return cvValue;
     }
 
     Integer getCVValue(final Integer cvNumber) {
@@ -56,11 +56,11 @@ public abstract class AbstractValueType implements ValueType {
     }
 
     String getId() {
-        return valueNode.getAttributes().getNamedItem("id").getTextContent();
+        return cvValue.getId();
     }
 
     private String getName() {
-        return valueNode.getAttributes().getNamedItem("name").getTextContent();
+        return cvValue.getName();
     }
 
     List<DecoderSettingOption> getOptions() {

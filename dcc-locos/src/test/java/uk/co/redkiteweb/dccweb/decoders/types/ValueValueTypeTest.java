@@ -4,9 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -25,40 +23,38 @@ import static org.mockito.Mockito.when;
 public class ValueValueTypeTest {
 
     private ValueType value;
-    private NamedNodeMap namedNodeMap;
+    private CVValue cvValue;
 
     @Before
     public void setup() {
         final CVHandler cvHandler = mock(CVHandler.class);
         when(cvHandler.readCV(anyInt())).thenReturn(1);
-        final Node node = mock(Node.class);
-        final Node nameNode = mock(Node.class);
-        final Node idNode = mock(Node.class);
-        namedNodeMap = mock(NamedNodeMap.class);
-        when(node.getParentNode()).thenReturn(node);
-        when(node.getAttributes()).thenReturn(namedNodeMap);
-        when(namedNodeMap.getNamedItem(eq("number"))).thenReturn(node);
-        when(namedNodeMap.getNamedItem(eq("name"))).thenReturn(nameNode);
-        when(namedNodeMap.getNamedItem("id")).thenReturn(idNode);
-        when(nameNode.getTextContent()).thenReturn("Name");
-        when(node.getTextContent()).thenReturn("1,2");
-        when(idNode.getTextContent()).thenReturn("id1");
+        cvValue = mock(CVValue.class);
+        when(cvValue.getName()).thenReturn("Name");
+        when(cvValue.getCvNumber()).thenReturn("1,2");
+        when(cvValue.getId()).thenReturn("id1");
+        when(cvValue.getReadMask()).thenReturn(null);
         value = new ValueValueType();
-        value.setValueNode(node);
+        value.setCVValue(cvValue);
         value.setCVReader(cvHandler);
     }
 
     @Test
-    public void testGetValue() {
-        assertEquals(new Integer(257), value.getValue());
+    public void testGetValueNoMask() {
+        when(cvValue.getMask()).thenReturn(0);
+        assertEquals(Integer.valueOf(257), value.getValue());
+    }
+
+    @Test
+    public void testGetValueNullMask() {
+        when(cvValue.getMask()).thenReturn(null);
+        assertEquals(Integer.valueOf(257), value.getValue());
     }
 
     @Test
     public void testGetWithMask() {
-        final Node maskNode = mock(Node.class);
-        when(namedNodeMap.getNamedItem(eq("mask"))).thenReturn(maskNode);
-        when(maskNode.getTextContent()).thenReturn("255");
-        assertEquals(new Integer(1), value.getValue());
+        when(cvValue.getMask()).thenReturn(255);
+        assertEquals(Integer.valueOf(1), value.getValue());
     }
 
     @Test
@@ -68,21 +64,29 @@ public class ValueValueTypeTest {
 
     @Test
     public void testCVValueNoMask() {
+        when(cvValue.getMask()).thenReturn(0);
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
-        assertEquals(new Integer(0), value.getCVValue(1, decoderSettings));
+        assertEquals(Integer.valueOf(0), value.getCVValue(1, decoderSettings));
+    }
+
+    @Test
+    public void testCVValueNullMask() {
+        when(cvValue.getMask()).thenReturn(null);
+        final List<DecoderSetting> decoderSettings = new ArrayList<>();
+        decoderSettings.add(createDecoderSetting("Flag", 1));
+        decoderSettings.add(createDecoderSetting("Name", 1));
+        assertEquals(Integer.valueOf(0), value.getCVValue(1, decoderSettings));
     }
 
     @Test
     public void testCVValueWithMask() {
-        final Node maskNode = mock(Node.class);
-        when(maskNode.getTextContent()).thenReturn("127");
-        when(namedNodeMap.getNamedItem(eq("mask"))).thenReturn(maskNode);
+        when(cvValue.getMask()).thenReturn(127);
         final List<DecoderSetting> decoderSettings = new ArrayList<>();
         decoderSettings.add(createDecoderSetting("Flag", 1));
         decoderSettings.add(createDecoderSetting("Name", 1));
-        assertEquals(new Integer(129), value.getCVValue(2, decoderSettings));
+        assertEquals(Integer.valueOf(129), value.getCVValue(2, decoderSettings));
     }
 
     private DecoderSetting createDecoderSetting(final String name, final Integer value) {

@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.leftGap {
+  margin-left: 0.5rem;
+}
+
+.rightGap {
+  margin-right: 0.5rem;
+}
+
+.top10 {
+  margin-top: 0.5rem;
+}

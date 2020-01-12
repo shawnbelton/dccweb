@@ -4,16 +4,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import uk.co.redkiteweb.dccweb.data.DecoderSetting;
+import uk.co.redkiteweb.dccweb.decoders.model.CVDefinition;
+import uk.co.redkiteweb.dccweb.decoders.model.CVValue;
 import uk.co.redkiteweb.dccweb.decoders.types.CVHandler;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueType;
 import uk.co.redkiteweb.dccweb.decoders.types.ValueTypeFactory;
 import uk.co.redkiteweb.dccweb.store.LogStore;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -28,32 +29,31 @@ public class DefinitionReaderTest {
 
     private DefinitionReader definitionReader;
     private DecoderDefinition decoderDefinition;
+    private Collection<CVValue> cvValues;
 
     @Before
     public void setup() throws DefinitionException {
         final LogStore logStore = mock(LogStore.class);
         decoderDefinition = mock(DecoderDefinition.class);
         final ValueTypeFactory valueTypeFactory = mock(ValueTypeFactory.class);
-        final Node valueNode = mock(Node.class);
+        final CVValue cvValue = mock(CVValue.class);
         final ValueType valueType = mock(ValueType.class);
         final CVHandler cvHandler = mock(CVHandler.class);
-        final NodeList cvNodes = mock(NodeList.class);
-        final NodeList valueNodes = mock(NodeList.class);
-        final Element cvNode = mock(Element.class);
+        final Collection<CVDefinition> cvDefinitions = new HashSet<>();
+        cvValues = new HashSet<>();
+        cvValues.add(cvValue);
+        final CVDefinition cvDefinition = mock(CVDefinition.class);
+        cvDefinitions.add(cvDefinition);
         definitionReader = new DefinitionReader();
         definitionReader.setLogStore(logStore);
         definitionReader.setDecoderDefinition(decoderDefinition);
         definitionReader.setValueTypeFactory(valueTypeFactory);
         definitionReader.setCvHandler(cvHandler);
-        when(decoderDefinition.getValueNode(anyString())).thenReturn(valueNode);
-        when(decoderDefinition.getCVNodes()).thenReturn(cvNodes);
-        when(cvNodes.getLength()).thenReturn(1);
-        when(cvNodes.item(anyInt())).thenReturn(cvNode);
-        when(cvNode.getAttribute(eq("number"))).thenReturn("1");
-        when(cvNode.getElementsByTagName("value")).thenReturn(valueNodes);
-        when(valueNodes.getLength()).thenReturn(1);
-        when(valueNodes.item(anyInt())).thenReturn(valueNode);
-        when(valueTypeFactory.getInstance(any(Node.class), any(CVHandler.class))).thenReturn(valueType);
+        when(decoderDefinition.getCVValue(anyString())).thenReturn(cvValue);
+        when(decoderDefinition.getCvDefinitions()).thenReturn(cvDefinitions);
+        when(cvDefinition.getNumber()).thenReturn("1");
+        when(cvDefinition.getValues()).thenReturn(cvValues);
+        when(valueTypeFactory.getInstance(any(CVValue.class), any(CVHandler.class))).thenReturn(valueType);
         when(valueType.getValue()).thenReturn(1);
     }
 
@@ -64,10 +64,7 @@ public class DefinitionReaderTest {
 
     @Test
     public void testReadAllValues() throws DefinitionException {
-        final NodeList nodeList = mock(NodeList.class);
-        when(nodeList.getLength()).thenReturn(1);
-        when(nodeList.item(anyInt())).thenReturn(mock(Node.class));
-        when(decoderDefinition.getValueNodes()).thenReturn(nodeList);
+        when(decoderDefinition.getCVValues()).thenReturn(cvValues);
         assertNotNull(definitionReader.readAllValues());
     }
 
@@ -83,7 +80,7 @@ public class DefinitionReaderTest {
         final DecoderSetting decoderSetting = new DecoderSetting();
 
         decoderSettings.add(decoderSetting);
-        definitionReader.buildCVs(decoderSettings);
+        assertNotNull(definitionReader.buildCVs(decoderSettings));
     }
 
 }

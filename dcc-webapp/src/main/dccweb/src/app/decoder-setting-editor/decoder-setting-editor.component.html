@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm">
+    <app-decoder-list></app-decoder-list>
+  </div>
+  <div class="col-sm">
+    <div class="card" *ngIf="isNotEmptySettings()">
+      <div class="card-header bg-primary text-white">
+        <span>Full Decoder Settings</span>
+      </div>
+      <form id="fullSetting" name="fullSetting" #fullSetting="ngForm">
+        <app-pagination [items]="decoderSettings" [pageSize]="5">
+          <ng-template let-item>
+            <app-decoder-setting class="row justify-content-end" [decoderSetting]="item"></app-decoder-setting>
+          </ng-template>
+        </app-pagination>
+        <div class="list-group-item">
+          <input type="button" class="btn btn-danger" (click)="writeCVs()" value="Write CVs"/>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

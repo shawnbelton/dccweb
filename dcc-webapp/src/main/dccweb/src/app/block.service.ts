@@ -17,9 +17,6 @@ export class BlockService {
   private _blocks: BehaviorSubject<Block[]> = new BehaviorSubject(null);
   private blocks: Observable<Block[]> = this._blocks.asObservable();
 
-  private _block: BehaviorSubject<Block> = new BehaviorSubject(null);
-  private block: Observable<Block> = this._block.asObservable();
-
   constructor(private http: HttpClient, private stompService: StompService) {
     this.fetchBlocks();
     this.stompService.subscribe('/blocks').subscribe(this.on_next);
@@ -45,12 +42,6 @@ export class BlockService {
       newBlocks.push(block);
     }
     this._blocks.next(newBlocks);
-    const currentBlock: Block = this._block.getValue();
-    if (null != currentBlock) {
-      if (currentBlock.blockId === block.blockId) {
-        this._block.next(block);
-      }
-    }
   }
 
   fetchBlocks(): void {
@@ -81,11 +72,14 @@ export class BlockService {
     return this.blocks;
   }
 
-  setBlock(block: Block): void {
-    this._block.next(block);
-  }
-
-  getBlock(): Observable<Block> {
-    return this.block;
+  getBlock(blockId: string): Block {
+    let block: Block = new Block();
+    const currentBlocks: Block[] = this._blocks.getValue();
+    for (const curBlock of currentBlocks) {
+      if (blockId === curBlock.blockId) {
+        block = curBlock;
+      }
+    }
+    return block;
   }
 }
