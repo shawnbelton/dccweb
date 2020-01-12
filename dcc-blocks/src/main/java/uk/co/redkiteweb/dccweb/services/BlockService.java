@@ -55,7 +55,7 @@ public class BlockService {
         block.setOccupied(occupied);
         blockRepository.save(block);
         final String message = String.format("Block %s is now %s.",
-                block.getBlockName(), block.getOccupied()?"Occupied":"Unoccupied");
+                block.getBlockName(), Boolean.TRUE.equals(block.getOccupied()) ? "Occupied" : "Unoccupied");
         logStore.log("info", message);
         LOGGER.info(message);
         eventBus.post(new BlockUpdateEvent(block));
