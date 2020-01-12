@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by shawn on 06/12/16.
  */
@@ -21,5 +23,6 @@ public class NullStepTest {
     @Test
     public void testRun() {
         nullStep.run();
+        assertTrue(true);
     }
 }

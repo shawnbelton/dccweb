@@ -6,6 +6,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.ExitProgramMessage;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created by shawn on 25/07/16.
  */
@@ -22,6 +24,7 @@ public class DemoExitProgramMessageTest {
     @Test
     public void keepAliveTest() {
         demoExitProgramMessage.process(new ExitProgramMessage());
+        assertTrue(true);
     }
 
 }

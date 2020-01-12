@@ -1,6 +1,9 @@
 package uk.co.redkiteweb.dccweb.decoders.model;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.TreeSet;
 
 import static uk.co.redkiteweb.dccweb.decoders.DecoderDefinition.getOrderValue;
 
@@ -16,11 +19,17 @@ public class CVValue implements Comparable<CVValue> {
     private String cvNumber;
     private String name;
     private Type type;
-    private Integer bit;
+    private Collection<Integer> bit;
     private Integer low;
     private Integer high;
     private Integer mask;
+    private Integer readMask;
     private Collection<CVValueOption> options;
+
+    public CVValue() {
+        this.options = new TreeSet<>();
+        this.bit = new HashSet<>();
+    }
 
     public String getId() {
         return id;
@@ -54,12 +63,12 @@ public class CVValue implements Comparable<CVValue> {
         this.type = type;
     }
 
-    public Integer getBit() {
-        return bit;
+    private static boolean areCollectionsEqualInt(final Collection<Integer> integers1, final Collection<Integer> integers2) {
+        return integers1.size() == integers2.size() && integers1.containsAll(integers2);
     }
 
-    public void setBit(final Integer bit) {
-        this.bit = bit;
+    public Collection<Integer> getBit() {
+        return bit;
     }
 
     public Integer getLow() {
@@ -86,6 +95,14 @@ public class CVValue implements Comparable<CVValue> {
         this.mask = mask;
     }
 
+    public Integer getReadMask() {
+        return readMask;
+    }
+
+    public void setReadMask(Integer readMask) {
+        this.readMask = readMask;
+    }
+
     public Collection<CVValueOption> getOptions() {
         return options;
     }
@@ -104,5 +121,37 @@ public class CVValue implements Comparable<CVValue> {
             finalCompare = firstCompare;
         }
         return finalCompare;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cvNumber, name, type, bit, low, high, mask, readMask, options);
+    }
+
+    public void setBit(final Collection<Integer> bit) {
+        this.bit = bit;
+    }
+
+    private static boolean areCollectionsEqual(final Collection<CVValueOption> options1, final Collection<CVValueOption> options2) {
+        return options1.size() == options2.size() && options1.containsAll(options2);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        boolean isEquals = false;
+        if (obj instanceof CVValue) {
+            final CVValue that = (CVValue) obj;
+            isEquals = Objects.equals(this.id, that.getId())
+                    && Objects.equals(this.cvNumber, that.getCvNumber())
+                    && Objects.equals(this.name, that.getName())
+                    && Objects.equals(this.type, that.getType())
+                    && areCollectionsEqualInt(this.bit, that.getBit())
+                    && Objects.equals(this.low, that.getLow())
+                    && Objects.equals(this.high, that.getHigh())
+                    && Objects.equals(this.mask, that.getMask())
+                    && Objects.equals(this.readMask, that.getReadMask())
+                    && areCollectionsEqual(this.options, that.getOptions());
+        }
+        return isEquals;
     }
 }

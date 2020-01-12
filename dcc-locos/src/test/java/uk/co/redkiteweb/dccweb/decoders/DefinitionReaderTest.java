@@ -80,7 +80,7 @@ public class DefinitionReaderTest {
         final DecoderSetting decoderSetting = new DecoderSetting();
 
         decoderSettings.add(decoderSetting);
-        definitionReader.buildCVs(decoderSettings);
+        assertNotNull(definitionReader.buildCVs(decoderSettings));
     }
 
 }

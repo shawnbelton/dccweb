@@ -114,4 +114,13 @@ public class RelayControllerServiceTest {
         verify(relayControllerRepository, times(1)).save(any(RelayController.class));
         verify(eventBus, times(1)).post(any(RelayUpdateEvent.class));
     }
+
+    @Test
+    public void updateValueNoControllerFoundTest() {
+        when(relayControllerRepository.findById(anyString())).thenReturn(Optional.empty());
+        relayControllerService.updateValue(mock(RelayController.class));
+        verify(relayControllerRepository, never()).save(any(RelayController.class));
+        verify(eventBus, never()).post(any(RelayUpdateEvent.class));
+    }
+
 }

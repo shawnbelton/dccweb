@@ -6,27 +6,30 @@
         <app-pagination [items]="locos" [pageSize]="5">
           <ng-template let-item>
             <div>
-              <div class="list-group-item-heading">
+              <div class="list-group-item-heading clearfix">
                 <input type="button" class="btn btn-info btn-sm rightGap" value="Drive" (click)="driveLoco(item)"/>
                 {{item.number}} {{item.name}}
                 <div class="float-right">
                   <input type="button" class="btn btn-success btn-sm" (click)="startEditLoco(item)" value="Edit"/>
-                  <input type="button" class="leftGap btn btn-primary btn-sm" (click)="configure(item)" value="Configure"/>
+                  <input (click)="configure(item)" class="leftGap btn btn-primary btn-sm" type="button"
+                         value="Configure"/>
                 </div>
               </div>
-              <div class="list-group-item-text" *ngIf="item.showConfig">
+              <div *ngIf="item.showConfig" class="list-group-item-text top10">
                 <form id="updateConfig" name="updateConfig" (ngSubmit)="assignDecoder(item)">
-                  <div class="form-group row">
-                    <label for="decoder" class="col-sm-3 col-form-label">Decoder:</label>
+                  <div class="form-row">
+                    <div class="col">
+                      <label class="col-form-label" for="decoder">Decoder:</label>
+                    </div>
                     <div class="col-sm-9">
-                      <select name="decoder" ngControl="decoder" id="decoder" class="form-control" [(ngModel)]="item.decoder.decoderId">
-                        <option *ngFor="let decoder of decoders" [value]="decoder.decoderId">Long Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}</option>
+                      <select [(ngModel)]="item.decoder.decoderId" class="form-control" id="decoder" name="decoder"
+                              ngControl="decoder">
+                        <option *ngFor="let decoder of decoders" [value]="decoder.decoderId">Long
+                          Address: {{decoder.longAddress}} Short Address: {{decoder.shortAddress}}</option>
                       </select>
                     </div>
-                  </div>
-                  <div class="clearfix">
-                    <div class="float-right">
-                      <input type="submit" value="Assign" class="btn btn-sm btn-success"/>
+                    <div class="col text-right">
+                      <input class="btn btn-sm btn-success" type="submit" value="Assign"/>
                     </div>
                   </div>
                 </form>
@@ -58,7 +61,8 @@
             <div class="col-sm-12">
               <div class="float-right">
                 <input type="button" value="Cancel" class="btn btn-sm btn-danger" (click)="cancelEdit()"/>
-                <input type="submit" value="Save" class="leftGap btn btn-sm btn-success" [disabled]="!locoForm.form.valid"/>
+                <input [disabled]="!locoForm.form.valid" class="leftGap btn btn-sm btn-success" type="submit"
+                       value="Save"/>
               </div>
             </div>
           </div>

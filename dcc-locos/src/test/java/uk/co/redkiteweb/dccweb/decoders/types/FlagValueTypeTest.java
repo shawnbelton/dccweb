@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.decoders.types;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +32,7 @@ public class FlagValueTypeTest {
         when(cvHandler.readCV(anyInt())).thenReturn(1);
         final CVValue cvValue = mock(CVValue.class);
         when(cvValue.getType()).thenReturn(CVValue.Type.FLAG);
-        when(cvValue.getBit()).thenReturn(3);
+        when(cvValue.getBit()).thenReturn(ImmutableList.of(3));
         when(cvValue.getCvNumber()).thenReturn("12");
         when(cvValue.getName()).thenReturn("Name");
         flag = new FlagValueType();

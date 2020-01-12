@@ -15,9 +15,23 @@ public class FlagValueType extends AbstractValueType implements ValueType {
     public Integer getValue() {
         final String cv = getCVValue().getCvNumber();
         final long value = getCVValue(Integer.parseInt(cv));
-        final long bitMask = Math.round(Math.pow(2,getCVValue().getBit()));
-        final long flagValue = (value & bitMask);
-        return (flagValue>0)?1:0;
+        return getBitsValue(value);
+    }
+
+    private int getBitsValue(final long cvValue) {
+        int value = 0;
+        int pos = 1;
+        for (final Integer bit : getCVValue().getBit()) {
+            value += getBitValue(cvValue, bit) * pos;
+            pos *= 2;
+        }
+        return value;
+    }
+
+    private int getBitValue(final long cvValue, final Integer bit) {
+        final long bitMask = Math.round(Math.pow(2, bit));
+        final long flagValue = (cvValue & bitMask);
+        return (flagValue > 0) ? 1 : 0;
     }
 
     @Override
@@ -27,7 +41,17 @@ public class FlagValueType extends AbstractValueType implements ValueType {
 
     @Override
     protected Integer getCVValue(final Integer cvNumber, final DecoderSetting decoderSetting) {
-        final int bitMask = (int)Math.round(Math.pow(2, getCVValue().getBit()));
-        return (decoderSetting.getNewValue()>0)?bitMask:0;
+        int newValue = decoderSetting.getNewValue();
+        int value = 0;
+        for (Integer bit : getCVValue().getBit()) {
+            value += getBitMask(bit, newValue % 2);
+            newValue /= 2;
+        }
+        return value;
+    }
+
+    private Integer getBitMask(final Integer bit, final int newValue) {
+        final int bitMask = (int) Math.round(Math.pow(2, bit));
+        return (newValue > 0) ? bitMask : 0;
     }
 }

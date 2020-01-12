@@ -113,7 +113,7 @@ public class MacroService {
     private Integer runStep(final MacroStep step, final MacroContextImpl macroContext) {
         final IStep stepImp = this.stepFactory.getInstance(step);
         stepImp.setMacroContext(macroContext);
-        LOGGER.info(String.format("Running macro step %d", step.getNumber()));
+        LOGGER.info("Running macro step {}", step.getNumber());
         return stepImp.runStep();
     }
 }

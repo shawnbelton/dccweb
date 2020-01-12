@@ -1,5 +1,6 @@
 package uk.co.redkiteweb.dccweb.decoders.types;
 
+import com.google.common.collect.ImmutableList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +47,7 @@ public class OptionTypeValueTest {
         cvValue.setId("id1");
         cvValue.setName("name");
         cvValue.setCvNumber("1");
-        cvValue.setBit(0);
+        cvValue.setBit(ImmutableList.of(0));
         cvValue.setOptions(createOptions());
         return cvValue;
     }

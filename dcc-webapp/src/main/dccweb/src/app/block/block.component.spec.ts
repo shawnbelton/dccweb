@@ -1,6 +1,7 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BlockComponent} from './block.component';
+import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 describe('BlockComponent', () => {
   let component: BlockComponent;
@@ -8,9 +9,10 @@ describe('BlockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BlockComponent ]
+      declarations: [BlockComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

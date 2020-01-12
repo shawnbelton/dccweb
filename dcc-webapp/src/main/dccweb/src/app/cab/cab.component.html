@@ -24,7 +24,7 @@
       <div class="row top10">
         <div class="mr-auto">
           <ul class="list-inline">
-            <li *ngFor="let cabFunction of cab.cabFunctions" class="list-inline-item">
+            <li *ngFor="let cabFunction of cab.cabFunctions" class="list-inline-item top10">
               <input type="button" (click)="toggleFunction(cabFunction)" class="btn btn-sm"
                      [ngClass]="{'btn-primary': cabFunction.state, 'btn-outline-primary': !cabFunction.state}" value="{{cabFunction.name}}"/>
             </li>

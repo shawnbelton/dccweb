@@ -1,0 +1,111 @@
+<decoder>
+    <include definition="nmra/shortAndLongAddress"/>
+    <cv number="2">
+        <value id="cv2" name="VStart" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="3">
+        <value id="cv3" name="Acceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="4">
+        <value id="cv4" name="Deceleration" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="5">
+        <value id="cv5" name="VHigh" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="6">
+        <value id="cv6" name="VMid" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="7">
+        <value id="cv7" name="Revision" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="8">
+        <value id="cv8" name="Manufacturer" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="13">
+        <value id="cv13bit0" name="Analog F1" type="flag" bit="0"/>
+        <value id="cv13bit1" name="Analog F2" type="flag" bit="1"/>
+        <value id="cv13bit2" name="Analog F3" type="flag" bit="2"/>
+        <value id="cv13bit3" name="Analog F4" type="flag" bit="3"/>
+        <value id="cv13bit4" name="Analog F5" type="flag" bit="4"/>
+        <value id="cv13bit5" name="Analog F6" type="flag" bit="5"/>
+        <value id="cv13bit6" name="Analog F7" type="flag" bit="6"/>
+        <value id="cv13bit7" name="Analog F8" type="flag" bit="7"/>
+    </cv>
+    <cv number="14">
+        <value id="cv14bit0" name="Analog F0" type="flag" bit="0"/>
+        <value id="cv14bit1" name="Analog F9" type="flag" bit="1"/>
+        <value id="cv14bit2" name="Analog F10" type="flag" bit="2"/>
+        <value id="cv14bit3" name="Analog F11" type="flag" bit="3"/>
+        <value id="cv14bit4" name="Analog F12" type="flag" bit="4"/>
+        <value id="cv14bit5" name="Analog F13" type="flag" bit="5"/>
+        <value id="cv14bit6" name="Analog F14" type="flag" bit="6"/>
+        <value id="cv14bit7" name="Analog F15" type="flag" bit="7"/>
+    </cv>
+    <cv number="15">
+        <value id="cv15" name="Decoder Lock ID number" type="value" low="0" high="255"/>
+    </cv>
+    <cv number="16">
+        <value id="cv16" name="Preset Lock ID number" type="value" low="0" high="255"/>
+    </cv>
+    <include definition="nmra/consistAddrDirection"/>
+    <include definition="esu/v4cv21.22"/>
+    <cv number="27">
+        <value id="cv27bit0" name="ABC brake on Asymmetrical DCC - higher voltage on right rail" type="flag" bit="0"/>
+        <value id="cv27bit1" name="ABC brake on Asymmetrical DCC - higher voltage on left rail" type="flag" bit="1"/>
+        <value id="cv27bit2" name="Brake on Zimo HLU commands" type="flag" bit="2"/>
+        <value id="cv27bit3" name="Brake on DC, polarity against direction" type="flag" bit="3"/>
+        <value id="cv27bit4" name="Brake on DC, polarity same direction" type="flag" bit="4"/>
+        <value id="cv27bit7" name="Constant Brake Distance on speed step 0" type="flag" bit="7"/>
+    </cv>
+    <cv number="28">
+        <value id="cv28bit0" name="RailCom® Channel 1 Address Broadcast" type="flag" bit="0"/>
+        <value id="cv28bit1" name="RailCom® Channel 2 Data Transmission" type="flag" bit="1"/>
+        <value id="cv28bit7" name="RailCom® Plus Auto Loco Recognition" type="flag" bit="7"/>
+    </cv>
+    <include definition="nmra/cv29direction"/>
+    <include definition="nmra/cv29speedSteps"/>
+    <include definition="nmra/cv29analog"/>
+    <cv number="29">
+        <value id="cv29bit3" name="RailCom" type="option" bit="3">
+            <option value="0">Disabled</option>
+            <option value="1">Enabled</option>
+        </value>
+        <value id="cv29bit4" name="Speed Curve" type="option" bit="4">
+            <option value="0">Use VStart, VMid, VHigh</option>
+            <option value="1">Use Table</option>
+        </value>
+    </cv>
+    <cv number="31">
+        <value id="cv31" name="Index register H" type="value" high="16"/>
+    </cv>
+    <cv number="32">
+        <value id="cv32" name="Index register L" type="value" high="4"/>
+    </cv>
+    <cv number="47">
+        <value id="cv47bit0" name="DCC Protocol" type="flag" bit="0"/>
+        <value id="cv47bit1" name="M4 Protocol" type="flag" bit="1"/>
+        <value id="cv47bit2" name="Marklin Motorola® Protocol" type="flag" bit="2"/>
+        <value id="cv47bit3" name="Selectrix® Protocol" type="flag" bit="3"/>
+    </cv>
+    <cv number="49">
+        <value id="cv49bit0" name="BEMF" type="flag" bit="0"/>
+        <value id="cv49bit1" name="Motor PWM Frequency" bit="1" type="option">
+            <option value="0">20 kHz</option>
+            <option value="1">40 kHz</option>
+        </value>
+        <value id="cv49bit2" name="Marklin® Delta Mode" type="flag" bit="2"/>
+        <value id="cv49bit37" name="Marklin Additional Addresses" type="option" bit="3,7">
+            <option value="0">No additional addresses</option>
+            <option value="1">Use 2 addresses</option>
+            <option value="2">Use 3 addresses</option>
+            <option value="3">Use 4 addresses</option>
+        </value>
+        <value id="cv49bit4" name="Automatic Speed Step Detection" type="flag" bit="4"/>
+        <value id="cv49bit5" name="LGB® Function Button Mode" type="flag" bit="5"/>
+        <value id="cv49bit6" name="ZIMO® Manual Function Mode" type="flag" bit="6"/>
+    </cv>
+    <cv number="50">
+        <value id="cv50bit0" name="AC Analog Mode" type="flag" bit="0"/>
+        <value id="cv50bit1" name="DC Analog Mode" type="flag" bit="1"/>
+    </cv>
+</decoder>
