@@ -10,7 +10,7 @@ import uk.co.redkiteweb.dccweb.model.RegisterDetails;
 import uk.co.redkiteweb.dccweb.model.RelayController;
 import uk.co.redkiteweb.dccweb.store.RelayControllerStore;
 
-import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @Service
@@ -42,7 +42,7 @@ public class RelayService {
         final String url = String.format("http://%s:%d/api/relay-controller/update",
                 registerDetails.getHost(), registerDetails.getPort());
         try {
-            final String host = Inet4Address.getLocalHost().getHostAddress();
+            final String host = InetAddress.getLocalHost().getHostAddress();
             final RelayController relayController = relayControllerStore.getRelayController();
             relayController.setControllerId("DUMMY");
             relayController.setIpAddress(String.format("%s:%s", host, environment.getProperty("local.server.port")));
