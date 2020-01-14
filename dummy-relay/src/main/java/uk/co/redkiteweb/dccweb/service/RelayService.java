@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 @Service
 public class RelayService {
 
-    private static final Logger LOGGER = LogManager.getLogger(RelayService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RelayService.class);
 
     private RestTemplate restTemplate;
     private RelayControllerStore relayControllerStore;

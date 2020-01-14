@@ -2,8 +2,8 @@ package uk.co.redkiteweb.dccweb.services;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uk.co.redkiteweb.dccweb.data.model.Macro;
@@ -28,7 +28,7 @@ import java.util.Map;
 @Service
 public class MacroService {
 
-    private static final Logger LOGGER = LogManager.getLogger(MacroService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MacroService.class);
 
     private LogStore logStore;
     private StepFactory stepFactory;

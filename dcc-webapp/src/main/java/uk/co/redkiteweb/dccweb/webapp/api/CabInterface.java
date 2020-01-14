@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.webapp.api;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uk.co.redkiteweb.dccweb.data.Cab;
@@ -16,7 +16,7 @@ import uk.co.redkiteweb.dccweb.services.AsyncCabService;
 @RequestMapping("/api/locos/cab")
 public class CabInterface {
 
-    private static final Logger LOGGER = LogManager.getLogger(CabInterface.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CabInterface.class);
 
     private CabStore cabStore;
     private AsyncCabService cabService;

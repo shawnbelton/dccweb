@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.schedulers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import uk.co.redkiteweb.dccweb.dccinterface.DccInterface;
 @Component
 public class CheckInterface {
 
-    private static final Logger LOGGER = LogManager.getLogger(CheckInterface.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckInterface.class);
 
     private DccInterface dccInterface;
 

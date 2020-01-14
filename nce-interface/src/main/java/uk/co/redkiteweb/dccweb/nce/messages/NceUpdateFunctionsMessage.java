@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.nce.messages;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.Message;
 import uk.co.redkiteweb.dccweb.dccinterface.messages.MessageResponse;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Component("NceUpdateFunctionsMessage")
 public class NceUpdateFunctionsMessage extends AbstractNceMessage implements NceMessage {
 
-    private static final Logger LOGGER = LogManager.getLogger(NceUpdateFunctionsMessage.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NceUpdateFunctionsMessage.class);
 
     private final Map<Integer, Integer> operationMap;
 
