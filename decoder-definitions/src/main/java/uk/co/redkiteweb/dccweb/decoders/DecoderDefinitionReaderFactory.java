@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.decoders;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -18,7 +18,7 @@ import java.io.*;
 @Component
 public class DecoderDefinitionReaderFactory implements ApplicationContextAware {
 
-    private static final Logger LOGGER = LogManager.getLogger(DecoderDefinitionReaderFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DecoderDefinitionReaderFactory.class);
 
     private ApplicationContext context;
     private String definitionsPath;
