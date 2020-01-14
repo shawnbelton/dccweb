@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.data.store;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class LogStoreImpl implements LogStore {
 
-    private static final Logger LOGGER = LogManager.getLogger(LogStoreImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogStoreImpl.class);
 
     private final List<LogEntry> logEntryStore;
     private SimpMessagingTemplate messagingTemplate;

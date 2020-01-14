@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.data.loaders;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import uk.co.redkiteweb.dccweb.data.repositories.DccManufacturerRepository;
 @Scope("prototype")
 public class DccManufacturerLoader implements Loader {
 
-    private static final Logger LOGGER = LogManager.getLogger(DccManufacturerLoader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DccManufacturerLoader.class);
 
     private DccManufacturerRepository dccManufacturerRepository;
 

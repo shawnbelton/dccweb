@@ -1,7 +1,7 @@
 package uk.co.redkiteweb.dccweb.demo.registers;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import uk.co.redkiteweb.dccweb.data.model.CV;
 import uk.co.redkiteweb.dccweb.data.model.Decoder;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @Component
 public class DecoderRegister {
 
-    private static final Logger LOGGER = LogManager.getLogger(DecoderRegister.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DecoderRegister.class);
 
     private Decoder decoder;
 
