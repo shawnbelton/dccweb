@@ -36,7 +36,7 @@
                             <workingDirectory>${project.basedir}/src/main/dummy-relay</workingDirectory>
                             <executable>${npm.executable}</executable>
                             <arguments>
-                                <argument>install</argument>
+                                <argument>install --no-audit</argument>
                             </arguments>
                         </configuration>
                         <goals>
