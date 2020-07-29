@@ -19,8 +19,8 @@
     </parent>
 
     <scm>
-        <connection>scm:git:https://github.com/shawnbelton/dccweb.git</connection>
-        <developerConnection>scm:git:https://github.com/shawnbelton/dccweb.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com:shawnbelton/dccweb.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:shawnbelton/dccweb.git</developerConnection>
         <url>https://github.com/shawnbelton/dccweb.git</url>
     </scm>
 
