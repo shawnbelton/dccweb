@@ -31,5 +31,12 @@ pipeline {
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.tar.gz', fingerprint: true
             }
         }
+        stage('release') {
+            when { branch 'develop' }
+            steps {
+                sh "mvn release:prepare"
+                sh "mvn release:perform"
+            }
+        }
     }
 }

@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "dccweb"
+  "defaultProject": "dccweb",
+  "cli": {
+    "analytics": "640bbe82-9a38-47b3-9cfc-21f24f2a0cae"
+  }
 }
