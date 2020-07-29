@@ -5,13 +5,13 @@ pipeline {
     agent any
     stages {
         stage('release-test') {
-            when { env.BRANCH_NAME == 'develop' }
+            when { branch 'develop' }
             steps {
                 echo "Building develop branch"
             }
         }
         stage('feature-test') {
-            when { env.BRANCH_NAME == 'feature/definitions' }
+            when { branch 'feature/definitions' }
             steps {
                 echo "Feature Build"
             }
