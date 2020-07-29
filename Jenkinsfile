@@ -4,18 +4,6 @@ pipeline {
     }
     agent any
     stages {
-        stage('release-test') {
-            when { branch 'develop' }
-            steps {
-                echo "Building develop branch"
-            }
-        }
-        stage('feature-test') {
-            when { branch 'feature/definitions' }
-            steps {
-                echo "Feature Build"
-            }
-        }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
@@ -41,6 +29,13 @@ pipeline {
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.zip', fingerprint: true
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.tar.gz', fingerprint: true
+            }
+        }
+        stage('release') {
+            when { branch 'develop' }
+            steps {
+                sh "mvn release:prepare"
+                sh "mvn release:perform"
             }
         }
     }
