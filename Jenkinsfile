@@ -4,6 +4,18 @@ pipeline {
     }
     agent any
     stages {
+        stage('release-test') {
+            when { env.BRANCH_NAME == 'develop' }
+            steps {
+                echo "Building develop branch"
+            }
+        }
+        stage('feature-test') {
+            when { env.BRANCH_NAME == 'feature/definitions' }
+            steps {
+                echo "Feature Build"
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn clean package'
