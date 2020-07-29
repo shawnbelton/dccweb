@@ -139,6 +139,36 @@
                     <useSystemClassLoader>false</useSystemClassLoader>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.2</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- Keep changes in the local repo, push will be done afterwards -->
+                    <pushChanges>true</pushChanges>
+                    <localCheckout>true</localCheckout>
+                    <!-- Use a better name for the tag -->
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>development</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>master</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>version-</versionTagPrefix>
+                    </flowInitContext>
+                    <noDeploy>true</noDeploy>
+                    <squash>true</squash>
+                    <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
