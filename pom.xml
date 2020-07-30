@@ -153,7 +153,8 @@
                         <versionTagPrefix>version-</versionTagPrefix>
                     </flowInitContext>
                     <noDeploy>true</noDeploy>
-                    <squash>true</squash>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <pushReleases>false</pushReleases>
                     <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
                     <enableSshAgent>true</enableSshAgent>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
