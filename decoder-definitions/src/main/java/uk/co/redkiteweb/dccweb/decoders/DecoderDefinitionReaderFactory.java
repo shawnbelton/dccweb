@@ -46,6 +46,8 @@ public class DecoderDefinitionReaderFactory implements ApplicationContextAware {
             try {
                 final DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
                 documentBuilderFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+                documentBuilderFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
                 final DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
                 return documentBuilder.parse(inputStream);
             } catch (IOException | SAXException | ParserConfigurationException exception) {

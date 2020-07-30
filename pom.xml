@@ -19,8 +19,8 @@
     </parent>
 
     <scm>
-        <connection>scm:git:https://github.com/shawnbelton/dccweb.git</connection>
-        <developerConnection>scm:git:https://github.com/shawnbelton/dccweb.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com:shawnbelton/dccweb.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:shawnbelton/dccweb.git</developerConnection>
         <url>https://github.com/shawnbelton/dccweb.git</url>
     </scm>
 
@@ -137,6 +137,27 @@
                 <version>3.0.0-M1</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>develop</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>release-</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>version-</versionTagPrefix>
+                    </flowInitContext>
+                    <noDeploy>true</noDeploy>
+                    <squash>true</squash>
+                    <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
+                    <enableSshAgent>true</enableSshAgent>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <updateDependencies>true</updateDependencies>
                 </configuration>
             </plugin>
         </plugins>
