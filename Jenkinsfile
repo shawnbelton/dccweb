@@ -34,8 +34,8 @@ pipeline {
         stage('release') {
             when { branch 'develop' }
             steps {
-                sh "mvn release:prepare"
-                sh "mvn release:perform"
+                sh "mvn -B -DuseReleaseProfile=false -DpushReleases=false jgitflow:release-start"
+                sh "mvn -B -DuseReleaseProfile=false -DpushReleases=true jgitflow:release-finish -DnoDeploy=true"
             }
         }
     }
