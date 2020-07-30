@@ -1,6 +1,6 @@
 pipeline {
     options {
-        buildDiscarder(logRotator(numToKeepStr: '10', daysToKeepStr: '90', artifactNumToKeepStr: '5'))
+        buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '90', artifactNumToKeepStr: '5'))
     }
     agent any
     stages {
@@ -12,18 +12,21 @@ pipeline {
             }
         }
         stage('Integration') {
+            when { branch 'master' }
             steps {
                 unstash 'dccweb'
                 sh 'mvn verify'
             }
         }
         stage('Sonar') {
+            when { branch 'master' }
             steps {
                 unstash 'dccweb'
                 sh 'mvn sonar:sonar'
             }
         }
         stage('Archive') {
+            when { branch 'master' }
             steps {
                 unstash 'dccweb'
                 archiveArtifacts artifacts: 'dcc-webapp/target/*.jar', fingerprint: true
