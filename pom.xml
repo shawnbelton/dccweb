@@ -154,7 +154,7 @@
                     </flowInitContext>
                     <noDeploy>true</noDeploy>
                     <useReleaseProfile>false</useReleaseProfile>
-                    <pushReleases>false</pushReleases>
+                    <pushReleases>true</pushReleases>
                     <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
                     <enableSshAgent>true</enableSshAgent>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
