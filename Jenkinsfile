@@ -38,7 +38,7 @@ pipeline {
             when { branch 'develop' }
             steps {
                 sh "git checkout -B develop"
-                sh "mvn -batch jgitflow:release-start jgitflow:release-finish"
+                sh "mvn jgitflow:release-start jgitflow:release-finish"
             }
         }
     }
