@@ -152,6 +152,8 @@
                         <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
                         <versionTagPrefix>version-</versionTagPrefix>
                     </flowInitContext>
+                    <username>${git.user}</username>
+                    <password>${git.password}</password>
                     <noDeploy>true</noDeploy>
                     <useReleaseProfile>false</useReleaseProfile>
                     <pushReleases>true</pushReleases>
