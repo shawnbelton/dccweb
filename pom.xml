@@ -3,7 +3,7 @@
 
     <groupId>uk.co.redkiteweb.dccweb</groupId>
     <artifactId>dcc-web</artifactId>
-    <version>1.0.0.1-SNAPSHOT</version>
+    <version>1.0.0.2-SNAPSHOT</version>
     <name>Digital Command Control Web Application</name>
     <url>http://www.redkiteweb.co.uk/</url>
     <packaging>pom</packaging>
