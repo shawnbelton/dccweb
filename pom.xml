@@ -160,6 +160,7 @@
                     <enableSshAgent>true</enableSshAgent>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <updateDependencies>true</updateDependencies>
+                    <squash>true</squash>
                 </configuration>
             </plugin>
         </plugins>
