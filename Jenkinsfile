@@ -37,8 +37,10 @@ pipeline {
         stage('release') {
             when { branch 'develop' }
             steps {
-                sh "git checkout -B develop"
-                sh "mvn jgitflow:release-start jgitflow:release-finish"
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+                    sh "git checkout -B develop"
+                    sh "mvn -Dgit.user=$USERNAME -Dgit.password=$PASSWORD jgitflow:release-start jgitflow:release-finish"
+                }
             }
         }
     }
