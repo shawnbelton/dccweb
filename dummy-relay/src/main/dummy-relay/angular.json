@@ -30,8 +30,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
-            ],
-            "es5BrowserSupport": true
+            ]
           },
           "configurations": {
             "production": {
@@ -137,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "dummy-relay"
+  "defaultProject": "dummy-relay",
+  "cli": {
+    "analytics": "c34f63fe-f879-45f8-a183-dc3bdb658ae8"
+  }
 }
