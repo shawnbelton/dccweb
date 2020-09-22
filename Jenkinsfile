@@ -39,7 +39,8 @@ pipeline {
             steps {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                     sh "git checkout -B develop"
-                    sh "mvn -B -X -Dgit.user=$USERNAME -Dgit.password='$PASSWORD' jgitflow:release-start jgitflow:release-finish"
+                    sh "mvn -B -Dgit.user=$USERNAME -Dgit.password='$PASSWORD' jgitflow:release-start jgitflow:release-finish"
+                    sh "git push origin develop master --tags"
                 }
             }
         }
