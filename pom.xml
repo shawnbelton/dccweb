@@ -154,13 +154,11 @@
                     <username>${git.user}</username>
                     <password>${git.password}</password>
                     <noDeploy>true</noDeploy>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <pushReleases>true</pushReleases>
-                    <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
-                    <enableSshAgent>true</enableSshAgent>
+                    <squash>false</squash>
+                    <pullDevelop>true</pullDevelop>
+                    <pullMaster>true</pullMaster>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <updateDependencies>true</updateDependencies>
-                    <squash>true</squash>
+                    <scmCommentPrefix>[RELEASE] </scmCommentPrefix>
                 </configuration>
             </plugin>
         </plugins>
