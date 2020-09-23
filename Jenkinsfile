@@ -37,6 +37,13 @@ pipeline {
         stage('release') {
             when { branch 'develop' }
             steps {
+                checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: env.BRANCH_NAME]],
+                        extensions: [[$class: 'LocalBranch', localBranch: env.BRANCH_NAME]],
+                        userRemoteConfigs: [[credentialsId: 'GITHUB', url: 'https://github.com/shawnbelton/dccweb.git']]
+                ])
+
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GITHUB', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                     sh "git checkout -B develop"
                     sh "mvn -B -Dgit.user=$USERNAME -Dgit.password='$PASSWORD' -DpushReleases=false jgitflow:release-start"
