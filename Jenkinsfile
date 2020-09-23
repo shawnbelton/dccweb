@@ -48,7 +48,6 @@ pipeline {
                     sh "git checkout -B develop"
                     sh "mvn -B -Dgit.user=$USERNAME -Dgit.password='$PASSWORD' -DpushReleases=false jgitflow:release-start"
                     sh "mvn -B -Dgit.user=$USERNAME -Dgit.password='$PASSWORD' -DpushReleases=true jgitflow:release-finish"
-                    sh "git push origin develop master --tags"
                 }
             }
         }
